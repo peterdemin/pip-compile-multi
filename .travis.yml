@@ -14,13 +14,10 @@ before_install:
 - pip install codecov
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -r requirements/test.txt
-
-# command to run tests, e.g. python setup.py test
-script: pytest test_lock.py
+install: pip install -e . -r requirements/test.txt
 
 # command to run tests using coverage, e.g. python setup.py test
-script: coverage run --source spam runtests.py
+script: coverage run --source lock --branch `which pytest`
 
 after_success:
   - codecov
