@@ -44,7 +44,7 @@ setup(
     install_requires=(
         'click',
         'pip-tools',
-    )
+    ),
     license="MIT",
     zip_safe=False,
     keywords='pip-compile-multi',

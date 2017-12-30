@@ -31,18 +31,24 @@ ENVIRONMENTS = [
 logger = logging.getLogger("pip-tools-multi")
 
 
+config = {
+    'compatible_patterns': [],
+    'base_dir': 'requirements',
+}
+
+
 @click.command()
 @click.option('--compatible', '-c', multiple=True,
               help='Glob expression for packages with compatible (~=) version constraint')
 def main(compatible):
     logging.basicConfig(level=logging.DEBUG)
     pinned_packages = set()
+    config['compatible_patterns'] = compatible
     for conf in ENVIRONMENTS:
         env = Environment(
             name=conf['name'],
             ignored=pinned_packages,
             allow_post=conf['allow_post'],
-            compatible_patterns=compatible,
         )
         env.create_lockfile()
         if conf['ref']:
@@ -54,7 +60,7 @@ class Environment(object):
     IN_EXT = '.in'
     OUT_EXT = '.txt'
 
-    def __init__(self, name, ignored=None, allow_post=False, compatible_patterns=None):
+    def __init__(self, name, ignored=None, allow_post=False):
         """
         name - name of the environment, e.g. base, test
         ignored - set of package names to omit in output
@@ -62,7 +68,6 @@ class Environment(object):
         self.name = name
         self.ignored = ignored or set()
         self.allow_post = allow_post
-        self.compatible_patterns = compatible_patterns or []
         self.packages = set()
 
     def create_lockfile(self):
@@ -132,7 +137,7 @@ class Environment(object):
 
         Also populate packages set
         """
-        dep = Dependency(line, self.compatible_patterns)
+        dep = Dependency(line)
         if dep.valid:
             if dep.package in self.ignored:
                 return None
@@ -171,8 +176,7 @@ class Dependency(object):
         r'(?:(?P<comment>#.*))?$'
     )
 
-    def __init__(self, line, compatible_patterns=None):
-        self.compatible_patterns = compatible_patterns or []
+    def __init__(self, line):
         m = self.RE_DEPENDENCY.match(line)
         if m:
             self.valid = True
@@ -201,7 +205,7 @@ class Dependency(object):
 
     @property
     def is_compatible(self):
-        for pattern in self.compatible_patterns:
+        for pattern in config.compatible_patterns:
             if fnmatch(self.package.lower(), pattern):
                 return True
         return False
