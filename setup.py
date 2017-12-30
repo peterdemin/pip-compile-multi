@@ -61,7 +61,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pip-compile-multi = lock:main',
+            'pip-compile-multi = lock:entry',
         ]
     },
 )

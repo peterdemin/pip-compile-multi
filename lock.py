@@ -40,15 +40,24 @@ config = {
 
 @click.command()
 @click.option('--compatible', '-c', multiple=True,
-              help='Glob expression for packages with compatible (~=) version constraint')
-def main(compatible):
+              help='Glob expression for packages with compatible (~=) '
+                   'version constraint')
+def entry(compatible):
+    """Click entry point"""
+    config['compatible_patterns'] = compatible
+    main()
+
+
+def main():
+    """
+    Compile requirements files for all environments.
+    """
     logging.basicConfig(level=logging.DEBUG)
     pinned_packages = set()
-    config['compatible_patterns'] = compatible
     for conf in ENVIRONMENTS:
         env = Environment(
             name=conf['name'],
-            ignored=pinned_packages,
+            ignore=pinned_packages,
             allow_post=conf['allow_post'],
         )
         env.create_lockfile()
@@ -58,16 +67,19 @@ def main(compatible):
 
 
 class Environment(object):
+    """requirements file"""
+
     IN_EXT = '.in'
     OUT_EXT = '.txt'
+    RE_REF = re.compile(r'^-r\s+(\S+)$')
 
-    def __init__(self, name, ignored=None, allow_post=False):
+    def __init__(self, name, ignore=None, allow_post=False):
         """
         name - name of the environment, e.g. base, test
-        ignored - set of package names to omit in output
+        ignore - set of package names to omit in output
         """
         self.name = name
-        self.ignored = ignored or set()
+        self.ignore = ignore or set()
         self.allow_post = allow_post
         self.packages = set()
 
@@ -92,6 +104,25 @@ class Environment(object):
             logger.critical(stdout.decode('utf-8'))
             logger.critical(stderr.decode('utf-8'))
             raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
+
+    @classmethod
+    def parse_references(cls, filename):
+        """
+        Read filename line by line searching for pattern:
+
+        -r file.in
+
+        return list of matched file names without extension.
+        E.g. ['file']
+        """
+        references = []
+        for line in open(filename):
+            matched = cls.RE_REF.match(line)
+            if matched:
+                reference = matched.group(1)
+                reference_base = os.path.splitext(reference)[0]
+                references.append(reference_base)
+        return references
 
     @property
     def infile(self):
@@ -134,13 +165,13 @@ class Environment(object):
         """
         Fix dependency by removing post-releases from versions
         and loosing constraints on internal packages.
-        Drop packages from ignored set
+        Drop packages from ignore set
 
         Also populate packages set
         """
         dep = Dependency(line)
         if dep.valid:
-            if dep.package in self.ignored:
+            if dep.package in self.ignore:
                 return None
             self.packages.add(dep.package)
             if not self.allow_post or dep.is_compatible:

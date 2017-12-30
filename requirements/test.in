@@ -1,4 +1,7 @@
 -r base.in
 
+prospector
 pylint
 flake8
+mock
+six

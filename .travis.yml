@@ -3,8 +3,9 @@
 language: python
 
 python:
+  - "3.6"
+  - "3.5"
   - "3.4"
-  - "3.3"
   - "2.7"
   - "2.6"
   - "pypy"
@@ -13,10 +14,10 @@ before_install:
 - pip install codecov
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -r requirements.txt
+install: pip install -r requirements/test.txt
 
 # command to run tests, e.g. python setup.py test
-script: python setup.py test
+script: pytest test_lock.py
 
 # command to run tests using coverage, e.g. python setup.py test
 script: coverage run --source spam runtests.py
