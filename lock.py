@@ -14,6 +14,7 @@ import os
 import re
 import subprocess
 import logging
+from fnmatch import fnmatch
 
 import click
 
@@ -205,7 +206,7 @@ class Dependency(object):
 
     @property
     def is_compatible(self):
-        for pattern in config.compatible_patterns:
+        for pattern in config['compatible_patterns']:
             if fnmatch(self.package.lower(), pattern):
                 return True
         return False
