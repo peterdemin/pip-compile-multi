@@ -2,15 +2,201 @@
 pip-tools-multi
 ===============================
 
-.. image:: https://badge.fury.io/py/pip-compile-multi.png
-    :target: http://badge.fury.io/py/pip-compile-multi
+.. image:: https://badge.fury.io/py/pip-tools-multi.png
+    :target: http://badge.fury.io/py/pip-tools-multi
 
 .. image:: https://travis-ci.org/peterdemin/pip-tools-multi.svg?branch=master
         :target: https://travis-ci.org/peterdemin/pip-tools-multi
 
-.. image:: https://pypip.in/d/pip-compile-multi/badge.png
-        :target: https://pypi.python.org/pypi/pip-compile-multi
+.. image:: https://pypip.in/d/pip-tools-multi/badge.png
+        :target: https://pypi.python.org/pypi/pip-tools-multi
 
 
 Compile multiple requirements files to lock dependency versions
 
+Example scenario
+----------------
+
+I will start from the very basics of dependency management and will go very slow,
+so if you feel bored, just scroll to the next section.
+
+Suppose you have a python project with following direct dependencies:
+
+.. code-block::
+
+    click
+    pip-tools
+
+(Yes I took pip-tools-multi as an example).
+Let's save them as-is in ``requirements/base.in``.
+Those are unpinned libraries, it means that whenever developer runs
+
+.. code-block:: shell
+
+    pip install -r requirements/base.in
+
+he will get *some* version of these libraries.
+And chances are that if several developers do the same over some period in time,
+some will have different dependency versions than others.
+Also, if the project is online service, one day it may stop working after
+redeployment because some of dependencies had backward-incompatible release.
+Those kind of releases are more common than newbie can think.
+More or less every package with version higher than ``2.0.0`` had them.
+
+To avoid this problem Python developers are hard-pinning (aka locking) their dependencies.
+So instead of list of libraries, they have something like:
+
+.. code-block::
+
+    click==6.7
+    pip-tools==1.11.0
+
+(To keep things neat let's put this into ``requirements/base.txt``)
+That's good for a starter. But there are two important drawbacks:
+
+1. Developers have to do non-trivial operations, if they want to keep up with
+   newer versions (that have bug fixes and performance improvements).
+2. Indirect dependencies (that is dependencies of dependencies) may still have
+   backward-incompatible releases, that brake everything.
+
+Let's put aside point 1 and fight point 2. Let's do
+
+.. code-block:: shell
+
+    pip freeze > requirements/base.txt
+
+Now we have full heirarchy of dependencies hard-pinned:
+
+.. code-block::
+
+    click==6.7
+    first==2.0.1
+    pip-tools==1.11.0
+    six==1.11.0
+
+That's great, and solves the main problem - service will be deployed exactly [#]_
+the same every single time and all developers will have identical environments.
+
+This case is so common, that there already is a number of tools to solve it.
+Two worth mentioning are:
+
+1. `Pip Tools`_ - mature package that is enhanced by ``pip-tools-multi``.
+2. `PipEnv`_ - fresh approach that is going to become Python standard
+   way of locking dependencies some day.
+
+But what if project uses some packages that are not required by the service itself?
+For example ``pytest``, that is needed to run unit tests, but should never
+be deployed to production site. Or ``flake8`` - syntax checking tool.
+If they are installed in the current virtual environment, they will get into
+``pip freeze`` output.
+That's no good.
+And removing them manually from ``requirements/base.txt`` is not an option.
+But still, these packages must be pinned to ensure, that tests are running
+the same way by the whole team (and build server).
+
+So let's get hands dirty and put all the testing stuff into ``requirements/test.in``:
+
+.. code-block::
+    -r base.in
+    
+    prospector
+    pylint
+    flake8
+    mock
+    six
+
+Note, how I put ``-r base.in`` in the beginning, so that *test* dependencies are installed
+along with the *base*.
+
+Now installation command is
+
+.. code-block:: shell
+
+    pip install -e requirements/test.in
+
+For one single time (exceptionally to show how unacceptable is this task)
+let's manually compose ``requirements/test.txt``.
+After installation, run freeze to bring whole list of all locked packages:
+
+.. code-block:: shell
+
+    $ pip freeze
+    astroid==1.6.0
+    click==6.7
+    dodgy==0.1.9
+    first==2.0.1
+    flake8==3.5.0
+    flake8-polyfill==1.0.2
+    isort==4.2.15
+    lazy-object-proxy==1.3.1
+    mccabe==0.6.1
+    mock==2.0.0
+    pbr==3.1.1
+    pep8-naming==0.5.0
+    pip-tools==1.11.0
+    prospector==0.12.7
+    pycodestyle==2.0.0
+    pydocstyle==2.1.1
+    pyflakes==1.6.0
+    pylint==1.8.1
+    pylint-celery==0.3
+    pylint-common==0.2.5
+    pylint-django==0.7.2
+    pylint-flask==0.5
+    pylint-plugin-utils==0.2.6
+    PyYAML==3.12
+    requirements-detector==0.5.2
+    setoptconf==0.2.0
+    six==1.11.0
+    snowballstemmer==1.2.1
+    wrapt==1.10.11
+
+Wow! That's quite a list! But we remember what goes into base.txt:
+
+1. click
+2. first
+3. pip-tools
+4. six
+
+Good, everything else can be put into ``requirements/test.txt``.
+But wait, ``six`` is included in ``test.in`` and is missing in ``test.txt``.
+That feels wrong... Ah, it's because we've moved ``six`` to the ``base.txt``.
+It's good, that we didn't forget, that it should be in *base*.
+We might forget next time though.
+
+Why don't we automate it? That's what ``pip-tools-multi`` is for.
+
+Managing dependency versions in multiple environments
+-----------------------------------------------------
+
+Let's reharse, example service has two groups of dependencies
+(or, as I call them, environments):
+
+.. code-block::
+
+    # requirements/base.in:
+    click
+    pip-tools
+    
+    # requirements/test.in:
+    -r base.in
+    prospector
+    pylint
+    flake8
+    mock
+    six
+
+To make automation even more appealing, let's add one more environment.
+I'll call it *local* - things that are needed during development, but are not
+required by tests, or service itself.
+
+.. code-block::
+
+    # requirements/local.in:
+    -r test.in
+    tox
+
+.. [#] That's not really true. Some one could re-upload broken package
+       under existing version on PyPI.
+.. _Pip Tools: https://github.com/jazzband/pip-tools
+.. _PipEnv: https://github.com/pypa/pipenv

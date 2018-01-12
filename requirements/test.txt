@@ -5,6 +5,7 @@
 #
 #    pip-compile --no-index --output-file requirements/test.txt requirements/test.in
 #
+six==1.11.0
 astroid==1.6.0             # via pylint, pylint-celery, pylint-flask, pylint-plugin-utils, requirements-detector
 dodgy==0.1.9               # via prospector
 flake8==3.5.0
