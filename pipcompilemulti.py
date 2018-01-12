@@ -29,7 +29,7 @@ ENVIRONMENTS = [
     {'name': 'test', 'ref': 'base', 'allow_post': True},
     {'name': 'local', 'ref': 'test', 'allow_post': True},
 ]
-logger = logging.getLogger("pip-tools-multi")
+logger = logging.getLogger("pip-compile-multi")
 
 
 config = {

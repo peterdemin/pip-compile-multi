@@ -1,15 +1,15 @@
 ===============================
-pip-tools-multi
+pip-compile-multi
 ===============================
 
-.. image:: https://badge.fury.io/py/pip-tools-multi.png
-    :target: http://badge.fury.io/py/pip-tools-multi
+.. image:: https://badge.fury.io/py/pip-compile-multi.png
+    :target: http://badge.fury.io/py/pip-compile-multi
 
-.. image:: https://travis-ci.org/peterdemin/pip-tools-multi.svg?branch=master
-        :target: https://travis-ci.org/peterdemin/pip-tools-multi
+.. image:: https://travis-ci.org/peterdemin/pip-compile-multi.svg?branch=master
+        :target: https://travis-ci.org/peterdemin/pip-compile-multi
 
-.. image:: https://pypip.in/d/pip-tools-multi/badge.png
-        :target: https://pypi.python.org/pypi/pip-tools-multi
+.. image:: https://pypip.in/d/pip-compile-multi/badge.png
+        :target: https://pypi.python.org/pypi/pip-compile-multi
 
 
 Compile multiple requirements files to lock dependency versions
@@ -27,7 +27,7 @@ Suppose you have a python project with following direct dependencies:
     click
     pip-tools
 
-(Yes I took pip-tools-multi as an example).
+(Yes I took pip-compile-multi as an example).
 Let's save them as-is in ``requirements/base.in``.
 Those are unpinned libraries, it means that whenever developer runs
 
@@ -80,7 +80,7 @@ the same every single time and all developers will have identical environments.
 This case is so common, that there already is a number of tools to solve it.
 Two worth mentioning are:
 
-1. `Pip Tools`_ - mature package that is enhanced by ``pip-tools-multi``.
+1. `Pip Tools`_ - mature package that is enhanced by ``pip-compile-multi``.
 2. `PipEnv`_ - fresh approach that is going to become Python standard
    way of locking dependencies some day.
 
@@ -164,7 +164,7 @@ That feels wrong... Ah, it's because we've moved ``six`` to the ``base.txt``.
 It's good, that we didn't forget, that it should be in *base*.
 We might forget next time though.
 
-Why don't we automate it? That's what ``pip-tools-multi`` is for.
+Why don't we automate it? That's what ``pip-compile-multi`` is for.
 
 Managing dependency versions in multiple environments
 -----------------------------------------------------
@@ -204,9 +204,9 @@ and all recursive *local* dependencies except for *base* and *test* into ``local
 .. code-block:: shell
 
     $ pip-compile-multi
-    INFO:pip-tools-multi:Locking requirements/base.in to requirements/base.txt
-    INFO:pip-tools-multi:Locking requirements/test.in to requirements/test.txt
-    INFO:pip-tools-multi:Locking requirements/local.in to requirements/local.txt
+    INFO:pip-compile-multi:Locking requirements/base.in to requirements/base.txt
+    INFO:pip-compile-multi:Locking requirements/test.in to requirements/test.txt
+    INFO:pip-compile-multi:Locking requirements/local.in to requirements/local.txt
 
 Yes, that's right. All the tedious dependency versions management job done with
 single command, that doesn't even have options.
@@ -238,10 +238,10 @@ Than you open ``test.in`` and soft-pin it with descriptive comment:
 I know, this example is made up. But you get the idea.
 That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
 
-Benefits of using pip-tools-multi
+Benefits of using pip-compile-multi
 ---------------------------------
 
-I want to summarise, why you need to start using ``pip-tools-multi``.
+I want to summarise, why you need to start using ``pip-compile-multi``.
 Some of the benefits are achievable with other methods, but I want to be general:
 
 1. Production will not suddenly brake after redeployment because of
@@ -263,4 +263,4 @@ Have a question? Need a feature? Fill free to open an `issue on GitHub`_.
 .. [#] Yeah, yeah, there are still a lot of ways to have these problems.
 .. _Pip Tools: https://github.com/jazzband/pip-tools
 .. _PipEnv: https://github.com/pypa/pipenv
-.. _issue on GitHub: https://github.com/peterdemin/pip-tools-multi/issues
+.. _issue on GitHub: https://github.com/peterdemin/pip-compile-multi/issues

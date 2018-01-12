@@ -6,6 +6,7 @@
 #    pip-compile --no-index --output-file requirements/test.txt requirements/test.in
 #
 astroid==1.6.0             # via pylint, pylint-celery, pylint-flask, pylint-plugin-utils, requirements-detector
+attrs==17.4.0              # via pytest
 dodgy==0.1.9               # via prospector
 flake8-polyfill==1.0.2     # via pep8-naming
 flake8==3.5.0
@@ -15,7 +16,9 @@ mccabe==0.6.1              # via flake8, prospector, pylint
 mock==2.0.0
 pbr==3.1.1                 # via mock
 pep8-naming==0.5.0         # via prospector
+pluggy==0.6.0              # via pytest
 prospector==0.12.7
+py==1.5.2                  # via pytest
 pycodestyle==2.0.0         # via flake8, prospector
 pydocstyle==2.1.1          # via prospector
 pyflakes==1.6.0            # via flake8, prospector
@@ -25,6 +28,7 @@ pylint-django==0.7.2       # via prospector
 pylint-flask==0.5          # via prospector
 pylint-plugin-utils==0.2.6 # via prospector, pylint-celery, pylint-common, pylint-django, pylint-flask
 pylint==1.8.1
+pytest==3.3.2
 pyyaml==3.12               # via prospector
 requirements-detector==0.5.2 # via prospector
 setoptconf==0.2.0          # via prospector
