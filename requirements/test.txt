@@ -5,16 +5,16 @@
 #
 #    pip-compile --no-index --output-file requirements/test.txt requirements/test.in
 #
-six==1.11.0
 astroid==1.6.0             # via pylint, pylint-celery, pylint-flask, pylint-plugin-utils, requirements-detector
 dodgy==0.1.9               # via prospector
+flake8-polyfill==1.0.2     # via pep8-naming
 flake8==3.5.0
 isort==4.2.15              # via pylint
 lazy-object-proxy==1.3.1   # via astroid
 mccabe==0.6.1              # via flake8, prospector, pylint
 mock==2.0.0
 pbr==3.1.1                 # via mock
-pep8-naming==0.4.1         # via prospector
+pep8-naming==0.5.0         # via prospector
 prospector==0.12.7
 pycodestyle==2.0.0         # via flake8, prospector
 pydocstyle==2.1.1          # via prospector

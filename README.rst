@@ -174,11 +174,11 @@ Let's reharse, example service has two groups of dependencies
 
 .. code-block::
 
-    # requirements/base.in:
+    $ cat requirements/base.in 
     click
     pip-tools
-    
-    # requirements/test.in:
+
+    $ cat requirements/test.in 
     -r base.in
     prospector
     pylint
@@ -192,9 +192,24 @@ required by tests, or service itself.
 
 .. code-block::
 
-    # requirements/local.in:
+    $ cat requirements/local.in 
     -r test.in
     tox
+
+Now we want to put all *base* dependencies along with all their recursive dependencies
+into ``base.txt``,
+all recursive *test* dependencies except for *base* into ``test.txt``,
+and all recursive *local* dependencies except for *base* and *test* into ``local.txt``.
+
+.. code-block:: shell
+
+    $ pip-compile-multi 
+    INFO:pip-tools-multi:Locking requirements/base.in to requirements/base.txt
+    INFO:pip-tools-multi:Locking requirements/test.in to requirements/test.txt
+    INFO:pip-tools-multi:Locking requirements/local.in to requirements/local.txt
+
+Yes, that's right. All the tedious dependency versions management job done with
+single command, that doesn't even have options.
 
 .. [#] That's not really true. Some one could re-upload broken package
        under existing version on PyPI.
