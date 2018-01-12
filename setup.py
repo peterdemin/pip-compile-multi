@@ -32,22 +32,22 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
-    name='pip-tools-multi',
+    name='pip-compile-multi',
     version=version,
     description="""Compile multiple requirements files to lock dependency versions""",
     long_description=readme + '\n\n' + history,
     author='Peter Demin',
     author_email='peterdemin@gmail.com',
-    url='https://github.com/peterdemin/pip-tools-multi',
+    url='https://github.com/peterdemin/pip-compile-multi',
     include_package_data=True,
-    py_modules=['piptoolsmulti.py'],
+    py_modules=['pipcompilemulti.py'],
     install_requires=(
         'click',
         'pip-tools',
     ),
     license="MIT",
     zip_safe=False,
-    keywords='pip-tools-multi',
+    keywords='pip-compile-multi',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -61,7 +61,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pip-tools-multi = piptoolsmulti:entry',
+            'pip-compile-multi = pipcompilemulti:entry',
         ]
     },
 )
