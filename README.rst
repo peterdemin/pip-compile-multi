@@ -53,12 +53,12 @@ he will get *some* version of these libraries.
 And chances are that if several developers do the same over some period in time,
 some will have different dependency versions than others.
 Also, if the project is online service, one day it may stop working after
-redeployment because some of dependencies had backward-incompatible release.
-Those kind of releases are more common than newbie can think.
-More or less every package with version higher than ``2.0.0`` had them.
+redeployment because some of the dependencies had backward incompatible release.
+That kind of releases is more common than a newbie can think.
+More or less every package with a version higher than ``2.0.0`` had them.
 
 To avoid this problem Python developers are hard-pinning (aka locking) their dependencies.
-So instead of list of libraries, they have something like:
+So instead of a list of libraries, they have something like:
 
 .. code-block::
 
@@ -68,7 +68,7 @@ So instead of list of libraries, they have something like:
 (To keep things neat let's put this into ``requirements/base.txt``)
 That's good for a starter. But there are two important drawbacks:
 
-1. Developers have to do non-trivial operations, if they want to keep up with
+1. Developers have to do non-trivial operations if they want to keep up with
    newer versions (that have bug fixes and performance improvements).
 2. Indirect dependencies (that is dependencies of dependencies) may still have
    backward-incompatible releases, that brake everything.
@@ -94,13 +94,13 @@ the same every single time and all developers will have identical environments.
 This case is so common, that there already is a number of tools to solve it.
 Two worth mentioning are:
 
-1. `Pip Tools`_ - mature package that is enhanced by ``pip-compile-multi``.
+1. `Pip Tools`_ - a mature package that is enhanced by ``pip-compile-multi``.
 2. `PipEnv`_ - fresh approach that is going to become Python standard
    way of locking dependencies some day.
 
-But what if project uses some packages that are not required by the service itself?
+But what if the project uses some packages that are not required by the service itself?
 For example ``pytest``, that is needed to run unit tests, but should never
-be deployed to production site. Or ``flake8`` - syntax checking tool.
+be deployed to a production site. Or ``flake8`` - syntax checking tool.
 If they are installed in the current virtual environment, they will get into
 ``pip freeze`` output.
 That's no good.
@@ -131,7 +131,7 @@ Now installation command is
 
 For one single time (exceptionally to show how unacceptable is this task)
 let's manually compose ``requirements/test.txt``.
-After installation, run freeze to bring whole list of all locked packages:
+After installation, run freeze to bring the whole list of all locked packages:
 
 .. code-block:: shell
 
@@ -184,7 +184,7 @@ Why don't we automate it? That's what ``pip-compile-multi`` is for.
 Managing dependency versions in multiple environments
 -----------------------------------------------------
 
-Let's reharse, example service has two groups of dependencies
+Let's rehearse, example service has two groups of dependencies
 (or, as I call them, environments):
 
 .. code-block::
@@ -224,10 +224,10 @@ and all recursive *local* dependencies except for *base* and *test* into ``local
     INFO:pip-compile-multi:Locking requirements/local.in to requirements/local.txt
 
 Yes, that's right. All the tedious dependency versions management job done with
-single command, that doesn't even have options.
+a single command, that doesn't even have options.
 
 Now you can run ``git diff`` to review the changes and ``git commit`` to save them.
-To install new set of versions run:
+To install the new set of versions run:
 
 .. code-block:: shell
 
@@ -261,20 +261,20 @@ Some of the benefits are achievable with other methods, but I want to be general
 
 1. Production will not suddenly brake after redeployment because of
    backward incompatible dependency release.
-2. Whole team will use the same package versions and see the same outcomes.
+2. The whole team will use the same package versions and see the same outcomes.
    No more "works for me" and "I can not reproduce this" [2].
 3. Service still uses most recent versions of packages.
    And fresh means best here.
-4. Dependencies are upgraded when time is suitable for the service,
+4. Dependencies are upgraded when the time is suitable for the service,
    not whenever they are released.
 5. Different environments are separated into different files.
-6. ``*.in`` files are small and manageable, because they store only direct dependencies.
+6. ``*.in`` files are small and manageable because they store only direct dependencies.
 7. ``*.txt`` files are exhaustive and precise (but you don't need to edit them).
 
 Have a question? Need a feature? Fill free to open an `issue on GitHub`_.
 
-[1] That's not really true. Some one could re-upload broken package
-    under existing version on PyPI.
+[1] That's not really true. Someone could re-upload broken package
+under existing version on PyPI.
 
 [2] Yeah, yeah, there are still a lot of ways to have these problems.
 
