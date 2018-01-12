@@ -1,6 +1,7 @@
 -r base.in
 
 prospector
+pytest
 pylint
 flake8
 mock

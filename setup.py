@@ -40,7 +40,7 @@ setup(
     author_email='peterdemin@gmail.com',
     url='https://github.com/peterdemin/pip-tools-multi',
     include_package_data=True,
-    py_modules=['pip-tools-multi'],
+    py_modules=['piptoolsmulti.py'],
     install_requires=(
         'click',
         'pip-tools',
@@ -61,7 +61,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pip-tools-multi = lock:entry',
+            'pip-tools-multi = piptoolsmulti:entry',
         ]
     },
 )
