@@ -17,7 +17,7 @@ before_install:
 install: pip install -e . -r requirements/test.txt
 
 # command to run tests using coverage, e.g. python setup.py test
-script: coverage run --source lock --branch `which pytest`
+script: coverage run --source pipcompilemulti --branch `which pytest`
 
 after_success:
   - codecov
