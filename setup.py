@@ -40,7 +40,7 @@ setup(
     author_email='peterdemin@gmail.com',
     url='https://github.com/peterdemin/pip-compile-multi',
     include_package_data=True,
-    py_modules=['pipcompilemulti.py'],
+    py_modules=['pipcompilemulti'],
     install_requires=(
         'click',
         'pip-tools',
