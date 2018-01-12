@@ -29,5 +29,4 @@ deploy:
     secure: "w4DaqlET3ZYSAGDinXmgJa4Nwptrv31DkYcM4nwNnyFEeI9WUQJx5wVWPK8Yt16nKcwqK/HuSu37TJfT3oGvjHQLotOhgFeYH/X4I/Ih9hn4QTf3AjrIoIScjptz03ToMnyDG98TvVoYbE/inq809l3XJV3/k6bBZcusvhiQyqkKXoVT/XaW++uWy4biGu51zoU4yMNCF/rFk3iXxcsUHXCNSiPsF0a+SIW9k4AvFAhq/56rdsbKyoMB/5RtPJ6PyfNwFVLVpDtyBd7HCqBRkCOA3mzBRpRMqmwSZhH9QrmLOiiGHTKX+Vk/6w83WXfr6Xpa8xebW/LgSHL1U89c7CPQqimxgglcQIeuBjsx1rozY2Ks/sbXY/z3t4d79y50m6JrnW6riN6SE6YYYBEpV0a/k5boO2/PaIPNaEerdcouegzHA6IXc39wR2MDiR+GosxybO5bryWqOunZCv+VmzNSlKlxUIlgT3r9O4Fc8+RARoki+VVHRKYiaalQ9lokSerPsJZ7SS0yjXpirGYBQ8E4S0KhLn0YhyYz04dzj5Iwpek21aUD6GEt+Grx8lBE0REkYFzN/X21Z4AzAD8QdFs/SCFUH6zeI/FZdlm+XYrWw27gfjMn9h02/tYRo5OwN0mTUSQvKNOXnmgvDSKoB6BnrJd64nLIYTm/H0JCHpc="
   on:
     tags: true
-    branch: master
   distributions: "sdist bdist_wheel"
