@@ -88,7 +88,7 @@ Now we have full heirarchy of dependencies hard-pinned:
     pip-tools==1.11.0
     six==1.11.0
 
-That's great, and solves the main problem - service will be deployed exactly [#]_
+That's great, and solves the main problem - service will be deployed exactly [1]
 the same every single time and all developers will have identical environments.
 
 This case is so common, that there already is a number of tools to solve it.
@@ -111,6 +111,7 @@ the same way by the whole team (and build server).
 So let's get hands dirty and put all the testing stuff into ``requirements/test.in``:
 
 .. code-block::
+
     -r base.in
     
     prospector
@@ -253,7 +254,7 @@ I know, this example is made up. But you get the idea.
 That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
 
 Benefits of using pip-compile-multi
----------------------------------
+-----------------------------------
 
 I want to summarise, why you need to start using ``pip-compile-multi``.
 Some of the benefits are achievable with other methods, but I want to be general:
@@ -261,7 +262,7 @@ Some of the benefits are achievable with other methods, but I want to be general
 1. Production will not suddenly brake after redeployment because of
    backward incompatible dependency release.
 2. Whole team will use the same package versions and see the same outcomes.
-   No more "works for me" and "I can not reproduce this" [#]_.
+   No more "works for me" and "I can not reproduce this" [2].
 3. Service still uses most recent versions of packages.
    And fresh means best here.
 4. Dependencies are upgraded when time is suitable for the service,
@@ -272,9 +273,11 @@ Some of the benefits are achievable with other methods, but I want to be general
 
 Have a question? Need a feature? Fill free to open an `issue on GitHub`_.
 
-.. [#] That's not really true. Some one could re-upload broken package
-       under existing version on PyPI.
-.. [#] Yeah, yeah, there are still a lot of ways to have these problems.
+[1] That's not really true. Some one could re-upload broken package
+    under existing version on PyPI.
+
+[2] Yeah, yeah, there are still a lot of ways to have these problems.
+
 .. _Pip Tools: https://github.com/jazzband/pip-tools
 .. _PipEnv: https://github.com/pypa/pipenv
 .. _issue on GitHub: https://github.com/peterdemin/pip-compile-multi/issues
