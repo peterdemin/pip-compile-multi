@@ -14,6 +14,20 @@ pip-compile-multi
 
 Compile multiple requirements files to lock dependency versions
 
+Installation
+------------
+
+.. code-block:: shell
+
+    pip install pip-compile-multi
+
+Basic Usage
+-----------
+
+.. code-block:: shell
+
+    pip-compile-multi
+
 Example scenario
 ----------------
 
