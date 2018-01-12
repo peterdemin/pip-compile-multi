@@ -6,7 +6,7 @@ except ImportError:
 
 import pytest
 
-import piptoolsmulti as lock
+import pipcompilemulti as lock
 
 
 PIN = 'pycodestyle==2.3.1         # via flake8'
