@@ -203,7 +203,7 @@ and all recursive *local* dependencies except for *base* and *test* into ``local
 
 .. code-block:: shell
 
-    $ pip-compile-multi 
+    $ pip-compile-multi
     INFO:pip-tools-multi:Locking requirements/base.in to requirements/base.txt
     INFO:pip-tools-multi:Locking requirements/test.in to requirements/test.txt
     INFO:pip-tools-multi:Locking requirements/local.in to requirements/local.txt
@@ -211,7 +211,56 @@ and all recursive *local* dependencies except for *base* and *test* into ``local
 Yes, that's right. All the tedious dependency versions management job done with
 single command, that doesn't even have options.
 
+Now you can run ``git diff`` to review the changes and ``git commit`` to save them.
+To install new set of versions run:
+
+.. code-block:: shell
+
+    pip install -Ur requirements/local.txt
+
+It's a perfect time to run all the tests and make sure, that updates were
+backward compatible enough for your needs.
+More often than I'd like in big projects, it's not so.
+Let's say new version of ``pylint`` dropped support of old Python version,
+that you still need to support.
+Than you open ``test.in`` and soft-pin it with descriptive comment:
+
+.. code-block::
+
+    $ cat requirements/test.in 
+    -r base.in
+    prospector
+    pylint<1.8  # Newer versions dropped support for Python 2.4
+    flake8
+    mock
+    six
+
+I know, this example is made up. But you get the idea.
+That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
+
+Benefits of using pip-tools-multi
+---------------------------------
+
+I want to summarise, why you need to start using ``pip-tools-multi``.
+Some of the benefits are achievable with other methods, but I want to be general:
+
+1. Production will not suddenly brake after redeployment because of
+   backward incompatible dependency release.
+2. Whole team will use the same package versions and see the same outcomes.
+   No more "works for me" and "I can not reproduce this" [#]_.
+3. Service still uses most recent versions of packages.
+   And fresh means best here.
+4. Dependencies are upgraded when time is suitable for the service,
+   not whenever they are released.
+5. Different environments are separated into different files.
+6. ``*.in`` files are small and manageable, because they store only direct dependencies.
+7. ``*.txt`` files are exhaustive and precise (but you don't need to edit them).
+
+Have a question? Need a feature? Fill free to open an `issue on GitHub`_.
+
 .. [#] That's not really true. Some one could re-upload broken package
        under existing version on PyPI.
+.. [#] Yeah, yeah, there are still a lot of ways to have these problems.
 .. _Pip Tools: https://github.com/jazzband/pip-tools
 .. _PipEnv: https://github.com/pypa/pipenv
+.. _issue on GitHub: https://github.com/peterdemin/pip-tools-multi/issues
