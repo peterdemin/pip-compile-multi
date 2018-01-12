@@ -1,3 +1,5 @@
 -r test.in
 
 tox
+twine
+wheel
