@@ -275,7 +275,7 @@ def discover(glob_pattern):
     """
     Find all files matching given glob_pattern,
     parse them, and return list of environments:
-    
+
     >>> envs = discover("requirements/*.in")
     >>> envs == [
     ...     {'name': 'base', 'refs': []},
@@ -298,7 +298,7 @@ def discover(glob_pattern):
 def extract_env_name(file_path):
     """Return environment name for given requirements file path"""
     return os.path.splitext(os.path.basename(file_path))[0]
-    
+
 
 RE_REFERENCE = re.compile('^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
