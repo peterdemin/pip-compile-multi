@@ -47,3 +47,6 @@ output/
 boilerplate/
 /.cache/
 /.eggs/
+
+# Vim
+Session.vim
