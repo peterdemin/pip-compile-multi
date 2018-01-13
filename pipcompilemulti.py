@@ -220,8 +220,10 @@ class Environment(object):
 
     @property
     def pin_command(self):
+        """Compose pip-compile shell command"""
         return [
             'pip-compile',
+            '--verbose',
             '--rebuild',
             '--upgrade',
             '--no-index',
