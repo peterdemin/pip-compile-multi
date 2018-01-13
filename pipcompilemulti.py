@@ -154,7 +154,7 @@ class Environment(object):
 
     IN_EXT = '.in'
     OUT_EXT = '.txt'
-    RE_REF = re.compile(r'^-r\s+(\S+)$')
+    RE_REF = re.compile('^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
     def __init__(self, name, ignore=None, allow_post=False):
         """
@@ -193,17 +193,19 @@ class Environment(object):
         Read filename line by line searching for pattern:
 
         -r file.in
+        or
+        --requirement file.in
 
-        return list of matched file names without extension.
+        return set of matched file names without extension.
         E.g. ['file']
         """
-        references = []
+        references = set()
         for line in open(filename):
             matched = cls.RE_REF.match(line)
             if matched:
-                reference = matched.group(1)
+                reference = matched.group('path')
                 reference_base = os.path.splitext(reference)[0]
-                references.append(reference_base)
+                references.add(reference_base)
         return references
 
     @property
@@ -349,7 +351,7 @@ def discover(glob_pattern):
         for path in in_paths
     }
     return order_by_refs([
-        {'name': name, 'refs': parse_references(in_path)}
+        {'name': name, 'refs': Environment.parse_references(in_path)}
         for name, in_path in names.items()
     ])
 
@@ -357,23 +359,6 @@ def discover(glob_pattern):
 def extract_env_name(file_path):
     """Return environment name for given requirements file path"""
     return os.path.splitext(os.path.basename(file_path))[0]
-
-
-RE_REFERENCE = re.compile('^(?:-r|--requirement)\s*(?P<path>\S+).*$')
-
-
-def parse_references(path):
-    """
-    Parse requirements file on given path line by line
-    and return list of referenced environment names.
-    """
-    paths = set()
-    with open(path) as fp:
-        for line in fp:
-            matchobj = RE_REFERENCE.match(line)
-            if matchobj:
-                paths.add(matchobj.group('path'))
-    return [extract_env_name(path) for path in paths]
 
 
 def order_by_refs(envs):
