@@ -75,12 +75,13 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
     pinned_packages = {}
     for conf in discover(os.path.join(OPTIONS['base_dir'], '*.' + OPTIONS['in_ext'])):
+        ignored_sets = [
+            pinned_packages[name]
+            for name in conf['refs']
+        ]
         env = Environment(
             name=conf['name'],
-            ignore=set.union(*[
-                pinned_packages[name]
-                for name in conf['refs']
-            ]),
+            ignore=set.union(ignored_sets) if ignored_sets else set(),
             allow_post=conf['name'] in OPTIONS['allow_post'],
         )
         env.create_lockfile()
