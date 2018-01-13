@@ -298,16 +298,16 @@ class Environment(object):
         Read file pointer and return pair of lines lists:
         first - header, second - the rest.
         """
-        line_nbr, header_ended = 0, False
+        body_start, header_ended = 0, False
         lines = []
         for line in fp:
             if line.startswith('#') and not header_ended:
                 # Header text
-                line_nbr += 1
+                body_start += 1
             else:
                 header_ended = True
             lines.append(line)
-        return lines[:line_nbr], lines[line_nbr:]
+        return lines[:body_start], lines[body_start:]
 
     def replace_header(self, header_text):
         """Replace pip-compile header with custom text"""
