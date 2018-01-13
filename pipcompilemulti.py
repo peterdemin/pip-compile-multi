@@ -14,6 +14,7 @@ import os
 import re
 import glob
 import logging
+import itertools
 import subprocess
 from fnmatch import fnmatch
 
@@ -74,20 +75,79 @@ def main():
     """
     logging.basicConfig(level=logging.DEBUG)
     pinned_packages = {}
-    for conf in discover(os.path.join(OPTIONS['base_dir'], '*.' + OPTIONS['in_ext'])):
+    env_confs = discover(
+        os.path.join(
+            OPTIONS['base_dir'],
+            '*.' + OPTIONS['in_ext'],
+        )
+    )
+    for conf in env_confs:
         ignored_sets = [
             pinned_packages[name]
             for name in conf['refs']
         ]
+        print(conf['name'], conf['refs'], ignored_sets)
         env = Environment(
             name=conf['name'],
-            ignore=set.union(ignored_sets) if ignored_sets else set(),
+            ignore=merged_packages(
+                pinned_packages,
+                recursive_refs(env_confs, conf['name'])
+            ),
             allow_post=conf['name'] in OPTIONS['allow_post'],
         )
         env.create_lockfile()
         for ref in conf['refs']:
             env.reference(ref)
         pinned_packages[conf['name']] = set(env.packages)
+
+
+def merged_packages(env_packages, names):
+    """
+    Return union set of environment packages with given names
+
+    >>> sorted(merged_packages(
+    ...     {
+    ...         'a': {1, 2},
+    ...         'b': {2, 3},
+    ...         'c': {3, 4}
+    ...     },
+    ...     ['a', 'b']
+    ... ))
+    [1, 2, 3]
+    """
+    ignored_sets = [
+        env_packages[name]
+        for name in names
+    ]
+    if ignored_sets:
+        return set.union(*ignored_sets)
+    return set()
+
+
+def recursive_refs(envs, name):
+    """
+    Return set of recursive refs for given env name
+
+    >>> sorted(recursive_refs([
+    ...     {'name': 'base', 'refs': set()},
+    ...     {'name': 'test', 'refs': {'base'}},
+    ...     {'name': 'local', 'refs': {'test'}},
+    ... ], 'local'))
+    ['base', 'test']
+    """
+    refs_by_name = {
+        env['name']: env['refs']
+        for env in envs
+    }
+    refs = refs_by_name[name]
+    if refs:
+        indirect_refs = set(itertools.chain.from_iterable([
+            recursive_refs(envs, ref)
+            for ref in refs
+        ]))
+    else:
+        indirect_refs = set()
+    return set.union(refs, indirect_refs)
 
 
 class Environment(object):
