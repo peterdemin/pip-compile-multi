@@ -52,9 +52,9 @@ def test_allow_post_releases():
 
 
 @pytest.mark.parametrize('name, refs', [
-    ('base.in', []),
-    ('test.in', ['base']),
-    ('local.in', ['test']),
+    ('base.in', set()),
+    ('test.in', {'base'}),
+    ('local.in', {'test'}),
 ])
 def test_parse_references(name, refs):
     """Check references are parsed for sample files"""

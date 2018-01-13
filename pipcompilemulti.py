@@ -341,9 +341,9 @@ def discover(glob_pattern):
 
     >>> envs = discover("requirements/*.in")
     >>> envs == [
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
+    ...     {'name': 'base', 'refs': set()},
+    ...     {'name': 'test', 'refs': {'base'}},
+    ...     {'name': 'local', 'refs': {'test'}},
     ... ]
     True
     """
