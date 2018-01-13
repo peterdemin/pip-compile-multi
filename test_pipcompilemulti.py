@@ -16,7 +16,7 @@ CMPT = 'pycodestyle~=2.3.1         # via flake8'
 def test_fix_compatible_pin():
     """Test == is replaced with ~= for compatible dependencies"""
     env = lock.Environment('xxx')
-    with mock.patch.dict(lock.config, {'compatible_patterns': ['pycode*']}):
+    with mock.patch.dict(lock.OPTIONS, {'compatible_patterns': ['pycode*']}):
         result = env.fix_pin(PIN)
     assert result == CMPT
 

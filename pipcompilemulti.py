@@ -12,11 +12,13 @@ Internal dependencies are soft-pinned using ~=
 
 import os
 import re
-import subprocess
+import glob
 import logging
+import subprocess
 from fnmatch import fnmatch
 
 import click
+from toposort import toposort_flatten
 
 
 __author__ = 'Peter Demin'
@@ -32,9 +34,12 @@ ENVIRONMENTS = [
 logger = logging.getLogger("pip-compile-multi")
 
 
-config = {
+OPTIONS = {
     'compatible_patterns': [],
     'base_dir': 'requirements',
+    'allow_post': ['test', 'local'],
+    'in_ext': 'in',
+    'out_ext': 'txt',
 }
 
 
@@ -42,9 +47,24 @@ config = {
 @click.option('--compatible', '-c', multiple=True,
               help='Glob expression for packages with compatible (~=) '
                    'version constraint')
-def entry(compatible):
+@click.option('--post', '-p', multiple=True,
+              help='Environment name (base, test, etc) that can have '
+                   'packages with post-release versions (1.2.3.post777)')
+@click.option('--directory', '-d', default=OPTIONS['base_dir'],
+              help='Directory path with requirements files')
+@click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
+              help='File extension of input files')
+@click.option('--out-ext', '-o', default=OPTIONS['out_ext'],
+              help='File extension of output files')
+def entry(compatible, post, directory, in_ext, out_ext):
     """Click entry point"""
-    config['compatible_patterns'] = compatible
+    OPTIONS.update({
+        'compatible_patterns': compatible,
+        'allow_post': set(post),
+        'base_dir': directory,
+        'in_ext': in_ext,
+        'out_ext': out_ext,
+    })
     main()
 
 
@@ -53,17 +73,20 @@ def main():
     Compile requirements files for all environments.
     """
     logging.basicConfig(level=logging.DEBUG)
-    pinned_packages = set()
-    for conf in ENVIRONMENTS:
+    pinned_packages = {}
+    for conf in discover(os.path.join(OPTIONS['base_dir'], '*.' + OPTIONS['in_ext'])):
         env = Environment(
             name=conf['name'],
-            ignore=pinned_packages,
-            allow_post=conf['allow_post'],
+            ignore=set.union(*[
+                pinned_packages[name]
+                for name in conf['refs']
+            ]),
+            allow_post=conf['name'] in OPTIONS['allow_post'],
         )
         env.create_lockfile()
-        if conf['ref']:
-            env.reference(conf['ref'])
-        pinned_packages.update(env.packages)
+        for ref in conf['refs']:
+            env.reference(ref)
+        pinned_packages[conf['name']] = set(env.packages)
 
 
 class Environment(object):
@@ -237,7 +260,7 @@ class Dependency(object):
 
     @property
     def is_compatible(self):
-        for pattern in config['compatible_patterns']:
+        for pattern in OPTIONS['compatible_patterns']:
             if fnmatch(self.package.lower(), pattern):
                 return True
         return False
@@ -246,6 +269,71 @@ class Dependency(object):
         post_index = self.version.find('.post')
         if post_index >= 0:
             self.version = self.version[:post_index]
+
+
+def discover(glob_pattern):
+    """
+    Find all files matching given glob_pattern,
+    parse them, and return list of environments:
+    
+    >>> envs = discover("requirements/*.in")
+    >>> envs == [
+    ...     {'name': 'base', 'refs': []},
+    ...     {'name': 'test', 'refs': ['base']},
+    ...     {'name': 'local', 'refs': ['test']},
+    ... ]
+    True
+    """
+    in_paths = glob.glob(glob_pattern)
+    names = {
+        extract_env_name(path): path
+        for path in in_paths
+    }
+    return order_by_refs([
+        {'name': name, 'refs': parse_references(in_path)}
+        for name, in_path in names.items()
+    ])
+
+
+def extract_env_name(file_path):
+    """Return environment name for given requirements file path"""
+    return os.path.splitext(os.path.basename(file_path))[0]
+    
+
+RE_REFERENCE = re.compile('^(?:-r|--requirement)\s*(?P<path>\S+).*$')
+
+
+def parse_references(path):
+    """
+    Parse requirements file on given path line by line
+    and return list of referenced environment names.
+    """
+    paths = set()
+    with open(path) as fp:
+        for line in fp:
+            matchobj = RE_REFERENCE.match(line)
+            if matchobj:
+                paths.add(matchobj.group('path'))
+    return [extract_env_name(path) for path in paths]
+
+
+def order_by_refs(envs):
+    """
+    Return topologicaly sorted list of environments.
+    I.e. all referenced environments are placed before their references.
+    """
+    topology = {
+        env['name']: set(env['refs'])
+        for env in envs
+    }
+    by_name = {
+        env['name']: env
+        for env in envs
+    }
+    return [
+        by_name[name]
+        for name in toposort_flatten(topology)
+    ]
 
 
 if __name__ == '__main__':
