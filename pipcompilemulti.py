@@ -129,14 +129,14 @@ def recursive_refs(envs, name):
     Return set of recursive refs for given env name
 
     >>> sorted(recursive_refs([
-    ...     {'name': 'base', 'refs': set()},
-    ...     {'name': 'test', 'refs': {'base'}},
-    ...     {'name': 'local', 'refs': {'test'}},
+    ...     {'name': 'base', 'refs': []},
+    ...     {'name': 'test', 'refs': ['base']},
+    ...     {'name': 'local', 'refs': ['test']},
     ... ], 'local'))
     ['base', 'test']
     """
     refs_by_name = {
-        env['name']: env['refs']
+        env['name']: set(env['refs'])
         for env in envs
     }
     refs = refs_by_name[name]
