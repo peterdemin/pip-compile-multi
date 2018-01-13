@@ -86,15 +86,14 @@ def main():
             pinned_packages[name]
             for name in conf['refs']
         ]
-        print(conf['name'], conf['refs'], ignored_sets)
+        rrefs = recursive_refs(env_confs, conf['name'])
         env = Environment(
             name=conf['name'],
-            ignore=merged_packages(
-                pinned_packages,
-                recursive_refs(env_confs, conf['name'])
-            ),
+            ignore=merged_packages(pinned_packages, rrefs),
             allow_post=conf['name'] in OPTIONS['allow_post'],
         )
+        logger.info("Locking %s to %s. References: %r",
+                    env.infile, env.outfile, sorted(rrefs))
         env.create_lockfile()
         for ref in conf['refs']:
             env.reference(ref)
@@ -173,7 +172,6 @@ class Environment(object):
         with hard-pinned versions.
         Then fix it.
         """
-        logger.info("Locking %s to %s", self.infile, self.outfile)
         process = subprocess.Popen(
             self.pin_command,
             stdout=subprocess.PIPE,
