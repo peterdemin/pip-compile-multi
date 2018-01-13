@@ -327,11 +327,14 @@ class Dependency(object):
     # unidecode==0.4.21         # via myapp
     # [package]  [version]      [comment]
     RE_DEPENDENCY = re.compile(
-        r'(?iu)(?P<package>[^=]+)'
+        r'(?iu)(?P<package>.+)'
         r'=='
         r'(?P<version>[^ ]+)'
         r' *'
         r'(?:(?P<comment>#.*))?$'
+    )
+    RE_EDITABLE_FLAG = re.compile(
+        r'^-e '
     )
 
     def __init__(self, line):
@@ -361,15 +364,15 @@ class Dependency(object):
             ' ' + self.comment if self.comment else '',
         ).rstrip()
 
-    @staticmethod
-    def without_editable(package):
+    @classmethod
+    def without_editable(cls, line):
         """
         Remove the editable flag.
         It's there because pip-compile can't yet do without it
         (see https://github.com/jazzband/pip-tools/issues/272 upstream),
         but in the output of pip-compile it's no longer needed.
         """
-        return package.replace('-e ', '')
+        return cls.RE_EDITABLE_FLAG.sub('', line)
 
     @property
     def is_compatible(self):
