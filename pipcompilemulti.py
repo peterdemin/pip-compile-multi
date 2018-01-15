@@ -109,8 +109,7 @@ def main():
                     env.infile, env.outfile, sorted(rrefs))
         env.create_lockfile()
         env.replace_header(header_text)
-        for ref in conf['refs']:
-            env.reference(ref)
+        env.add_references(conf['refs'])
         pinned_packages[conf['name']] = set(env.packages)
 
 
@@ -280,16 +279,18 @@ class Environment(object):
             return dep.serialize()
         return line.strip()
 
-    def reference(self, other_name):
-        """
-        Add reference to other_name in outfile
-        """
-        ref = other_name + self.OUT_EXT
+    def add_references(self, other_names):
+        """Add references to other_names in outfile"""
+        if not other_names:
+            # Skip on empty list
+            return
         with open(self.outfile, 'rt') as fp:
             header, body = self.split_header(fp)
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
-            fp.write('-r {0}\n'.format(ref))
+            for other_name in sorted(other_names):
+                ref = other_name + self.OUT_EXT
+                fp.write('-r {0}\n'.format(ref))
             fp.writelines(body)
 
     @staticmethod
