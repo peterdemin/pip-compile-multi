@@ -11,25 +11,18 @@ except ImportError:
 
 version = "1.1.1"
 
-if sys.argv[-1] == 'publish':
-    try:
-        import wheel
-    except ImportError:
-        raise ImportError("Fix: pip install wheel")
-    os.system('python setup.py sdist bdist_wheel upload')
-    print("You probably want to also tag the version now:")
-    print("  git tag -a %s -m 'version %s'" % (version, version))
-    print("  git push --tags")
-    sys.exit()
 
-if sys.argv[-1] == 'tag':
-    print("Tagging the version on github:")
-    os.system("git tag -a %s -m 'version %s'" % (version, version))
-    os.system("git push --tags")
-    sys.exit()
+with open('README.rst') as fp:
+    readme = fp.read()
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+
+with open('HISTORY.rst') as fp:
+    history = fp.read().replace('.. :changelog:', '')
+
+
+with open('requirements/base.in') as fp:
+    requirements = list(fp)
+
 
 setup(
     name='pip-compile-multi',
@@ -41,10 +34,7 @@ setup(
     url='https://github.com/peterdemin/pip-compile-multi',
     include_package_data=True,
     py_modules=['pipcompilemulti'],
-    install_requires=(
-        'click',
-        'pip-tools',
-    ),
+    install_requires=requirements,
     license="MIT",
     zip_safe=False,
     keywords='pip-compile-multi',
