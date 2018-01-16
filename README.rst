@@ -6,10 +6,13 @@ pip-compile-multi
     :target: http://badge.fury.io/py/pip-compile-multi
 
 .. image:: https://travis-ci.org/peterdemin/pip-compile-multi.svg?branch=master
-        :target: https://travis-ci.org/peterdemin/pip-compile-multi
+    :target: https://travis-ci.org/peterdemin/pip-compile-multi
+
+.. image:: https://ci.appveyor.com/api/projects/status/1spvqh9hlqtv2a81?svg=true
+    :target: https://ci.appveyor.com/project/peterdemin/pip-compile-multi
 
 .. image:: https://img.shields.io/pypi/pyversions/pip-compile-multi.svg
-        :target: https://pypi.python.org/pypi/pip-compile-multi
+    :target: https://pypi.python.org/pypi/pip-compile-multi
 
 
 Compile multiple requirements files to lock dependency versions
