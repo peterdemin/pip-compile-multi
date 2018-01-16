@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 
 try:
     from setuptools import setup
@@ -20,7 +19,7 @@ with open('HISTORY.rst') as fp:
     history = fp.read().replace('.. :changelog:', '')
 
 
-with open('requirements/base.in') as fp:
+with open(os.path.join('requirements', 'base.in')) as fp:
     requirements = list(fp)
 
 
