@@ -3,4 +3,4 @@
 tox
 twine
 wheel
-bumpversion
+bump2version
