@@ -8,7 +8,7 @@ pip-compile-multi
 .. image:: https://travis-ci.org/peterdemin/pip-compile-multi.svg?branch=master
         :target: https://travis-ci.org/peterdemin/pip-compile-multi
 
-.. image:: https://pypip.in/d/pip-compile-multi/badge.png
+.. image:: https://img.shields.io/pypi/pyversions/pip-compile-multi.svg
         :target: https://pypi.python.org/pypi/pip-compile-multi
 
 
