@@ -9,7 +9,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = "1.1.1"
+version = "1.1.2"
 
 
 with open('README.rst') as fp:

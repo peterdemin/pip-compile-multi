@@ -24,7 +24,7 @@ from toposort import toposort_flatten
 
 __author__ = 'Peter Demin'
 __email__ = 'peterdemin@gmail.com'
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 
 logger = logging.getLogger("pip-compile-multi")
