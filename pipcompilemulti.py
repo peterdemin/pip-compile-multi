@@ -12,6 +12,7 @@ Internal dependencies are soft-pinned using ~=
 
 import os
 import re
+import sys
 import glob
 import logging
 import itertools
@@ -95,10 +96,6 @@ def main():
     else:
         header_text = DEFAULT_HEADER
     for conf in env_confs:
-        ignored_sets = [
-            pinned_packages[name]
-            for name in conf['refs']
-        ]
         rrefs = recursive_refs(env_confs, conf['name'])
         env = Environment(
             name=conf['name'],
@@ -168,6 +165,7 @@ class Environment(object):
     IN_EXT = '.in'
     OUT_EXT = '.txt'
     RE_REF = re.compile('^(?:-r|--requirement)\s*(?P<path>\S+).*$')
+    PY3_IGNORE = set(['future', 'futures'])  # future[s] are obsolete in python3
 
     def __init__(self, name, ignore=None, allow_post=False):
         """
@@ -176,6 +174,8 @@ class Environment(object):
         """
         self.name = name
         self.ignore = ignore or set()
+        if sys.version_info[0] >= 3:
+            self.ignore.update(self.PY3_IGNORE)
         self.allow_post = allow_post
         self.packages = set()
 
