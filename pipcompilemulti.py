@@ -173,7 +173,7 @@ class Environment(object):
         ignore - set of package names to omit in output
         """
         self.name = name
-        self.ignore = ignore or set()
+        self.ignore = set(ignore or [])
         if sys.version_info[0] >= 3:
             self.ignore.update(self.PY3_IGNORE)
         self.allow_post = allow_post
