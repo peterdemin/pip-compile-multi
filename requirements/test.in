@@ -6,3 +6,4 @@ pylint
 flake8
 mock
 six
+future  # check it is ignored in py3
