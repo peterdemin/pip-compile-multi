@@ -98,7 +98,7 @@ This case is so common, that there already is a number of tools to solve it.
 Two worth mentioning are:
 
 1. `Pip Tools`_ - a mature package that is enhanced by ``pip-compile-multi``.
-2. `PipEnv`_ - fresh approach that is going to become Python standard
+2. `PipEnv`_ - fresh approach that is going to become Python the standard
    way of locking dependencies some day.
 
 But what if the project uses some packages that are not required by the service itself?
@@ -215,7 +215,7 @@ required by tests, or service itself.
     tox
 
 Now we want to put all *base* dependencies along with all their recursive dependencies
-into ``base.txt``,
+in ``base.txt``,
 all recursive *test* dependencies except for *base* into ``test.txt``,
 and all recursive *local* dependencies except for *base* and *test* into ``local.txt``.
 
@@ -283,7 +283,7 @@ Requirements Directory
 ======================
 
 While it's a common practice to put requirements files inside ``requirements`` directory,
-it's not always the case. Directory can be overriden with this option:
+it's not always the case. The directory can be overridden with this option:
 
 .. code-block::
 
@@ -337,13 +337,13 @@ This line contains a SHA1 hash of the ``.in`` file's contents.
 
 Command ``pip-compile-multi`` recalculates hashes for ``.in`` files and compares them with stored values.
 
-If verification fails, error message is logged and exit code 1 is returned.
+If verification fails, an error message is logged and exit code 1 is returned.
 
 Have fun!
 ---------
 
 Now that occasional backward incompatible dependancy release can't ruin your day,
-you can spead the word about ``pip-compile-multi``, ask for a new feature in a `GitHub issue`_,
+you can spread the word about ``pip-compile-multi``, ask for a new feature in a `GitHub issue`_,
 or even open a PR ;-).
 
 [1] That's not really true. Someone could re-upload broken package
