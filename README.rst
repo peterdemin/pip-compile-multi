@@ -274,7 +274,77 @@ Some of the benefits are achievable with other methods, but I want to be general
 6. ``*.in`` files are small and manageable because they store only direct dependencies.
 7. ``*.txt`` files are exhaustive and precise (but you don't need to edit them).
 
-Have a question? Need a feature? Fill free to open an `issue on GitHub`_.
+Features
+--------
+
+``pip-compile-multi`` supports a number of options to customize compilation.
+
+Requirements Directory
+======================
+
+While it's a common practice to put requirements files inside ``requirements`` directory,
+it's not always the case. Directory can be overriden with this option:
+
+.. code-block::
+
+    -d, --directory TEXT   Directory path with requirements files
+
+Requirements Files Extensions
+=============================
+
+By default ``pip-compile-multi`` compiles ``*.txt`` from ``*.in`` files.
+While it's a sane choice, each project can use it's own:
+
+.. code-block::
+
+    -i, --in-ext TEXT      File extension of input files
+    -o, --out-ext TEXT     File extension of output files
+
+Compatible Releases
+===================
+
+`PEP-440`_ describes compatible release operator ``~=``.
+Sometimes it's useful to have some of the dependencies pinned using this operator.
+For example, rapidly changing internal libraries.
+Format for this option is
+
+.. code-block::
+
+    -c, --compatible TEXT
+
+where TEXT is a `glob`_ pattern for library name.
+This option can be supplied multiple times.
+
+
+.. _glob: https://en.wikipedia.org/wiki/Glob_(programming)
+.. _PEP-440: https://www.python.org/dev/peps/pep-0440/#compatible-release
+
+Custom Header
+=============
+
+``pip-compile-multi`` adds a brief header into generated files.
+Override it with
+
+.. code-block::
+
+      -h, --header TEXT      File path with custom header text for generated files
+
+Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
+=======================================================================
+
+``pip-compile-multi`` adds a special line (before header) in the beginning of each generated file.
+This line contains a SHA1 hash of the ``.in`` file's contents.
+
+Command ``pip-compile-multi`` recalculates hashes for ``.in`` files and compares them with stored values.
+
+If verification fails, error message is logged and exit code 1 is returned.
+
+Have fun!
+---------
+
+Now that occasional backward incompatible dependancy release can't ruin your day,
+you can spead the word about ``pip-compile-multi``, ask for a new feature in a `GitHub issue`_,
+or even open a PR ;-).
 
 [1] That's not really true. Someone could re-upload broken package
 under existing version on PyPI.
@@ -283,4 +353,4 @@ under existing version on PyPI.
 
 .. _Pip Tools: https://github.com/jazzband/pip-tools
 .. _PipEnv: https://github.com/pypa/pipenv
-.. _issue on GitHub: https://github.com/peterdemin/pip-compile-multi/issues
+.. _GitHub issue: https://github.com/peterdemin/pip-compile-multi/issues
