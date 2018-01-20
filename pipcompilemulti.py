@@ -50,7 +50,8 @@ OPTIONS = {
 }
 
 
-@click.command()
+@click.group(invoke_without_command=True)
+@click.pass_context
 @click.option('--compatible', '-c', multiple=True,
               help='Glob expression for packages with compatible (~=) '
                    'version constraint')
@@ -65,8 +66,16 @@ OPTIONS = {
               help='File extension of output files')
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files')
-def entry(compatible, post, directory, in_ext, out_ext, header):
-    """Click entry point"""
+def cli(ctx, compatible, post, directory, in_ext, out_ext, header):
+    """Recompile"""
+    if ctx.invoked_subcommand is None:
+        recompile(compatible, post, directory, in_ext, out_ext, header)
+    else:
+        click.echo('I am about to invoke %s' % ctx.invoked_subcommand)
+
+
+def recompile(compatible, post, directory, in_ext, out_ext, header):
+    """Update global OPTIONS and run main"""
     OPTIONS.update({
         'compatible_patterns': compatible,
         'allow_post': set(post),
@@ -76,6 +85,11 @@ def entry(compatible, post, directory, in_ext, out_ext, header):
         'header_file': header or None,
     })
     main()
+
+
+@cli.command()
+def sync():
+    click.echo('The subcommand')
 
 
 def main():
