@@ -53,7 +53,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pip-compile-multi = pipcompilemulti:entry',
+            'pip-compile-multi = pipcompilemulti:cli',
         ]
     },
 )
