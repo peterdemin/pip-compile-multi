@@ -222,9 +222,9 @@ and all recursive *local* dependencies except for *base* and *test* into ``local
 .. code-block:: shell
 
     $ pip-compile-multi
-    INFO:pip-compile-multi:Locking requirements/base.in to requirements/base.txt
-    INFO:pip-compile-multi:Locking requirements/test.in to requirements/test.txt
-    INFO:pip-compile-multi:Locking requirements/local.in to requirements/local.txt
+    Locking requirements/base.in to requirements/base.txt. References: []
+    Locking requirements/test.in to requirements/test.txt. References: ['base']
+    Locking requirements/local.in to requirements/local.txt. References: ['base', 'test']
 
 Yes, that's right. All the tedious dependency versions management job done with
 a single command, that doesn't even have options.
