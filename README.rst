@@ -335,9 +335,33 @@ Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
 ``pip-compile-multi`` adds a special line (before header) in the beginning of each generated file.
 This line contains a SHA1 hash of the ``.in`` file's contents.
 
-Command ``pip-compile-multi`` recalculates hashes for ``.in`` files and compares them with stored values.
+Command
 
-If verification fails, an error message is logged and exit code 1 is returned.
+.. code-block::
+
+    $ pip-compile-multi verify
+    Verifying that requirements/base.txt was generated from requirements/base.in.
+    Success - comments match.
+    Verifying that requirements/test.txt was generated from requirements/test.in.
+    Success - comments match.
+    Verifying that requirements/local.txt was generated from requirements/local.in.
+    Success - comments match.
+
+recalculates hashes for ``.in`` files and compares them with the stored values.
+
+If verification fails, an error message is logged and exit code 1 is returned:
+
+.. code-block::
+
+    $ pip-compile-multi verify
+    Verifying that requirements/base.txt was generated from requirements/base.in.
+    Success - comments match.
+    Verifying that requirements/test.txt was generated from requirements/test.in.
+    FAILURE!
+    Expecting: # SHA1:c93d71964e14b04f3c8327d16dbc4d6b1bbc3b1d
+    Found:     # SHA1:6c2562322ca1bdc8309b08581a2aa4efbb5a4534
+    Verifying that requirements/local.txt was generated from requirements/local.in.
+    Success - comments match.
 
 Have fun!
 ---------

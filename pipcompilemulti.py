@@ -10,8 +10,6 @@ Internal dependencies are soft-pinned using ~=
 ".post23423" version postfixes are truncated
 """
 
-from __future__ import unicode_literals
-
 import os
 import re
 import sys
