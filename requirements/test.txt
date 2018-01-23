@@ -6,7 +6,7 @@
 #    pip-compile-multi
 #
 -r base.txt
-astroid==1.6.0             # via pylint, pylint-celery, pylint-flask, pylint-plugin-utils, requirements-detector
+astroid==1.6.1             # via pylint, pylint-celery, pylint-flask, pylint-plugin-utils, requirements-detector
 attrs==17.4.0              # via pytest
 dodgy==0.1.9               # via prospector
 flake8-polyfill==1.0.2     # via pep8-naming
@@ -25,10 +25,10 @@ pydocstyle==2.1.1          # via prospector
 pyflakes==1.6.0            # via flake8, prospector
 pylint-celery==0.3         # via prospector
 pylint-common==0.2.5       # via prospector
-pylint-django==0.7.2       # via prospector
+pylint-django==0.8.0       # via prospector
 pylint-flask==0.5          # via prospector
 pylint-plugin-utils==0.2.6 # via prospector, pylint-celery, pylint-common, pylint-django, pylint-flask
-pylint==1.8.1
+pylint==1.8.2
 pytest==3.3.2
 pyyaml==3.12               # via prospector
 requirements-detector==0.5.2 # via prospector
