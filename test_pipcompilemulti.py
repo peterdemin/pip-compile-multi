@@ -73,4 +73,4 @@ def test_split_header():
         line + '\n'
         for line in lock.DEFAULT_HEADER.splitlines()
     ]
-    assert header == expected
+    assert header[1:] == expected
