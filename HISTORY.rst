@@ -1,6 +1,11 @@
 History
 =======
 
+Unreleased
+----------
+
+* Added ``--generate-hashes`` option
+
 1.1.9 (2018-02-08)
 ------------------
 
