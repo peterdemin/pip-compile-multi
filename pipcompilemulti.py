@@ -60,6 +60,9 @@ OPTIONS = {
               help='Environment name (base, test, etc) that can have '
                    'packages with post-release versions (1.2.3.post777). '
                    'Can be supplied multiple times.')
+@click.option('--generate-hashes', '-g', multiple=True,
+              help='Environment name (base, test, etc) that needs '
+                   'packages hashes')
 @click.option('--directory', '-d', default=OPTIONS['base_dir'],
               help='Directory path with requirements files.')
 @click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
@@ -71,12 +74,13 @@ OPTIONS = {
 @click.option('--only-name', '-n', multiple=True,
               help='Compile only for passed environment names. '
                    'Can be supplied multiple times.')
-def cli(ctx, compatible, post, directory, in_ext, out_ext, header, only_name):
+def cli(ctx, compatible, post, generate_hashes, directory, in_ext, out_ext, header, only_name):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
         'compatible_patterns': compatible,
         'allow_post': set(post),
+        'add_hashes': set(generate_hashes),
         'base_dir': directory,
         'in_ext': in_ext,
         'out_ext': out_ext,
@@ -110,6 +114,7 @@ def recompile():
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
             allow_post=conf['name'] in OPTIONS['allow_post'],
+            add_hashes=conf['name'] in OPTIONS['add_hashes'],
         )
         logger.info("Locking %s to %s. References: %r",
                     env.infile, env.outfile, sorted(rrefs))
@@ -178,7 +183,7 @@ class Environment(object):
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
     PY3_IGNORE = set(['future', 'futures'])  # future[s] are obsolete in python3
 
-    def __init__(self, name, ignore=None, allow_post=False):
+    def __init__(self, name, ignore=None, allow_post=False, add_hashes=False):
         """
         name - name of the environment, e.g. base, test
         ignore - set of package names to omit in output
@@ -188,6 +193,7 @@ class Environment(object):
         if sys.version_info[0] >= 3:
             self.ignore.update(self.PY3_IGNORE)
         self.allow_post = allow_post
+        self.add_hashes = add_hashes
         self.packages = set()
 
     def create_lockfile(self):
@@ -247,7 +253,7 @@ class Environment(object):
     @property
     def pin_command(self):
         """Compose pip-compile shell command"""
-        return [
+        parts = [
             'pip-compile',
             '--no-header',
             '--verbose',
@@ -257,6 +263,9 @@ class Environment(object):
             '--output-file', self.outfile,
             self.infile,
         ]
+        if self.add_hashes:
+            parts.insert(1, '--generate-hashes')
+        return parts
 
     def fix_lockfile(self):
         """
@@ -265,7 +274,7 @@ class Environment(object):
         with open(self.outfile, 'rt') as fp:
             lines = [
                 self.fix_pin(line)
-                for line in fp
+                for line in self.concatenated(fp)
             ]
         with open(self.outfile, 'wt') as fp:
             fp.writelines([
@@ -273,6 +282,22 @@ class Environment(object):
                 for line in lines
                 if line is not None
             ])
+
+    @staticmethod
+    def concatenated(fp):
+        """Read lines from fp concatenating on backslash (\\)"""
+        line_parts = []
+        for line in fp:
+            line = line.strip()
+            if line.endswith('\\'):
+                line_parts.append(line[:-1].rstrip())
+            else:
+                line_parts.append(line)
+                yield ' '.join(line_parts)
+                line_parts[:] = []
+        if line_parts:
+            # Impossible:
+            raise RuntimeError("Compiled file ends with backslash \\")
 
     def fix_pin(self, line):
         """
@@ -344,21 +369,23 @@ class Dependency(object):
     RE_DEPENDENCY = re.compile(
         r'(?iu)(?P<package>.+)'
         r'=='
-        r'(?P<version>[^ ]+)'
+        r'(?P<version>\S+)'
         r' *'
-        r'(?:(?P<comment>#.*))?$'
+        r'(?P<hashes>(?:--hash=\S+ *)+)?'
+        r'(?P<comment>#.*)?$'
     )
     RE_EDITABLE_FLAG = re.compile(
         r'^-e '
     )
 
     def __init__(self, line):
-        m = self.RE_DEPENDENCY.match(line)
-        if m:
+        matchobj = self.RE_DEPENDENCY.match(line)
+        if matchobj:
             self.valid = True
-            self.package = m.group('package')
-            self.version = m.group('version').strip()
-            self.comment = (m.group('comment') or '').strip()
+            self.package = matchobj.group('package')
+            self.version = matchobj.group('version').strip()
+            self.hashes = (matchobj.group('hashes') or '').strip()
+            self.comment = (matchobj.group('comment') or '').strip()
         else:
             self.valid = False
 
@@ -374,10 +401,18 @@ class Dependency(object):
             version=self.version,
             equal=equal,
         )
-        return '{0}{1}'.format(
-            package_version.ljust(self.COMMENT_JUSTIFICATION),
-            self.comment,
-        ).rstrip()
+        if self.hashes:
+            hashes = self.hashes.split()
+            lines = [package_version.strip()]
+            lines.extend(hashes)
+            if self.comment:
+                lines.append(self.comment)
+            return ' \\\n    '.join(lines)
+        else:
+            return '{0}{1}'.format(
+                package_version.ljust(self.COMMENT_JUSTIFICATION),
+                self.comment,
+            ).rstrip()  # rstrip for empty comment
 
     @classmethod
     def without_editable(cls, line):
