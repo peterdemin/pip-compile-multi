@@ -175,7 +175,7 @@ class Environment(object):
 
     IN_EXT = '.in'
     OUT_EXT = '.txt'
-    RE_REF = re.compile('^(?:-r|--requirement)\s*(?P<path>\S+).*$')
+    RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
     PY3_IGNORE = set(['future', 'futures'])  # future[s] are obsolete in python3
 
     def __init__(self, name, ignore=None, allow_post=False):
@@ -249,6 +249,7 @@ class Environment(object):
         """Compose pip-compile shell command"""
         return [
             'pip-compile',
+            '--no-header',
             '--verbose',
             '--rebuild',
             '--upgrade',
