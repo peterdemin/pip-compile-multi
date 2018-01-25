@@ -360,14 +360,14 @@ class Dependency(object):
             == otherwise
         """
         equal = '~=' if self.is_compatible else '=='
-        package_version = '{package}{equal}{version}'.format(
+        package_version = '{package}{equal}{version}  '.format(
             package=self.without_editable(self.package),
             version=self.version,
             equal=equal,
         )
         return '{0}{1}'.format(
             package_version.ljust(self.COMMENT_JUSTIFICATION),
-            ' ' + self.comment if self.comment else '',
+            self.comment,
         ).rstrip()
 
     @classmethod

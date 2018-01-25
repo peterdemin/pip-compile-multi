@@ -9,8 +9,8 @@ import pytest
 import pipcompilemulti as lock
 
 
-PIN = 'pycodestyle==2.3.1         # via flake8'
-CMPT = 'pycodestyle~=2.3.1         # via flake8'
+PIN = 'pycodestyle==2.3.1        # via flake8'
+CMPT = 'pycodestyle~=2.3.1        # via flake8'
 
 
 def test_fix_compatible_pin():
@@ -45,7 +45,7 @@ def test_post_releases_are_truncated_by_default():
 
 def test_allow_post_releases():
     """Test postXXX versions are kept if allow_post=True"""
-    pin = 'pycodestyle==2.3.1.post2231 # via flake8'
+    pin = 'pycodestyle==2.3.1.post2231  # via flake8'
     env = lock.Environment('', allow_post=True)
     result = env.fix_pin(pin)
     assert result == pin
