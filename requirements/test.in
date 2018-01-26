@@ -1,6 +1,5 @@
 -r base.in
 
-prospector
 pytest
 pylint
 flake8
