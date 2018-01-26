@@ -62,7 +62,8 @@ OPTIONS = {
                    'Can be supplied multiple times.')
 @click.option('--generate-hashes', '-g', multiple=True,
               help='Environment name (base, test, etc) that needs '
-                   'packages hashes')
+                   'packages hashes. '
+                   'Can be supplied multiple times.')
 @click.option('--directory', '-d', default=OPTIONS['base_dir'],
               help='Directory path with requirements files.')
 @click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
@@ -108,13 +109,19 @@ def recompile():
             base_header_text = fp.read()
     else:
         base_header_text = DEFAULT_HEADER
+    hashed_by_reference = set()
+    for name in OPTIONS['add_hashes']:
+        hashed_by_reference.update(
+            reference_cluster(env_confs, name)
+        )
     for conf in env_confs:
         rrefs = recursive_refs(env_confs, conf['name'])
+        add_hashes = conf['name'] in hashed_by_reference
         env = Environment(
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
             allow_post=conf['name'] in OPTIONS['allow_post'],
-            add_hashes=conf['name'] in OPTIONS['add_hashes'],
+            add_hashes=add_hashes,
         )
         logger.info("Locking %s to %s. References: %r",
                     env.infile, env.outfile, sorted(rrefs))
@@ -175,13 +182,48 @@ def recursive_refs(envs, name):
     return set.union(refs, indirect_refs)
 
 
+def reference_cluster(envs, name):
+    """
+    Return set of all env names referencing or
+    referenced by given name.
+
+    >>> cluster = sorted(reference_cluster([
+    ...     {'name': 'base', 'refs': []},
+    ...     {'name': 'test', 'refs': ['base']},
+    ...     {'name': 'local', 'refs': ['test']},
+    ... ], 'test'))
+    >>> cluster == ['base', 'local', 'test']
+    True
+    """
+    edges = [
+        set([env['name'], ref])
+        for env in envs
+        for ref in env['refs']
+    ]
+    prev, cluster = set(), set([name])
+    while prev != cluster:
+        # While cluster grows
+        prev = set(cluster)
+        to_visit = []
+        for edge in edges:
+            if cluster & edge:
+                # Add adjacent nodes:
+                cluster |= edge
+            else:
+                # Leave only edges that are out
+                # of cluster for the next round:
+                to_visit.append(edge)
+        edges = to_visit
+    return cluster
+
+
 class Environment(object):
     """requirements file"""
 
     IN_EXT = '.in'
     OUT_EXT = '.txt'
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
-    PY3_IGNORE = set(['future', 'futures'])  # future[s] are obsolete in python3
+    PY3_IGNORE = set(['future', 'futures'])  # future[s] is obsolete in python3
 
     def __init__(self, name, ignore=None, allow_post=False, add_hashes=False):
         """

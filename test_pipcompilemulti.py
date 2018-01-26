@@ -116,3 +116,16 @@ def test_serialize_hashes():
         "    --hash=abc \\\n"
         "    # comment"
     )
+
+
+def test_reference_cluster():
+    """Check cluster propagets both ways"""
+    for entry in ['base', 'test', 'local', 'doc']:
+        cluster = lock.reference_cluster([
+            {'name': 'base', 'refs': []},
+            {'name': 'test', 'refs': ['base']},
+            {'name': 'local', 'refs': ['test']},
+            {'name': 'doc', 'refs': ['base']},
+            {'name': 'side', 'refs': []},
+        ], entry)
+        assert cluster == set(['base', 'doc', 'local', 'test'])
