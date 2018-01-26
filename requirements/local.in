@@ -4,3 +4,4 @@ tox
 twine
 wheel
 bump2version
+prospector
