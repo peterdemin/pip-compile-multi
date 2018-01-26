@@ -79,7 +79,7 @@ def cli(ctx, compatible, post, directory, in_ext, out_ext, header):
         'header_file': header or None,
     })
     if ctx.invoked_subcommand is None:
-        return recompile()
+        recompile()
 
 
 def recompile():
