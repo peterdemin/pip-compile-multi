@@ -5,3 +5,4 @@ twine
 wheel
 bump2version
 prospector
+flake8
