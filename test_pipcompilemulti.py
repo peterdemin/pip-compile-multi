@@ -1,3 +1,10 @@
+"""
+Tests for pip-compile-multi
+Many days ago module was called lock,
+but then it was renamed to avoid name conflicts.
+But tests still think it is lock...
+"""
+
 import os
 try:
     from unittest import mock

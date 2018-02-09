@@ -75,7 +75,8 @@ OPTIONS = {
 @click.option('--only-name', '-n', multiple=True,
               help='Compile only for passed environment names. '
                    'Can be supplied multiple times.')
-def cli(ctx, compatible, post, generate_hashes, directory, in_ext, out_ext, header, only_name):
+def cli(ctx, compatible, post, generate_hashes, directory,
+        in_ext, out_ext, header, only_name):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
@@ -475,6 +476,7 @@ class Dependency(object):
         return False
 
     def drop_post(self):
+        """Remove .postXXXX postfix from version"""
         post_index = self.version.find('.post')
         if post_index >= 0:
             self.version = self.version[:post_index]
