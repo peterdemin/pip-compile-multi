@@ -5,6 +5,7 @@ History
 -------------------
 
 * Propagate --only-name option to references
+* Fixed extension override options
 
 1.1.10 (2018-02-09)
 -------------------
