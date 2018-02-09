@@ -229,8 +229,6 @@ def reference_cluster(envs, name):
 class Environment(object):
     """requirements file"""
 
-    IN_EXT = '.in'
-    OUT_EXT = '.txt'
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
     PY3_IGNORE = set(['future', 'futures'])  # future[s] is obsolete in python3
 
@@ -293,13 +291,13 @@ class Environment(object):
     def infile(self):
         """Path of the input file"""
         return os.path.join(OPTIONS['base_dir'],
-                            '{0}{1}'.format(self.name, self.IN_EXT))
+                            '{0}.{1}'.format(self.name, OPTIONS['in_ext']))
 
     @property
     def outfile(self):
         """Path of the output file"""
         return os.path.join(OPTIONS['base_dir'],
-                            '{0}{1}'.format(self.name, self.OUT_EXT))
+                            '{0}.{1}'.format(self.name, OPTIONS['out_ext']))
 
     @property
     def pin_command(self):
@@ -378,9 +376,10 @@ class Environment(object):
             header, body = self.split_header(fp)
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
-            for other_name in sorted(other_names):
-                ref = other_name + self.OUT_EXT
-                fp.write('-r {0}\n'.format(ref))
+            fp.writelines(
+                '-r {0}.{1}\n'.format(other_name, OPTIONS['out_ext'])
+                for other_name in sorted(other_names)
+            )
             fp.writelines(body)
 
     @staticmethod
