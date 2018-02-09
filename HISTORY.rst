@@ -1,6 +1,12 @@
 History
 =======
 
+1.1.9 (2018-02-08)
+------------------
+
+* Fixed directory override option
+* Added --only-name option
+
 1.1.8 (2018-01-25)
 ------------------
 
