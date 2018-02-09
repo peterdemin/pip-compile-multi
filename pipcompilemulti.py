@@ -55,19 +55,23 @@ OPTIONS = {
 @click.pass_context
 @click.option('--compatible', '-c', multiple=True,
               help='Glob expression for packages with compatible (~=) '
-                   'version constraint')
+                   'version constraint. Can be supplied multiple times.')
 @click.option('--post', '-p', multiple=True,
               help='Environment name (base, test, etc) that can have '
-                   'packages with post-release versions (1.2.3.post777)')
+                   'packages with post-release versions (1.2.3.post777). '
+                   'Can be supplied multiple times.')
 @click.option('--directory', '-d', default=OPTIONS['base_dir'],
-              help='Directory path with requirements files')
+              help='Directory path with requirements files.')
 @click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
-              help='File extension of input files')
+              help='File extension of input files.')
 @click.option('--out-ext', '-o', default=OPTIONS['out_ext'],
-              help='File extension of output files')
+              help='File extension of output files.')
 @click.option('--header', '-h', default='',
-              help='File path with custom header text for generated files')
-def cli(ctx, compatible, post, directory, in_ext, out_ext, header):
+              help='File path with custom header text for generated files.')
+@click.option('--only-name', '-n', multiple=True,
+              help='Compile only for passed environment names. '
+                   'Can be supplied multiple times.')
+def cli(ctx, compatible, post, directory, in_ext, out_ext, header, only_name):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
@@ -77,6 +81,7 @@ def cli(ctx, compatible, post, directory, in_ext, out_ext, header):
         'in_ext': in_ext,
         'out_ext': out_ext,
         'header_file': header or None,
+        'include_names': only_name,
     })
     if ctx.invoked_subcommand is None:
         recompile()
@@ -91,7 +96,8 @@ def recompile():
         os.path.join(
             OPTIONS['base_dir'],
             '*.' + OPTIONS['in_ext'],
-        )
+        ),
+        OPTIONS['include_names'],
     )
     if OPTIONS['header_file']:
         with open(OPTIONS['header_file']) as fp:
@@ -396,7 +402,7 @@ class Dependency(object):
             self.version = self.version[:post_index]
 
 
-def discover(glob_pattern):
+def discover(glob_pattern, include_names=None):
     """
     Find all files matching given glob_pattern,
     parse them, and return list of environments:
@@ -408,12 +414,25 @@ def discover(glob_pattern):
     ...     {'name': 'local', 'refs': {'test'}},
     ... ]
     True
+    >>> envs = discover("requirements/*.in", ['base'])
+    >>> envs == [
+    ...     {'name': 'base', 'refs': set()},
+    ... ]
+    True
     """
     in_paths = glob.glob(glob_pattern)
-    names = {
+    all_names = {
         extract_env_name(path): path
         for path in in_paths
     }
+    if include_names:
+        names = {
+            name: path
+            for name, path in all_names.items()
+            if name in include_names
+        }
+    else:
+        names = all_names
     return order_by_refs([
         {'name': name, 'refs': Environment.parse_references(in_path)}
         for name, in_path in names.items()
