@@ -14,7 +14,9 @@ before_install:
 - pip install codecov
 
 # command to install dependencies
-install: pip install -r requirements/test.txt && pip install -e .
+install:
+  - ./install_test_deps.sh
+  - pip install -e .
 
 # command to run tests using coverage, e.g. python setup.py test
 script: coverage run --source pipcompilemulti --branch `which pytest` --doctest-modules pipcompilemulti.py test_pipcompilemulti.py
