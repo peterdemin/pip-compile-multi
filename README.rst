@@ -319,6 +319,44 @@ This option can be supplied multiple times.
 .. _glob: https://en.wikipedia.org/wiki/Glob_(programming)
 .. _PEP-440: https://www.python.org/dev/peps/pep-0440/#compatible-release
 
+Generate hashes
+===============
+
+Put package hash after pinned version for additional security.
+Format for this option is
+
+.. code-block::
+
+  -g, --generate-hashes TEXT  Environment name (base, test, etc) that needs
+                              packages hashes. Can be supplied multiple times.
+
+
+Example invocation:
+
+.. code-block::
+
+    $ pip-compile-multi -g base -g docs
+
+Example output:
+
+.. code-block::
+
+    pip-tools==1.11.0 \
+        --hash=sha256:50288eb066ce66dbef5401a21530712a93c659fe480c7d8d34e2379300555fa1 \
+        --hash=sha256:ba427b68443466c389e3b0b0ef55f537ab39344190ea980dfebb333d0e6a50a3
+    first==2.0.1 \
+        --hash=sha256:3bb3de3582cb27071cfb514f00ed784dc444b7f96dc21e140de65fe00585c95e \
+        --hash=sha256:41d5b64e70507d0c3ca742d68010a76060eea8a3d863e9b5130ab11a4a91aa0e \
+        # via pip-tools
+
+Note: hashes might be different for different Python version.
+So if service must be installable under multiple Python versions, you'll have to run
+``pip-compile-multi`` under each of supported version and manually merge hashes.
+
+``pip`` requires all packages to have hashes if at least one has it.
+``pip-compile-multi`` will recursively propagate this option to all environments
+that are referencing or referenced by passed environment name.
+
 Custom Header
 =============
 
