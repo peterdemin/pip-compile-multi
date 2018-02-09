@@ -329,6 +329,26 @@ Override it with
 
       -h, --header TEXT      File path with custom header text for generated files
 
+Limit ``.in`` files
+===================
+
+By default ``pip-compile-multi`` compiles all ``.in`` files in ``requirements`` directory.
+To limit compilation to only a subset, use 
+
+.. code-block::
+
+    -n, --only-name TEXT   Compile only for passed environment names. Can be
+                           supplied multiple times.
+
+For example, to compile one file under Python2.7 and another under Python3.6, run:
+
+.. code-block::
+
+    $ virtual-env27/bin/pip-compile-multi -n deps27
+    Locking requirements/deps27.in to requirements/deps27.txt. References: []
+    $ virtual-env36/bin/pip-compile-multi -n deps36
+    Locking requirements/deps36.in to requirements/deps36.txt. References: []
+
 Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
 =======================================================================
 
