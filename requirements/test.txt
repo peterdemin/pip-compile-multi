@@ -9,7 +9,7 @@
 astroid==1.6.1            # via pylint
 attrs==17.4.0             # via pytest
 flake8==3.5.0
-isort==4.2.15             # via pylint
+isort==4.3.3              # via pylint
 lazy-object-proxy==1.3.1  # via astroid
 mccabe==0.6.1             # via flake8, pylint
 mock==2.0.0
@@ -19,5 +19,5 @@ py==1.5.2                 # via pytest
 pycodestyle==2.3.1        # via flake8
 pyflakes==1.6.0           # via flake8
 pylint==1.8.2
-pytest==3.3.2
+pytest==3.4.0
 wrapt==1.10.11            # via astroid
