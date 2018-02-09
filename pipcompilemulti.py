@@ -73,8 +73,8 @@ OPTIONS = {
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files.')
 @click.option('--only-name', '-n', multiple=True,
-              help='Compile only for passed environment names. '
-                   'Can be supplied multiple times.')
+              help='Compile only for passed environment names and their '
+                   'references. Can be supplied multiple times.')
 def cli(ctx, compatible, post, generate_hashes, directory,
         in_ext, out_ext, header, only_name):
     """Recompile"""
@@ -103,7 +103,6 @@ def recompile():
             OPTIONS['base_dir'],
             '*.' + OPTIONS['in_ext'],
         ),
-        OPTIONS['include_names'],
     )
     if OPTIONS['header_file']:
         with open(OPTIONS['header_file']) as fp:
@@ -115,7 +114,16 @@ def recompile():
         hashed_by_reference.update(
             reference_cluster(env_confs, name)
         )
+    included_and_refs = set(OPTIONS['include_names'])
+    for name in set(included_and_refs):
+        included_and_refs.update(
+            recursive_refs(env_confs, name)
+        )
     for conf in env_confs:
+        if included_and_refs:
+            if conf['name'] not in included_and_refs:
+                # Skip envs that are not included or referenced by included:
+                continue
         rrefs = recursive_refs(env_confs, conf['name'])
         add_hashes = conf['name'] in hashed_by_reference
         env = Environment(
@@ -482,7 +490,7 @@ class Dependency(object):
             self.version = self.version[:post_index]
 
 
-def discover(glob_pattern, include_names=None):
+def discover(glob_pattern):
     """
     Find all files matching given glob_pattern,
     parse them, and return list of environments:
@@ -495,25 +503,12 @@ def discover(glob_pattern, include_names=None):
     ...     {'name': 'local', 'refs': {'test'}},
     ... ]
     True
-    >>> envs = discover("requirements/*.in", ['base'])
-    >>> envs == [
-    ...     {'name': 'base', 'refs': set()},
-    ... ]
-    True
     """
     in_paths = glob.glob(glob_pattern)
-    all_names = {
+    names = {
         extract_env_name(path): path
         for path in in_paths
     }
-    if include_names:
-        names = {
-            name: path
-            for name, path in all_names.items()
-            if name in include_names
-        }
-    else:
-        names = all_names
     return order_by_refs([
         {'name': name, 'refs': Environment.parse_references(in_path)}
         for name, in_path in names.items()
