@@ -361,7 +361,7 @@ Override it with
 
 .. code-block::
 
-      -h, --header TEXT      File path with custom header text for generated files
+    -h, --header TEXT      File path with custom header text for generated files
 
 Limit ``.in`` files
 ===================
@@ -371,8 +371,9 @@ To limit compilation to only a subset, use
 
 .. code-block::
 
-    -n, --only-name TEXT   Compile only for passed environment names. Can be
-                           supplied multiple times.
+    -n, --only-name TEXT        Compile only for passed environment names and
+                                their references. Can be supplied multiple
+                                times.
 
 For example, to compile one file under Python2.7 and another under Python3.6, run:
 
