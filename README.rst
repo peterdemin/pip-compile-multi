@@ -349,10 +349,6 @@ Example output:
         --hash=sha256:41d5b64e70507d0c3ca742d68010a76060eea8a3d863e9b5130ab11a4a91aa0e \
         # via pip-tools
 
-Note: hashes might be different for different Python version.
-So if service must be installable under multiple Python versions, you'll have to run
-``pip-compile-multi`` under each of supported version and manually merge hashes.
-
 ``pip`` requires all packages to have hashes if at least one has it.
 ``pip-compile-multi`` will recursively propagate this option to all environments
 that are referencing or referenced by passed environment name.
