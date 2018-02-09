@@ -1,3 +1,10 @@
+"""
+Tests for pip-compile-multi
+Many days ago module was called lock,
+but then it was renamed to avoid name conflicts.
+But tests still think it is lock...
+"""
+
 import os
 try:
     from unittest import mock
@@ -74,3 +81,58 @@ def test_split_header():
         for line in lock.DEFAULT_HEADER.splitlines()
     ]
     assert header[1:] == expected
+
+
+def test_concatenation():
+    """Check lines are joined and extra spaces removed"""
+    lines = lock.Environment.concatenated([
+        'abc  \\\n',
+        '   123  \\\n',
+        '?\n',
+        'MMM\n',
+    ])
+    assert list(lines) == ['abc 123 ?', 'MMM']
+
+
+def test_parse_hashes_with_comment():
+    """Check that sample is parsed"""
+    dep = lock.Dependency(
+        'lib==ver  --hash=123 --hash=abc    # comment'
+    )
+    assert dep.hashes == '--hash=123 --hash=abc'
+
+
+def test_parse_hashes_without_comment():
+    """Check that sample is parsed"""
+    dep = lock.Dependency(
+        'lib==ver  --hash=123 --hash=abc'
+    )
+    assert dep.valid
+    assert dep.hashes == '--hash=123 --hash=abc'
+
+
+def test_serialize_hashes():
+    """Check serialization in pip-tools style"""
+    dep = lock.Dependency(
+        'lib==ver  --hash=123 --hash=abc    # comment'
+    )
+    text = dep.serialize()
+    assert text == (
+        "lib==ver \\\n"
+        "    --hash=123 \\\n"
+        "    --hash=abc \\\n"
+        "    # comment"
+    )
+
+
+def test_reference_cluster():
+    """Check cluster propagets both ways"""
+    for entry in ['base', 'test', 'local', 'doc']:
+        cluster = lock.reference_cluster([
+            {'name': 'base', 'refs': []},
+            {'name': 'test', 'refs': ['base']},
+            {'name': 'local', 'refs': ['test']},
+            {'name': 'doc', 'refs': ['base']},
+            {'name': 'side', 'refs': []},
+        ], entry)
+        assert cluster == set(['base', 'doc', 'local', 'test'])
