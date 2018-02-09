@@ -228,12 +228,14 @@ class Environment(object):
 
     @property
     def infile(self):
-        return os.path.join('requirements',
+        """Path of the input file"""
+        return os.path.join(OPTIONS['base_dir'],
                             '{0}{1}'.format(self.name, self.IN_EXT))
 
     @property
     def outfile(self):
-        return os.path.join('requirements',
+        """Path of the output file"""
+        return os.path.join(OPTIONS['base_dir'],
                             '{0}{1}'.format(self.name, self.OUT_EXT))
 
     @property
