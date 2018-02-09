@@ -5,28 +5,11 @@
 #
 #    pip-compile-multi
 #
-backports.functools-lru-cache==1.5 \
-    --hash=sha256:9d98697f088eb1b0fa451391f91afb5e3ebde16bbdb272819fd091151fda4f1a \
-    --hash=sha256:f0b0e4eba956de51238e17573b7087e852dfe9854afd2e9c873f73fc0ca0a6dd
-configparser==3.5.0 \
-    --hash=sha256:5308b47021bc2340965c371f0f058cc6971a04502638d4244225c49d80db273a
-enum34==1.1.6 \
-    --hash=sha256:2d81cbbe0e73112bdfe6ef8576f2238f2ba27dd0d55752a776c41d38b7da2850 \
-    --hash=sha256:644837f692e5f550741432dd3f223bbb9852018674981b1664e5dc339387588a \
-    --hash=sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79 \
-    --hash=sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1
-funcsigs==1.0.2 \
-    --hash=sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca \
-    --hash=sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50
-future==0.16.0 \
-    --hash=sha256:e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb
-futures==3.2.0 \
-    --hash=sha256:9ec02aa7d674acb8618afb127e27fde7fc68994c0437ad759fa094a574adb265 \
-    --hash=sha256:ec0a6cb848cc212002b9828c3e34c675e0c9ff6741dc445cab6fdd4e1085d1f1
-singledispatch==3.4.0.3 \
-    --hash=sha256:5b06af87df13818d14f08a028e42f566640aef80805c3b50c5056b086e3c2b9c \
-    --hash=sha256:833b46966687b3de7f438c761ac475213e53b306740f1abfaa86e1d1aae56aa8
-six==1.11.0 \
-    --hash=sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9 \
-    --hash=sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb \
-    # via singledispatch
+backports.functools-lru-cache==1.5
+configparser==3.5.0
+enum34==1.1.6
+funcsigs==1.0.2
+future==0.16.0
+futures==3.2.0
+singledispatch==3.4.0.3
+six==1.11.0               # via singledispatch
