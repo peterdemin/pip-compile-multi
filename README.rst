@@ -430,6 +430,15 @@ If verification fails, an error message is logged and exit code 1 is returned:
     Verifying that requirements/local.txt was generated from requirements/local.in.
     Success - comments match.
 
+Trusted by
+----------
+
+.. image:: https://raw.githubusercontent.com/peterdemin/pip-compile-multi/trust/logos/redhat.png
+   :alt: RedHat
+
+.. image:: https://raw.githubusercontent.com/peterdemin/pip-compile-multi/trust/logos/zulip.png
+   :alt: Zulip
+
 Have fun!
 ---------
 
