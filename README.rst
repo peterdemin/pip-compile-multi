@@ -31,7 +31,7 @@ Basic Usage
 
     pip-compile-multi
 
-Example scenario
+Example Scenario
 ----------------
 
 I will start from the very basics of dependency management and will go very slow,
@@ -184,7 +184,7 @@ We might forget next time though.
 
 Why don't we automate it? That's what ``pip-compile-multi`` is for.
 
-Managing dependency versions in multiple environments
+Managing Dependency Versions in Multiple Environments
 -----------------------------------------------------
 
 Let's rehearse, example service has two groups of dependencies
@@ -256,7 +256,7 @@ Than you open ``test.in`` and soft-pin it with descriptive comment:
 I know, this example is made up. But you get the idea.
 That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
 
-Benefits of using pip-compile-multi
+Benefits of Using pip-compile-multi
 -----------------------------------
 
 I want to summarise, why you need to start using ``pip-compile-multi``.
@@ -331,7 +331,7 @@ This option can be supplied multiple times.
 .. _glob: https://en.wikipedia.org/wiki/Glob_(programming)
 .. _PEP-440: https://www.python.org/dev/peps/pep-0440/#compatible-release
 
-Generate hashes
+Generate Hashes
 ===============
 
 Put package hash after pinned version for additional security.
@@ -375,7 +375,7 @@ Override it with
 
     -h, --header TEXT      File path with custom header text for generated files
 
-Limit ``.in`` files
+Limit ``.in`` Files
 ===================
 
 By default ``pip-compile-multi`` compiles all ``.in`` files in ``requirements`` directory.
@@ -396,8 +396,8 @@ For example, to compile one file under Python2.7 and another under Python3.6, ru
     $ virtual-env36/bin/pip-compile-multi -n deps36
     Locking requirements/deps36.in to requirements/deps36.txt. References: []
 
-Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
-=======================================================================
+Check that ``pip-compile-multi`` Was Run After Changes in ``.in`` File
+======================================================================
 
 ``pip-compile-multi`` adds a special line (before header) in the beginning of each generated file.
 This line contains a SHA1 hash of the ``.in`` file's contents.
@@ -443,7 +443,7 @@ Trusted by Open Source Community
    :alt: Zulip
    :target: https://github.com/zulip/zulip
 
-Have fun!
+Have Fun!
 ---------
 
 Now that occasional backward incompatible dependancy release can't ruin your day,
