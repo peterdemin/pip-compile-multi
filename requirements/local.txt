@@ -7,18 +7,14 @@
 #
 -r test.txt
 astroid==1.6.1            # via pylint, pylint-celery, pylint-flask, pylint-plugin-utils, requirements-detector
-backports.functools-lru-cache==1.5  # via astroid, pylint
 bump2version==0.5.7
 certifi==2018.1.18        # via requests
 chardet==3.0.4            # via requests
-configparser==3.5.0       # via flake8, pydocstyle, pylint
 dodgy==0.1.9              # via prospector
-enum34==1.1.6             # via astroid, flake8
 flake8-polyfill==1.0.2    # via pep8-naming
 flake8==3.5.0
-futures==3.2.0            # via isort
 idna==2.6                 # via requests
-isort==4.3.3              # via pylint
+isort==4.3.4              # via pylint
 lazy-object-proxy==1.3.1  # via astroid
 mccabe==0.6.1             # via flake8, prospector, pylint
 pep8-naming==0.5.0        # via prospector
@@ -38,7 +34,6 @@ requests-toolbelt==0.8.0  # via twine
 requests==2.18.4          # via requests-toolbelt, twine
 requirements-detector==0.5.2  # via prospector
 setoptconf==0.2.0         # via prospector
-singledispatch==3.4.0.3   # via astroid, pylint
 snowballstemmer==1.2.1    # via pydocstyle
 tox==2.9.1
 tqdm==4.19.5              # via twine
