@@ -1,6 +1,11 @@
 History
 =======
 
+<Unreleased> (2018-02-22)
+------------------
+
+* Add support for VCS dependencies
+
 1.1.11 (2018-02-09)
 -------------------
 
