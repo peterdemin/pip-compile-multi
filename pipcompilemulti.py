@@ -75,7 +75,7 @@ OPTIONS = {
 @click.option('--only-name', '-n', multiple=True,
               help='Compile only for passed environment names and their '
                    'references. Can be supplied multiple times.')
-@click.option('--upgrade/--no-upgrade', default=False,
+@click.option('--upgrade/--no-upgrade', default=True,
               help='Upgrade package version (default true)')
 def cli(ctx, compatible, post, generate_hashes, directory,
         in_ext, out_ext, header, only_name, upgrade):
