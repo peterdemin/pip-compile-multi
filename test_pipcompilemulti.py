@@ -136,3 +136,100 @@ def test_reference_cluster():
             {'name': 'side', 'refs': []},
         ], entry)
         assert cluster == set(['base', 'doc', 'local', 'test'])
+
+
+def test_parse_vcs_dependencies():
+    """
+    Check VCS support
+    https://pip.pypa.io/en/stable/reference/pip_install/#vcs-support
+    """
+    cases = (
+        "git://git.myproject.org/MyProject#egg=MyProject",
+        "-e git://git.myproject.org/MyProject#egg=MyProject",
+        "git+http://git.myproject.org/MyProject#egg=MyProject",
+        "-e git+http://git.myproject.org/MyProject#egg=MyProject",
+        "git+https://git.myproject.org/MyProject#egg=MyProject",
+        "-e git+https://git.myproject.org/MyProject#egg=MyProject",
+        "git+ssh://git.myproject.org/MyProject#egg=MyProject",
+        "-e git+ssh://git.myproject.org/MyProject#egg=MyProject",
+        "git+git://git.myproject.org/MyProject#egg=MyProject",
+        "-e git+git://git.myproject.org/MyProject#egg=MyProject",
+        "git+file://git.myproject.org/MyProject#egg=MyProject",
+        "-e git+file://git.myproject.org/MyProject#egg=MyProject",
+        "-e git+git@git.myproject.org:MyProject#egg=MyProject",
+        # Passing branch names, a commit hash or a tag name is possible like so:
+        "git://git.myproject.org/MyProject.git@master#egg=MyProject",
+        "-e git://git.myproject.org/MyProject.git@master#egg=MyProject",
+        "git://git.myproject.org/MyProject.git@v1.0#egg=MyProject",
+        "-e git://git.myproject.org/MyProject.git@v1.0#egg=MyProject",
+        "git://git.myproject.org/MyProject.git@"
+        "da39a3ee5e6b4b0d3255bfef95601890afd80709#egg=MyProject",
+        "-e git://git.myproject.org/MyProject.git@"
+        "da39a3ee5e6b4b0d3255bfef95601890afd80709#egg=MyProject",
+        # Mercurial
+        "hg+http://hg.myproject.org/MyProject#egg=MyProject",
+        "-e hg+http://hg.myproject.org/MyProject#egg=MyProject",
+        "hg+https://hg.myproject.org/MyProject#egg=MyProject",
+        "-e hg+https://hg.myproject.org/MyProject#egg=MyProject",
+        "hg+ssh://hg.myproject.org/MyProject#egg=MyProject",
+        "-e hg+ssh://hg.myproject.org/MyProject#egg=MyProject",
+        # You can also specify a revision number, a revision hash,
+        # a tag name or a local branch name like so:
+        "hg+http://hg.myproject.org/MyProject@da39a3ee5e6b#egg=MyProject",
+        "-e hg+http://hg.myproject.org/MyProject@da39a3ee5e6b#egg=MyProject",
+        "hg+http://hg.myproject.org/MyProject@2019#egg=MyProject",
+        "-e hg+http://hg.myproject.org/MyProject@2019#egg=MyProject",
+        "hg+http://hg.myproject.org/MyProject@v1.0#egg=MyProject",
+        "-e hg+http://hg.myproject.org/MyProject@v1.0#egg=MyProject",
+        "hg+http://hg.myproject.org/MyProject@special_feature#egg=MyProject",
+        "-e hg+http://hg.myproject.org/MyProject@special_feature#egg=MyProject",
+        # Subversion
+        "svn+svn://svn.myproject.org/svn/MyProject#egg=MyProject",
+        "-e svn+svn://svn.myproject.org/svn/MyProject#egg=MyProject",
+        "svn+http://svn.myproject.org/svn/MyProject/trunk@2019#egg=MyProject",
+        "-e svn+http://svn.myproject.org/svn/MyProject/trunk@2019#egg=MyProject",
+        # Bazaar
+        "bzr+http://bzr.myproject.org/MyProject/trunk#egg=MyProject",
+        "-e bzr+http://bzr.myproject.org/MyProject/trunk#egg=MyProject",
+        "bzr+sftp://user@myproject.org/MyProject/trunk#egg=MyProject",
+        "-e bzr+sftp://user@myproject.org/MyProject/trunk#egg=MyProject",
+        "bzr+ssh://user@myproject.org/MyProject/trunk#egg=MyProject",
+        "-e bzr+ssh://user@myproject.org/MyProject/trunk#egg=MyProject",
+        "bzr+ftp://user@myproject.org/MyProject/trunk#egg=MyProject",
+        "-e bzr+ftp://user@myproject.org/MyProject/trunk#egg=MyProject",
+        "bzr+lp:MyProject#egg=MyProject",
+        "-e bzr+lp:MyProject#egg=MyProject",
+        # Tags or revisions can be installed like so:
+        "bzr+https://bzr.myproject.org/MyProject/trunk@2019#egg=MyProject",
+        "-e bzr+https://bzr.myproject.org/MyProject/trunk@2019#egg=MyProject",
+        "bzr+http://bzr.myproject.org/MyProject/trunk@v1.0#egg=MyProject",
+        "-e bzr+http://bzr.myproject.org/MyProject/trunk@v1.0#egg=MyProject",
+        # Zulip
+        "-e git+https://github.com/zulip/talon.git@"
+        "7d8bdc4dbcfcc5a73298747293b99fe53da55315#egg=talon==1.2.10.zulip1",
+        "-e git+https://github.com/zulip/ultrajson@70ac02bec#egg=ujson==1.35+git",
+        "-e git+https://github.com/zulip/virtualenv-clone.git@"
+        "44e831da39ffb6b9bb5c7d103d98babccdca0456#egg=virtualenv-clone==0.2.6.zulip1",
+        '-e "git+https://github.com/zulip/python-zulip-api.git@'
+        '0.4.1#egg=zulip==0.4.1_git&subdirectory=zulip"',
+        '-e "git+https://github.com/zulip/python-zulip-api.git@'
+        '0.4.1#egg=zulip_bots==0.4.1+git&subdirectory=zulip_bots"',
+        # AWX:
+        "-e git+https://github.com/ansible/ansiconv.git@tower_1.0.0#egg=ansiconv",
+        "-e git+https://github.com/ansible/django-qsstats-magic.git@"
+        "tower_0.7.2#egg=django-qsstats-magic",
+        "-e git+https://github.com/ansible/dm.xmlsec.binding.git@master#egg=dm.xmlsec.binding",
+        "-e git+https://github.com/ansible/django-jsonbfield@"
+        "fix-sqlite_serialization#egg=jsonbfield",
+        "-e git+https://github.com/ansible/docutils.git@master#egg=docutils",
+
+    )
+    for line in cases:
+        dependency = lock.Dependency(line)
+        assert dependency.valid, line
+        serialized = dependency.serialize()
+        if line.startswith('-e') and 'git+git@' not in line:
+            expect = line.split(' ', 1)[1]
+        else:
+            expect = line
+        assert serialized == expect

@@ -417,27 +417,50 @@ class Dependency(object):
     # unidecode==0.4.21         # via myapp
     # [package]  [version]      [comment]
     RE_DEPENDENCY = re.compile(
-        r'(?iu)(?P<package>.+)'
+        r'(?iu)(?P<package>\S+)'
         r'=='
         r'(?P<version>\S+)'
-        r' *'
-        r'(?P<hashes>(?:--hash=\S+ *)+)?'
+        r'\s*'
+        r'(?P<hashes>(?:--hash=\S+\s*)+)?'
         r'(?P<comment>#.*)?$'
     )
     RE_EDITABLE_FLAG = re.compile(
         r'^-e '
     )
+    # -e git+https://github.com/ansible/docutils.git@master#egg=docutils
+    # -e "git+https://github.com/zulip/python-zulip-api.git@
+    #                 0.4.1#egg=zulip==0.4.1_git&subdirectory=zulip"
+    RE_VCS_DEPENDENCY = re.compile(
+        r'(?iu)(?P<editable>-e)?'
+        r'\s*'
+        r'(?P<prefix>\S+#egg=)'
+        r'(?P<package>[a-z0-9-_.]+)'
+        r'(?P<postfix>\S+)'
+        r'\s*'
+        r'(?P<comment>#.*)?$'
+    )
 
     def __init__(self, line):
-        matchobj = self.RE_DEPENDENCY.match(line)
-        if matchobj:
+        regular = self.RE_DEPENDENCY.match(line)
+        if regular:
             self.valid = True
-            self.package = matchobj.group('package')
-            self.version = matchobj.group('version').strip()
-            self.hashes = (matchobj.group('hashes') or '').strip()
-            self.comment = (matchobj.group('comment') or '').strip()
-        else:
-            self.valid = False
+            self.is_vcs = False
+            self.package = regular.group('package')
+            self.version = regular.group('version').strip()
+            self.hashes = (regular.group('hashes') or '').strip()
+            self.comment = (regular.group('comment') or '').strip()
+            return
+        vcs = self.RE_VCS_DEPENDENCY.match(line)
+        if vcs:
+            self.valid = True
+            self.is_vcs = True
+            self.package = vcs.group('package')
+            self.version = ''
+            self.hashes = ''  # No way!
+            self.comment = (vcs.group('comment') or '').strip()
+            self.line = line
+            return
+        self.valid = False
 
     def serialize(self):
         """
@@ -445,6 +468,8 @@ class Dependency(object):
             ~= if package is internal
             == otherwise
         """
+        if self.is_vcs:
+            return self.without_editable(self.line).strip()
         equal = '~=' if self.is_compatible else '=='
         package_version = '{package}{equal}{version}  '.format(
             package=self.without_editable(self.package),
@@ -472,6 +497,9 @@ class Dependency(object):
         (see https://github.com/jazzband/pip-tools/issues/272 upstream),
         but in the output of pip-compile it's no longer needed.
         """
+        if 'git+git@' in line:
+            # git+git can't be installed without -e:
+            return line
         return cls.RE_EDITABLE_FLAG.sub('', line)
 
     @property
