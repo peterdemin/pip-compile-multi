@@ -75,8 +75,10 @@ OPTIONS = {
 @click.option('--only-name', '-n', multiple=True,
               help='Compile only for passed environment names and their '
                    'references. Can be supplied multiple times.')
+@click.option('--upgrade/--no-upgrade', default=True,
+              help='Upgrade package version (default true)')
 def cli(ctx, compatible, post, generate_hashes, directory,
-        in_ext, out_ext, header, only_name):
+        in_ext, out_ext, header, only_name, upgrade):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
@@ -88,6 +90,7 @@ def cli(ctx, compatible, post, generate_hashes, directory,
         'out_ext': out_ext,
         'header_file': header or None,
         'include_names': only_name,
+        'upgrade': upgrade,
     })
     if ctx.invoked_subcommand is None:
         recompile()
@@ -307,11 +310,12 @@ class Environment(object):
             '--no-header',
             '--verbose',
             '--rebuild',
-            '--upgrade',
             '--no-index',
             '--output-file', self.outfile,
             self.infile,
         ]
+        if OPTIONS['upgrade']:
+            parts.insert(3, '--upgrade')
         if self.add_hashes:
             parts.insert(1, '--generate-hashes')
         return parts
