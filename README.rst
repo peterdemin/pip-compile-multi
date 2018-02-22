@@ -300,6 +300,18 @@ While it's a sane choice, each project can use it's own:
     -i, --in-ext TEXT      File extension of input files
     -o, --out-ext TEXT     File extension of output files
 
+Disable upgrades
+================
+
+When new dependencies are added it's tempting to keep everything else the same.
+To recompile ``.txt`` keeping satisfying version use ``--no-upgrade``:
+
+.. code-block::
+
+    --upgrade / --no-upgrade    Upgrade package version (default true)
+
+Option has no effect if there is no existing ``.txt`` files.
+
 Compatible Releases
 ===================
 

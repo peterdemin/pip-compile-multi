@@ -5,6 +5,7 @@ History
 ------------------
 
 * Add support for VCS dependencies
+* Add --no-upgrade option
 
 1.1.11 (2018-02-09)
 -------------------
