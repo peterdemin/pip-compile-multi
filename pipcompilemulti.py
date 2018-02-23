@@ -141,7 +141,7 @@ def recompile():
         header_text = generate_hash_comment(env.infile) + base_header_text
         env.replace_header(header_text)
         env.add_references(conf['refs'])
-        pinned_packages[conf['name']] = set(env.packages)
+        pinned_packages[conf['name']] = env.packages
 
 
 def merged_packages(env_packages, names):
@@ -150,21 +150,37 @@ def merged_packages(env_packages, names):
 
     >>> sorted(merged_packages(
     ...     {
-    ...         'a': {1, 2},
-    ...         'b': {2, 3},
-    ...         'c': {3, 4}
+    ...         'a': {'x': 1, 'y': 2},
+    ...         'b': {'y': 2, 'z': 3},
+    ...         'c': {'z': 3, 'w': 4}
     ...     },
     ...     ['a', 'b']
-    ... ))
-    [1, 2, 3]
+    ... ).items())
+    [('x', 1), ('y', 2), ('z', 3)]
     """
-    ignored_sets = [
-        env_packages[name]
+    combined_packages = sorted(itertools.chain.from_iterable(
+        env_packages[name].items()
         for name in names
-    ]
-    if ignored_sets:
-        return set.union(*ignored_sets)
-    return set()
+    ))
+    result = {}
+    errors = set()
+    for name, version in combined_packages:
+        if name in result:
+            if result[name] != version:
+                errors.add((name, version, result[name]))
+        else:
+            result[name] = version
+    if errors:
+        for error in sorted(errors):
+            logger.error(
+                "Package %s was resolved to different "
+                "versions in different environments: %s and %s",
+                error[0], error[1], error[2],
+            )
+        raise RuntimeError(
+            "Please add constraints for the package version listed above"
+        )
+    return result
 
 
 def recursive_refs(envs, name):
@@ -233,7 +249,7 @@ class Environment(object):
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
-    PY3_IGNORE = set(['future', 'futures'])  # future[s] is obsolete in python3
+    PY3_IGNORE = {'future': None, 'futures': None}  # future[s] is obsolete in python3
 
     def __init__(self, name, ignore=None, allow_post=False, add_hashes=False):
         """
@@ -241,12 +257,12 @@ class Environment(object):
         ignore - set of package names to omit in output
         """
         self.name = name
-        self.ignore = set(ignore or [])
+        self.ignore = ignore or {}
         if sys.version_info[0] >= 3:
             self.ignore.update(self.PY3_IGNORE)
         self.allow_post = allow_post
         self.add_hashes = add_hashes
-        self.packages = set()
+        self.packages = {}
 
     def create_lockfile(self):
         """
@@ -321,9 +337,7 @@ class Environment(object):
         return parts
 
     def fix_lockfile(self):
-        """
-        Run each line of outfile through fix_pin
-        """
+        """Run each line of outfile through fix_pin"""
         with open(self.outfile, 'rt') as fp:
             lines = [
                 self.fix_pin(line)
@@ -363,8 +377,21 @@ class Environment(object):
         dep = Dependency(line)
         if dep.valid:
             if dep.package in self.ignore:
+                ignored_version = self.ignore[dep.package]
+                if ignored_version is not None:
+                    # ignored_version can be None to disable conflict detection:
+                    if dep.version and dep.version != ignored_version:
+                        logger.error(
+                            "Package %s was resolved to different "
+                            "versions in different environments: %s and %s",
+                            dep.package, dep.version, ignored_version,
+                        )
+                        raise RuntimeError(
+                            "Please add constraints for the package "
+                            "version listed above"
+                        )
                 return None
-            self.packages.add(dep.package)
+            self.packages[dep.package] = dep.version
             if not self.allow_post or dep.is_compatible:
                 # Always drop post for internal packages
                 dep.drop_post()
