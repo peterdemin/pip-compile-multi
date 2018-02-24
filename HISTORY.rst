@@ -1,12 +1,12 @@
 History
 =======
 
-<Unreleased>
-------------
+1.1.12 (2018-02-23)
+-------------------
 
-* Add checks for conflicting package versions
-* Add support for VCS dependencies
-* Add --no-upgrade option
+* Added checks for conflicting package versions
+* Added support for VCS dependencies
+* Added --no-upgrade option
 
 1.1.11 (2018-02-09)
 -------------------
