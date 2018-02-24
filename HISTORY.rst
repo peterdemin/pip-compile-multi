@@ -1,9 +1,10 @@
 History
 =======
 
-<Unreleased> (2018-02-22)
-------------------
+<Unreleased>
+------------
 
+* Add checks for conflicting package versions
 * Add support for VCS dependencies
 * Add --no-upgrade option
 
