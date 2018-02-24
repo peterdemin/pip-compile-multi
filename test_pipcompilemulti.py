@@ -37,7 +37,7 @@ def test_no_fix_incompatible_pin():
 
 def test_pin_is_ommitted_if_set_to_ignore():
     """Test ignored files won't pass"""
-    env = lock.Environment('', ignore=['pycodestyle'])
+    env = lock.Environment('', ignore={'pycodestyle': '2.3.1'})
     result = env.fix_pin(PIN)
     assert result is None
 
@@ -233,3 +233,24 @@ def test_parse_vcs_dependencies():
         else:
             expect = line
         assert serialized == expect
+
+
+def test_merged_packages_raise_for_conflict():
+    """Check that package x can't be locked to versions 1 and 2"""
+    with pytest.raises(RuntimeError):
+        lock.merged_packages(
+            {
+                'a': {'x': 1},
+                'b': {'x': 2},
+            },
+            ['a', 'b']
+        )
+
+
+def test_fix_pin_detects_version_conflict():
+    """Check that package x can't be locked to versions 1 and 2"""
+    env = lock.Environment('', ignore={'x': '1'})
+    ignored_pin = env.fix_pin('x==1')
+    assert ignored_pin is None
+    with pytest.raises(RuntimeError):
+        env.fix_pin('x==2')
