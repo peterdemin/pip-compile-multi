@@ -187,7 +187,20 @@ Managing dependency versions in multiple environments
 -----------------------------------------------------
 
 Let's rehearse, example service has two groups of dependencies
-(or, as I call them, environments):
+(or, as I call them, environments) - base and test.
+To make automation even more appealing, let's add one more environment - *local* - things
+that are needed during development, but are not required by tests, or service itself.
+
+========================   ======================  =====================
+requirements/base.in       requirements/test.in    requirements/local.in
+------------------------   ----------------------  ---------------------
+click                      -r base.in              -r test.in
+pip-tools                  prospector              tox
+                           pylint                     
+                           flake8                     
+                           mock                       
+                           six                        
+========================   ======================  =====================
 
 .. code-block::
 
@@ -203,9 +216,7 @@ Let's rehearse, example service has two groups of dependencies
     mock
     six
 
-To make automation even more appealing, let's add one more environment.
-I'll call it *local* - things that are needed during development, but are not
-required by tests, or service itself.
+
 
 .. code-block::
 
