@@ -98,8 +98,7 @@ This case is so common, that there already is a number of tools to solve it.
 Two worth mentioning are:
 
 1. `Pip Tools`_ - a mature package that is enhanced by ``pip-compile-multi``.
-2. `PipEnv`_ - fresh approach that is going to become Python the standard
-   way of locking dependencies some day.
+2. `PipEnv`_ - a fresh approach that is going to become the "official" Python way of locking dependencies some day.
 
 But what if the project uses some packages that are not required by the service itself?
 For example ``pytest``, that is needed to run unit tests, but should never
@@ -310,7 +309,7 @@ To recompile ``.txt`` keeping satisfying version use ``--no-upgrade``:
 
     --upgrade / --no-upgrade    Upgrade package version (default true)
 
-Option has no effect if there is no existing ``.txt`` files.
+The option has no effect if there are no existing ``.txt`` files.
 
 Compatible Releases
 ===================
@@ -363,7 +362,7 @@ Example output:
 
 ``pip`` requires all packages to have hashes if at least one has it.
 ``pip-compile-multi`` will recursively propagate this option to all environments
-that are referencing or referenced by passed environment name.
+that are referencing or referenced by selected environment name.
 
 Custom Header
 =============
@@ -399,7 +398,7 @@ For example, to compile one file under Python2.7 and another under Python3.6, ru
 Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
 =======================================================================
 
-``pip-compile-multi`` adds a special line (before header) in the beginning of each generated file.
+``pip-compile-multi`` adds a special line (before header) at the beginning of each generated file.
 This line contains a SHA1 hash of the ``.in`` file's contents.
 
 Command
