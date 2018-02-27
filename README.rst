@@ -191,16 +191,17 @@ Let's rehearse, example service has two groups of dependencies
 To make automation even more appealing, let's add one more environment - *local* - things
 that are needed during development, but are not required by tests, or service itself.
 
-========================   ======================  =====================
-requirements/base.in       requirements/test.in    requirements/local.in
-------------------------   ----------------------  ---------------------
-click                      -r base.in              -r test.in
-pip-tools                  prospector              tox
-                           pylint                     
-                           flake8                     
-                           mock                       
-                           six                        
-========================   ======================  =====================
++------------------------+------------------------+------------------------+ 
+| requirements/base.in   | requirements/test.in   | requirements/local.in  | 
++========================+========================+========================+ 
+| click                  | -r base.in             | -r test.in             |
++------------------------+------------------------+------------------------+
+| pip-tools              | mock                   | tox                    |
++------------------------+------------------------+------------------------+
+|                        | six                    | prospector             |
++------------------------+------------------------+------------------------+
+|                        |                        | flake8                 |
++------------------------+------------------------+------------------------+
 
 .. code-block::
 
