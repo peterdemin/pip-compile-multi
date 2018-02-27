@@ -203,28 +203,6 @@ that are needed during development, but are not required by tests, or service it
 |                        |                        | flake8                 |
 +------------------------+------------------------+------------------------+
 
-.. code-block::
-
-    $ cat requirements/base.in 
-    click
-    pip-tools
-
-    $ cat requirements/test.in 
-    -r base.in
-    prospector
-    pylint
-    flake8
-    mock
-    six
-
-
-
-.. code-block::
-
-    $ cat requirements/local.in 
-    -r test.in
-    tox
-
 Now we want to put all *base* dependencies along with all their recursive dependencies
 in ``base.txt``,
 all recursive *test* dependencies except for *base* into ``test.txt``,
@@ -250,19 +228,18 @@ To install the new set of versions run:
 It's a perfect time to run all the tests and make sure, that updates were
 backward compatible enough for your needs.
 More often than I'd like in big projects, it's not so.
+
 Let's say new version of ``pylint`` dropped support of old Python version,
 that you still need to support.
-Than you open ``test.in`` and soft-pin it with descriptive comment:
+Than you open ``local.in`` and soft-pin it with descriptive comment:
 
 .. code-block::
 
-    $ cat requirements/test.in 
-    -r base.in
+    $ cat requirements/local.in 
+    -r test.in
     prospector
     pylint<1.8  # Newer versions dropped support for Python 2.4
     flake8
-    mock
-    six
 
 I know, this example is made up. But you get the idea.
 That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
