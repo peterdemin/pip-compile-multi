@@ -46,21 +46,21 @@ Suppose you have a python project with following direct dependencies:
 
 (Yes I took pip-compile-multi as an example).
 Let's save them as-is in ``requirements/base.in``.
-Those are unpinned libraries, it means that whenever developer runs
+Those are unpinned libraries. It means that whenever developer runs
 
 .. code-block:: shell
 
     pip install -r requirements/base.in
 
 he will get *some* version of these libraries.
-And chances are that if several developers do the same over some period in time,
+And the chances are that if several developers do the same over some period,
 some will have different dependency versions than others.
 Also, if the project is online service, one day it may stop working after
 redeployment because some of the dependencies had backward incompatible release.
 That kind of releases is more common than a newbie can think.
 More or less every package with a version higher than ``2.0.0`` had them.
 
-To avoid this problem Python developers are hard-pinning (aka locking) their dependencies.
+To avoid this problem, Python developers are hard-pinning (aka locking) their dependencies.
 So instead of a list of libraries, they have something like:
 
 .. code-block::
@@ -69,7 +69,7 @@ So instead of a list of libraries, they have something like:
     pip-tools==1.11.0
 
 (To keep things neat let's put this into ``requirements/base.txt``)
-That's good for a starter. But there are two important drawbacks:
+That's good for a starter. But there are two significant drawbacks:
 
 1. Developers have to do non-trivial operations if they want to keep up with
    newer versions (that have bug fixes and performance improvements).
@@ -92,9 +92,9 @@ Now we have full heirarchy of dependencies hard-pinned:
     six==1.11.0
 
 That's great, and solves the main problem - service will be deployed exactly [1]
-the same every single time and all developers will have identical environments.
+the same every single time and all developers will have same environments.
 
-This case is so common, that there already is a number of tools to solve it.
+This case is so common that there already are some tools to solve it.
 Two worth mentioning are:
 
 1. `Pip Tools`_ - a mature package that is enhanced by ``pip-compile-multi``.
@@ -177,8 +177,8 @@ Wow! That's quite a list! But we remember what goes into base.txt:
 
 Good, everything else can be put into ``requirements/test.txt``.
 But wait, ``six`` is included in ``test.in`` and is missing in ``test.txt``.
-That feels wrong... Ah, it's because we've moved ``six`` to the ``base.txt``.
-It's good, that we didn't forget, that it should be in *base*.
+That feels wrong. Ah, it's because we've moved ``six`` to the ``base.txt``.
+It's good that we didn't forget, that it should be in *base*.
 We might forget next time though.
 
 Why don't we automate it? That's what ``pip-compile-multi`` is for.
@@ -186,22 +186,32 @@ Why don't we automate it? That's what ``pip-compile-multi`` is for.
 Managing dependency versions in multiple environments
 -----------------------------------------------------
 
-Let's rehearse, example service has two groups of dependencies
-(or, as I call them, environments) - base and test.
-To make automation even more appealing, let's add one more environment - *local* - things
-that are needed during development, but are not required by tests, or service itself.
+Let's rehearse. Example service has two groups of dependencies
+(or, as I call them, environments):
 
-+------------------------+------------------------+------------------------+ 
-| requirements/base.in   | requirements/test.in   | requirements/local.in  | 
-+========================+========================+========================+ 
-| click                  | -r base.in             | -r test.in             |
-+------------------------+------------------------+------------------------+
-| pip-tools              | mock                   | tox                    |
-+------------------------+------------------------+------------------------+
-|                        | six                    | prospector             |
-+------------------------+------------------------+------------------------+
-|                        |                        | flake8                 |
-+------------------------+------------------------+------------------------+
+.. code-block::
+
+    $ cat requirements/base.in 
+    click
+    pip-tools
+
+    $ cat requirements/test.in 
+    -r base.in
+    prospector
+    pylint
+    flake8
+    mock
+    six
+
+To make automation even more appealing, let's add one more environment.
+I'll call it *local* - things that are needed during development, but are not
+required by tests, or service itself.
+
+.. code-block::
+
+    $ cat requirements/local.in 
+    -r test.in
+    tox
 
 Now we want to put all *base* dependencies along with all their recursive dependencies
 in ``base.txt``,
@@ -216,7 +226,7 @@ and all recursive *local* dependencies except for *base* and *test* into ``local
     Locking requirements/local.in to requirements/local.txt. References: ['base', 'test']
 
 Yes, that's right. All the tedious dependency versions management job done with
-a single command, that doesn't even have options.
+a single command that doesn't even have options.
 
 Now you can run ``git diff`` to review the changes and ``git commit`` to save them.
 To install the new set of versions run:
@@ -228,18 +238,19 @@ To install the new set of versions run:
 It's a perfect time to run all the tests and make sure, that updates were
 backward compatible enough for your needs.
 More often than I'd like in big projects, it's not so.
-
-Let's say new version of ``pylint`` dropped support of old Python version,
+Let's say the new version of ``pylint`` dropped support of old Python version,
 that you still need to support.
-Than you open ``local.in`` and soft-pin it with descriptive comment:
+Than you open ``test.in`` and soft-pin it with descriptive comment:
 
 .. code-block::
 
-    $ cat requirements/local.in 
-    -r test.in
+    $ cat requirements/test.in 
+    -r base.in
     prospector
     pylint<1.8  # Newer versions dropped support for Python 2.4
     flake8
+    mock
+    six
 
 I know, this example is made up. But you get the idea.
 That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
@@ -265,7 +276,7 @@ Some of the benefits are achievable with other methods, but I want to be general
 Features
 --------
 
-``pip-compile-multi`` supports a number of options to customize compilation.
+``pip-compile-multi`` supports many options to customize compilation.
 
 Requirements Directory
 ======================
@@ -298,7 +309,7 @@ To recompile ``.txt`` keeping satisfying version use ``--no-upgrade``:
 
     --upgrade / --no-upgrade    Upgrade package version (default true)
 
-The option has no effect if there are no existing ``.txt`` files.
+The option does not affect if there are no existing ``.txt`` files.
 
 Compatible Releases
 ===================
@@ -306,7 +317,7 @@ Compatible Releases
 `PEP-440`_ describes compatible release operator ``~=``.
 Sometimes it's useful to have some of the dependencies pinned using this operator.
 For example, rapidly changing internal libraries.
-Format for this option is
+The format for this option is
 
 .. code-block::
 
@@ -327,7 +338,7 @@ Format for this option is
 
 .. code-block::
 
-  -g, --generate-hashes TEXT  Environment name (base, test, etc) that needs
+  -g, --generate-hashes TEXT  Environment name (base, test, etc.) that needs
                               packages hashes. Can be supplied multiple times.
 
 
@@ -425,9 +436,7 @@ Now that occasional backward incompatible dependancy release can't ruin your day
 you can spread the word about ``pip-compile-multi``, ask for a new feature in a `GitHub issue`_,
 or even open a PR ;-).
 
-.........
-
-[1] That's not really true. Someone could re-upload broken package
+[1] That's not true. Someone could re-upload broken package
 under existing version on PyPI.
 
 [2] Yeah, yeah, there are still a lot of ways to have these problems.
