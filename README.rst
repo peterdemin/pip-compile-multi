@@ -39,7 +39,7 @@ so if you feel bored, just scroll to the next section.
 
 Suppose you have a python project with following direct dependencies:
 
-.. code-block::
+.. code-block:: none
 
     click
     pip-tools
@@ -63,7 +63,7 @@ More or less every package with a version higher than ``2.0.0`` had them.
 To avoid this problem, Python developers are hard-pinning (aka locking) their dependencies.
 So instead of a list of libraries, they have something like:
 
-.. code-block::
+.. code-block:: none
 
     click==6.7
     pip-tools==1.11.0
@@ -84,7 +84,7 @@ Let's put aside point 1 and fight point 2. Let's do
 
 Now we have full heirarchy of dependencies hard-pinned:
 
-.. code-block::
+.. code-block:: none
 
     click==6.7
     first==2.0.1
@@ -112,7 +112,7 @@ the same way by the whole team (and build server).
 
 So let's get hands dirty and put all the testing stuff into ``requirements/test.in``:
 
-.. code-block::
+.. code-block:: none
 
     -r base.in
     
@@ -189,7 +189,7 @@ Managing dependency versions in multiple environments
 Let's rehearse. Example service has two groups of dependencies
 (or, as I call them, environments):
 
-.. code-block::
+.. code-block:: shell
 
     $ cat requirements/base.in 
     click
@@ -207,7 +207,7 @@ To make automation even more appealing, let's add one more environment.
 I'll call it *local* - things that are needed during development, but are not
 required by tests, or service itself.
 
-.. code-block::
+.. code-block:: shell
 
     $ cat requirements/local.in 
     -r test.in
@@ -242,7 +242,7 @@ Let's say the new version of ``pylint`` dropped support of old Python version,
 that you still need to support.
 Than you open ``test.in`` and soft-pin it with descriptive comment:
 
-.. code-block::
+.. code-block:: shell
 
     $ cat requirements/test.in 
     -r base.in
@@ -284,7 +284,7 @@ Requirements Directory
 While it's a common practice to put requirements files inside ``requirements`` directory,
 it's not always the case. The directory can be overridden with this option:
 
-.. code-block::
+.. code-block:: none
 
     -d, --directory TEXT   Directory path with requirements files
 
@@ -294,7 +294,7 @@ Requirements Files Extensions
 By default ``pip-compile-multi`` compiles ``*.txt`` from ``*.in`` files.
 While it's a sane choice, each project can use it's own:
 
-.. code-block::
+.. code-block:: none
 
     -i, --in-ext TEXT      File extension of input files
     -o, --out-ext TEXT     File extension of output files
@@ -305,7 +305,7 @@ Disable upgrades
 When new dependencies are added it's tempting to keep everything else the same.
 To recompile ``.txt`` keeping satisfying version use ``--no-upgrade``:
 
-.. code-block::
+.. code-block:: none
 
     --upgrade / --no-upgrade    Upgrade package version (default true)
 
@@ -319,7 +319,7 @@ Sometimes it's useful to have some of the dependencies pinned using this operato
 For example, rapidly changing internal libraries.
 The format for this option is
 
-.. code-block::
+.. code-block:: none
 
     -c, --compatible TEXT
 
@@ -336,7 +336,7 @@ Generate hashes
 Put package hash after pinned version for additional security.
 Format for this option is
 
-.. code-block::
+.. code-block:: none
 
   -g, --generate-hashes TEXT  Environment name (base, test, etc.) that needs
                               packages hashes. Can be supplied multiple times.
@@ -344,13 +344,13 @@ Format for this option is
 
 Example invocation:
 
-.. code-block::
+.. code-block:: none
 
     $ pip-compile-multi -g base -g docs
 
 Example output:
 
-.. code-block::
+.. code-block:: none
 
     pip-tools==1.11.0 \
         --hash=sha256:50288eb066ce66dbef5401a21530712a93c659fe480c7d8d34e2379300555fa1 \
@@ -370,7 +370,7 @@ Custom Header
 ``pip-compile-multi`` adds a brief header into generated files.
 Override it with
 
-.. code-block::
+.. code-block:: none
 
     -h, --header TEXT      File path with custom header text for generated files
 
@@ -380,7 +380,7 @@ Limit ``.in`` files
 By default ``pip-compile-multi`` compiles all ``.in`` files in ``requirements`` directory.
 To limit compilation to only a subset, use 
 
-.. code-block::
+.. code-block:: none
 
     -n, --only-name TEXT        Compile only for passed environment names and
                                 their references. Can be supplied multiple
@@ -388,12 +388,25 @@ To limit compilation to only a subset, use
 
 For example, to compile one file under Python2.7 and another under Python3.6, run:
 
-.. code-block::
+.. code-block:: none
 
     $ virtual-env27/bin/pip-compile-multi -n deps27
     Locking requirements/deps27.in to requirements/deps27.txt. References: []
     $ virtual-env36/bin/pip-compile-multi -n deps36
     Locking requirements/deps36.in to requirements/deps36.txt. References: []
+
+Forbid .postX release
+=====================
+
+``pip-compile-multi`` can remove ``.postX`` part of dependencies versions.
+
+.. code-block:: none
+
+  -P, --forbid-post TEXT      Environment name (base, test, etc) that cannot
+                              have packages with post-release versions
+                              (1.2.3.post777). Can be supplied multiple times.
+
+Be careful with this option since different maintainers treat post releases differently.
 
 Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
 =======================================================================
@@ -403,7 +416,7 @@ This line contains a SHA1 hash of the ``.in`` file's contents.
 
 Command
 
-.. code-block::
+.. code-block:: shell
 
     $ pip-compile-multi verify
     Verifying that requirements/base.txt was generated from requirements/base.in.
@@ -417,7 +430,7 @@ recalculates hashes for ``.in`` files and compares them with the stored values.
 
 If verification fails, an error message is logged and exit code 1 is returned:
 
-.. code-block::
+.. code-block:: shell
 
     $ pip-compile-multi verify
     Verifying that requirements/base.txt was generated from requirements/base.in.
@@ -432,7 +445,7 @@ If verification fails, an error message is logged and exit code 1 is returned:
 Have fun!
 ---------
 
-Now that occasional backward incompatible dependancy release can't ruin your day,
+Now that occasional backward incompatible dependency release can't ruin your day,
 you can spread the word about ``pip-compile-multi``, ask for a new feature in a `GitHub issue`_,
 or even open a PR ;-).
 
