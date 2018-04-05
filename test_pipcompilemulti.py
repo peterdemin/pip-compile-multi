@@ -42,20 +42,20 @@ def test_pin_is_ommitted_if_set_to_ignore():
     assert result is None
 
 
-def test_post_releases_are_truncated_by_default():
+def test_post_releases_are_kept_by_default():
     """Test postXXX versions are truncated to release"""
     pin = 'pycodestyle==2.3.1.post2231  # via flake8'
     env = lock.Environment('')
     result = env.fix_pin(pin)
-    assert result == PIN
+    assert result == pin
 
 
-def test_allow_post_releases():
+def test_forbid_post_releases():
     """Test postXXX versions are kept if allow_post=True"""
     pin = 'pycodestyle==2.3.1.post2231  # via flake8'
-    env = lock.Environment('', allow_post=True)
+    env = lock.Environment('', forbid_post=True)
     result = env.fix_pin(pin)
-    assert result == pin
+    assert result == PIN
 
 
 @pytest.mark.parametrize('name, refs', [

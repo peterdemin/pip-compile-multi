@@ -44,7 +44,7 @@ DEFAULT_HEADER = """
 OPTIONS = {
     'compatible_patterns': [],
     'base_dir': 'requirements',
-    'allow_post': ['test', 'local'],
+    'forbid_post': [],
     'in_ext': 'in',
     'out_ext': 'txt',
     'header_file': None,
@@ -56,8 +56,8 @@ OPTIONS = {
 @click.option('--compatible', '-c', multiple=True,
               help='Glob expression for packages with compatible (~=) '
                    'version constraint. Can be supplied multiple times.')
-@click.option('--post', '-p', multiple=True,
-              help='Environment name (base, test, etc) that can have '
+@click.option('--forbid-post', '-P', multiple=True,
+              help="Environment name (base, test, etc) that cannot have "
                    'packages with post-release versions (1.2.3.post777). '
                    'Can be supplied multiple times.')
 @click.option('--generate-hashes', '-g', multiple=True,
@@ -77,13 +77,13 @@ OPTIONS = {
                    'references. Can be supplied multiple times.')
 @click.option('--upgrade/--no-upgrade', default=True,
               help='Upgrade package version (default true)')
-def cli(ctx, compatible, post, generate_hashes, directory,
+def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         in_ext, out_ext, header, only_name, upgrade):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
         'compatible_patterns': compatible,
-        'allow_post': set(post),
+        'forbid_post': set(forbid_post),
         'add_hashes': set(generate_hashes),
         'base_dir': directory,
         'in_ext': in_ext,
@@ -132,7 +132,7 @@ def recompile():
         env = Environment(
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
-            allow_post=conf['name'] in OPTIONS['allow_post'],
+            forbid_post=conf['name'] in OPTIONS['forbid_post'],
             add_hashes=add_hashes,
         )
         logger.info("Locking %s to %s. References: %r",
@@ -251,7 +251,7 @@ class Environment(object):
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
     PY3_IGNORE = {'future': None, 'futures': None}  # future[s] is obsolete in python3
 
-    def __init__(self, name, ignore=None, allow_post=False, add_hashes=False):
+    def __init__(self, name, ignore=None, forbid_post=False, add_hashes=False):
         """
         name - name of the environment, e.g. base, test
         ignore - set of package names to omit in output
@@ -260,7 +260,7 @@ class Environment(object):
         self.ignore = ignore or {}
         if sys.version_info[0] >= 3:
             self.ignore.update(self.PY3_IGNORE)
-        self.allow_post = allow_post
+        self.forbid_post = forbid_post
         self.add_hashes = add_hashes
         self.packages = {}
 
@@ -392,7 +392,7 @@ class Environment(object):
                         )
                 return None
             self.packages[dep.package] = dep.version
-            if not self.allow_post or dep.is_compatible:
+            if self.forbid_post or dep.is_compatible:
                 # Always drop post for internal packages
                 dep.drop_post()
             return dep.serialize()
