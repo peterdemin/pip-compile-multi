@@ -1,6 +1,12 @@
 History
 =======
 
+1.2.1 (2018-04-16)
+-------------------
+
+* Fixed Restructured text formatting (thanks to @yigor)
+* Updated test dependencies (and hashes)
+
 1.2.0 (2018-04-03)
 -------------------
 
