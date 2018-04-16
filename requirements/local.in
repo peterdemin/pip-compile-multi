@@ -7,3 +7,4 @@ bump2version
 prospector
 flake8
 collective.checkdocs
+pygments
