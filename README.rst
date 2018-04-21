@@ -52,13 +52,12 @@ Those are unpinned libraries. It means that whenever developer runs
 
     pip install -r requirements/base.in
 
-he will get *some* version of these libraries.
+they will get *some* version of these libraries.
 And the chances are that if several developers do the same over some period,
 some will have different dependency versions than others.
 Also, if the project is online service, one day it may stop working after
 redeployment because some of the dependencies had backward incompatible release.
-That kind of releases is more common than a newbie can think.
-More or less every package with a version higher than ``2.0.0`` had them.
+These backward incompatible changes are relatively common.
 
 To avoid this problem, Python developers are hard-pinning (aka locking) their dependencies.
 So instead of a list of libraries, they have something like:
@@ -108,7 +107,7 @@ If they are installed in the current virtual environment, they will get into
 That's no good.
 And removing them manually from ``requirements/base.txt`` is not an option.
 But still, these packages must be pinned to ensure, that tests are running
-the same way by the whole team (and build server).
+the same way on all development machines (and build server).
 
 So let's get hands dirty and put all the testing stuff into ``requirements/test.in``:
 
@@ -258,13 +257,12 @@ That re-run ``pip-compile-multi`` to compile new ``test.txt`` and check new set.
 Benefits of using pip-compile-multi
 -----------------------------------
 
-I want to summarise, why you need to start using ``pip-compile-multi``.
+I want to summarise, why ``pip-compile-multi`` might be a good addition to your project.
 Some of the benefits are achievable with other methods, but I want to be general:
 
 1. Production will not suddenly brake after redeployment because of
    backward incompatible dependency release.
-2. The whole team will use the same package versions and see the same outcomes.
-   No more "works for me" and "I can not reproduce this" [2].
+2. Every development machine will have the same package versions.
 3. Service still uses most recent versions of packages.
    And fresh means best here.
 4. Dependencies are upgraded when the time is suitable for the service,
@@ -292,7 +290,7 @@ Requirements Files Extensions
 =============================
 
 By default ``pip-compile-multi`` compiles ``*.txt`` from ``*.in`` files.
-While it's a sane choice, each project can use it's own:
+While this is a common naming pattern, each project can use it's own:
 
 .. code-block:: text
 
@@ -451,8 +449,6 @@ or even open a PR ;-).
 
 [1] That's not true. Someone could re-upload broken package
 under existing version on PyPI.
-
-[2] Yeah, yeah, there are still a lot of ways to have these problems.
 
 .. _Pip Tools: https://github.com/jazzband/pip-tools
 .. _PipEnv: https://github.com/pypa/pipenv
