@@ -440,6 +440,17 @@ If verification fails, an error message is logged and exit code 1 is returned:
     Verifying that requirements/local.txt was generated from requirements/local.in.
     Success - comments match.
 
+
+In big teams it might be a good idea to have this check in ``tox.ini``:
+
+.. code-block:: ini
+
+    [testenv:deps]
+    skip_install = True
+    deps = pip-compile-multi
+    commands = pip-compile-multi verify
+
+
 Have fun!
 ---------
 
