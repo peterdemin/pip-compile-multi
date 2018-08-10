@@ -6,10 +6,15 @@
 #    pip-compile-multi
 #
 -r base.txt
-attrs==17.4.0             # via pytest
+atomicwrites==1.1.5       # via pytest
+attrs==18.1.0             # via pytest
+funcsigs==1.0.2           # via mock, pytest
+future==0.16.0
 mock==2.0.0
-more-itertools==4.1.0     # via pytest
-pbr==4.0.2                # via mock
-pluggy==0.6.0             # via pytest
-py==1.5.3                 # via pytest
-pytest==3.5.0
+more-itertools==4.3.0     # via pytest
+pathlib2==2.3.2           # via pytest
+pbr==4.2.0                # via mock
+pluggy==0.7.1             # via pytest
+py==1.5.4                 # via pytest
+pytest==3.7.1
+scandir==1.9.0            # via pathlib2

@@ -554,11 +554,14 @@ def discover(glob_pattern):
     parse them, and return list of environments:
 
     >>> envs = discover("requirements/*.in")
+    >>> # print(envs)
     >>> envs == [
     ...     {'name': 'base', 'refs': set()},
     ...     {'name': 'py27', 'refs': set()},
     ...     {'name': 'test', 'refs': {'base'}},
     ...     {'name': 'local', 'refs': {'test'}},
+    ...     {'name': 'local27', 'refs': {'test', 'py27'}},
+    ...     {'name': 'testwin', 'refs': {'test'}},
     ... ]
     True
     """

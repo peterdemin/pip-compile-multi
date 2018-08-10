@@ -1,0 +1,13 @@
+-r test.in
+-r py27.in
+
+tox
+twine
+wheel
+bump2version
+prospector<1
+flake8
+collective.checkdocs
+pygments
+pylint<2
+astroid<2
