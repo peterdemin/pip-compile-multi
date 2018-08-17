@@ -54,6 +54,7 @@ setup(
     entry_points={
         'console_scripts': [
             'pip-compile-multi = pipcompilemulti:cli',
+            'requirements = piprequirements:cli',
         ]
     },
 )
