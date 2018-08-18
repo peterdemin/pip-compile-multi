@@ -1,7 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+"""Package configuration"""
 
 import os
+
 
 try:
     from setuptools import setup
@@ -12,28 +12,28 @@ version = "1.2.2"
 
 
 with open('README.rst') as fp:
-    readme = fp.read()
+    README = fp.read()
 
 
 with open('HISTORY.rst') as fp:
-    history = fp.read().replace('.. :changelog:', '')
+    HISTORY = fp.read().replace('.. :changelog:', '')
 
 
 with open(os.path.join('requirements', 'base.in')) as fp:
-    requirements = list(fp)
+    REQUIREMENTS = list(fp)
 
 
 setup(
     name='pip-compile-multi',
-    version=version,
+    version=VERSION,
     description="""Compile multiple requirements files to lock dependency versions""",
-    long_description=readme + '\n\n' + history,
+    long_description=README + '\n\n' + HISTORY,
     author='Peter Demin',
     author_email='peterdemin@gmail.com',
     url='https://github.com/peterdemin/pip-compile-multi',
     include_package_data=True,
-    py_modules=['pipcompilemulti'],
-    install_requires=requirements,
+    packages=['pipcompilemulti'],
+    install_requires=REQUIREMENTS,
     license="MIT",
     zip_safe=False,
     keywords='pip-compile-multi',
@@ -53,8 +53,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pip-compile-multi = pipcompilemulti:cli',
-            'requirements = piprequirements:cli',
+            'pip-compile-multi = pipcompilemulti.cli_v1:cli',
+            'requirements = pipcompilemulti.cli_v2:cli',
         ]
     },
 )

@@ -19,7 +19,7 @@ install:
   - pip install -e .
 
 # command to run tests using coverage, e.g. python setup.py test
-script: coverage run --source pipcompilemulti --branch `which pytest` --doctest-modules pipcompilemulti.py test_pipcompilemulti.py
+script: coverage run --source pipcompilemulti --branch `which pytest`
 
 after_success:
   - codecov

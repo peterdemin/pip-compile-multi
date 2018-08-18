@@ -1,7 +1,10 @@
 """Human-friendly interface to pip-compile-multi"""
 import logging
+
 import click
-from pipcompilemulti import recompile, OPTIONS
+
+from .actions import recompile
+from .options import OPTIONS
 
 
 MORE_DEFAULTS = {
@@ -26,6 +29,13 @@ def lock():
 
 @cli.command()
 def upgrade():
+    """Upgrade locked dependency versions"""
+    OPTIONS['upgrade'] = True
+    recompile()
+
+
+@cli.command()
+def verify():
     """Upgrade locked dependency versions"""
     OPTIONS['upgrade'] = True
     recompile()
