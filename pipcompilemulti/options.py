@@ -3,12 +3,15 @@ Global dictionary holding configuration options
 """
 
 OPTIONS = {
-    'compatible_patterns': [],
+    'add_hashes': [],
     'base_dir': 'requirements',
+    'compatible_patterns': [],
     'forbid_post': [],
-    'in_ext': 'in',
-    'out_ext': 'txt',
     'header_file': None,
+    'in_ext': 'in',
+    'include_names': [],
+    'out_ext': 'txt',
+    'upgrade': True,
 }
 
 DEFAULT_HEADER = """
