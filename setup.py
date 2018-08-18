@@ -26,7 +26,8 @@ with open(os.path.join('requirements', 'base.in')) as fp:
 setup(
     name='pip-compile-multi',
     version=VERSION,
-    description="""Compile multiple requirements files to lock dependency versions""",
+    description="Compile multiple requirements files "
+                "to lock dependency versions",
     long_description=README + '\n\n' + HISTORY,
     author='Peter Demin',
     author_email='peterdemin@gmail.com',

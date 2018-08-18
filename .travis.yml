@@ -1,5 +1,4 @@
-# Config file for automatic testing at travis-ci.org
-
+sudo: false
 language: python
 
 python:
@@ -10,19 +9,18 @@ python:
   - "2.7"
   - "pypy"
 
-before_install:
-- pip install codecov
 
-# command to install dependencies
-install:
-  - ./install_test_deps.sh
-  - pip install -e .
+matrix:
+  include:
+    - os: linux
+      python: 2.7
+      env: TOXENV=lint2
+    - os: linux
+      python: 3.6
+      env: TOXENV=lint3
 
-# command to run tests using coverage, e.g. python setup.py test
-script: coverage run --source pipcompilemulti --branch `which pytest`
-
-after_success:
-  - codecov
+install: pip install tox-travis
+script: tox
 
 deploy:
   provider: pypi

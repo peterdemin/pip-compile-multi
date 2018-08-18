@@ -17,7 +17,8 @@ class Environment(object):
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
-    PY3_IGNORE = {'future': None, 'futures': None}  # future[s] is obsolete in python3
+    # future[s] is obsolete in python3
+    PY3_IGNORE = {'future': None, 'futures': None}
 
     def __init__(self, name, ignore=None, forbid_post=False, add_hashes=False):
         """
@@ -147,7 +148,7 @@ class Environment(object):
             if dep.package in self.ignore:
                 ignored_version = self.ignore[dep.package]
                 if ignored_version is not None:
-                    # ignored_version can be None to disable conflict detection:
+                    # ignored_version can be None to disable conflict detection
                     if dep.version and dep.version != ignored_version:
                         logger.error(
                             "Package %s was resolved to different "
