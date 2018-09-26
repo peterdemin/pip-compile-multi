@@ -5,7 +5,7 @@
 #
 #    pip-compile-multi
 #
-click==6.7
+click==7.0
 first==2.0.1              # via pip-tools
 pip-tools==2.0.2
 six==1.11.0               # via pip-tools
