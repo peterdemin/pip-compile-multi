@@ -5,7 +5,7 @@ tox
 twine
 wheel
 bump2version
-prospector<1
+prospector<2
 flake8
 collective.checkdocs
 pygments
