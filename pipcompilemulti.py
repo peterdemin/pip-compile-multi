@@ -12,7 +12,6 @@ Internal dependencies are soft-pinned using ~=
 
 import os
 import re
-import sys
 import glob
 import hashlib
 import logging
@@ -249,7 +248,6 @@ class Environment(object):
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
-    PY3_IGNORE = {'future': None, 'futures': None}  # future[s] is obsolete in python3
 
     def __init__(self, name, ignore=None, forbid_post=False, add_hashes=False):
         """
@@ -258,8 +256,6 @@ class Environment(object):
         """
         self.name = name
         self.ignore = ignore or {}
-        if sys.version_info[0] >= 3:
-            self.ignore.update(self.PY3_IGNORE)
         self.forbid_post = forbid_post
         self.add_hashes = add_hashes
         self.packages = {}
