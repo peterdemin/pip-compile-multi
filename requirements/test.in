@@ -3,4 +3,3 @@
 pytest
 mock
 six
-future  # check it is ignored in py3

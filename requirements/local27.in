@@ -6,7 +6,7 @@ twine
 wheel
 bump2version
 prospector<1
-flake8
+flake8<=3.5.0
 collective.checkdocs
 pygments
 pylint<2
