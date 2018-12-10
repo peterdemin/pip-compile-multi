@@ -12,4 +12,4 @@ funcsigs==1.0.2
 future==0.17.1
 futures==3.2.0
 singledispatch==3.4.0.3
-six==1.11.0               # via singledispatch
+six==1.12.0               # via singledispatch
