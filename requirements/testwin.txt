@@ -6,4 +6,4 @@
 #    pip-compile-multi
 #
 -r test.txt
-colorama==0.4.0
+colorama==0.4.1
