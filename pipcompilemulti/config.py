@@ -1,6 +1,8 @@
 """Get tasks options from INI file"""
 import sys
+import collections
 import configparser
+import six
 
 from .options import OPTIONS
 
@@ -50,9 +52,11 @@ def read_sections():
 
 def parse_value(key, value):
     """Parse value as comma-delimited list if default value for it is list"""
-    if isinstance(OPTIONS.get(key), list):
-        return [item.strip()
-                for item in value.split(',')]
+    default = OPTIONS.get(key)
+    if isinstance(default, collections.Iterable):
+        if not isinstance(default, six.string_types):
+            return [item.strip()
+                    for item in value.split(',')]
     return value
 
 
