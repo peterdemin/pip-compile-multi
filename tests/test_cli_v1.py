@@ -9,5 +9,8 @@ from pipcompilemulti.cli_v1 import cli
 def test_v1_command_exits_with_zero(command):
     """Run pip-compile-multi on self"""
     runner = CliRunner()
-    result = runner.invoke(cli, [command])
+    parameters = [command]
+    if command != 'verify':
+        parameters.extend(['--only-name', 'local'])
+    result = runner.invoke(cli, parameters)
     assert result.exit_code == 0
