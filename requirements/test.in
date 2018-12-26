@@ -1,6 +1,5 @@
 -r base.in
 
 pytest
-pathlib2  # pytest's dependency, not needed in py3.6+, but installed to ease management
 mock
 six

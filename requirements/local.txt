@@ -44,6 +44,7 @@ tox==3.6.1
 tqdm==4.28.1              # via twine
 twine==1.12.1
 typed-ast==1.1.1          # via astroid
+typing==3.6.6             # via astroid
 urllib3==1.24.1           # via requests
 virtualenv==16.1.0        # via tox
 webencodings==0.5.1       # via bleach
