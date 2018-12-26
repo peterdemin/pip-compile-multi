@@ -26,14 +26,14 @@ def verify_environments():
     success = True
     for conf in env_confs:
         env = Environment(name=conf['name'])
-        logger.info("Verifying that %s was generated from %s.",
-                    env.outfile, env.infile)
         current_comment = generate_hash_comment(env.infile)
         existing_comment = parse_hash_comment(env.outfile)
         if current_comment == existing_comment:
-            logger.info("Success - comments match.")
+            logger.info("OK - %s was generated from %s.",
+                        env.outfile, env.infile)
         else:
-            logger.error("FAILURE!")
+            logger.error("ERROR! %s was not regenerated after changes in %s.",
+                         env.outfile, env.infile)
             logger.error("Expecting: %s", current_comment.strip())
             logger.error("Found:     %s", existing_comment.strip())
             success = False

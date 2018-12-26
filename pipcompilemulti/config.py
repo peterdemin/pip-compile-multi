@@ -6,37 +6,50 @@ from .options import OPTIONS
 
 
 def read_config():
-    """Read requirements.ini and return dictionary of section: options
+    """Read requirements.ini and return list of pairs (name, options)
     If no requirements sections found, return None.
     If some sections found, but none matches current runtime, return empty list.
     """
-    config = configparser.ConfigParser()
-    config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
-    jobs = []
-    use_default = True
-    matchers = python_version_matchers()
-    for section in config.sections():
-        if 'requirements' in section:
-            use_default = False
-        else:
-            continue
-        target_version = config[section].get('python')
-        if target_version in matchers:
-            jobs.append((
-                section,
-                {
-                    key: parse_value(key, config[section][key])
-                    for key in config[section]
-                    if key != 'python'
-                }
-            ))
-    if use_default:
+    return filter_sections(read_sections())
+
+
+def filter_sections(sections):
+    """Filter through pairs (name, options)
+    leaving only those that match runtime.
+
+    If no requirements sections found, return None.
+    If some sections found, but none matches current runtime, return empty list.
+    """
+    if not sections:
         return None
+    jobs = []
+    matchers = python_version_matchers()
+    for name, options in sections:
+        target_version = options.pop('python', None)
+        if target_version in matchers:
+            jobs.append((name, options))
     return jobs
 
 
+def read_sections():
+    """Read ini files and return list of pairs (name, options)"""
+    config = configparser.ConfigParser()
+    config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
+    return [
+        (
+            name,
+            {
+                key: parse_value(key, config[name][key])
+                for key in config[name]
+            }
+        )
+        for name in config.sections()
+        if 'requirements' in name
+    ]
+
+
 def parse_value(key, value):
-    """parse value as comma-delimited list if default value for it is list"""
+    """Parse value as comma-delimited list if default value for it is list"""
     if isinstance(OPTIONS.get(key), list):
         return [item.strip()
                 for item in value.split(',')]
@@ -54,5 +67,5 @@ def python_version_matchers():
     matchers = [
         pattern.format(*version)
         for pattern in patterns
-    ]
+    ] + [None]
     return set(matchers)

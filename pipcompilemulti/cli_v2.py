@@ -5,7 +5,7 @@ import logging
 import click
 
 from .options import OPTIONS
-from .config import read_config
+from .config import read_config, read_sections
 from .actions import recompile
 from .verify import verify_environments
 
@@ -23,33 +23,36 @@ def cli():
 def lock():
     """Lock new dependencies without upgrading"""
     OPTIONS['upgrade'] = False
-    run_configurations(recompile)
+    run_configurations(recompile, read_config)
 
 
 @cli.command()
 def upgrade():
     """Upgrade locked dependency versions"""
     OPTIONS['upgrade'] = True
-    run_configurations(recompile)
+    run_configurations(recompile, read_config)
 
 
 @cli.command()
 @click.pass_context
 def verify(ctx):
     """Upgrade locked dependency versions"""
-    oks = run_configurations(ext_skipper(verify_environments))
+    oks = run_configurations(
+        skipper(verify_environments),
+        read_sections,
+    )
     ctx.exit(0
              if False not in oks
              else 1)
 
 
-def ext_skipper(func):
-    """Decorator that memorizes in_ext and out_ext from OPTIONS
+def skipper(func):
+    """Decorator that memorizes base_dir, in_ext and out_ext from OPTIONS
     and skips execution for duplicates."""
     @functools.wraps(func)
     def wrapped():
         """Dummy docstring to make pylint happy."""
-        key = (OPTIONS['in_ext'], OPTIONS['out_ext'])
+        key = (OPTIONS['base_dir'], OPTIONS['in_ext'], OPTIONS['out_ext'])
         if key not in seen:
             seen[key] = func()
         return seen[key]
@@ -57,10 +60,10 @@ def ext_skipper(func):
     return wrapped
 
 
-def run_configurations(callback):
+def run_configurations(callback, sections_reader):
     """Parse configurations and execute callback for matching."""
     base = dict(OPTIONS)
-    sections = read_config()
+    sections = sections_reader()
     if sections is None:
         logger.info("Configuration not found in .ini files. "
                     "Running with default settings")
