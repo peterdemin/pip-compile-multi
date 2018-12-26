@@ -20,11 +20,12 @@ matrix:
       env: TOXENV=lint3
 
 before_install:
-  - pip install codecov
+  - pip install codecov coveralls
 install: pip install tox-travis
 script: tox
 after_success:
   - codecov
+  - coveralls
 
 deploy:
   provider: pypi
