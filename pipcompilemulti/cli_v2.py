@@ -35,7 +35,7 @@ def lock():
         OPTIONS.clear()
         OPTIONS.update(base)
         OPTIONS.update(options)
-        print(OPTIONS)
+        logger.debug(OPTIONS)
         recompile()
     if not sections:
         logger.info("Configuration not found in requirements.ini. "

@@ -41,7 +41,8 @@ def python_version_matchers():
         "{0}{1}",
         "{0}.{1}",
     ]
-    return set([
+    matchers = [
         pattern.format(*version)
         for pattern in patterns
-    ])
+    ]
+    return set(matchers)
