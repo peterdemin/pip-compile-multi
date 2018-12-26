@@ -1,4 +1,5 @@
 """Human-friendly interface to pip-compile-multi"""
+import functools
 import logging
 
 import click
@@ -10,54 +11,68 @@ from .verify import verify_environments
 
 
 logger = logging.getLogger("pip-compile-multi")
-MORE_DEFAULTS = {
-    'add_hashes': [],
-    'include_names': [],
-}
 
 
 @click.group()
 def cli():
     """Human-friendly interface to pip-compile-multi"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
-    OPTIONS.update(MORE_DEFAULTS)
 
 
 @cli.command()
 def lock():
     """Lock new dependencies without upgrading"""
     OPTIONS['upgrade'] = False
-    base = dict(OPTIONS)
-    sections = read_config()
-    if sections is None:
-        logger.info("Configuration not found in requirements.ini. "
-                    "Running with default settings")
-        recompile()
-    elif sections == []:
-        logger.info("Configuration does not match current runtime. "
-                    "Exiting")
-    for section, options in sections:
-        logger.info("Running configuration from section %s",
-                    section)
-        OPTIONS.clear()
-        OPTIONS.update(base)
-        OPTIONS.update(options)
-        logger.debug(OPTIONS)
-        recompile()
+    run_configurations(recompile)
 
 
 @cli.command()
 def upgrade():
     """Upgrade locked dependency versions"""
     OPTIONS['upgrade'] = True
-    recompile()
+    run_configurations(recompile)
 
 
 @cli.command()
 @click.pass_context
 def verify(ctx):
     """Upgrade locked dependency versions"""
-    OPTIONS['upgrade'] = True
+    oks = run_configurations(ext_skipper(verify_environments))
     ctx.exit(0
-             if verify_environments()
+             if False in oks
              else 1)
+
+
+def ext_skipper(func):
+    """Decorator that memorizes in_ext and out_ext from OPTIONS
+    and skips execution for duplicates."""
+    @functools.wraps(func)
+    def wrapped():
+        key = (OPTIONS['in_ext'], OPTIONS['out_ext'])
+        if key not in seen:
+            seen[key] = func()
+        return seen[key]
+    seen = {}
+    return wrapped
+
+
+def run_configurations(callback):
+    """Parse configurations and execute callback for matching."""
+    base = dict(OPTIONS)
+    sections = read_config()
+    if sections is None:
+        logger.info("Configuration not found in .ini files. "
+                    "Running with default settings")
+        recompile()
+    elif sections == []:
+        logger.info("Configuration does not match current runtime. "
+                    "Exiting")
+    results = []
+    for section, options in sections:
+        OPTIONS.clear()
+        OPTIONS.update(base)
+        OPTIONS.update(options)
+        logger.debug("Running configuration from section \"%s\". OPTIONS: %r",
+                     section, OPTIONS)
+        results.append(callback())
+    return results
