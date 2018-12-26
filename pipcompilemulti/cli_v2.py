@@ -48,6 +48,7 @@ def ext_skipper(func):
     and skips execution for duplicates."""
     @functools.wraps(func)
     def wrapped():
+        """Dummy docstring to make pylint happy."""
         key = (OPTIONS['in_ext'], OPTIONS['out_ext'])
         if key not in seen:
             seen[key] = func()

@@ -54,3 +54,4 @@ boilerplate/
 
 # Vim
 Session.vim
+/htmlcov/

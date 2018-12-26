@@ -1,5 +1,6 @@
 -r base.in
 
 pytest
+pytest-cov
 mock
 six
