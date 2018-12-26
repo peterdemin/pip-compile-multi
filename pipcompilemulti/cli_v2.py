@@ -39,7 +39,7 @@ def verify(ctx):
     """Upgrade locked dependency versions"""
     oks = run_configurations(ext_skipper(verify_environments))
     ctx.exit(0
-             if False in oks
+             if False not in oks
              else 1)
 
 
