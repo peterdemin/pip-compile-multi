@@ -26,6 +26,7 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
+/.pytest_cache/
 
 # Conflict tests side-effects
 /conflicting-in-*/*.txt

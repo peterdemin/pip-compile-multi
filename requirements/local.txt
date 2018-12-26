@@ -6,41 +6,45 @@
 #    pip-compile-multi
 #
 -r test.txt
-astroid==2.0.4            # via pylint, requirements-detector
+astroid==2.0.4            # via prospector, pylint, pylint-celery, pylint-flask, requirements-detector
 bleach==3.0.2             # via readme-renderer
 bump2version==0.5.10
-certifi==2018.10.15       # via requests
+certifi==2018.11.29       # via requests
 chardet==3.0.4            # via requests
 collective.checkdocs==0.2
 docutils==0.14            # via collective.checkdocs, readme-renderer
 dodgy==0.1.9              # via prospector
 filelock==3.0.10          # via tox
 flake8==3.5.0
-idna==2.7                 # via requests
+idna==2.8                 # via requests
 isort==4.3.4              # via pylint
 lazy-object-proxy==1.3.1  # via astroid
 mccabe==0.6.1             # via flake8, prospector, pylint
 pep8-naming==0.4.1        # via prospector
 pkginfo==1.4.2            # via twine
-prospector==1.1.5
+prospector==1.1.6.2
 pycodestyle==2.3.1        # via flake8, prospector
 pydocstyle==3.0.0         # via prospector
 pyflakes==1.6.0           # via flake8, prospector
-pygments==2.2.0
-pylint-plugin-utils==0.4  # via prospector
-pylint==2.1.1             # via prospector, pylint-plugin-utils
+pygments==2.3.1
+pylint-celery==0.3        # via prospector
+pylint-django==2.0.2      # via prospector
+pylint-flask==0.5         # via prospector
+pylint-plugin-utils==0.4  # via prospector, pylint-celery, pylint-django, pylint-flask
+pylint==2.1.1             # via prospector, pylint-celery, pylint-django, pylint-flask, pylint-plugin-utils
 pyyaml==3.13              # via prospector
 readme-renderer==24.0     # via twine
 requests-toolbelt==0.8.0  # via twine
-requests==2.20.1          # via requests-toolbelt, twine
+requests==2.21.0          # via requests-toolbelt, twine
 requirements-detector==0.6  # via prospector
 setoptconf==0.2.0         # via prospector
 snowballstemmer==1.2.1    # via pydocstyle
 toml==0.10.0              # via tox
-tox==3.5.3
+tox==3.6.1
 tqdm==4.28.1              # via twine
 twine==1.12.1
-typed-ast==1.1.0          # via astroid
+typed-ast==1.1.1          # via astroid
+typing==3.6.6             # via astroid
 urllib3==1.24.1           # via requests
 virtualenv==16.1.0        # via tox
 webencodings==0.5.1       # via bleach
