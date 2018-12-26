@@ -29,6 +29,13 @@ def lock():
     OPTIONS['upgrade'] = False
     base = dict(OPTIONS)
     sections = read_config()
+    if sections is None:
+        logger.info("Configuration not found in requirements.ini. "
+                    "Running with default settings")
+        recompile()
+    elif sections == []:
+        logger.info("Configuration does not match current runtime. "
+                    "Exiting")
     for section, options in sections:
         logger.info("Running configuration from section %s",
                     section)
@@ -36,10 +43,6 @@ def lock():
         OPTIONS.update(base)
         OPTIONS.update(options)
         logger.debug(OPTIONS)
-        recompile()
-    if not sections:
-        logger.info("Configuration not found in requirements.ini. "
-                    "Running with default settings")
         recompile()
 
 

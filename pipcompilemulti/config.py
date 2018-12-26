@@ -6,12 +6,20 @@ from .options import OPTIONS
 
 
 def read_config():
-    """Read requirements.ini and return dictionary of section: options"""
+    """Read requirements.ini and return dictionary of section: options
+    If no requirements sections found, return None.
+    If some sections found, but none matches current runtime, return empty list.
+    """
     config = configparser.ConfigParser()
-    config.read('requirements.ini')
+    config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
     jobs = []
+    use_default = True
     matchers = python_version_matchers()
     for section in config.sections():
+        if 'requirements' in section:
+            use_default = False
+        else:
+            continue
         target_version = config[section].get('python')
         if target_version in matchers:
             jobs.append((
@@ -22,6 +30,8 @@ def read_config():
                     if key != 'python'
                 }
             ))
+    if use_default:
+        return None
     return jobs
 
 
