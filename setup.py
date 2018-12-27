@@ -8,7 +8,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-VERSION = "2.0.0"
+VERSION = "1.2.2"
 
 
 with open('README.rst') as fp:
@@ -21,6 +21,15 @@ with open('HISTORY.rst') as fp:
 
 with open(os.path.join('requirements', 'base.in')) as fp:
     REQUIREMENTS = list(fp)
+
+
+CONSOLE_SCRIPTS = [
+    'pip-compile-multi = pipcompilemulti.cli_v1:cli',
+]
+if os.environ.get('PCM_ALPHA') == 'ON':
+    CONSOLE_SCRIPTS.append(
+        'requirements = pipcompilemulti.cli_v2:cli'
+    )
 
 
 setup(
@@ -57,9 +66,6 @@ setup(
         'Topic :: Utilities',
     ],
     entry_points={
-        'console_scripts': [
-            'pip-compile-multi = pipcompilemulti.cli_v1:cli',
-            'requirements = pipcompilemulti.cli_v2:cli',
-        ]
+        'console_scripts': CONSOLE_SCRIPTS,
     },
 )
