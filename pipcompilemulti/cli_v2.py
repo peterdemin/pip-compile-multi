@@ -22,14 +22,14 @@ def cli():
 @cli.command()
 def lock():
     """Lock new dependencies without upgrading"""
-    OPTIONS['upgrade'] = False
+    OPTIONS.compile.upgrade = False
     run_configurations(recompile, read_config)
 
 
 @cli.command()
 def upgrade():
     """Upgrade locked dependency versions"""
-    OPTIONS['upgrade'] = True
+    OPTIONS.compile.upgrade = True
     run_configurations(recompile, read_config)
 
 
@@ -52,7 +52,11 @@ def skipper(func):
     @functools.wraps(func)
     def wrapped():
         """Dummy docstring to make pylint happy."""
-        key = (OPTIONS['base_dir'], OPTIONS['in_ext'], OPTIONS['out_ext'])
+        key = (
+            OPTIONS.discovery.directory,
+            OPTIONS.discovery.in_ext,
+            OPTIONS.discovery.out_ext,
+        )
         if key not in seen:
             seen[key] = func()
         return seen[key]
@@ -62,7 +66,6 @@ def skipper(func):
 
 def run_configurations(callback, sections_reader):
     """Parse configurations and execute callback for matching."""
-    base = dict(OPTIONS)
     sections = sections_reader()
     if sections is None:
         logger.info("Configuration not found in .ini files. "
@@ -73,9 +76,8 @@ def run_configurations(callback, sections_reader):
                     "Exiting")
     results = []
     for section, options in sections:
-        OPTIONS.clear()
-        OPTIONS.update(base)
-        OPTIONS.update(options)
+        OPTIONS.reset()
+        OPTIONS.update_from_dict(options)
         logger.debug("Running configuration from section \"%s\". OPTIONS: %r",
                      section, OPTIONS)
         results.append(callback())

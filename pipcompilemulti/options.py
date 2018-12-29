@@ -1,18 +1,5 @@
-"""
-Global dictionary holding configuration options
-"""
+"""Global object holding configuration options."""
 
-OPTIONS = {
-    'add_hashes': [],
-    'base_dir': 'requirements',
-    'compatible_patterns': [],
-    'forbid_post': [],
-    'header_file': None,
-    'in_ext': 'in',
-    'include_names': [],
-    'out_ext': 'txt',
-    'upgrade': True,
-}
 
 DEFAULT_HEADER = """
 #
@@ -22,3 +9,117 @@ DEFAULT_HEADER = """
 #    pip-compile-multi
 #
 """.lstrip()
+
+DEFAULT = {
+    'compatible': [],
+    'directory': 'requirements',
+    'forbid_post': [],
+    'generate_hashes': [],
+    'in_ext': 'in',
+    'only_names': [],
+    'out_ext': 'txt',
+    'upgrade': True,
+    'header': DEFAULT_HEADER,
+}
+
+
+class BaseOptions(object):
+    """Base class for Options categories"""
+
+    LISTS = set([
+        'compatible',
+        'forbid_post',
+        'generate_hashes',
+        'only_names',
+    ])
+
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        """Reset options to defaults."""
+        for key in self._fields():
+            setattr(self, key, DEFAULT[key])
+
+    def update_from_dict(self, options):
+        """Update options from dictionary."""
+        for key in self._fields():
+            if key not in options:
+                continue
+            value = options[key]
+            if key in self.LISTS:
+                if hasattr(value, 'split'):
+                    # Split strings by comma
+                    value = [part.strip()
+                             for part in value.split(',')]
+                else:
+                    value = list(value)  # copy
+                setattr(self, key, value)
+            else:
+                setattr(self, key, value)
+
+    def _fields(self):
+        """Return list of field names for reset and update."""
+        return list(self.__dict__)
+
+
+class DiscoveryOptions(BaseOptions):
+    """Options related to files discovery"""
+
+    def __init__(self):
+        self.directory = None
+        self.in_ext = None
+        self.out_ext = None
+        self.only_names = None
+        super(DiscoveryOptions, self).__init__()
+
+
+class CompileOptions(BaseOptions):
+    """Options related to calling pip-compile"""
+
+    def __init__(self):
+        self.generate_hashes = None
+        self.upgrade = None
+        super(CompileOptions, self).__init__()
+
+    def reset(self):
+        """Do not reset upgrade."""
+        self.generate_hashes = DEFAULT['generate_hashes']
+
+
+class FixOptions(BaseOptions):
+    """Options related to fixing lock files after pip-compile"""
+
+    def __init__(self):
+        self.compatible = DEFAULT['compatible']
+        self.forbid_post = DEFAULT['forbid_post']
+        self.header = DEFAULT['header']
+        super(FixOptions, self).__init__()
+
+
+class Options(object):
+    """Runtime options"""
+
+    def __init__(self):
+        self.discovery = DiscoveryOptions()
+        self.compile = CompileOptions()
+        self.fix = FixOptions()
+
+    def reset(self):
+        """Reset options to defaults."""
+        self.discovery.reset()
+        self.compile.reset()
+        self.fix.reset()
+
+    def update_from_dict(self, options):
+        """Update options from dictionary."""
+        self.discovery.update_from_dict(options)
+        self.compile.update_from_dict(options)
+        self.fix.update_from_dict(options)
+
+    def set(self, key, value):
+        """Set single option value."""
+        self.update_from_dict({key: value})
+
+
+OPTIONS = Options()

@@ -21,21 +21,21 @@ def recompile():
     pinned_packages = {}
     env_confs = discover(
         os.path.join(
-            OPTIONS['base_dir'],
-            '*.' + OPTIONS['in_ext'],
+            OPTIONS.discovery.directory,
+            '*.' + OPTIONS.discovery.in_ext,
         ),
     )
-    if OPTIONS['header_file']:
-        with open(OPTIONS['header_file']) as fp:
+    if OPTIONS.fix.header:
+        with open(OPTIONS.fix.header) as fp:
             base_header_text = fp.read()
     else:
         base_header_text = DEFAULT_HEADER
     hashed_by_reference = set()
-    for name in OPTIONS['add_hashes']:
+    for name in OPTIONS.compile.generate_hashes:
         hashed_by_reference.update(
             reference_cluster(env_confs, name)
         )
-    included_and_refs = set(OPTIONS['include_names'])
+    included_and_refs = set(OPTIONS.discovery.only_names)
     for name in set(included_and_refs):
         included_and_refs.update(
             recursive_refs(env_confs, name)
@@ -50,7 +50,7 @@ def recompile():
         env = Environment(
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
-            forbid_post=conf['name'] in OPTIONS['forbid_post'],
+            forbid_post=conf['name'] in OPTIONS.fix.forbid_post,
             add_hashes=add_hashes,
         )
         logger.info("Locking %s to %s. References: %r",

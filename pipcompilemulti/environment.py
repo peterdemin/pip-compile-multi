@@ -78,14 +78,18 @@ class Environment(object):
     @property
     def infile(self):
         """Path of the input file"""
-        return os.path.join(OPTIONS['base_dir'],
-                            '{0}.{1}'.format(self.name, OPTIONS['in_ext']))
+        return os.path.join(
+            OPTIONS.discovery.directory,
+            '{0}.{1}'.format(self.name, OPTIONS.discovery.in_ext),
+        )
 
     @property
     def outfile(self):
         """Path of the output file"""
-        return os.path.join(OPTIONS['base_dir'],
-                            '{0}.{1}'.format(self.name, OPTIONS['out_ext']))
+        return os.path.join(
+            OPTIONS.discovery.directory,
+            '{0}.{1}'.format(self.name, OPTIONS.discovery.out_ext),
+        )
 
     @property
     def pin_command(self):
@@ -99,7 +103,7 @@ class Environment(object):
             '--output-file', self.outfile,
             self.infile,
         ]
-        if OPTIONS['upgrade']:
+        if OPTIONS.compile.upgrade:
             parts.insert(3, '--upgrade')
         if self.add_hashes:
             parts.insert(1, '--generate-hashes')
@@ -177,7 +181,7 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
             fp.writelines(
-                '-r {0}.{1}\n'.format(other_name, OPTIONS['out_ext'])
+                '-r {0}.{1}\n'.format(other_name, OPTIONS.discovery.out_ext)
                 for other_name in sorted(other_names)
             )
             fp.writelines(body)

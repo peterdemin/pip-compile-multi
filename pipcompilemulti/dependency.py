@@ -103,7 +103,7 @@ class Dependency(object):
     @property
     def is_compatible(self):
         """Check if package name is matched by compatible_patterns"""
-        for pattern in OPTIONS['compatible_patterns']:
+        for pattern in OPTIONS.fix.compatible:
             if fnmatch(self.package.lower(), pattern):
                 return True
         return False

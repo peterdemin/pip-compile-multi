@@ -4,7 +4,7 @@ import logging
 
 import click
 
-from .options import OPTIONS
+from .options import OPTIONS, DEFAULT
 from .actions import recompile
 from .verify import verify_environments
 
@@ -22,11 +22,11 @@ from .verify import verify_environments
               help='Environment name (base, test, etc) that needs '
                    'packages hashes. '
                    'Can be supplied multiple times.')
-@click.option('--directory', '-d', default=OPTIONS['base_dir'],
+@click.option('--directory', '-d', default=DEFAULT['directory'],
               help='Directory path with requirements files.')
-@click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
+@click.option('--in-ext', '-i', default=DEFAULT['in_ext'],
               help='File extension of input files.')
-@click.option('--out-ext', '-o', default=OPTIONS['out_ext'],
+@click.option('--out-ext', '-o', default=DEFAULT['out_ext'],
               help='File extension of output files.')
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files.')
@@ -39,15 +39,15 @@ def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         in_ext, out_ext, header, only_name, upgrade):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
-    OPTIONS.update({
-        'compatible_patterns': compatible,
+    OPTIONS.update_from_dict({
+        'compatible': compatible,
         'forbid_post': set(forbid_post),
-        'add_hashes': set(generate_hashes),
-        'base_dir': directory,
+        'generate_hashes': set(generate_hashes),
+        'directory': directory,
         'in_ext': in_ext,
         'out_ext': out_ext,
-        'header_file': header or None,
-        'include_names': only_name,
+        'header': header or None,
+        'only_names': only_name,
         'upgrade': upgrade,
     })
     if ctx.invoked_subcommand is None:

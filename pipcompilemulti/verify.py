@@ -19,8 +19,8 @@ def verify_environments():
     """
     env_confs = discover(
         os.path.join(
-            OPTIONS['base_dir'],
-            '*.' + OPTIONS['in_ext'],
+            OPTIONS.discovery.directory,
+            '*.' + OPTIONS.discovery.in_ext,
         )
     )
     success = True
