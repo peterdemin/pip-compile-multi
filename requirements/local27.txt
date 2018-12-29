@@ -31,7 +31,7 @@ pyflakes==1.6.0           # via flake8, prospector
 pygments==2.3.1
 pylint-common==0.2.5      # via prospector
 pylint-plugin-utils==0.4  # via prospector, pylint-common
-pylint==1.9.3
+pylint==1.9.4
 pyyaml==3.13              # via prospector
 readme-renderer==24.0     # via twine
 requests-toolbelt==0.8.0  # via twine

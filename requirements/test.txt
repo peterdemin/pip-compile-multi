@@ -10,7 +10,7 @@ atomicwrites==1.2.1       # via pytest
 attrs==18.2.0             # via pytest
 coverage==4.5.2           # via pytest-cov
 mock==2.0.0
-more-itertools==4.3.0     # via pytest
+more-itertools==5.0.0     # via pytest
 pathlib2==2.3.3           # via pytest
 pbr==5.1.1                # via mock
 pluggy==0.8.0             # via pytest
