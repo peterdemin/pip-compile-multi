@@ -1,9 +1,13 @@
 """Dependency class"""
 
 import re
+import logging
 from fnmatch import fnmatch
 
 from .options import OPTIONS
+
+
+logger = logging.getLogger("pip-compile-multi")
 
 
 class Dependency(object):
@@ -113,3 +117,23 @@ class Dependency(object):
         post_index = self.version.find('.post')
         if post_index >= 0:
             self.version = self.version[:post_index]
+
+    def check_version_matches(self, other_version):
+        """Check that dependency version matches other. Raise if not."""
+        if other_version is None:
+            # None to disable conflict detection
+            return
+        if self.version and self.version != other_version:
+            if self.is_compatible and not OPTIONS.compile.upgrade:
+                # Skip false positive when locking compatible
+                # release without upgrade.
+                return
+            logger.error(
+                "Package %s was resolved to different "
+                "versions in different environments: %s and %s",
+                self.package, self.version, other_version,
+            )
+            raise RuntimeError(
+                "Please add constraints for the package "
+                "version listed above"
+            )

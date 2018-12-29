@@ -150,19 +150,7 @@ class Environment(object):
         dep = Dependency(line)
         if dep.valid:
             if dep.package in self.ignore:
-                ignored_version = self.ignore[dep.package]
-                if ignored_version is not None:
-                    # ignored_version can be None to disable conflict detection
-                    if dep.version and dep.version != ignored_version:
-                        logger.error(
-                            "Package %s was resolved to different "
-                            "versions in different environments: %s and %s",
-                            dep.package, dep.version, ignored_version,
-                        )
-                        raise RuntimeError(
-                            "Please add constraints for the package "
-                            "version listed above"
-                        )
+                dep.check_version_matches(self.ignore[dep.package])
                 return None
             self.packages[dep.package] = dep.version
             if self.forbid_post or dep.is_compatible:
