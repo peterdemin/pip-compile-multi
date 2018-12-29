@@ -106,9 +106,9 @@ class FixOptions(BaseOptions):
         super(FixOptions, self).__init__()
 
     def update_from_dict(self, options):
-        if 'header' in options:
-            path = options['header']
-            with open(path) as fp:
+        header_file = options.pop('header', None)
+        if header_file is not None:
+            with open(header_file) as fp:
                 text = fp.read()
             options = dict(options, header=text)
         super(FixOptions, self).update_from_dict(options)
