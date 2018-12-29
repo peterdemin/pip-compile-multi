@@ -62,6 +62,15 @@ class BaseOptions(object):
         """Return list of field names for reset and update."""
         return list(self.__dict__)
 
+    def __repr__(self):
+        return '<{0} {1}>'.format(
+            self.__class__.__name__,
+            ", ".join(
+                "{0}={1}".format(key, getattr(self, key))
+                for key in self._fields()
+            )
+        )
+
 
 class DiscoveryOptions(BaseOptions):
     """Options related to files discovery"""
@@ -96,6 +105,23 @@ class FixOptions(BaseOptions):
         self.header = DEFAULT['header']
         super(FixOptions, self).__init__()
 
+    def update_from_dict(self, options):
+        if 'header' in options:
+            path = options['header']
+            with open(path) as fp:
+                text = fp.read()
+            options = dict(options, header=text)
+        super(FixOptions, self).update_from_dict(options)
+
+    def __repr__(self):
+        return '<{0} {1}>'.format(
+            self.__class__.__name__,
+            ", ".join(
+                "{0}={1}".format(key, getattr(self, key))
+                for key in ('compatible', 'forbid_post')
+            )
+        )
+
 
 class Options(object):
     """Runtime options"""
@@ -120,6 +146,13 @@ class Options(object):
     def set(self, key, value):
         """Set single option value."""
         self.update_from_dict({key: value})
+
+    def __repr__(self):
+        return '{0} {1} {2}'.format(
+            self.discovery,
+            self.compile,
+            self.fix,
+        )
 
 
 OPTIONS = Options()

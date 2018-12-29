@@ -41,7 +41,7 @@ def read_sections():
     config = configparser.ConfigParser()
     config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
     return [
-        (name, config[name])
+        (name, dict(config[name].items()))
         for name in config.sections()
         if name.startswith(PREFIX)
     ]

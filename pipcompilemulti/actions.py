@@ -5,7 +5,7 @@ import os
 import logging
 import itertools
 
-from .options import OPTIONS, DEFAULT_HEADER
+from .options import OPTIONS
 from .discover import discover
 from .environment import Environment
 from .verify import generate_hash_comment
@@ -25,11 +25,6 @@ def recompile():
             '*.' + OPTIONS.discovery.in_ext,
         ),
     )
-    if OPTIONS.fix.header:
-        with open(OPTIONS.fix.header) as fp:
-            base_header_text = fp.read()
-    else:
-        base_header_text = DEFAULT_HEADER
     hashed_by_reference = set()
     for name in OPTIONS.compile.generate_hashes:
         hashed_by_reference.update(
@@ -56,7 +51,7 @@ def recompile():
         logger.info("Locking %s to %s. References: %r",
                     env.infile, env.outfile, sorted(rrefs))
         env.create_lockfile()
-        header_text = generate_hash_comment(env.infile) + base_header_text
+        header_text = generate_hash_comment(env.infile) + OPTIONS.fix.header
         env.replace_header(header_text)
         env.add_references(conf['refs'])
         pinned_packages[conf['name']] = env.packages
