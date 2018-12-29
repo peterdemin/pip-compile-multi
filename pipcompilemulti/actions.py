@@ -7,7 +7,7 @@ import itertools
 
 from .options import OPTIONS
 from .discover import discover
-from .environment import Environment
+from .environment import environment_factory
 from .verify import generate_hash_comment
 
 
@@ -42,7 +42,7 @@ def recompile():
                 continue
         rrefs = recursive_refs(env_confs, conf['name'])
         add_hashes = conf['name'] in hashed_by_reference
-        env = Environment(
+        env = environment_factory(
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
             forbid_post=conf['name'] in OPTIONS.fix.forbid_post,

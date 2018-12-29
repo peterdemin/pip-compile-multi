@@ -4,10 +4,20 @@ import re
 import logging
 from fnmatch import fnmatch
 
-from .options import OPTIONS
-
 
 logger = logging.getLogger("pip-compile-multi")
+
+
+def dependency_builder_factory(compatible, upgrade):
+    """Factory that returns Dependency builder"""
+    def builder(line):
+        """Instantiate Dependency with preset compatible and upgrade."""
+        return Dependency(
+            line,
+            compatible,
+            upgrade,
+        )
+    return builder
 
 
 class Dependency(object):
@@ -42,8 +52,10 @@ class Dependency(object):
         r'(?P<comment>#.*)?$'
     )
 
-    def __init__(self, line):
+    def __init__(self, line, compatible, upgrade):
         regular = self.RE_DEPENDENCY.match(line)
+        self.compatible = compatible
+        self.upgrade = upgrade
         if regular:
             self.valid = True
             self.is_vcs = False
@@ -57,9 +69,6 @@ class Dependency(object):
             self.valid = True
             self.is_vcs = True
             self.package = vcs.group('package')
-            self.version = ''
-            self.hashes = ''  # No way!
-            self.comment = (vcs.group('comment') or '').strip()
             self.line = line
             return
         self.valid = False
@@ -107,7 +116,7 @@ class Dependency(object):
     @property
     def is_compatible(self):
         """Check if package name is matched by compatible_patterns"""
-        for pattern in OPTIONS.fix.compatible:
+        for pattern in self.compatible:
             if fnmatch(self.package.lower(), pattern):
                 return True
         return False
@@ -124,7 +133,7 @@ class Dependency(object):
             # None to disable conflict detection
             return
         if self.version and self.version != other_version:
-            if self.is_compatible and not OPTIONS.compile.upgrade:
+            if self.is_compatible and not self.upgrade:
                 # Skip false positive when locking compatible
                 # release without upgrade.
                 return

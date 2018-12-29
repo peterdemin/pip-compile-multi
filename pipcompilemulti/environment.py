@@ -2,35 +2,67 @@
 
 import os
 import re
-import sys
 import logging
-import subprocess
 
 from .options import OPTIONS
-from .dependency import Dependency
+from .locker import Locker, PipCompile
+from .dependency import dependency_builder_factory
 
 
 logger = logging.getLogger("pip-compile-multi")
+
+
+def environment_factory(name,
+                        ignore=None,
+                        forbid_post=False,
+                        add_hashes=False):
+    """Create Environment instance"""
+    infile = os.path.join(
+        OPTIONS.discovery.directory,
+        '{0}.{1}'.format(name, OPTIONS.discovery.in_ext),
+    )
+    outfile = os.path.join(
+        OPTIONS.discovery.directory,
+        '{0}.{1}'.format(name, OPTIONS.discovery.out_ext),
+    )
+    return Environment(
+        name,
+        infile,
+        outfile,
+        OPTIONS.discovery.out_ext,
+        locker=Locker(
+            outfile=outfile,
+            forbid_post=forbid_post,
+            ignore=ignore,
+            dependency_builder=dependency_builder_factory(
+                compatible=OPTIONS.fix.compatible,
+                upgrade=OPTIONS.compile.upgrade,
+            ),
+            compiler=PipCompile(
+                infile=infile,
+                outfile=outfile,
+                upgrade=OPTIONS.compile.upgrade,
+                generate_hashes=add_hashes,
+            ),
+        )
+    )
 
 
 class Environment(object):
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
-    # future[s] is obsolete in python3
-    PY3_IGNORE = {'future': None, 'futures': None}
 
-    def __init__(self, name, ignore=None, forbid_post=False, add_hashes=False):
+    def __init__(self, name, infile, outfile, out_ext, locker):
         """
         name - name of the environment, e.g. base, test
         ignore - set of package names to omit in output
         """
         self.name = name
-        self.ignore = ignore or {}
-        if sys.version_info[0] >= 3:
-            self.ignore.update(self.PY3_IGNORE)
-        self.forbid_post = forbid_post
-        self.add_hashes = add_hashes
+        self.infile = infile
+        self.outfile = outfile
+        self.out_ext = out_ext
+        self.locker = locker
         self.packages = {}
 
     def create_lockfile(self):
@@ -39,20 +71,7 @@ class Environment(object):
         with hard-pinned versions.
         Then fix it.
         """
-        process = subprocess.Popen(
-            self.pin_command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        stdout, stderr = process.communicate()
-        if process.returncode == 0:
-            self.fix_lockfile()
-        else:
-            logger.critical("ERROR executing %s", ' '.join(self.pin_command))
-            logger.critical("Exit code: %s", process.returncode)
-            logger.critical(stdout.decode('utf-8'))
-            logger.critical(stderr.decode('utf-8'))
-            raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
+        self.packages.update(self.locker.create_lockfile())
 
     @classmethod
     def parse_references(cls, filename):
@@ -75,90 +94,6 @@ class Environment(object):
                 references.add(reference_base)
         return references
 
-    @property
-    def infile(self):
-        """Path of the input file"""
-        return os.path.join(
-            OPTIONS.discovery.directory,
-            '{0}.{1}'.format(self.name, OPTIONS.discovery.in_ext),
-        )
-
-    @property
-    def outfile(self):
-        """Path of the output file"""
-        return os.path.join(
-            OPTIONS.discovery.directory,
-            '{0}.{1}'.format(self.name, OPTIONS.discovery.out_ext),
-        )
-
-    @property
-    def pin_command(self):
-        """Compose pip-compile shell command"""
-        parts = [
-            'pip-compile',
-            '--no-header',
-            '--verbose',
-            '--rebuild',
-            '--no-index',
-            '--output-file', self.outfile,
-            self.infile,
-        ]
-        if OPTIONS.compile.upgrade:
-            parts.insert(3, '--upgrade')
-        if self.add_hashes:
-            parts.insert(1, '--generate-hashes')
-        return parts
-
-    def fix_lockfile(self):
-        """Run each line of outfile through fix_pin"""
-        with open(self.outfile, 'rt') as fp:
-            lines = [
-                self.fix_pin(line)
-                for line in self.concatenated(fp)
-            ]
-        with open(self.outfile, 'wt') as fp:
-            fp.writelines([
-                line + '\n'
-                for line in lines
-                if line is not None
-            ])
-
-    @staticmethod
-    def concatenated(fp):
-        """Read lines from fp concatenating on backslash (\\)"""
-        line_parts = []
-        for line in fp:
-            line = line.strip()
-            if line.endswith('\\'):
-                line_parts.append(line[:-1].rstrip())
-            else:
-                line_parts.append(line)
-                yield ' '.join(line_parts)
-                line_parts[:] = []
-        if line_parts:
-            # Impossible:
-            raise RuntimeError("Compiled file ends with backslash \\")
-
-    def fix_pin(self, line):
-        """
-        Fix dependency by removing post-releases from versions
-        and loosing constraints on internal packages.
-        Drop packages from ignore set
-
-        Also populate packages set
-        """
-        dep = Dependency(line)
-        if dep.valid:
-            if dep.package in self.ignore:
-                dep.check_version_matches(self.ignore[dep.package])
-                return None
-            self.packages[dep.package] = dep.version
-            if self.forbid_post or dep.is_compatible:
-                # Always drop post for internal packages
-                dep.drop_post()
-            return dep.serialize()
-        return line.strip()
-
     def add_references(self, other_names):
         """Add references to other_names in outfile"""
         if not other_names:
@@ -169,7 +104,7 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
             fp.writelines(
-                '-r {0}.{1}\n'.format(other_name, OPTIONS.discovery.out_ext)
+                '-r {0}.{1}\n'.format(other_name, self.out_ext)
                 for other_name in sorted(other_names)
             )
             fp.writelines(body)
