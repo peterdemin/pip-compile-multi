@@ -456,7 +456,7 @@ Bonus: boilerplate to put in project's README
 
 Nice way of introducing dependency management process to new team members for copy-pasting to `README.md`:
 
-.. code-block:: markdown
+.. code-block:: text
 
     ## Dependency management
 
