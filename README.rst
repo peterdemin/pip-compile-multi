@@ -81,7 +81,7 @@ Let's put aside point 1 and fight point 2. Let's do
 
     pip freeze > requirements/base.txt
 
-Now we have full heirarchy of dependencies hard-pinned:
+Now we have full hierarchy of dependencies hard-pinned:
 
 .. code-block:: text
 
