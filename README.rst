@@ -73,7 +73,7 @@ That's good for a starter. But there are two significant drawbacks:
 1. Developers have to do non-trivial operations if they want to keep up with
    newer versions (that have bug fixes and performance improvements).
 2. Indirect dependencies (that is dependencies of dependencies) may still have
-   backward-incompatible releases, that brake everything.
+   backward-incompatible releases, that break everything.
 
 Let's put aside point 1 and fight point 2. Let's do
 
@@ -260,7 +260,7 @@ Benefits of using pip-compile-multi
 I want to summarise, why ``pip-compile-multi`` might be a good addition to your project.
 Some of the benefits are achievable with other methods, but I want to be general:
 
-1. Production will not suddenly brake after redeployment because of
+1. Production will not suddenly break after redeployment because of
    backward incompatible dependency release.
 2. Every development machine will have the same package versions.
 3. Service still uses most recent versions of packages.
