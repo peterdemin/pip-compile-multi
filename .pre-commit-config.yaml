@@ -1,0 +1,5 @@
+repos:
+  - repo: .
+    rev: 9e10f14ff2db314ca10b7dcd3a837f0b66557c7d
+    hooks:
+      - id: pip-compile-multi-verify
