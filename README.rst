@@ -114,7 +114,7 @@ So let's get hands dirty and put all the testing stuff into ``requirements/test.
 .. code-block:: text
 
     -r base.in
-    
+
     prospector
     pylint
     flake8
@@ -190,11 +190,11 @@ Let's rehearse. Example service has two groups of dependencies
 
 .. code-block:: shell
 
-    $ cat requirements/base.in 
+    $ cat requirements/base.in
     click
     pip-tools
 
-    $ cat requirements/test.in 
+    $ cat requirements/test.in
     -r base.in
     prospector
     pylint
@@ -208,7 +208,7 @@ required by tests, or service itself.
 
 .. code-block:: shell
 
-    $ cat requirements/local.in 
+    $ cat requirements/local.in
     -r test.in
     tox
 
@@ -243,7 +243,7 @@ Than you open ``test.in`` and soft-pin it with descriptive comment:
 
 .. code-block:: shell
 
-    $ cat requirements/test.in 
+    $ cat requirements/test.in
     -r base.in
     prospector
     pylint<1.8  # Newer versions dropped support for Python 2.4
@@ -376,7 +376,7 @@ Limit ``.in`` files
 ===================
 
 By default ``pip-compile-multi`` compiles all ``.in`` files in ``requirements`` directory.
-To limit compilation to only a subset, use 
+To limit compilation to only a subset, use
 
 .. code-block:: text
 
@@ -450,6 +450,17 @@ In big teams it might be a good idea to have this check in ``tox.ini``:
     deps = pip-compile-multi
     commands = pip-compile-multi verify
 
+Verify as pre-commit hook
+=========================
+
+To verify that ``pip-compile-multi`` has been run after changing ``.in`` files as a `PreCommit`_ hook, just add the following to your local repo's ``.pre-commit-config.yaml`` file:
+
+.. code-block:: yaml
+
+    - repo: https://github.com/peterdemin/pip-compile-multi
+      rev: v1.3.2
+      hooks:
+        - id: pip-compile-multi-verify
 
 Bonus: boilerplate to put in project's README
 ---------------------------------------------
@@ -488,3 +499,4 @@ under existing version on PyPI.
 .. _Pip Tools: https://github.com/jazzband/pip-tools
 .. _PipEnv: https://github.com/pypa/pipenv
 .. _GitHub issue: https://github.com/peterdemin/pip-compile-multi/issues
+.. _PreCommit: https://pre-commit.com/
