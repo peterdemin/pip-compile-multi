@@ -3,3 +3,9 @@ repos:
     rev: v1.3.2
     hooks:
       - id: pip-compile-multi-verify
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.1.0
+    hooks:
+      - id: flake8
+      - id: trailing-whitespace
