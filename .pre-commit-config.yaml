@@ -1,5 +1,5 @@
 repos:
   - repo: https://github.com/peterdemin/pip-compile-multi
-    rev: a397f00efb9c477699d2265eff11353e03385adf
+    rev: v1.3.2
     hooks:
       - id: pip-compile-multi-verify
