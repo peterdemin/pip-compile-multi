@@ -6,7 +6,7 @@
 #    pip-compile-multi
 #
 backports.functools-lru-cache==1.5
-configparser==3.5.0
+configparser==3.7.1
 enum34==1.1.6
 funcsigs==1.0.2
 future==0.17.1
