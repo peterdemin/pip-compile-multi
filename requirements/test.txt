@@ -5,16 +5,17 @@
 #
 #    pip-compile-multi
 #
--r base.txt
 atomicwrites==1.2.1       # via pytest
 attrs==18.2.0             # via pytest
+click==7.0
 coverage==4.5.2           # via pytest-cov
 mock==2.0.0
 more-itertools==5.0.0     # via pytest
-pathlib2==2.3.3           # via pytest
 pbr==5.1.2                # via mock
+pip-tools==3.3.2
 pluggy==0.8.1             # via pytest
 py==1.7.0                 # via pytest
 pytest-cov==2.6.1
-pytest==4.2.0
-scandir==1.9.0            # via pathlib2
+pytest==4.2.1
+six==1.12.0
+toposort==1.5
