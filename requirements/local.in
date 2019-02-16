@@ -8,3 +8,4 @@ prospector
 flake8~=3.5.0  # waiting for prospector to catch up with pyflakes constraint
 collective.checkdocs
 pygments
+pre-commit
