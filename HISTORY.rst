@@ -1,6 +1,11 @@
 History
 =======
 
+1.3.1 (2019-02-19)
+------------------
+
+* Re-remove workaround for future[s] packages in Python3
+
 1.3.0 (2018-12-27)
 ------------------
 
