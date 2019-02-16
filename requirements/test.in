@@ -4,3 +4,4 @@ pytest
 pytest-cov
 mock
 six
+more-itertools < 6.0  # 6.0 dropped Python2.7 support
