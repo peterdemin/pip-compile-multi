@@ -5,26 +5,41 @@
 #
 #    pip-compile-multi
 #
--r py27.txt
--r test.txt
 astroid==1.6.5
+atomicwrites==1.3.0       # via pytest
+attrs==18.2.0             # via pytest
+backports.functools-lru-cache==1.5
 bleach==3.1.0             # via readme-renderer
 bump2version==0.5.10
 certifi==2018.11.29       # via requests
 chardet==3.0.4            # via requests
+click==7.0
 collective.checkdocs==0.2
+configparser==3.7.1
+coverage==4.5.2           # via pytest-cov
 docutils==0.14            # via collective.checkdocs, readme-renderer
 dodgy==0.1.9              # via prospector
+enum34==1.1.6
 filelock==3.0.10          # via tox
 flake8-polyfill==1.0.2    # via pep8-naming
 flake8==3.5.0
+funcsigs==1.0.2
+future==0.17.1
+futures==3.2.0
 idna==2.8                 # via requests
 isort==4.3.4              # via pylint
 lazy-object-proxy==1.3.1  # via astroid
 mccabe==0.6.1             # via flake8, prospector, pylint
+mock==2.0.0
+more-itertools==5.0.0
+pathlib2==2.3.3           # via pytest
+pbr==5.1.2                # via mock
 pep8-naming==0.8.2        # via prospector
+pip-tools==3.3.2
 pkginfo==1.5.0.1          # via twine
+pluggy==0.8.1             # via pytest, tox
 prospector==0.12.11
+py==1.7.0                 # via pytest, tox
 pycodestyle==2.3.1        # via flake8, prospector
 pydocstyle==3.0.0         # via prospector
 pyflakes==1.6.0           # via flake8, prospector
@@ -32,19 +47,25 @@ pygments==2.3.1
 pylint-common==0.2.5      # via prospector
 pylint-plugin-utils==0.4  # via prospector, pylint-common
 pylint==1.9.4
+pytest-cov==2.6.1
+pytest==4.2.1
 pyyaml==3.13              # via prospector
 readme-renderer==24.0     # via twine
 requests-toolbelt==0.9.1  # via twine
 requests==2.21.0          # via requests-toolbelt, twine
 requirements-detector==0.6  # via prospector
+scandir==1.9.0
 setoptconf==0.2.0         # via prospector
+singledispatch==3.4.0.3
+six==1.12.0
 snowballstemmer==1.2.1    # via pydocstyle
 toml==0.10.0              # via tox
+toposort==1.5
 tox==3.7.0
 tqdm==4.31.1              # via twine
 twine==1.13.0
 urllib3==1.24.1           # via requests
 virtualenv==16.4.0        # via tox
 webencodings==0.5.1       # via bleach
-wheel==0.33.0
+wheel==0.33.1
 wrapt==1.11.1             # via astroid
