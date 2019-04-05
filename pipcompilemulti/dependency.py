@@ -32,7 +32,7 @@ class Dependency(object):
         r'(?iu)(?P<editable>-e)?'
         r'\s*'
         r'(?P<prefix>\S+#egg=)'
-        r'(?P<package>[a-z0-9-_.]+)'
+        r'(?P<package>[^=&\s]+)'
         r'(?P<postfix>\S+)'
         r'\s*'
         r'(?P<comment>#.*)?$'
