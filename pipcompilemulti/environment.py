@@ -27,6 +27,7 @@ class Environment(object):
         self.forbid_post = forbid_post
         self.add_hashes = add_hashes
         self.packages = {}
+        self._outfile_pkg_names = None
 
     def create_lockfile(self):
         """
@@ -48,6 +49,22 @@ class Environment(object):
             logger.critical(stdout.decode('utf-8'))
             logger.critical(stderr.decode('utf-8'))
             raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
+
+    def maybe_create_lockfile(self):
+        """
+        Write recursive dependencies list to outfile unless the goal is to
+        upgrade specific package(s) which don't already
+        appear. Populate package ignore set in either case and return
+        boolean indicating whether outfile was written.
+        """
+        if OPTIONS['upgrade_packages'] and not any(
+                self.is_package_in_outfile(p)
+                for p in OPTIONS['upgrade_packages']):
+            self.fix_lockfile()  # populate ignore set
+            return False
+
+        self.create_lockfile()
+        return True
 
     @classmethod
     def parse_references(cls, filename):
@@ -82,6 +99,19 @@ class Environment(object):
         return os.path.join(OPTIONS['base_dir'],
                             '{0}.{1}'.format(self.name, OPTIONS['out_ext']))
 
+    def is_package_in_outfile(self, pkg):
+        """Is specified package name already in the outfile?"""
+        pkg_names = self._outfile_pkg_names
+        if pkg_names is None:
+            pkg_names = self._outfile_pkg_names = set()
+            try:
+                with open(self.outfile, 'rt') as fp:
+                    pkg_names.update(l.split('==')[0].lower() for l in fp)
+            except IOError:
+                pass  # Act as if file is empty
+
+        return pkg.lower() in pkg_names
+
     @property
     def pin_command(self):
         """Compose pip-compile shell command"""
@@ -91,13 +121,18 @@ class Environment(object):
             '--verbose',
             '--rebuild',
             '--no-index',
-            '--output-file', self.outfile,
-            self.infile,
         ]
+        if OPTIONS['upgrade_packages']:
+            parts.extend(
+                '--upgrade-package=' + p for p in OPTIONS['upgrade_packages']
+                if self.is_package_in_outfile(p))
+
         if OPTIONS['upgrade']:
-            parts.insert(3, '--upgrade')
+            parts.append('--upgrade')
         if self.add_hashes:
-            parts.insert(1, '--generate-hashes')
+            parts.append('--generate-hashes')
+
+        parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 
     def fix_lockfile(self):

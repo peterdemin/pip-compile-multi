@@ -12,6 +12,7 @@ OPTIONS = {
     'include_names': [],
     'out_ext': 'txt',
     'upgrade': True,
+    'upgrade_packages': [],
 }
 
 DEFAULT_HEADER = """

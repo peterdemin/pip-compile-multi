@@ -30,6 +30,7 @@ def lock():
 def upgrade():
     """Upgrade locked dependency versions"""
     OPTIONS['upgrade'] = True
+    OPTIONS['upgrade_packages'] = []
     run_configurations(recompile, read_config)
 
 
