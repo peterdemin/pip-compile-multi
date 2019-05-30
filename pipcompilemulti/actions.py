@@ -55,10 +55,12 @@ def recompile():
         )
         logger.info("Locking %s to %s. References: %r",
                     env.infile, env.outfile, sorted(rrefs))
-        env.create_lockfile()
-        header_text = generate_hash_comment(env.infile) + base_header_text
-        env.replace_header(header_text)
-        env.add_references(conf['refs'])
+        if env.maybe_create_lockfile():
+            # Only munge lockfile if it was written.
+            header_text = generate_hash_comment(env.infile) + base_header_text
+            env.replace_header(header_text)
+            env.add_references(conf['refs'])
+
         pinned_packages[conf['name']] = env.packages
 
 

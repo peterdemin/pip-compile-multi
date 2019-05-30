@@ -5,7 +5,8 @@ import pytest
 from pipcompilemulti.cli_v1 import cli
 
 
-@pytest.mark.parametrize('command', ['--no-upgrade', '--upgrade'])
+@pytest.mark.parametrize('command', ['--no-upgrade', '--upgrade',
+                                     '--upgrade-package=pip-tools'])
 def test_v1_command_exits_with_zero(command):
     """Run pip-compile-multi on self"""
     runner = CliRunner()
@@ -23,4 +24,12 @@ def test_v1_verify_exits_with_zero():
     """Run pip-compile-multi on self"""
     runner = CliRunner()
     result = runner.invoke(cli, ['verify'])
+    assert result.exit_code == 0
+
+
+def test_v1_command_conflict():
+    """--upgrade-package implies --no-upgrade"""
+    runner = CliRunner()
+    parameters = ['--upgrade', '--upgrade-package=pip-tools']
+    result = runner.invoke(cli, parameters)
     assert result.exit_code == 0
