@@ -12,7 +12,7 @@ configparser==3.7.4       # via importlib-metadata
 contextlib2==0.5.5        # via importlib-metadata
 coverage==4.5.3           # via pytest-cov
 funcsigs==1.0.2           # via mock, pytest
-importlib-metadata==0.15  # via pluggy
+importlib-metadata==0.17  # via pluggy
 mock==3.0.5
 more-itertools==5.0.0
 pathlib2==2.3.3           # via importlib-metadata, pytest
