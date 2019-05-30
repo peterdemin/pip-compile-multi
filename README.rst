@@ -307,7 +307,25 @@ To recompile ``.txt`` keeping satisfying version use ``--no-upgrade``:
 
     --upgrade / --no-upgrade    Upgrade package version (default true)
 
-The option does not affect if there are no existing ``.txt`` files.
+The option has no effect if there are no existing ``.txt`` files.
+
+Upgrade only selected packages
+==============================
+
+To upgrade only one package and keep everything else untouched, use following option:
+
+.. code-block:: text
+
+    -P, --upgrade-package TEXT  Only upgrade named package.
+                                Can be supplied multiple times.
+
+Under the hood it uses
+`the same option of pip-compile <https://github.com/jazzband/pip-tools#updating-requirements>`_
+and runs compilation only for files that have one of the passed packages.
+
+This option implies ``--no-upgrade`` and takes precedence over ``--upgrade``.
+
+Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
 
 Compatible Releases
 ===================
