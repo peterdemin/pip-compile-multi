@@ -418,9 +418,9 @@ Forbid .postX release
 
 .. code-block:: text
 
-  -P, --forbid-post TEXT      Environment name (base, test, etc) that cannot
-                              have packages with post-release versions
-                              (1.2.3.post777). Can be supplied multiple times.
+    -p, --forbid-post TEXT      Environment name (base, test, etc) that cannot
+                                have packages with post-release versions
+                                (1.2.3.post777). Can be supplied multiple times.
 
 Be careful with this option since different maintainers treat post releases differently.
 

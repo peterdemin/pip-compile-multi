@@ -14,7 +14,7 @@ from .verify import verify_environments
 @click.option('--compatible', '-c', multiple=True,
               help='Glob expression for packages with compatible (~=) '
                    'version constraint. Can be supplied multiple times.')
-@click.option('--forbid-post', '-P', multiple=True,
+@click.option('--forbid-post', '-p', multiple=True,
               help="Environment name (base, test, etc) that cannot have "
                    'packages with post-release versions (1.2.3.post777). '
                    'Can be supplied multiple times.')
