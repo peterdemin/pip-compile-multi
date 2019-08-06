@@ -1,6 +1,6 @@
 -r base.in
 
-pytest
+pytest ~= 4.6  # 4.6 is last to support Python2.7
 pytest-cov
 mock
 six
