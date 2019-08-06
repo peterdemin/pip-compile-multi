@@ -21,8 +21,9 @@ def discover(glob_pattern):
     ...     {'name': 'base', 'refs': set()},
     ...     {'name': 'py27', 'refs': set()},
     ...     {'name': 'test', 'refs': {'base'}},
+    ...     {'name': 'test27', 'refs': {'py27'}},
     ...     {'name': 'local', 'refs': {'test'}},
-    ...     {'name': 'local27', 'refs': {'test', 'py27'}},
+    ...     {'name': 'local27', 'refs': {'test', 'test27'}},
     ...     {'name': 'testwin', 'refs': {'test'}},
     ... ]
     True
