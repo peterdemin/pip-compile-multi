@@ -8,7 +8,7 @@
 -r py27.hash
 contextlib2==0.5.5 \
     --hash=sha256:509f9419ee91cdd00ba34443217d5ca51f5a364a404e1dce9e8979cea969ca48 \
-    --hash=sha256:6c0f26b0e73e68d2fcfbf0d73faf1635b1bd184c582a45a14feec37b0ece4811
+    --hash=sha256:f5260a6e679d2ff42ec91ec5252f4eeffdcf21053db9113bd0a8e4d953769c00
 pathlib2==2.3.4 \
     --hash=sha256:2156525d6576d21c4dcaddfa427fae887ef89a7a9de5cbfe0728b3aafa78427e \
     --hash=sha256:446014523bb9be5c28128c4d2a10ad6bb60769e78bd85658fe44a450674e0ef8
