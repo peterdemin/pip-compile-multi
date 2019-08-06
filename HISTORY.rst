@@ -1,6 +1,13 @@
 History
 =======
 
+1.5.0 (2019-08-06)
+------------------
+
+* Change short option for ``--forbid-post`` from ``-P`` to ``-p``
+  (as it conflicted with ``-P`` for ``--upgrade-package`` #147).
+
+
 1.3.1 (2019-02-19)
 ------------------
 
