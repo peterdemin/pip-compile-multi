@@ -463,10 +463,12 @@ In big teams it might be a good idea to have this check in ``tox.ini``:
 
 .. code-block:: ini
 
-    [testenv:deps]
-    skip_install = True
+    [testenv:verify]
+    skipsdist = true
+    skip_install = true
     deps = pip-compile-multi
     commands = pip-compile-multi verify
+    whitelist_externals = pip-compile-multi
 
 Verify as pre-commit hook
 =========================
