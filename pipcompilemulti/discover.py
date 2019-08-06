@@ -16,12 +16,13 @@ def discover(glob_pattern):
     parse them, and return list of environments:
 
     >>> envs = discover("requirements/*.in")
-    >>> # print(envs)
+    >>> # import pprint; pprint.pprint(envs)
     >>> envs == [
     ...     {'name': 'base', 'refs': set()},
     ...     {'name': 'py27', 'refs': set()},
+    ...     {'name': 'test35', 'refs': set()},
     ...     {'name': 'test', 'refs': {'base'}},
-    ...     {'name': 'test27', 'refs': {'py27'}},
+    ...     {'name': 'test27', 'refs': {'py27', 'test35'}},
     ...     {'name': 'local', 'refs': {'test'}},
     ...     {'name': 'local27', 'refs': {'test', 'test27'}},
     ...     {'name': 'testwin', 'refs': {'test'}},
