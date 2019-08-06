@@ -1,5 +1,5 @@
+-r test27.in
 -r test.in
--r py27.in
 
 tox
 twine
