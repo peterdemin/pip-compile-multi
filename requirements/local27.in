@@ -11,3 +11,4 @@ collective.checkdocs
 pygments
 pylint<2
 astroid<2
+pydocstyle<=3
