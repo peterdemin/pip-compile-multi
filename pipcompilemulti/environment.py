@@ -129,10 +129,15 @@ class Environment(object):
 
         if OPTIONS['upgrade']:
             parts.append('--upgrade')
+
+        if OPTIONS['use_cache']:
+            parts.remove('--rebuild')
+
         if self.add_hashes:
             parts.append('--generate-hashes')
 
         parts.extend(['--output-file', self.outfile, self.infile])
+
         return parts
 
     def fix_lockfile(self):

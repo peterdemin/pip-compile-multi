@@ -13,6 +13,7 @@ OPTIONS = {
     'out_ext': 'txt',
     'upgrade': True,
     'upgrade_packages': [],
+    'use_cache': False,
 }
 
 DEFAULT_HEADER = """

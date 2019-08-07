@@ -327,6 +327,14 @@ This option implies ``--no-upgrade`` and takes precedence over ``--upgrade``.
 
 Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
 
+Use Cache
+==============================
+Originally pip-compile-multi always executes pip-compile with --rebuild flag, which causes significant performance degradation (but is more reliable in edge cases).
+
+Option --use-cache that will remove --rebuild flag from the call to pip-compile.
+
+This way, the default behavior will be slow but safe, and those who are feeling lucky can save themselves a few minutes.
+
 Compatible Releases
 ===================
 

@@ -6,7 +6,8 @@ from pipcompilemulti.cli_v1 import cli
 
 
 @pytest.mark.parametrize('command', ['--no-upgrade', '--upgrade',
-                                     '--upgrade-package=pip-tools'])
+                                     '--upgrade-package=pip-tools',
+                                     '--use-cache'])
 def test_v1_command_exits_with_zero(command):
     """Run pip-compile-multi on self"""
     runner = CliRunner()
