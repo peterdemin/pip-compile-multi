@@ -3,13 +3,45 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pip-compile-multi's documentation!
-=============================================
+pip-compile-multi
+~~~~~~~~~~~~~~~~~
+
+.. include:: installation.rst
+
+.. include:: usage.rst
+
+
+Why should I use pip-compile-multi?
+===================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
 
+    example
+    benefits
+
+
+How do I use pip-compile-multi?
+===============================
+
+.. toctree::
+    :maxdepth: 2
+
+    features
+    precommit
+    boilerplate
+
+
+Additional notes
+================
+
+.. toctree::
+    :maxdepth: 2
+
+    history
+
+
+.. include:: afterword.rst
 
 
 Indices and tables
