@@ -1,17 +1,23 @@
 History
 =======
 
+1.5.1 (2019-08-08)
+------------------
+
+* Added option ``--use-cache``. (thanks to @kolotev #149).
+
+
 1.5.0 (2019-08-06)
 ------------------
 
-* Change short option for ``--forbid-post`` from ``-P`` to ``-p``
+* Changed short option for ``--forbid-post`` from ``-P`` to ``-p``
   (as it conflicted with ``-P`` for ``--upgrade-package`` #147).
 
 
 1.3.1 (2019-02-19)
 ------------------
 
-* Re-remove workaround for future[s] packages in Python3
+* Re-removed workaround for future[s] packages in Python3
 
 1.3.0 (2018-12-27)
 ------------------
@@ -22,7 +28,7 @@ History
 1.2.2 (2018-11-20)
 ------------------
 
-* Remove workaround for future[s] packages in Python3 (no longer needed)
+* Removed workaround for future[s] packages in Python3 (no longer needed)
 
 1.2.1 (2018-04-16)
 -------------------

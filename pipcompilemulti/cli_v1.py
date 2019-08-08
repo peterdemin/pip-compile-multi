@@ -38,7 +38,7 @@ from .verify import verify_environments
 @click.option('--upgrade-package', '-P', multiple=True,
               help='Only upgrade named package. Can be supplied multiple times.')
 @click.option('--use-cache', '-u', default=OPTIONS['use_cache'], is_flag=True,
-              help='Will remove --rebuild flag from the call to pip-compile.')
+              help='Use pip-tools cache to speed up compilation.')
 def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         in_ext, out_ext, header, only_name, upgrade, upgrade_package, use_cache):
     """Recompile"""

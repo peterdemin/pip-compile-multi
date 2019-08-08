@@ -119,25 +119,21 @@ class Environment(object):
             'pip-compile',
             '--no-header',
             '--verbose',
-            '--rebuild',
             '--no-index',
         ]
         if OPTIONS['upgrade_packages']:
             parts.extend(
-                '--upgrade-package=' + p for p in OPTIONS['upgrade_packages']
-                if self.is_package_in_outfile(p))
-
+                '--upgrade-package=' + package
+                for package in OPTIONS['upgrade_packages']
+                if self.is_package_in_outfile(package)
+            )
         if OPTIONS['upgrade']:
             parts.append('--upgrade')
-
-        if OPTIONS['use_cache']:
-            parts.remove('--rebuild')
-
+        if not OPTIONS['use_cache']:
+            parts.append('--rebuild')
         if self.add_hashes:
             parts.append('--generate-hashes')
-
         parts.extend(['--output-file', self.outfile, self.infile])
-
         return parts
 
     def fix_lockfile(self):
