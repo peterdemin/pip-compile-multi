@@ -37,8 +37,10 @@ from .verify import verify_environments
               help='Upgrade package version (default true)')
 @click.option('--upgrade-package', '-P', multiple=True,
               help='Only upgrade named package. Can be supplied multiple times.')
+@click.option('--use-cache', '-u', default=OPTIONS['use_cache'], is_flag=True,
+              help='Will remove --rebuild flag from the call to pip-compile.')
 def cli(ctx, compatible, forbid_post, generate_hashes, directory,
-        in_ext, out_ext, header, only_name, upgrade, upgrade_package):
+        in_ext, out_ext, header, only_name, upgrade, upgrade_package, use_cache):
     """Recompile"""
 
     if upgrade_package:
@@ -57,6 +59,7 @@ def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         'include_names': only_name,
         'upgrade': upgrade,
         'upgrade_packages': upgrade_package,
+        'use_cache': use_cache,
     })
     if ctx.invoked_subcommand is None:
         recompile()
