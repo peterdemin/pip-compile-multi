@@ -95,7 +95,7 @@ On Windows:
 Your shell prompt will change to show the name of the activated environment.
 
 Install pip-compile-multi
--------------------------
+=========================
 
 Within the activated environment, use the following command to install pip-compile-multi:
 
@@ -109,7 +109,7 @@ pip-compile-multi is now installed. Check out the :doc:`/features` or go to the
 .. _install-install-virtualenv:
 
 Install virtualenv
-------------------
+==================
 
 If you are using Python 2, the venv module is not available. Instead,
 install `virtualenv`_.

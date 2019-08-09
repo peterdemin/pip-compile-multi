@@ -1,5 +1,5 @@
-Benefits of using pip-compile-multi
------------------------------------
+Benefits
+--------
 
 I want to summarise, why ``pip-compile-multi`` might be a good addition to your project.
 Some of the benefits are achievable with other methods, but I want to be general:
