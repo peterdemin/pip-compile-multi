@@ -36,7 +36,7 @@ Why use pip-compile-multi?
     example
     benefits
 
-
+   
 How to use pip-compile-multi?
 =============================
 
@@ -44,13 +44,14 @@ How to use pip-compile-multi?
     :maxdepth: 2
 
     installation
+    migration
     features
     precommit
     boilerplate
 
 
-Additional notes
-================
+Release notes
+=============
 
 .. toctree::
     :maxdepth: 2
