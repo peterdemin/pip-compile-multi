@@ -20,15 +20,7 @@ Compile multiple requirements files to lock dependency versions
 Trusted by
 ----------
 
-.. image:: docs/Uber_Logo_Black_RGB.svg
-   :width: 300 px
-   :height: 300 px
-   :align: left
-
-.. image:: docs/moz-logo-bw-rgb.svg
-   :width: 300 px
-   :height: 300 px
-   :align: left
+|mozilla| |uber|
 
 
 Installation
@@ -555,3 +547,14 @@ under existing version on PyPI.
 .. _PipEnv: https://github.com/pypa/pipenv
 .. _GitHub issue: https://github.com/peterdemin/pip-compile-multi/issues
 .. _PreCommit: https://pre-commit.com/
+
+
+
+.. |uber| image:: docs/Uber_Logo_Black_RGB.svg
+   :width: 300 px
+   :height: 300 px
+
+.. |mozilla| image:: docs/moz-logo-bw-rgb.svg
+   :width: 300 px
+   :height: 300 px
+
