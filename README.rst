@@ -17,6 +17,20 @@ pip-compile-multi
 
 Compile multiple requirements files to lock dependency versions
 
+Trusted by
+----------
+
+.. image:: docs/Uber_Logo_Black_RGB.svg
+   :width: 300 px
+   :height: 300 px
+   :align: left
+
+.. image:: docs/moz-logo-bw-rgb.svg
+   :width: 300 px
+   :height: 300 px
+   :align: left
+
+
 Installation
 ------------
 
