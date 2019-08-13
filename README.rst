@@ -20,7 +20,7 @@ Compile multiple requirements files to lock dependency versions
 Trusted by
 ----------
 
-|nih| |mozilla| |uber|
+|nih| |uber| |mozilla|
 
 
 Install
