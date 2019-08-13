@@ -20,7 +20,7 @@ Compile multiple requirements files to lock dependency versions
 Trusted by
 ----------
 
-|mozilla| |uber|
+|nih| |mozilla| |uber|
 
 
 Install
@@ -43,6 +43,10 @@ Read the Docs
 * `Why use pip-compile-multi <https://kibitzr.readthedocs.io/en/latest/>`_
 * `How to use pip-compile-multi <https://kibitzr.readthedocs.io/en/latest/>`_
 
+
+.. |nih| image:: docs/NIH-logo.svg
+   :width: 300 px
+   :height: 300 px
 
 .. |uber| image:: docs/Uber_Logo_Black_RGB.svg
    :width: 300 px
