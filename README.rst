@@ -45,14 +45,14 @@ Read the Docs
 
 
 .. |nih| image:: docs/NIH_logo.svg
-   :width: 300 px
-   :height: 300 px
+   :width: 200 px
+   :height: 200 px
 
 .. |uber| image:: docs/Uber_Logo_Black_RGB.svg
-   :width: 300 px
-   :height: 300 px
+   :width: 200 px
+   :height: 200 px
 
 .. |mozilla| image:: docs/moz-logo-bw-rgb.svg
-   :width: 300 px
-   :height: 300 px
+   :width: 200 px
+   :height: 200 px
 
