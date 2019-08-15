@@ -33,10 +33,9 @@ Why use pip-compile-multi?
 .. toctree::
     :maxdepth: 2
 
-    example
-    benefits
+    why
 
-   
+
 How to use pip-compile-multi?
 =============================
 
