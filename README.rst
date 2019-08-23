@@ -41,9 +41,9 @@ Trusted by
 Read the Docs
 -------------
 
-* `Why use pip-compile-multi <https://pip-compile-multi.readthedocs.io/en/latest/>`_
-* `How to use pip-compile-multi <https://pip-compile-multi.readthedocs.io/en/latest/>`_
-
+* `Why use pip-compile-multi <https://pip-compile-multi.readthedocs.io/en/latest/why.html>`_
+* `How to start using pip-compile-multi <https://pip-compile-multi.readthedocs.io/en/latest/migration.html>`_
+* `List of features <https://pip-compile-multi.readthedocs.io/en/latest/features.html>`_
 
 .. |nih| image:: docs/NIH_logo.svg
    :width: 200 px
