@@ -17,12 +17,6 @@ pip-compile-multi
 
 Compile multiple requirements files to lock dependency versions
 
-Trusted by
-----------
-
-|nih| |uber| |mozilla|
-
-
 Install
 -------
 
@@ -36,6 +30,13 @@ Run
 .. code-block:: shell
 
     pip-compile-multi
+
+
+Trusted by
+----------
+
+|nih| |uber| |mozilla|
+
 
 Read the Docs
 -------------
