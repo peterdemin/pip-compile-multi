@@ -9,7 +9,7 @@
 -r test27.txt
 astroid==1.6.6
 bleach==3.1.0             # via readme-renderer
-bump2version==0.5.10
+bump2version==0.5.11
 certifi==2019.6.16        # via requests
 chardet==3.0.4            # via requests
 collective.checkdocs==0.2
@@ -20,7 +20,7 @@ flake8-polyfill==1.0.2    # via pep8-naming
 flake8==3.5.0
 idna==2.8                 # via requests
 isort==4.3.21             # via pylint
-lazy-object-proxy==1.4.1  # via astroid
+lazy-object-proxy==1.4.2  # via astroid
 mccabe==0.6.1             # via flake8, prospector, pylint
 pep8-naming==0.8.2        # via prospector
 pkginfo==1.5.0.1          # via twine
@@ -41,10 +41,10 @@ setoptconf==0.2.0         # via prospector
 snowballstemmer==1.9.0    # via pydocstyle
 toml==0.10.0              # via tox
 tox==3.13.2
-tqdm==4.32.2              # via twine
+tqdm==4.35.0              # via twine
 twine==1.13.0
 urllib3==1.25.3           # via requests
-virtualenv==16.7.2        # via tox
+virtualenv==16.7.4        # via tox
 webencodings==0.5.1       # via bleach
-wheel==0.33.4
+wheel==0.33.6
 wrapt==1.11.2             # via astroid
