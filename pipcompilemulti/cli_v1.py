@@ -7,6 +7,7 @@ import click
 from .options import OPTIONS
 from .actions import recompile
 from .verify import verify_environments
+from .features import FEATURES
 
 
 @click.group(invoke_without_command=True)
@@ -24,8 +25,6 @@ from .verify import verify_environments
                    'Can be supplied multiple times.')
 @click.option('--directory', '-d', default=OPTIONS['base_dir'],
               help='Directory path with requirements files.')
-@click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
-              help='File extension of input files.')
 @click.option('--out-ext', '-o', default=OPTIONS['out_ext'],
               help='File extension of output files.')
 @click.option('--header', '-h', default='',
@@ -37,10 +36,9 @@ from .verify import verify_environments
               help='Upgrade package version (default true)')
 @click.option('--upgrade-package', '-P', multiple=True,
               help='Only upgrade named package. Can be supplied multiple times.')
-@click.option('--use-cache', '-u', default=OPTIONS['use_cache'], is_flag=True,
-              help='Use pip-tools cache to speed up compilation.')
+@FEATURES.bind
 def cli(ctx, compatible, forbid_post, generate_hashes, directory,
-        in_ext, out_ext, header, only_name, upgrade, upgrade_package, use_cache):
+        out_ext, header, only_name, upgrade, upgrade_package):
     """Recompile"""
 
     if upgrade_package:
@@ -53,13 +51,11 @@ def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         'forbid_post': set(forbid_post),
         'add_hashes': set(generate_hashes),
         'base_dir': directory,
-        'in_ext': in_ext,
         'out_ext': out_ext,
         'header_file': header or None,
         'include_names': only_name,
         'upgrade': upgrade,
         'upgrade_packages': upgrade_package,
-        'use_cache': use_cache,
     })
     if ctx.invoked_subcommand is None:
         recompile()

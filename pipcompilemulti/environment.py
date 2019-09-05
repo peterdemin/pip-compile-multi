@@ -7,6 +7,7 @@ import subprocess
 
 from .options import OPTIONS
 from .dependency import Dependency
+from .features import FEATURES
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -91,7 +92,7 @@ class Environment(object):
     def infile(self):
         """Path of the input file"""
         return os.path.join(OPTIONS['base_dir'],
-                            '{0}.{1}'.format(self.name, OPTIONS['in_ext']))
+                            FEATURES.compose_input_file_name(self.name))
 
     @property
     def outfile(self):
@@ -129,10 +130,9 @@ class Environment(object):
             )
         if OPTIONS['upgrade']:
             parts.append('--upgrade')
-        if not OPTIONS['use_cache']:
-            parts.append('--rebuild')
         if self.add_hashes:
             parts.append('--generate-hashes')
+        parts.extend(FEATURES.pin_options())
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 
