@@ -1,7 +1,7 @@
 """Aggregate all features in a single controller."""
 
 from .use_cache import UseCache
-from .file_extensions import InputExtension
+from .file_extensions import InputExtension, OutputExtension
 
 
 class FeaturesController:
@@ -10,9 +10,11 @@ class FeaturesController:
     def __init__(self):
         self.use_cache = UseCache()
         self.input_extension = InputExtension()
+        self.output_extension = OutputExtension()
         self._features = [
             self.use_cache,
             self.input_extension,
+            self.output_extension,
         ]
 
     def bind(self, command):
@@ -28,3 +30,7 @@ class FeaturesController:
     def compose_input_file_name(self, env_name):
         """Return input file name by environment name."""
         return self.input_extension.compose_input_file_name(env_name)
+
+    def compose_output_file_name(self, env_name):
+        """Return output file name by environment name."""
+        return self.output_extension.compose_output_file_name(env_name)

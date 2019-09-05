@@ -9,6 +9,7 @@ from .options import OPTIONS, DEFAULT_HEADER
 from .discover import discover
 from .environment import Environment
 from .verify import generate_hash_comment
+from .features import FEATURES
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -22,7 +23,7 @@ def recompile():
     env_confs = discover(
         os.path.join(
             OPTIONS['base_dir'],
-            '*.' + OPTIONS['in_ext'],
+            FEATURES.compose_input_file_name('*'),
         ),
     )
     if OPTIONS['header_file']:

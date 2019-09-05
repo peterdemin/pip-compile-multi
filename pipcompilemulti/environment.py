@@ -98,7 +98,7 @@ class Environment(object):
     def outfile(self):
         """Path of the output file"""
         return os.path.join(OPTIONS['base_dir'],
-                            '{0}.{1}'.format(self.name, OPTIONS['out_ext']))
+                            FEATURES.compose_output_file_name(self.name))
 
     def is_package_in_outfile(self, pkg):
         """Is specified package name already in the outfile?"""
@@ -208,7 +208,7 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
             fp.writelines(
-                '-r {0}.{1}\n'.format(other_name, OPTIONS['out_ext'])
+                '-r {0}\n'.format(FEATURES.compose_output_file_name(other_name))
                 for other_name in sorted(other_names)
             )
             fp.writelines(body)

@@ -8,12 +8,9 @@ OPTIONS = {
     'compatible_patterns': [],
     'forbid_post': [],
     'header_file': None,
-    'in_ext': 'in',
     'include_names': [],
-    'out_ext': 'txt',
     'upgrade': True,
     'upgrade_packages': [],
-    'use_cache': False,
 }
 
 DEFAULT_HEADER = """

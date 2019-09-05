@@ -25,8 +25,6 @@ from .features import FEATURES
                    'Can be supplied multiple times.')
 @click.option('--directory', '-d', default=OPTIONS['base_dir'],
               help='Directory path with requirements files.')
-@click.option('--out-ext', '-o', default=OPTIONS['out_ext'],
-              help='File extension of output files.')
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files.')
 @click.option('--only-name', '-n', multiple=True,
@@ -38,7 +36,7 @@ from .features import FEATURES
               help='Only upgrade named package. Can be supplied multiple times.')
 @FEATURES.bind
 def cli(ctx, compatible, forbid_post, generate_hashes, directory,
-        out_ext, header, only_name, upgrade, upgrade_package):
+        header, only_name, upgrade, upgrade_package):
     """Recompile"""
 
     if upgrade_package:
@@ -51,7 +49,6 @@ def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         'forbid_post': set(forbid_post),
         'add_hashes': set(generate_hashes),
         'base_dir': directory,
-        'out_ext': out_ext,
         'header_file': header or None,
         'include_names': only_name,
         'upgrade': upgrade,

@@ -47,6 +47,7 @@ class BaseFeature:
         """Bind feature's click option to passed command."""
         @wraps(func)
         def func_with_extra_option(*args, **kwargs):
+            """Save option value and call original command without it."""
             self.extract_option(kwargs)
             return func(*args, **kwargs)
 
@@ -55,3 +56,8 @@ class BaseFeature:
     def extract_option(self, kwargs):
         """Pop option value from kwargs and save it in OPTIONS."""
         OPTIONS[self.OPTION_NAME] = kwargs.pop(self.OPTION_NAME)
+
+    @property
+    def value(self):
+        """Option value."""
+        return OPTIONS.get(self.OPTION_NAME, self.CLICK_OPTION.default)

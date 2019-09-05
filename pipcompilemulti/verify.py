@@ -7,6 +7,7 @@ import logging
 from .options import OPTIONS
 from .discover import discover
 from .environment import Environment
+from .features import FEATURES
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -20,7 +21,7 @@ def verify_environments():
     env_confs = discover(
         os.path.join(
             OPTIONS['base_dir'],
-            '*.' + OPTIONS['in_ext'],
+            FEATURES.compose_input_file_name('*'),
         )
     )
     success = True

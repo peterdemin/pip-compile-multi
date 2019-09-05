@@ -39,8 +39,8 @@ class UseCache(BaseFeature):
 
     @property
     def enabled(self):
-        """Is this feature enabled."""
-        return OPTIONS[self.OPTION_NAME]
+        """Is cache enabled."""
+        return self.value
 
     def pin_options(self):
         """Return command-line options for pin command.
