@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+"""
+Configuration file for the Sphinx documentation builder.
+
+This file does only contain a selection of the most common options. For a
+full list see the documentation:
+http://www.sphinx-doc.org/en/master/config
+"""
+# pylint: disable=invalid-name,redefined-builtin
 
 # -- Path setup --------------------------------------------------------------
 
@@ -100,6 +101,11 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+
+extra_nav_links = {
+    'GitHub': 'https://github.com/peterdemin/pip-compile-multi',
+    'PyPI': 'https://pypi.org/project/pip-compile-multi/',
+}
 
 
 # -- Options for HTMLHelp output ---------------------------------------------

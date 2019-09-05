@@ -1,6 +1,6 @@
-===============================
+=================
 pip-compile-multi
-===============================
+=================
 
 .. image:: https://badge.fury.io/py/pip-compile-multi.png
     :target: http://badge.fury.io/py/pip-compile-multi
@@ -14,8 +14,9 @@ pip-compile-multi
 .. image:: https://img.shields.io/pypi/pyversions/pip-compile-multi.svg
     :target: https://pypi.python.org/pypi/pip-compile-multi
 
+`Docs <https://pip-compile-multi.readthedocs.io/en/latest/>`
 
-Compile multiple requirements files to lock dependency versions
+Compile multiple requirements files to lock dependency versions.
 
 Install
 -------
