@@ -20,15 +20,15 @@ Migration steps
 1. Create ``requirements`` directory.
 2. Copy-paste the list of project runtime dependencies
    to ``requirements/base.in``.
-2. Create ``requirements/test.in`` with test time dependencies.
+3. Create ``requirements/test.in`` with test time dependencies.
    Make sure it has a reference to runtime dependencies - ``-r base.in``.
-3. Run ``pip-compile-multi``. It will produce two more files:
+4. Run ``pip-compile-multi``. It will produce two more files:
 
     * ``requirements/base.txt``
     * ``requirements/test.txt``
 
-4. :ref:`Unpin <unpin>` packages in ``.in`` files.
-5. Run ``pip-compile-multi`` again to upgrade the compiled files.
+5. :ref:`Unpin <unpin>` packages in ``.in`` files.
+6. Run ``pip-compile-multi`` again to upgrade the compiled files.
 
 .. _unpin:
 

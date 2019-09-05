@@ -13,16 +13,7 @@ it's not always the case. The directory can be overridden with this option:
 
     -d, --directory TEXT   Directory path with requirements files
 
-Requirements Files Extensions
-=============================
-
-By default ``pip-compile-multi`` compiles ``*.txt`` from ``*.in`` files.
-While this is a common naming pattern, each project can use it's own:
-
-.. code-block:: text
-
-    -i, --in-ext TEXT      File extension of input files
-    -o, --out-ext TEXT     File extension of output files
+.. automodule:: pipcompilemulti.features.file_extensions
 
 Disable upgrades
 ================
@@ -54,26 +45,7 @@ This option implies ``--no-upgrade`` and takes precedence over ``--upgrade``.
 
 Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
 
-Use Cache
-=========
-
-By default ``pip-compile-multi`` executes ``pip-compile`` with ``--rebuild`` flag.
-This flag clears any caches upfront and rebuilds from scratch.
-Such a strategy has proven to be more reliable in `edge cases`_,
-but causes significant performance degradation.
-
-Option ``--use-cache`` removes ``--rebuild`` flag from the call to ``pip-compile``.
-
-.. code-block:: text
-
-    -u, --use-cache             Use pip-tools cache to speed up compilation.
-
-.. note::
-
-    When using ``--use-cache``, ``pip-compile-multi`` can run **10 times faster**.
-    But if you run into "magical" issues, try to rerun compilation without this flag first.
-
-.. _edge cases: https://github.com/jazzband/pip-tools/issues?q=--rebuild
+.. automodule:: pipcompilemulti.features.use_cache
 
 Compatible Releases
 ===================
