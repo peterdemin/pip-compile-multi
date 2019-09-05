@@ -14,7 +14,7 @@ pip-compile-multi
 .. image:: https://img.shields.io/pypi/pyversions/pip-compile-multi.svg
     :target: https://pypi.python.org/pypi/pip-compile-multi
 
-`Docs <https://pip-compile-multi.readthedocs.io/en/latest/>`
+`Docs <https://pip-compile-multi.readthedocs.io/en/latest/>`_
 
 Compile multiple requirements files to lock dependency versions.
 
