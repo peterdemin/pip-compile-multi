@@ -1,6 +1,6 @@
 """Common functionality for features activated by command line option."""
 
-from functools import wraps
+from functools import wraps, partial
 
 import click
 
@@ -14,23 +14,38 @@ class ClickOption:
                  long_option='',
                  short_option='',
                  is_flag=False,
-                 default=False,
+                 default=None,
+                 multiple=False,
                  help_text=''):
         self.long_option = long_option
         self.short_option = short_option
         self.is_flag = is_flag
         self.default = default
+        self.multiple = multiple
         self.help_text = help_text
 
     def decorator(self):
         """Create click command decorator with this option."""
-        return click.option(
+        result = partial(
+            click.option,
             self.long_option,
             self.short_option,
             is_flag=self.is_flag,
-            default=self.default,
+            multiple=self.multiple,
             help=self.help_text,
         )
+        if self.default:
+            return result(default=self.default)
+        return result()
+
+    @property
+    def argument_name(self):
+        """Generate command argument name from long option.
+
+        >>> ClickOption("--param-name").argument_name
+        'param_name'
+        """
+        return self.long_option.lstrip('--').replace('-', '_')
 
     def bind(self, func):
         """Decorate click command with this option."""
@@ -55,7 +70,7 @@ class BaseFeature:
 
     def extract_option(self, kwargs):
         """Pop option value from kwargs and save it in OPTIONS."""
-        OPTIONS[self.OPTION_NAME] = kwargs.pop(self.OPTION_NAME)
+        OPTIONS[self.OPTION_NAME] = kwargs.pop(self.CLICK_OPTION.argument_name)
 
     @property
     def value(self):

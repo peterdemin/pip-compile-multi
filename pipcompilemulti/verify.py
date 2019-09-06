@@ -18,12 +18,7 @@ def verify_environments():
     For each environment verify hash comments and report failures.
     If any failure occured, exit with code 1.
     """
-    env_confs = discover(
-        os.path.join(
-            OPTIONS['base_dir'],
-            FEATURES.compose_input_file_name('*'),
-        )
-    )
+    env_confs = discover(FEATURES.compose_input_file_path('*'))
     success = True
     for conf in env_confs:
         env = Environment(name=conf['name'])

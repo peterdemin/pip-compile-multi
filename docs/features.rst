@@ -3,15 +3,7 @@ Features
 
 ``pip-compile-multi`` supports many options to customize compilation.
 
-Requirements Directory
-======================
-
-While it's a common practice to put requirements files inside ``requirements`` directory,
-it's not always the case. The directory can be overridden with this option:
-
-.. code-block:: text
-
-    -d, --directory TEXT   Directory path with requirements files
+.. automodule:: pipcompilemulti.features.base_dir
 
 .. automodule:: pipcompilemulti.features.file_extensions
 
@@ -47,24 +39,7 @@ Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
 
 .. automodule:: pipcompilemulti.features.use_cache
 
-Compatible Releases
-===================
-
-`PEP-440`_ describes compatible release operator ``~=``.
-Sometimes it's useful to have some of the dependencies pinned using this operator.
-For example, rapidly changing internal libraries.
-The format for this option is
-
-.. code-block:: text
-
-    -c, --compatible TEXT
-
-where TEXT is a `glob`_ pattern for library name.
-This option can be supplied multiple times.
-
-
-.. _glob: https://en.wikipedia.org/wiki/Glob_(programming)
-.. _PEP-440: https://www.python.org/dev/peps/pep-0440/#compatible-release
+.. automodule:: pipcompilemulti.features.compatible
 
 Generate hashes
 ===============
@@ -131,18 +106,9 @@ For example, to compile one file under Python2.7 and another under Python3.6, ru
     $ virtual-env36/bin/pip-compile-multi -n deps36
     Locking requirements/deps36.in to requirements/deps36.txt. References: []
 
-Forbid .postX release
-=====================
 
-``pip-compile-multi`` can remove ``.postX`` part of dependencies versions.
+.. automodule:: pipcompilemulti.features.forbid_post
 
-.. code-block:: text
-
-    -p, --forbid-post TEXT      Environment name (base, test, etc) that cannot
-                                have packages with post-release versions
-                                (1.2.3.post777). Can be supplied multiple times.
-
-Be careful with this option since different maintainers treat post releases differently.
 
 Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
 =======================================================================

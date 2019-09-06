@@ -1,9 +1,8 @@
 """Dependency class"""
 
 import re
-from fnmatch import fnmatch
 
-from .options import OPTIONS
+from .features import FEATURES
 
 
 class Dependency(object):
@@ -68,7 +67,7 @@ class Dependency(object):
         """
         if self.is_vcs:
             return self.without_editable(self.line).strip()
-        equal = '~=' if self.is_compatible else '=='
+        equal = FEATURES.constraint(self.package)
         package_version = '{package}{equal}{version}  '.format(
             package=self.without_editable(self.package),
             version=self.version,
@@ -100,16 +99,6 @@ class Dependency(object):
             return line
         return cls.RE_EDITABLE_FLAG.sub('', line)
 
-    @property
-    def is_compatible(self):
-        """Check if package name is matched by compatible_patterns"""
-        for pattern in OPTIONS['compatible_patterns']:
-            if fnmatch(self.package.lower(), pattern):
-                return True
-        return False
-
-    def drop_post(self):
-        """Remove .postXXXX postfix from version"""
-        post_index = self.version.find('.post')
-        if post_index >= 0:
-            self.version = self.version[:post_index]
+    def drop_post(self, env_name):
+        """Remove .postXXXX postfix from version if needed."""
+        self.version = FEATURES.drop_post(env_name, self.package, self.version)

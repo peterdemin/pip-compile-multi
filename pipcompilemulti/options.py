@@ -4,9 +4,6 @@ Global dictionary holding configuration options
 
 OPTIONS = {
     'add_hashes': [],
-    'base_dir': 'requirements',
-    'compatible_patterns': [],
-    'forbid_post': [],
     'header_file': None,
     'include_names': [],
     'upgrade': True,

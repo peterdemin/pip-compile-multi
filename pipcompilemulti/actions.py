@@ -20,12 +20,7 @@ def recompile():
     Compile requirements files for all environments.
     """
     pinned_packages = {}
-    env_confs = discover(
-        os.path.join(
-            OPTIONS['base_dir'],
-            FEATURES.compose_input_file_name('*'),
-        ),
-    )
+    env_confs = discover(FEATURES.compose_input_file_path('*'))
     if OPTIONS['header_file']:
         with open(OPTIONS['header_file']) as fp:
             base_header_text = fp.read()
@@ -51,7 +46,6 @@ def recompile():
         env = Environment(
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
-            forbid_post=conf['name'] in OPTIONS['forbid_post'],
             add_hashes=add_hashes,
         )
         logger.info("Locking %s to %s. References: %r",

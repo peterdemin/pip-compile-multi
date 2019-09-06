@@ -12,9 +12,6 @@ from .features import FEATURES
 
 @click.group(invoke_without_command=True)
 @click.pass_context
-@click.option('--compatible', '-c', multiple=True,
-              help='Glob expression for packages with compatible (~=) '
-                   'version constraint. Can be supplied multiple times.')
 @click.option('--forbid-post', '-p', multiple=True,
               help="Environment name (base, test, etc) that cannot have "
                    'packages with post-release versions (1.2.3.post777). '
@@ -23,8 +20,6 @@ from .features import FEATURES
               help='Environment name (base, test, etc) that needs '
                    'packages hashes. '
                    'Can be supplied multiple times.')
-@click.option('--directory', '-d', default=OPTIONS['base_dir'],
-              help='Directory path with requirements files.')
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files.')
 @click.option('--only-name', '-n', multiple=True,
@@ -33,9 +28,10 @@ from .features import FEATURES
 @click.option('--upgrade/--no-upgrade', default=True,
               help='Upgrade package version (default true)')
 @click.option('--upgrade-package', '-P', multiple=True,
-              help='Only upgrade named package. Can be supplied multiple times.')
+              help='Only upgrade named package. '
+                   'Can be supplied multiple times.')
 @FEATURES.bind
-def cli(ctx, compatible, forbid_post, generate_hashes, directory,
+def cli(ctx, generate_hashes,
         header, only_name, upgrade, upgrade_package):
     """Recompile"""
 
@@ -45,10 +41,7 @@ def cli(ctx, compatible, forbid_post, generate_hashes, directory,
 
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
-        'compatible_patterns': compatible,
-        'forbid_post': set(forbid_post),
         'add_hashes': set(generate_hashes),
-        'base_dir': directory,
         'header_file': header or None,
         'include_names': only_name,
         'upgrade': upgrade,

@@ -18,14 +18,13 @@ class Environment(object):
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
-    def __init__(self, name, ignore=None, forbid_post=False, add_hashes=False):
+    def __init__(self, name, ignore=None, add_hashes=False):
         """
         name - name of the environment, e.g. base, test
         ignore - set of package names to omit in output
         """
         self.name = name
         self.ignore = ignore or {}
-        self.forbid_post = forbid_post
         self.add_hashes = add_hashes
         self.packages = {}
         self._outfile_pkg_names = None
@@ -91,14 +90,12 @@ class Environment(object):
     @property
     def infile(self):
         """Path of the input file"""
-        return os.path.join(OPTIONS['base_dir'],
-                            FEATURES.compose_input_file_name(self.name))
+        return FEATURES.compose_input_file_path(self.name)
 
     @property
     def outfile(self):
         """Path of the output file"""
-        return os.path.join(OPTIONS['base_dir'],
-                            FEATURES.compose_output_file_name(self.name))
+        return FEATURES.compose_output_file_path(self.name)
 
     def is_package_in_outfile(self, pkg):
         """Is specified package name already in the outfile?"""
@@ -192,9 +189,7 @@ class Environment(object):
                         )
                 return None
             self.packages[dep.package] = dep.version
-            if self.forbid_post or dep.is_compatible:
-                # Always drop post for internal packages
-                dep.drop_post()
+            dep.drop_post(self.name)
             return dep.serialize()
         return line.strip()
 
@@ -208,7 +203,9 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
             fp.writelines(
-                '-r {0}\n'.format(FEATURES.compose_output_file_name(other_name))
+                '-r {0}\n'.format(
+                    FEATURES.compose_output_file_name(other_name)
+                )
                 for other_name in sorted(other_names)
             )
             fp.writelines(body)
