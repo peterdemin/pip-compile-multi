@@ -16,10 +16,6 @@ from .features import FEATURES
               help="Environment name (base, test, etc) that cannot have "
                    'packages with post-release versions (1.2.3.post777). '
                    'Can be supplied multiple times.')
-@click.option('--generate-hashes', '-g', multiple=True,
-              help='Environment name (base, test, etc) that needs '
-                   'packages hashes. '
-                   'Can be supplied multiple times.')
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files.')
 @click.option('--only-name', '-n', multiple=True,
@@ -31,8 +27,7 @@ from .features import FEATURES
               help='Only upgrade named package. '
                    'Can be supplied multiple times.')
 @FEATURES.bind
-def cli(ctx, generate_hashes,
-        header, only_name, upgrade, upgrade_package):
+def cli(ctx, header, only_name, upgrade, upgrade_package):
     """Recompile"""
 
     if upgrade_package:
@@ -41,7 +36,6 @@ def cli(ctx, generate_hashes,
 
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
-        'add_hashes': set(generate_hashes),
         'header_file': header or None,
         'include_names': only_name,
         'upgrade': upgrade,

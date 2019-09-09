@@ -5,6 +5,7 @@ from .file_extensions import InputExtension, OutputExtension
 from .base_dir import BaseDir
 from .compatible import Compatible
 from .forbid_post import ForbidPost
+from .add_hashes import AddHashes
 
 
 class FeaturesController:
@@ -17,6 +18,7 @@ class FeaturesController:
         self.base_dir = BaseDir()
         self.compatible = Compatible()
         self.forbid_post = ForbidPost()
+        self.add_hashes = AddHashes()
         self._features = [
             self.use_cache,
             self.input_extension,
@@ -24,6 +26,7 @@ class FeaturesController:
             self.base_dir,
             self.compatible,
             self.forbid_post,
+            self.add_hashes,
         ]
 
     def bind(self, command):
@@ -32,9 +35,11 @@ class FeaturesController:
             command = feature.bind(command)
         return command
 
-    def pin_options(self):
+    def pin_options(self, env_name):
         """Return list of options to pin command."""
-        return self.use_cache.pin_options()
+        options = self.use_cache.pin_options()
+        options.extend(self.add_hashes.pin_options(env_name))
+        return options
 
     def compose_input_file_path(self, env_name):
         """Return input file path by environment name."""
@@ -63,3 +68,7 @@ class FeaturesController:
     def constraint(self, package_name):
         """Return ``~=`` if package_name matches patterns, ``==`` otherwise."""
         return self.compatible.constraint(package_name)
+
+    def on_discover(self, env_confs):
+        """Configure features with a list of discovered environments."""
+        self.add_hashes.on_discover(env_confs)

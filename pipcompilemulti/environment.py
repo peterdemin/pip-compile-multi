@@ -18,14 +18,13 @@ class Environment(object):
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
-    def __init__(self, name, ignore=None, add_hashes=False):
+    def __init__(self, name, ignore=None):
         """
         name - name of the environment, e.g. base, test
         ignore - set of package names to omit in output
         """
         self.name = name
         self.ignore = ignore or {}
-        self.add_hashes = add_hashes
         self.packages = {}
         self._outfile_pkg_names = None
 
@@ -127,9 +126,7 @@ class Environment(object):
             )
         if OPTIONS['upgrade']:
             parts.append('--upgrade')
-        if self.add_hashes:
-            parts.append('--generate-hashes')
-        parts.extend(FEATURES.pin_options())
+        parts.extend(FEATURES.pin_options(self.name))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 

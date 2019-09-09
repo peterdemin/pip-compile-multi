@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """High level actions to be called from CLI"""
 
-import os
 import logging
 import itertools
 
@@ -21,16 +20,12 @@ def recompile():
     """
     pinned_packages = {}
     env_confs = discover(FEATURES.compose_input_file_path('*'))
+    FEATURES.on_discover(env_confs)
     if OPTIONS['header_file']:
         with open(OPTIONS['header_file']) as fp:
             base_header_text = fp.read()
     else:
         base_header_text = DEFAULT_HEADER
-    hashed_by_reference = set()
-    for name in OPTIONS['add_hashes']:
-        hashed_by_reference.update(
-            reference_cluster(env_confs, name)
-        )
     included_and_refs = set(OPTIONS['include_names'])
     for name in set(included_and_refs):
         included_and_refs.update(
@@ -42,11 +37,9 @@ def recompile():
                 # Skip envs that are not included or referenced by included:
                 continue
         rrefs = recursive_refs(env_confs, conf['name'])
-        add_hashes = conf['name'] in hashed_by_reference
         env = Environment(
             name=conf['name'],
             ignore=merged_packages(pinned_packages, rrefs),
-            add_hashes=add_hashes,
         )
         logger.info("Locking %s to %s. References: %r",
                     env.infile, env.outfile, sorted(rrefs))
@@ -123,38 +116,3 @@ def recursive_refs(envs, name):
     else:
         indirect_refs = set()
     return set.union(refs, indirect_refs)
-
-
-def reference_cluster(envs, name):
-    """
-    Return set of all env names referencing or
-    referenced by given name.
-
-    >>> cluster = sorted(reference_cluster([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
-    ... ], 'test'))
-    >>> cluster == ['base', 'local', 'test']
-    True
-    """
-    edges = [
-        set([env['name'], ref])
-        for env in envs
-        for ref in env['refs']
-    ]
-    prev, cluster = set(), set([name])
-    while prev != cluster:
-        # While cluster grows
-        prev = set(cluster)
-        to_visit = []
-        for edge in edges:
-            if cluster & edge:
-                # Add adjacent nodes:
-                cluster |= edge
-            else:
-                # Leave only edges that are out
-                # of cluster for the next round:
-                to_visit.append(edge)
-        edges = to_visit
-    return cluster
