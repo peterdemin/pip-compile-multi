@@ -37,9 +37,9 @@ class Compatible(BaseFeature):
     )
 
     @property
-    def value(self):
+    def patterns(self):
         """Use empty list as the default."""
-        return super().value or []
+        return self.value or []
 
     def constraint(self, package_name):
         """Return ``~=`` if package_name matches patterns, ``==`` otherwise.
@@ -57,7 +57,7 @@ class Compatible(BaseFeature):
     def is_matched(self, package_name):
         """Whether package name matches one of configured glob patterns."""
         package = package_name.lower()
-        for pattern in self.value:
+        for pattern in self.patterns:
             if fnmatch(package, pattern):
                 return True
         return False

@@ -71,7 +71,7 @@ class AddHashes(BaseFeature):
     @property
     def enabled_envs(self):
         """Convert list of environment names to a set."""
-        return set(super().value or [])
+        return set(self.value or [])
 
     def on_discover(self, env_confs):
         """Save environment names that need hashing."""

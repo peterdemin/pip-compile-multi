@@ -34,9 +34,9 @@ class ForbidPost(BaseFeature):
     )
 
     @property
-    def value(self):
+    def enabled_envs(self):
         """Convert to set."""
-        return set(super().value or [])
+        return set(self.value or [])
 
     @staticmethod
     def drop_post(version):
@@ -54,4 +54,4 @@ class ForbidPost(BaseFeature):
 
     def post_forbidden(self, env_name):
         """Whether post versions are forbidden for passed environment name."""
-        return env_name in self.value
+        return env_name in self.enabled_envs
