@@ -10,6 +10,7 @@ from .add_hashes import AddHashes
 
 class FeaturesController:
     """Gateway to a list of features."""
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self):
         self.use_cache = UseCache()
