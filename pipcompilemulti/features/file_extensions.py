@@ -41,7 +41,7 @@ class OutputExtension(BaseFeature):
     OPTION_NAME = 'out_ext'
     CLICK_OPTION = ClickOption(
         long_option='--out-ext',
-        short_option='-i',
+        short_option='-o',
         default="txt",
         is_flag=False,
         help_text='File extension of output files.',
