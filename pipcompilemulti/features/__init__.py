@@ -1,3 +1,5 @@
+"""Features as modules."""
+
 from .controller import FeaturesController
 
 
