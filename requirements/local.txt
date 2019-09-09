@@ -48,7 +48,7 @@ snowballstemmer==1.9.1    # via pydocstyle
 toml==0.10.0              # via pre-commit, tox
 tox==3.14.0
 tqdm==4.35.0              # via twine
-twine==1.13.0
+twine==1.14.0
 urllib3==1.25.3           # via requests
 virtualenv==16.7.5        # via pre-commit, tox
 webencodings==0.5.1       # via bleach
