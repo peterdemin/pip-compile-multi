@@ -11,7 +11,8 @@ import pytest
 from pipcompilemulti.environment import Environment
 from pipcompilemulti.dependency import Dependency
 from pipcompilemulti.options import OPTIONS, DEFAULT_HEADER
-from pipcompilemulti.actions import reference_cluster, merged_packages
+from pipcompilemulti.actions import merged_packages
+from pipcompilemulti.features.add_hashes import reference_cluster
 
 
 PIN = 'pycodestyle==2.3.1        # via flake8'
