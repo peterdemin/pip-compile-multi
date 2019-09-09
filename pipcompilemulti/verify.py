@@ -1,10 +1,8 @@
 """Verify action"""
 
-import os
 import hashlib
 import logging
 
-from .options import OPTIONS
 from .discover import discover
 from .environment import Environment
 from .features import FEATURES
