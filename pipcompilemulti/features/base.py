@@ -1,6 +1,6 @@
 """Common functionality for features activated by command line option."""
 
-from functools import wraps, partial
+from functools import wraps
 
 import click
 
@@ -26,17 +26,17 @@ class ClickOption:
 
     def decorator(self):
         """Create click command decorator with this option."""
-        result = partial(
-            click.option,
-            self.long_option,
-            self.short_option,
+        args = [self.long_option]
+        kwargs = dict(
             is_flag=self.is_flag,
             multiple=self.multiple,
             help=self.help_text,
         )
+        if self.short_option:
+            args.append(self.short_option)
         if self.default:
-            return result(default=self.default)
-        return result()
+            kwargs.update(default=self.default)
+        return click.option(*args, **kwargs)
 
     @property
     def argument_name(self):

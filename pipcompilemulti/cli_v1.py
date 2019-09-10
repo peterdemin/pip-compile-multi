@@ -21,25 +21,13 @@ from .features import FEATURES
 @click.option('--only-name', '-n', multiple=True,
               help='Compile only for passed environment names and their '
                    'references. Can be supplied multiple times.')
-@click.option('--upgrade/--no-upgrade', default=True,
-              help='Upgrade package version (default true)')
-@click.option('--upgrade-package', '-P', multiple=True,
-              help='Only upgrade named package. '
-                   'Can be supplied multiple times.')
 @FEATURES.bind
-def cli(ctx, header, only_name, upgrade, upgrade_package):
+def cli(ctx, header, only_name):
     """Recompile"""
-
-    if upgrade_package:
-        # pip-compile only accepts one of --upgrade or --upgrade-package
-        upgrade = False
-
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
         'header_file': header or None,
         'include_names': only_name,
-        'upgrade': upgrade,
-        'upgrade_packages': upgrade_package,
     })
     if ctx.invoked_subcommand is None:
         recompile()

@@ -6,6 +6,7 @@ from .base_dir import BaseDir
 from .compatible import Compatible
 from .forbid_post import ForbidPost
 from .add_hashes import AddHashes
+from .upgrade import UpgradeAll, UpgradeSelected
 
 
 class FeaturesController:
@@ -20,6 +21,8 @@ class FeaturesController:
         self.compatible = Compatible()
         self.forbid_post = ForbidPost()
         self.add_hashes = AddHashes()
+        self.upgrade_all = UpgradeAll(self)
+        self.upgrade_selected = UpgradeSelected(self)
         self._features = [
             self.use_cache,
             self.input_extension,
@@ -28,6 +31,8 @@ class FeaturesController:
             self.compatible,
             self.forbid_post,
             self.add_hashes,
+            self.upgrade_all,
+            self.upgrade_selected,
         ]
 
     def bind(self, command):
@@ -73,3 +78,9 @@ class FeaturesController:
     def on_discover(self, env_confs):
         """Configure features with a list of discovered environments."""
         self.add_hashes.on_discover(env_confs)
+
+    def affected(self, env_name):
+        """Whether environment was affected by upgrade command."""
+        if self.upgrade_all.enabled:
+            return True
+        return self.upgrade_selected.affected(env_name)

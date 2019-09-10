@@ -5,7 +5,6 @@ import re
 import logging
 import subprocess
 
-from .options import OPTIONS
 from .dependency import Dependency
 from .features import FEATURES
 
@@ -51,14 +50,12 @@ class Environment(object):
 
     def maybe_create_lockfile(self):
         """
-        Write recursive dependencies list to outfile unless the goal is to
-        upgrade specific package(s) which don't already
-        appear. Populate package ignore set in either case and return
+        Write recursive dependencies list to outfile unless the goal is
+        to upgrade specific package(s) which don't already appear.
+        Populate package ignore set in either case and return
         boolean indicating whether outfile was written.
         """
-        if OPTIONS['upgrade_packages'] and not any(
-                self.is_package_in_outfile(p)
-                for p in OPTIONS['upgrade_packages']):
+        if FEATURES.affected(self.name):
             self.fix_lockfile()  # populate ignore set
             return False
 
@@ -106,7 +103,6 @@ class Environment(object):
                     pkg_names.update(l.split('==')[0].lower() for l in fp)
             except IOError:
                 pass  # Act as if file is empty
-
         return pkg.lower() in pkg_names
 
     @property
@@ -118,14 +114,6 @@ class Environment(object):
             '--verbose',
             '--no-index',
         ]
-        if OPTIONS['upgrade_packages']:
-            parts.extend(
-                '--upgrade-package=' + package
-                for package in OPTIONS['upgrade_packages']
-                if self.is_package_in_outfile(package)
-            )
-        if OPTIONS['upgrade']:
-            parts.append('--upgrade')
         parts.extend(FEATURES.pin_options(self.name))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts

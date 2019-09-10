@@ -3,11 +3,8 @@ Global dictionary holding configuration options
 """
 
 OPTIONS = {
-    'add_hashes': [],
     'header_file': None,
     'include_names': [],
-    'upgrade': True,
-    'upgrade_packages': [],
 }
 
 DEFAULT_HEADER = """
