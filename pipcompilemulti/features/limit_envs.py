@@ -24,6 +24,7 @@ For example, to compile one file under Python2.7 and another under Python3.6, ru
 .. automodule:: pipcompilemulti.features.forbid_post
 """
 
+from pipcompilemulti.utils import recursive_refs
 from .base import BaseFeature, ClickOption
 
 
@@ -63,31 +64,3 @@ class LimitEnvs(BaseFeature):
     def included(self, env_name):
         """Whether environment is included directly or by reference."""
         return env_name in self.all_envs
-
-
-def recursive_refs(envs, name):
-    """
-    Return set of recursive refs for given env name
-
-    >>> local_refs = sorted(recursive_refs([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
-    ... ], 'local'))
-    >>> local_refs == ['base', 'test']
-    True
-    """
-    refs_by_name = {
-        env['name']: set(env['refs'])
-        for env in envs
-    }
-    refs = refs_by_name[name]
-    if refs:
-        indirect_refs = set(
-            subref
-            for ref in refs
-            for subref in recursive_refs(envs, ref)
-        )
-    else:
-        indirect_refs = set()
-    return set.union(refs, indirect_refs)

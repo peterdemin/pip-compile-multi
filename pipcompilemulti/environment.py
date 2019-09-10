@@ -7,6 +7,7 @@ import subprocess
 
 from .dependency import Dependency
 from .features import FEATURES
+from .deduplicate import PackageDeduplicator
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -17,15 +18,30 @@ class Environment(object):
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
-    def __init__(self, name, ignore=None):
+    def __init__(self, name, deduplicator=None):
         """
         name - name of the environment, e.g. base, test
-        ignore - set of package names to omit in output
         """
         self.name = name
-        self.ignore = ignore or {}
+        self._dedup = deduplicator or PackageDeduplicator()
+        self.ignore = self._dedup.ignored_packages(name)
         self.packages = {}
         self._outfile_pkg_names = None
+
+    def maybe_create_lockfile(self):
+        """
+        Write recursive dependencies list to outfile unless the goal is
+        to upgrade specific package(s) which don't already appear.
+        Populate package ignore set in either case and return
+        boolean indicating whether outfile was written.
+        """
+        logger.info("Locking %s to %s. References: %r",
+                    self.infile, self.outfile, sorted(self._dedup.recursive_refs(self.name)))
+        if not FEATURES.affected(self.name):
+            self.fix_lockfile()  # populate ignore set
+            return False
+        self.create_lockfile()
+        return True
 
     def create_lockfile(self):
         """
@@ -47,20 +63,6 @@ class Environment(object):
             logger.critical(stdout.decode('utf-8'))
             logger.critical(stderr.decode('utf-8'))
             raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
-
-    def maybe_create_lockfile(self):
-        """
-        Write recursive dependencies list to outfile unless the goal is
-        to upgrade specific package(s) which don't already appear.
-        Populate package ignore set in either case and return
-        boolean indicating whether outfile was written.
-        """
-        if not FEATURES.affected(self.name):
-            self.fix_lockfile()  # populate ignore set
-            return False
-
-        self.create_lockfile()
-        return True
 
     @classmethod
     def parse_references(cls, filename):
@@ -119,6 +121,7 @@ class Environment(object):
                 for line in lines
                 if line is not None
             ])
+        self._dedup.register_packages_for_env(self.name, self.packages)
 
     @staticmethod
     def concatenated(fp):

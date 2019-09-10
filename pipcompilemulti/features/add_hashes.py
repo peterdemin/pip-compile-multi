@@ -34,6 +34,7 @@ Example output:
 environments that are referencing or referenced by selected environments.
 """  # noqa: E501
 
+from pipcompilemulti.utils import reference_cluster
 from .base import BaseFeature, ClickOption
 
 
@@ -90,38 +91,3 @@ class AddHashes(BaseFeature):
         if self._needs_hashes(env_name):
             return ['--generate-hashes']
         return []
-
-
-def reference_cluster(envs, name):
-    """
-    Return set of all env names referencing or
-    referenced by given name.
-
-    >>> cluster = sorted(reference_cluster([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
-    ... ], 'test'))
-    >>> cluster == ['base', 'local', 'test']
-    True
-    """
-    edges = [
-        set([env['name'], ref])
-        for env in envs
-        for ref in env['refs']
-    ]
-    prev, cluster = set(), set([name])
-    while prev != cluster:
-        # While cluster grows
-        prev = set(cluster)
-        to_visit = []
-        for edge in edges:
-            if cluster & edge:
-                # Add adjacent nodes:
-                cluster |= edge
-            else:
-                # Leave only edges that are out
-                # of cluster for the next round:
-                to_visit.append(edge)
-        edges = to_visit
-    return cluster
