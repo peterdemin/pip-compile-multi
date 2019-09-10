@@ -55,7 +55,7 @@ class Environment(object):
         Populate package ignore set in either case and return
         boolean indicating whether outfile was written.
         """
-        if FEATURES.affected(self.name):
+        if not FEATURES.affected(self.name):
             self.fix_lockfile()  # populate ignore set
             return False
 
@@ -92,18 +92,6 @@ class Environment(object):
     def outfile(self):
         """Path of the output file"""
         return FEATURES.compose_output_file_path(self.name)
-
-    def is_package_in_outfile(self, pkg):
-        """Is specified package name already in the outfile?"""
-        pkg_names = self._outfile_pkg_names
-        if pkg_names is None:
-            pkg_names = self._outfile_pkg_names = set()
-            try:
-                with open(self.outfile, 'rt') as fp:
-                    pkg_names.update(l.split('==')[0].lower() for l in fp)
-            except IOError:
-                pass  # Act as if file is empty
-        return pkg.lower() in pkg_names
 
     @property
     def pin_command(self):
