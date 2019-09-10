@@ -44,8 +44,10 @@ class ClickOption:
 
         >>> ClickOption("--param-name").argument_name
         'param_name'
+        >>> ClickOption("--param-name/--no-param-name").argument_name
+        'param_name'
         """
-        return self.long_option.lstrip('--').replace('-', '_')
+        return self.long_option.lstrip('--').split('/', 1)[0].replace('-', '_')
 
     def bind(self, func):
         """Decorate click command with this option."""
