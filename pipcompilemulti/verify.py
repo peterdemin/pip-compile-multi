@@ -104,4 +104,4 @@ def parse_hash_comment(file_path):
         for line in fp:
             if line.startswith("# SHA1:"):
                 return line
-    return None
+    return ''
