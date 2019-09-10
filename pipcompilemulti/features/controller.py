@@ -1,5 +1,7 @@
 """Aggregate all features in a single controller."""
 
+from functools import wraps
+
 from .use_cache import UseCache
 from .file_extensions import InputExtension, OutputExtension
 from .base_dir import BaseDir
@@ -43,9 +45,16 @@ class FeaturesController:
 
     def bind(self, command):
         """Bind all features to click command."""
+        @wraps(command)
+        def save_click_command_options(*args, **kwargs):
+            """Save option values and call original command without it."""
+            for feature in self._features:
+                feature.extract_option(kwargs)
+            return command(*args, **kwargs)
+
         for feature in self._features:
-            command = feature.bind(command)
-        return command
+            save_click_command_options = feature.bind(save_click_command_options)
+        return save_click_command_options
 
     def pin_options(self, env_name):
         """Return list of options to pin command."""

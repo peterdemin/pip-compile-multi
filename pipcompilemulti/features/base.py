@@ -1,7 +1,5 @@
 """Common functionality for features activated by command line option."""
 
-from functools import wraps
-
 import click
 
 from ..options import OPTIONS
@@ -23,6 +21,10 @@ class ClickOption:
         self.default = default
         self.multiple = multiple
         self.help_text = help_text
+
+    def decorate(self, command):
+        """Decorate click command with this option."""
+        return self.decorator()(command)
 
     def decorator(self):
         """Create click command decorator with this option."""
@@ -49,10 +51,6 @@ class ClickOption:
         """
         return self.long_option.lstrip('--').split('/', 1)[0].replace('-', '_')
 
-    def bind(self, func):
-        """Decorate click command with this option."""
-        return self.decorator()(func)
-
 
 class BaseFeature:
     """Base class for features."""
@@ -60,15 +58,9 @@ class BaseFeature:
     OPTION_NAME = None
     CLICK_OPTION = None
 
-    def bind(self, func):
+    def bind(self, command):
         """Bind feature's click option to passed command."""
-        @wraps(func)
-        def func_with_extra_option(*args, **kwargs):
-            """Save option value and call original command without it."""
-            self.extract_option(kwargs)
-            return func(*args, **kwargs)
-
-        return self.CLICK_OPTION.bind(func_with_extra_option)
+        return self.CLICK_OPTION.decorate(command)
 
     def extract_option(self, kwargs):
         """Pop option value from kwargs and save it in OPTIONS."""
