@@ -63,8 +63,17 @@ class BaseFeature:
         return self.CLICK_OPTION.decorate(command)
 
     def extract_option(self, kwargs):
-        """Pop option value from kwargs and save it in OPTIONS."""
-        OPTIONS[self.OPTION_NAME] = kwargs.pop(self.CLICK_OPTION.argument_name)
+        """Pop option value from kwargs and save it in OPTIONS.
+
+        If option was saved before and new value is the same as default,
+        then keep previous value.
+        This allows passing options both before and after ``verify`` command.
+        """
+        new_value = kwargs.pop(self.CLICK_OPTION.argument_name)
+        if self.OPTION_NAME in OPTIONS and new_value == self.CLICK_OPTION.default:
+            # Do not overwrite with default if already set.
+            return
+        OPTIONS[self.OPTION_NAME] = new_value
 
     @property
     def value(self):

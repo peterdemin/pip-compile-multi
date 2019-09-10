@@ -28,6 +28,7 @@ def cli(ctx):
 
 @cli.command()
 @click.pass_context
+@FEATURES.bind
 def verify(ctx):
     """
     For each environment verify hash comments and report failures.
