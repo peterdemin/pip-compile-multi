@@ -73,4 +73,4 @@ But looking at this line you can't tell if ``uwsgi==2.1.0`` is going to break yo
 The only way to know it is to actually try.
 
 So for such projects the general approach is to remove all ``<`` constraints and see
-which of them were really needed. 
+which of them were really needed.
