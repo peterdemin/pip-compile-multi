@@ -12,22 +12,14 @@ from .features import FEATURES
 
 @click.group(invoke_without_command=True)
 @click.pass_context
-@click.option('--forbid-post', '-p', multiple=True,
-              help="Environment name (base, test, etc) that cannot have "
-                   'packages with post-release versions (1.2.3.post777). '
-                   'Can be supplied multiple times.')
 @click.option('--header', '-h', default='',
               help='File path with custom header text for generated files.')
-@click.option('--only-name', '-n', multiple=True,
-              help='Compile only for passed environment names and their '
-                   'references. Can be supplied multiple times.')
 @FEATURES.bind
-def cli(ctx, header, only_name):
+def cli(ctx, header):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
     OPTIONS.update({
         'header_file': header or None,
-        'include_names': only_name,
     })
     if ctx.invoked_subcommand is None:
         recompile()

@@ -9,15 +9,14 @@ from .discover import discover
 from .environment import Environment
 from .verify import generate_hash_comment
 from .features import FEATURES
+from .features.limit_envs import recursive_refs
 
 
 logger = logging.getLogger("pip-compile-multi")
 
 
 def recompile():
-    """
-    Compile requirements files for all environments.
-    """
+    """Compile requirements files for all environments."""
     pinned_packages = {}
     env_confs = discover(FEATURES.compose_input_file_path('*'))
     FEATURES.on_discover(env_confs)
@@ -26,16 +25,9 @@ def recompile():
             base_header_text = fp.read()
     else:
         base_header_text = DEFAULT_HEADER
-    included_and_refs = set(OPTIONS['include_names'])
-    for name in set(included_and_refs):
-        included_and_refs.update(
-            recursive_refs(env_confs, name)
-        )
     for conf in env_confs:
-        if included_and_refs:
-            if conf['name'] not in included_and_refs:
-                # Skip envs that are not included or referenced by included:
-                continue
+        if not FEATURES.included(conf['name']):
+            continue
         rrefs = recursive_refs(env_confs, conf['name'])
         env = Environment(
             name=conf['name'],
@@ -48,13 +40,11 @@ def recompile():
             header_text = generate_hash_comment(env.infile) + base_header_text
             env.replace_header(header_text)
             env.add_references(conf['refs'])
-
         pinned_packages[conf['name']] = env.packages
 
 
 def merged_packages(env_packages, names):
-    """
-    Return union set of environment packages with given names
+    """Return union set of environment packages with given names.
 
     >>> sorted(merged_packages(
     ...     {
@@ -89,30 +79,3 @@ def merged_packages(env_packages, names):
             "Please add constraints for the package version listed above"
         )
     return result
-
-
-def recursive_refs(envs, name):
-    """
-    Return set of recursive refs for given env name
-
-    >>> local_refs = sorted(recursive_refs([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
-    ... ], 'local'))
-    >>> local_refs == ['base', 'test']
-    True
-    """
-    refs_by_name = {
-        env['name']: set(env['refs'])
-        for env in envs
-    }
-    refs = refs_by_name[name]
-    if refs:
-        indirect_refs = set(itertools.chain.from_iterable([
-            recursive_refs(envs, ref)
-            for ref in refs
-        ]))
-    else:
-        indirect_refs = set()
-    return set.union(refs, indirect_refs)

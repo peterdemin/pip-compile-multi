@@ -7,6 +7,7 @@ from .compatible import Compatible
 from .forbid_post import ForbidPost
 from .add_hashes import AddHashes
 from .upgrade import UpgradeAll, UpgradeSelected
+from .limit_envs import LimitEnvs
 
 
 class FeaturesController:
@@ -23,6 +24,7 @@ class FeaturesController:
         self.add_hashes = AddHashes()
         self.upgrade_all = UpgradeAll(self)
         self.upgrade_selected = UpgradeSelected(self)
+        self.limit_envs = LimitEnvs()
         self._features = [
             self.use_cache,
             self.input_extension,
@@ -33,6 +35,7 @@ class FeaturesController:
             self.add_hashes,
             self.upgrade_all,
             self.upgrade_selected,
+            self.limit_envs,
         ]
 
     def bind(self, command):
@@ -78,9 +81,14 @@ class FeaturesController:
     def on_discover(self, env_confs):
         """Configure features with a list of discovered environments."""
         self.add_hashes.on_discover(env_confs)
+        self.limit_envs.on_discover(env_confs)
 
     def affected(self, env_name):
         """Whether environment was affected by upgrade command."""
         if self.upgrade_all.enabled:
             return True
         return self.upgrade_selected.affected(env_name)
+
+    def included(self, env_name):
+        """Whether environment is included directly or by reference."""
+        return self.limit_envs.included(env_name)
