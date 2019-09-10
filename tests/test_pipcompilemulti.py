@@ -10,8 +10,9 @@ import pytest
 
 from pipcompilemulti.environment import Environment
 from pipcompilemulti.dependency import Dependency
-from pipcompilemulti.options import OPTIONS, DEFAULT_HEADER
+from pipcompilemulti.options import OPTIONS
 from pipcompilemulti.actions import merged_packages
+from pipcompilemulti.features.header import DEFAULT_HEADER
 from pipcompilemulti.features.add_hashes import reference_cluster
 
 

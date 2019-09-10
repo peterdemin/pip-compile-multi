@@ -15,18 +15,7 @@ Features
 
 .. automodule:: pipcompilemulti.features.add_hashes
 
-Custom Header
-=============
-
-``pip-compile-multi`` adds a brief header into generated files.
-Override it with
-
-.. code-block:: text
-
-    -h, --header TEXT      File path with custom header text for generated files
-
-.. automodule:: pipcompilemulti.features.limit_envs
-
+.. automodule:: pipcompilemulti.features.header
 
 Check that ``pip-compile-multi`` was run after changes in ``.in`` file.
 =======================================================================

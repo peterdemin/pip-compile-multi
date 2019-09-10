@@ -1,10 +1,9 @@
-"""First version of command line interface"""
+"""The current stable version of command line interface."""
 
 import logging
 
 import click
 
-from .options import OPTIONS
 from .actions import recompile
 from .verify import verify_environments
 from .features import FEATURES
@@ -12,15 +11,10 @@ from .features import FEATURES
 
 @click.group(invoke_without_command=True)
 @click.pass_context
-@click.option('--header', '-h', default='',
-              help='File path with custom header text for generated files.')
 @FEATURES.bind
-def cli(ctx, header):
+def cli(ctx):
     """Recompile"""
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
-    OPTIONS.update({
-        'header_file': header or None,
-    })
     if ctx.invoked_subcommand is None:
         recompile()
 

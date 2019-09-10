@@ -8,6 +8,7 @@ from .forbid_post import ForbidPost
 from .add_hashes import AddHashes
 from .upgrade import UpgradeAll, UpgradeSelected
 from .limit_envs import LimitEnvs
+from .header import CustomHeader
 
 
 class FeaturesController:
@@ -25,6 +26,7 @@ class FeaturesController:
         self.upgrade_all = UpgradeAll(self)
         self.upgrade_selected = UpgradeSelected(self)
         self.limit_envs = LimitEnvs()
+        self.header = CustomHeader()
         self._features = [
             self.use_cache,
             self.input_extension,
@@ -36,6 +38,7 @@ class FeaturesController:
             self.upgrade_all,
             self.upgrade_selected,
             self.limit_envs,
+            self.header,
         ]
 
     def bind(self, command):
@@ -92,3 +95,7 @@ class FeaturesController:
     def included(self, env_name):
         """Whether environment is included directly or by reference."""
         return self.limit_envs.included(env_name)
+
+    def get_header_text(self):
+        """Text to put in the beginning of each generated file."""
+        return self.header.text

@@ -4,7 +4,6 @@
 import logging
 import itertools
 
-from .options import OPTIONS, DEFAULT_HEADER
 from .discover import discover
 from .environment import Environment
 from .verify import generate_hash_comment
@@ -20,11 +19,6 @@ def recompile():
     pinned_packages = {}
     env_confs = discover(FEATURES.compose_input_file_path('*'))
     FEATURES.on_discover(env_confs)
-    if OPTIONS['header_file']:
-        with open(OPTIONS['header_file']) as fp:
-            base_header_text = fp.read()
-    else:
-        base_header_text = DEFAULT_HEADER
     for conf in env_confs:
         if not FEATURES.included(conf['name']):
             continue
@@ -37,7 +31,7 @@ def recompile():
                     env.infile, env.outfile, sorted(rrefs))
         if env.maybe_create_lockfile():
             # Only munge lockfile if it was written.
-            header_text = generate_hash_comment(env.infile) + base_header_text
+            header_text = generate_hash_comment(env.infile) + FEATURES.get_header_text()
             env.replace_header(header_text)
             env.add_references(conf['refs'])
         pinned_packages[conf['name']] = env.packages
