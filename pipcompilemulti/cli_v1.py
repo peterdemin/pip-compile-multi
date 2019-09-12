@@ -22,6 +22,10 @@ from .verify import verify_environments
               help='Environment name (base, test, etc) that needs '
                    'packages hashes. '
                    'Can be supplied multiple times.')
+@click.option('--allow-unsafe/--no-allow-unsafe', default=False,
+              help="Whether or not to include 'unsafe' packages "
+                   'in generated requirements files. '
+                   'Consult pip-compile --help for more information')
 @click.option('--directory', '-d', default=OPTIONS['base_dir'],
               help='Directory path with requirements files.')
 @click.option('--in-ext', '-i', default=OPTIONS['in_ext'],
@@ -39,7 +43,7 @@ from .verify import verify_environments
               help='Only upgrade named package. Can be supplied multiple times.')
 @click.option('--use-cache', '-u', default=OPTIONS['use_cache'], is_flag=True,
               help='Use pip-tools cache to speed up compilation.')
-def cli(ctx, compatible, forbid_post, generate_hashes, directory,
+def cli(ctx, compatible, forbid_post, generate_hashes, allow_unsafe, directory,
         in_ext, out_ext, header, only_name, upgrade, upgrade_package, use_cache):
     """Recompile"""
 
@@ -52,6 +56,7 @@ def cli(ctx, compatible, forbid_post, generate_hashes, directory,
         'compatible_patterns': compatible,
         'forbid_post': set(forbid_post),
         'add_hashes': set(generate_hashes),
+        'allow_unsafe': allow_unsafe,
         'base_dir': directory,
         'in_ext': in_ext,
         'out_ext': out_ext,

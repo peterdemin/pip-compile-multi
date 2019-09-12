@@ -133,6 +133,8 @@ class Environment(object):
             parts.append('--rebuild')
         if self.add_hashes:
             parts.append('--generate-hashes')
+        if OPTIONS['allow_unsafe']:
+            parts.append('--allow-unsafe')
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 
