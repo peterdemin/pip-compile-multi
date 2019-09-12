@@ -54,7 +54,7 @@ def trim_traceback(traceback):
     new_traceback = traceback
     while new_traceback is not None:
         file_path = new_traceback.tb_frame.f_code.co_filename
-        if file_path == THIS_FILE:
+        if THIS_FILE.startswith(file_path):
             return new_traceback
         level += 1
         new_traceback = new_traceback.tb_next
