@@ -128,6 +128,22 @@ Example output:
 ``pip-compile-multi`` will recursively propagate this option to all environments
 that are referencing or referenced by selected environment name.
 
+Allow Unsafe Packages
+=====================
+If your project depends on packages that include ``setuptools`` or other packages
+considered "unsafe" by ``pip-tools`` and you still wish to have them included in
+the resulting requirements files, you can pass this option to do so:
+
+.. code-block:: text
+
+    --allow-unsafe / --no-allow-unsafe
+                                    Whether or not to include 'unsafe' packages
+                                    in generated requirements files. Consult
+                                    pip-compile --help for more information
+
+This is commonly used with --generate-hashes to avoid generating requirements files
+which cannot be installed.
+
 Custom Header
 =============
 
