@@ -10,7 +10,7 @@
 astroid==1.6.6
 bleach==3.1.0             # via readme-renderer
 bump2version==0.5.11
-certifi==2019.6.16        # via requests
+certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
 collective.checkdocs==0.2
 docutils==0.15.2          # via collective.checkdocs, readme-renderer

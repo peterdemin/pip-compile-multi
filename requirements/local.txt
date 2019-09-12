@@ -10,7 +10,7 @@ aspy.yaml==1.3.0          # via pre-commit
 astroid==1.6.6            # via pylint, requirements-detector
 bleach==3.1.0             # via readme-renderer
 bump2version==0.5.11
-certifi==2019.6.16        # via requests
+certifi==2019.9.11        # via requests
 cfgv==2.0.1               # via pre-commit
 chardet==3.0.4            # via requests
 collective.checkdocs==0.2
