@@ -41,7 +41,7 @@ class LimitEnvs(BaseFeature):
     )
 
     def __init__(self):
-        self.all_envs = None
+        self._all_envs = None
 
     @property
     def direct_envs(self):
@@ -53,14 +53,14 @@ class LimitEnvs(BaseFeature):
         included_and_refs = self.direct_envs
         if not self.direct_envs:
             # No limit means all envs included:
-            self.all_envs = [env['name'] for env in env_confs]
+            self._all_envs = [env['name'] for env in env_confs]
             return
         for name in set(included_and_refs):
             included_and_refs.update(
                 recursive_refs(env_confs, name)
             )
-        self.all_envs = included_and_refs
+        self._all_envs = included_and_refs
 
     def included(self, env_name):
         """Whether environment is included directly or by reference."""
-        return env_name in self.all_envs
+        return env_name in self._all_envs

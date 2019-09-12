@@ -98,6 +98,7 @@ class FeaturesController:
         """Configure features with a list of discovered environments."""
         self.add_hashes.on_discover(env_confs)
         self.limit_envs.on_discover(env_confs)
+        self.upgrade_selected.reset()
 
     def affected(self, env_name):
         """Whether environment was affected by upgrade command."""

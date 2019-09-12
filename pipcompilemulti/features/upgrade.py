@@ -76,6 +76,10 @@ class UpgradeSelected(BaseFeature):
 
     def __init__(self, controller):
         self._controller = controller
+        self.reset()
+
+    def reset(self):
+        """Clear cached packages."""
         self._env_packages_cache = {}
 
     @property
