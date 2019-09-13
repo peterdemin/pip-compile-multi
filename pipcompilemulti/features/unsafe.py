@@ -14,7 +14,9 @@ you can pass this option to do so:
                                 pip-compile --help for more information
 
 This is commonly used with --generate-hashes to avoid
-generating requirements files which cannot be installed.
+generating requirements files which `cannot be installed`_.
+
+.. _cannot be installed: https://github.com/jazzband/pip-tools/issues/806
 """
 
 from .base import BaseFeature, ClickOption
