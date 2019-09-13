@@ -21,4 +21,5 @@ python:
   version: 3.7
   install:
     - requirements: requirements/local.hash
-    - requirements: .
+    - method: pip
+      path: .
