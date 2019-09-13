@@ -12,4 +12,4 @@ pre-commit
 pipdeptree
 pydocstyle<=3
 pylint!=1.9.5  # Missing for 3.7
-sphinx
+sphinx<2  # Dropped Python 2.7 support
