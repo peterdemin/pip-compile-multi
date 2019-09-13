@@ -36,11 +36,6 @@ class AllowUnsafe(BaseFeature):
                   'Consult pip-compile --help for more information'
     )
 
-    @property
-    def enabled(self):
-        """Are unsafe packages allowed."""
-        return self.value
-
     def pin_options(self):
         """Return command-line options for pin command.
 
@@ -55,3 +50,8 @@ class AllowUnsafe(BaseFeature):
         if self.enabled:
             return ['--allow-unsafe']
         return []
+
+    @property
+    def enabled(self):
+        """Are unsafe packages allowed."""
+        return self.value
