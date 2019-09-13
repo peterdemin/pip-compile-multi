@@ -15,6 +15,8 @@ Features
 
 .. automodule:: pipcompilemulti.features.add_hashes
 
+.. automodule:: pipcompilemulti.features.unsafe
+
 .. automodule:: pipcompilemulti.features.header
 
 .. automodule:: pipcompilemulti.verify

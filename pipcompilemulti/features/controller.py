@@ -11,6 +11,7 @@ from .add_hashes import AddHashes
 from .upgrade import UpgradeAll, UpgradeSelected
 from .limit_envs import LimitEnvs
 from .header import CustomHeader
+from .unsafe import AllowUnsafe
 
 
 class FeaturesController:
@@ -29,6 +30,7 @@ class FeaturesController:
         self.upgrade_selected = UpgradeSelected(self)
         self.limit_envs = LimitEnvs()
         self.header = CustomHeader()
+        self.allow_unsafe = AllowUnsafe()
         self._features = [
             self.use_cache,
             self.input_extension,
@@ -41,25 +43,27 @@ class FeaturesController:
             self.upgrade_selected,
             self.limit_envs,
             self.header,
+            self.allow_unsafe,
         ]
 
     def bind(self, command):
         """Bind all features to click command."""
         @wraps(command)
-        def save_click_command_options(*args, **kwargs):
+        def save_command_options(*args, **kwargs):
             """Save option values and call original command without it."""
             for feature in self._features:
                 feature.extract_option(kwargs)
             return command(*args, **kwargs)
 
         for feature in self._features:
-            save_click_command_options = feature.bind(save_click_command_options)
-        return save_click_command_options
+            save_command_options = feature.bind(save_command_options)
+        return save_command_options
 
     def pin_options(self, env_name):
         """Return list of options to pin command."""
         options = self.use_cache.pin_options()
         options.extend(self.add_hashes.pin_options(env_name))
+        options.extend(self.allow_unsafe.pin_options())
         return options
 
     def compose_input_file_path(self, env_name):
