@@ -49,7 +49,8 @@ def verify(ctx):
 
 def skipper(func):
     """Decorator that memorizes base_dir, in_ext and out_ext from OPTIONS
-    and skips execution for duplicates."""
+    and skips execution for duplicates.
+    """
     @functools.wraps(func)
     def wrapped():
         """Dummy docstring to make pylint happy."""
@@ -63,7 +64,11 @@ def skipper(func):
 
 def run_configurations(callback, sections_reader):
     """Parse configurations and execute callback for matching."""
-    base = dict(OPTIONS)
+    base = {
+        'base_dir': 'requirements',
+        'in_ext': '.in',
+        'out_ext': '.txt',
+    }
     sections = sections_reader()
     if sections is None:
         logger.info("Configuration not found in .ini files. "
