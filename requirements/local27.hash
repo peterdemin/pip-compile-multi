@@ -152,6 +152,8 @@ wheel==0.33.6 \
 wrapt==1.11.2 \
     --hash=sha256:565a021fd19419476b9362b05eeaa094178de64f8361e44468f9e9d7843901e1
 
-# WARNING: The following packages were not pinned, but pip requires them to be
-# pinned when the requirements file includes hashes. Consider using the --allow-unsafe flag.
-# setuptools==41.2.0        # via twine
+# The following packages are considered to be unsafe in a requirements file:
+setuptools==41.2.0 \
+    --hash=sha256:4380abcf2a4ffd1a5ba22d687c6d690dce83b2b51c70e9c6d09f7e8c7e8040dc \
+    --hash=sha256:66b86bbae7cc7ac2e867f52dc08a6bd064d938bac59dfec71b9b565dd36d6012 \
+    # via twine
