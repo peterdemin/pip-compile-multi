@@ -66,8 +66,8 @@ def run_configurations(callback, sections_reader):
     """Parse configurations and execute callback for matching."""
     base = {
         'base_dir': 'requirements',
-        'in_ext': '.in',
-        'out_ext': '.txt',
+        'in_ext': 'in',
+        'out_ext': 'txt',
     }
     sections = sections_reader()
     if sections is None:
