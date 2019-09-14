@@ -1,6 +1,13 @@
 History
 =======
 
+1.5.3 (2019-09-19)
+------------------
+
+* Refactored features to separate modules.
+* Allow passing verify options after verify command.
+* Trim irrelevant entries from the traceback.
+
 1.5.2 (2019-09-12)
 ------------------
 
