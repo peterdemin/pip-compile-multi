@@ -1,12 +1,57 @@
-"""Verify action"""
+"""
+Check that ``pip-compile-multi`` was run after changes in ``.in`` file
+======================================================================
 
-import os
+``pip-compile-multi`` adds a special line (before header) at the beginning of each generated file.
+This line contains a SHA1 hash of the ``.in`` file's contents.
+
+Command
+
+.. code-block:: shell
+
+    $ pip-compile-multi verify
+    Verifying that requirements/base.txt was generated from requirements/base.in.
+    Success - comments match.
+    Verifying that requirements/test.txt was generated from requirements/test.in.
+    Success - comments match.
+    Verifying that requirements/local.txt was generated from requirements/local.in.
+    Success - comments match.
+
+recalculates hashes for ``.in`` files and compares them with the stored values.
+
+If verification fails, an error message is logged and exit code 1 is returned:
+
+.. code-block:: shell
+
+    $ pip-compile-multi verify
+    Verifying that requirements/base.txt was generated from requirements/base.in.
+    Success - comments match.
+    Verifying that requirements/test.txt was generated from requirements/test.in.
+    FAILURE!
+    Expecting: # SHA1:c93d71964e14b04f3c8327d16dbc4d6b1bbc3b1d
+    Found:     # SHA1:6c2562322ca1bdc8309b08581a2aa4efbb5a4534
+    Verifying that requirements/local.txt was generated from requirements/local.in.
+    Success - comments match.
+
+
+In big teams it might be a good idea to have this check in ``tox.ini``:
+
+.. code-block:: ini
+
+    [testenv:verify]
+    skipsdist = true
+    skip_install = true
+    deps = pip-compile-multi
+    commands = pip-compile-multi verify
+    whitelist_externals = pip-compile-multi
+"""
+
 import hashlib
 import logging
 
-from .options import OPTIONS
 from .discover import discover
 from .environment import Environment
+from .features import FEATURES
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -17,12 +62,7 @@ def verify_environments():
     For each environment verify hash comments and report failures.
     If any failure occured, exit with code 1.
     """
-    env_confs = discover(
-        os.path.join(
-            OPTIONS['base_dir'],
-            '*.' + OPTIONS['in_ext'],
-        )
-    )
+    env_confs = discover(FEATURES.compose_input_file_path('*'))
     success = True
     for conf in env_confs:
         env = Environment(name=conf['name'])
@@ -64,4 +104,4 @@ def parse_hash_comment(file_path):
         for line in fp:
             if line.startswith("# SHA1:"):
                 return line
-    return None
+    return ''

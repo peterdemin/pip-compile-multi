@@ -10,8 +10,10 @@ import pytest
 
 from pipcompilemulti.environment import Environment
 from pipcompilemulti.dependency import Dependency
-from pipcompilemulti.options import OPTIONS, DEFAULT_HEADER
-from pipcompilemulti.actions import reference_cluster, merged_packages
+from pipcompilemulti.options import OPTIONS
+from pipcompilemulti.deduplicate import PackageDeduplicator
+from pipcompilemulti.utils import merged_packages, reference_cluster
+from pipcompilemulti.features.header import DEFAULT_HEADER
 
 
 PIN = 'pycodestyle==2.3.1        # via flake8'
@@ -35,7 +37,10 @@ def test_no_fix_incompatible_pin():
 
 def test_pin_is_ommitted_if_set_to_ignore():
     """Test ignored files won't pass"""
-    env = Environment('', ignore={'pycodestyle': '2.3.1'})
+    dedup = PackageDeduplicator()
+    dedup.on_discover([{'name': 'a', 'refs': ['b']}, {'name': 'b', 'refs': []}])
+    dedup.register_packages_for_env('b', {'pycodestyle': '2.3.1'})
+    env = Environment('a', deduplicator=dedup)
     result = env.fix_pin(PIN)
     assert result is None
 
@@ -51,8 +56,9 @@ def test_post_releases_are_kept_by_default():
 def test_forbid_post_releases():
     """Test postXXX versions are kept if allow_post=True"""
     pin = 'pycodestyle==2.3.1.post2231  # via flake8'
-    env = Environment('', forbid_post=True)
-    result = env.fix_pin(pin)
+    with mock.patch.dict(OPTIONS, {'forbid_post': ['env']}):
+        env = Environment('env')
+        result = env.fix_pin(pin)
     assert result == PIN
 
 
@@ -247,7 +253,10 @@ def test_merged_packages_raise_for_conflict():
 
 def test_fix_pin_detects_version_conflict():
     """Check that package x can't be locked to versions 1 and 2"""
-    env = Environment('', ignore={'x': '1'})
+    dedup = PackageDeduplicator()
+    dedup.on_discover([{'name': 'a', 'refs': ['b']}, {'name': 'b', 'refs': []}])
+    dedup.register_packages_for_env('b', {'x': '1'})
+    env = Environment('a', deduplicator=dedup)
     ignored_pin = env.fix_pin('x==1')
     assert ignored_pin is None
     with pytest.raises(RuntimeError):

@@ -5,8 +5,9 @@ import re
 import logging
 import subprocess
 
-from .options import OPTIONS
 from .dependency import Dependency
+from .features import FEATURES
+from .deduplicate import PackageDeduplicator
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -17,17 +18,30 @@ class Environment(object):
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
-    def __init__(self, name, ignore=None, forbid_post=False, add_hashes=False):
+    def __init__(self, name, deduplicator=None):
         """
         name - name of the environment, e.g. base, test
-        ignore - set of package names to omit in output
         """
         self.name = name
-        self.ignore = ignore or {}
-        self.forbid_post = forbid_post
-        self.add_hashes = add_hashes
+        self._dedup = deduplicator or PackageDeduplicator()
+        self.ignore = self._dedup.ignored_packages(name)
         self.packages = {}
         self._outfile_pkg_names = None
+
+    def maybe_create_lockfile(self):
+        """
+        Write recursive dependencies list to outfile unless the goal is
+        to upgrade specific package(s) which don't already appear.
+        Populate package ignore set in either case and return
+        boolean indicating whether outfile was written.
+        """
+        logger.info("Locking %s to %s. References: %r",
+                    self.infile, self.outfile, sorted(self._dedup.recursive_refs(self.name)))
+        if not FEATURES.affected(self.name):
+            self.fix_lockfile()  # populate ignore set
+            return False
+        self.create_lockfile()
+        return True
 
     def create_lockfile(self):
         """
@@ -49,22 +63,6 @@ class Environment(object):
             logger.critical(stdout.decode('utf-8'))
             logger.critical(stderr.decode('utf-8'))
             raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
-
-    def maybe_create_lockfile(self):
-        """
-        Write recursive dependencies list to outfile unless the goal is to
-        upgrade specific package(s) which don't already
-        appear. Populate package ignore set in either case and return
-        boolean indicating whether outfile was written.
-        """
-        if OPTIONS['upgrade_packages'] and not any(
-                self.is_package_in_outfile(p)
-                for p in OPTIONS['upgrade_packages']):
-            self.fix_lockfile()  # populate ignore set
-            return False
-
-        self.create_lockfile()
-        return True
 
     @classmethod
     def parse_references(cls, filename):
@@ -90,27 +88,12 @@ class Environment(object):
     @property
     def infile(self):
         """Path of the input file"""
-        return os.path.join(OPTIONS['base_dir'],
-                            '{0}.{1}'.format(self.name, OPTIONS['in_ext']))
+        return FEATURES.compose_input_file_path(self.name)
 
     @property
     def outfile(self):
         """Path of the output file"""
-        return os.path.join(OPTIONS['base_dir'],
-                            '{0}.{1}'.format(self.name, OPTIONS['out_ext']))
-
-    def is_package_in_outfile(self, pkg):
-        """Is specified package name already in the outfile?"""
-        pkg_names = self._outfile_pkg_names
-        if pkg_names is None:
-            pkg_names = self._outfile_pkg_names = set()
-            try:
-                with open(self.outfile, 'rt') as fp:
-                    pkg_names.update(l.split('==')[0].lower() for l in fp)
-            except IOError:
-                pass  # Act as if file is empty
-
-        return pkg.lower() in pkg_names
+        return FEATURES.compose_output_file_path(self.name)
 
     @property
     def pin_command(self):
@@ -121,20 +104,7 @@ class Environment(object):
             '--verbose',
             '--no-index',
         ]
-        if OPTIONS['upgrade_packages']:
-            parts.extend(
-                '--upgrade-package=' + package
-                for package in OPTIONS['upgrade_packages']
-                if self.is_package_in_outfile(package)
-            )
-        if OPTIONS['upgrade']:
-            parts.append('--upgrade')
-        if not OPTIONS['use_cache']:
-            parts.append('--rebuild')
-        if self.add_hashes:
-            parts.append('--generate-hashes')
-        if OPTIONS['allow_unsafe']:
-            parts.append('--allow-unsafe')
+        parts.extend(FEATURES.pin_options(self.name))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 
@@ -151,6 +121,7 @@ class Environment(object):
                 for line in lines
                 if line is not None
             ])
+        self._dedup.register_packages_for_env(self.name, self.packages)
 
     @staticmethod
     def concatenated(fp):
@@ -194,9 +165,7 @@ class Environment(object):
                         )
                 return None
             self.packages[dep.package] = dep.version
-            if self.forbid_post or dep.is_compatible:
-                # Always drop post for internal packages
-                dep.drop_post()
+            dep.drop_post(self.name)
             return dep.serialize()
         return line.strip()
 
@@ -210,7 +179,9 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.writelines(header)
             fp.writelines(
-                '-r {0}.{1}\n'.format(other_name, OPTIONS['out_ext'])
+                '-r {0}\n'.format(
+                    FEATURES.compose_output_file_name(other_name)
+                )
                 for other_name in sorted(other_names)
             )
             fp.writelines(body)

@@ -55,3 +55,4 @@ boilerplate/
 # Vim
 Session.vim
 /htmlcov/
+/.idea/
