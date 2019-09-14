@@ -24,10 +24,11 @@ to ``pip-compile``.
 .. _edge cases: https://github.com/jazzband/pip-tools/issues?q=--rebuild
 """
 
-from .base import BaseFeature, ClickOption
+from .base import ClickOption
+from .forward import ForwardOption
 
 
-class UseCache(BaseFeature):
+class UseCache(ForwardOption):
     """Use pip-tools cache, or rebuild from scratch."""
 
     OPTION_NAME = 'use_cache'
@@ -38,18 +39,4 @@ class UseCache(BaseFeature):
         default=False,
         help_text='Use pip-tools cache to speed up compilation.',
     )
-
-    @property
-    def enabled(self):
-        """Is cache enabled."""
-        return self.value
-
-    def pin_options(self):
-        """Return command-line options for pin command.
-
-        >>> UseCache().pin_options()
-        ['--rebuild']
-        """
-        if self.enabled:
-            return []
-        return ['--rebuild']
+    disabled_pin_options = ['--rebuild']

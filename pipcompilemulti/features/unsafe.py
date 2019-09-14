@@ -19,10 +19,11 @@ generating requirements files which `cannot be installed`_.
 .. _cannot be installed: https://github.com/jazzband/pip-tools/issues/806
 """
 
-from .base import BaseFeature, ClickOption
+from .base import ClickOption
+from .forward import ForwardOption
 
 
-class AllowUnsafe(BaseFeature):
+class AllowUnsafe(ForwardOption):
     """Use pip-tools cache, or rebuild from scratch."""
 
     OPTION_NAME = 'allow_unsafe'
@@ -35,23 +36,4 @@ class AllowUnsafe(BaseFeature):
                   'in generated requirements files. '
                   'Consult pip-compile --help for more information'
     )
-
-    def pin_options(self):
-        """Return command-line options for pin command.
-
-        >>> from pipcompilemulti.options import OPTIONS
-        >>> unsafe = AllowUnsafe()
-        >>> unsafe.pin_options()
-        []
-        >>> OPTIONS['allow_unsafe'] = True
-        >>> unsafe.pin_options()
-        ['--allow-unsafe']
-        """
-        if self.enabled:
-            return ['--allow-unsafe']
-        return []
-
-    @property
-    def enabled(self):
-        """Are unsafe packages allowed."""
-        return self.value
+    enabled_pin_options = ['--allow-unsafe']

@@ -34,9 +34,10 @@ Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
 """
 
 from .base import BaseFeature, ClickOption
+from .forward import ForwardOption
 
 
-class UpgradeAll(BaseFeature):
+class UpgradeAll(ForwardOption):
     """Upgrade all packages in all environments."""
 
     OPTION_NAME = 'upgrade'
@@ -46,6 +47,7 @@ class UpgradeAll(BaseFeature):
         is_flag=True,
         help_text='Upgrade package version (default true)',
     )
+    enabled_pin_options = ['--upgrade']
 
     def __init__(self, controller):
         self._controller = controller
@@ -54,12 +56,6 @@ class UpgradeAll(BaseFeature):
     def enabled(self):
         """Whether global upgrade is enabled."""
         return self.value and not self._controller.upgrade_selected.active
-
-    def pin_options(self):
-        """Pin command options for upgrading all packages."""
-        if self.enabled:
-            return ['--upgrade']
-        return []
 
 
 class UpgradeSelected(BaseFeature):
