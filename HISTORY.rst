@@ -1,8 +1,15 @@
 History
 =======
 
-1.5.3 (2019-09-19)
+1.5.4 (2019-09-16)
 ------------------
+
+* Fixed MANIFEST to include features directory
+
+1.5.3 (2019-09-14)
+------------------
+
+THIS VERSION IS BROKEN AND WON'T INSTALL ``features`` DIRECTORY.
 
 * Refactored features to separate modules.
 * Allow passing verify options after verify command.
