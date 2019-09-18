@@ -31,10 +31,10 @@ Run
 Links
 -----
 
-Documentation: https://pip-compile-multi.readthedocs.io/en/latest/
-Releases: https://pypi.python.org/pypi/pip-compile-multi
-Code: https://github.com/peterdemin/pip-compile-multi
-Issue tracker: https://github.com/peterdemin/pip-compile-multi/issues
+* Documentation: https://pip-compile-multi.readthedocs.io/en/latest/
+* Releases: https://pypi.python.org/pypi/pip-compile-multi
+* Code: https://github.com/peterdemin/pip-compile-multi
+* Issue tracker: https://github.com/peterdemin/pip-compile-multi/issues
 
 """
 
