@@ -1,6 +1,11 @@
 History
 =======
 
+1.5.5 (2019-09-18)
+------------------
+
+* Minor fixes to packaging and documentation.
+
 1.5.4 (2019-09-16)
 ------------------
 
