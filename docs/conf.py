@@ -79,8 +79,19 @@ html_theme = 'alabaster'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#
-# html_theme_options = {}
+
+html_theme_options = {
+    'github_user': 'peterdemin',
+    'github_repo': 'pip-compile-multi',
+    'github_type': 'star',
+    'github_banner': True,
+    'github_button': True,
+    'extra_nav_links': {
+        'Code': 'https://github.com/peterdemin/pip-compile-multi',
+        'Releases': 'https://pypi.org/project/pip-compile-multi/',
+        'Issue tracker': 'https://github.com/peterdemin/pip-compile-multi/issues',
+    },
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -94,12 +105,14 @@ html_static_path = ['_static']
 # defined by theme itself.  Builtin themes are using these templates by
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
-#
-# html_sidebars = {}
 
-extra_nav_links = {
-    'GitHub': 'https://github.com/peterdemin/pip-compile-multi',
-    'PyPI': 'https://pypi.org/project/pip-compile-multi/',
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'searchbox.html',
+        'sourcelink.html',
+    ]
 }
 
 
