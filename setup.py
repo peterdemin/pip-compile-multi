@@ -1,18 +1,42 @@
 """Package configuration"""
 
 import os
+from setuptools import setup, find_packages
 
-
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
 
 VERSION = "1.5.4"
 
 
-with open('README.rst') as fp:
-    README = fp.read()
+README = """
+pip-compile-multi
+=================
+
+Compile multiple requirements files to lock dependency versions.
+
+Install
+-------
+
+.. code-block:: shell
+
+    pip install pip-compile-multi
+
+Run
+----
+
+.. code-block:: shell
+
+    pip-compile-multi
+
+
+Links
+-----
+
+Documentation: https://pip-compile-multi.readthedocs.io/en/latest/
+Releases: https://pypi.python.org/pypi/pip-compile-multi
+Code: https://github.com/peterdemin/pip-compile-multi
+Issue tracker: https://github.com/peterdemin/pip-compile-multi/issues
+
+"""
 
 
 with open('HISTORY.rst') as fp:
@@ -42,7 +66,7 @@ setup(
     author_email='peterdemin@gmail.com',
     url='https://github.com/peterdemin/pip-compile-multi',
     include_package_data=True,
-    packages=['pipcompilemulti'],
+    packages=find_packages(exclude=['tests']),
     install_requires=REQUIREMENTS,
     license="MIT",
     zip_safe=False,
@@ -66,4 +90,5 @@ setup(
     entry_points={
         'console_scripts': CONSOLE_SCRIPTS,
     },
+    setup_requires=['setuptools', 'wheel'],
 )

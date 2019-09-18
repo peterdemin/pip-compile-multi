@@ -1,3 +1,7 @@
+.PHONY: build
+build: clean
+	python setup.py sdist bdist_wheel
+
 .PHONY: virtual_env_set
 virtual_env_set:
 ifndef VIRTUAL_ENV
