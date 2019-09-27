@@ -102,7 +102,6 @@ class Environment(object):
             'pip-compile',
             '--no-header',
             '--verbose',
-            '--no-index',
         ]
         parts.extend(FEATURES.pin_options(self.name))
         parts.extend(['--output-file', self.outfile, self.infile])
