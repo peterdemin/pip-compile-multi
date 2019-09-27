@@ -19,4 +19,6 @@ Features
 
 .. automodule:: pipcompilemulti.features.header
 
+.. automodule:: pipcompilemulti.features.annotate_index
+
 .. automodule:: pipcompilemulti.verify
