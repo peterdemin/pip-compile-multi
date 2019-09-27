@@ -64,6 +64,8 @@ class FeaturesController:
         options = self.use_cache.pin_options()
         options.extend(self.add_hashes.pin_options(env_name))
         options.extend(self.allow_unsafe.pin_options())
+        options.extend(self.upgrade_all.pin_options())
+        options.extend(self.upgrade_selected.pin_options(env_name))
         return options
 
     def compose_input_file_path(self, env_name):
