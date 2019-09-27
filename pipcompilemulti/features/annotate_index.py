@@ -1,8 +1,8 @@
 """
-Enable indexes
-==============
+Add index URL annotation
+========================
 
-This flag provides the ability to annotate the index URL mimicing the logic of
+This flag provides the ability to annotate the index URL mimicking the logic of
 the ``pip-compile`` ``--index`` and ``--no-index` flag by opting to add or not
 add the ``pip`` index to the generated files.
 
