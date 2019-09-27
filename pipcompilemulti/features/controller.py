@@ -3,12 +3,12 @@
 from functools import wraps
 
 from .add_hashes import AddHashes
+from .annotate_index import AnnotateIndex
 from .base_dir import BaseDir
 from .compatible import Compatible
 from .file_extensions import InputExtension, OutputExtension
 from .forbid_post import ForbidPost
 from .header import CustomHeader
-from .index import Index
 from .limit_envs import LimitEnvs
 from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
@@ -20,7 +20,7 @@ class FeaturesController:
     # pylint: disable=too-many-instance-attributes
 
     def __init__(self):
-        self.index = Index()
+        self.annotate_index = AnnotateIndex()
         self.use_cache = UseCache()
         self.input_extension = InputExtension()
         self.output_extension = OutputExtension()
@@ -34,7 +34,7 @@ class FeaturesController:
         self.header = CustomHeader()
         self.allow_unsafe = AllowUnsafe()
         self._features = [
-            self.index,
+            self.annotate_index,
             self.use_cache,
             self.input_extension,
             self.output_extension,
@@ -70,7 +70,7 @@ class FeaturesController:
         options.extend(self.allow_unsafe.pin_options())
         options.extend(self.upgrade_all.pin_options())
         options.extend(self.upgrade_selected.pin_options(env_name))
-        options.extend(self.index.pin_options())
+        options.extend(self.annotate_index.pin_options())
         return options
 
     def compose_input_file_path(self, env_name):
