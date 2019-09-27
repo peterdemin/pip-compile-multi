@@ -1,24 +1,33 @@
 History
 =======
 
+1.5.7 (2019-09-27)
+------------------
+
+* Enable accidentially disabled --upgrade option.
+
 1.5.6 (2019-09-18)
 ------------------
 
 * Minor fixes to packaging and documentation.
+
+Note: this version is broken and won't pass ``--upgrade`` option to ``pip-compile``.
 
 1.5.4 (2019-09-16)
 ------------------
 
 * Fixed MANIFEST to include features directory
 
+Note: this version is broken and won't pass ``--upgrade`` option to ``pip-compile``.
+
 1.5.3 (2019-09-14)
 ------------------
-
-THIS VERSION IS BROKEN AND WON'T INSTALL ``features`` DIRECTORY.
 
 * Refactored features to separate modules.
 * Allow passing verify options after verify command.
 * Trim irrelevant entries from the traceback.
+
+Note: this version is broken and won't install ``features`` directory.
 
 1.5.2 (2019-09-12)
 ------------------
