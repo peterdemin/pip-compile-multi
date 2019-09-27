@@ -10,7 +10,7 @@ add the ``pip`` index to the generated files.
 
     --annotate-index / --no-annotate-index    Add index URL to generated files (default false)
 
-Note the default behavior is not to add the index, i.e., ``--no-annotate-index`.
+Note the default behavior is not to add the index, i.e., ``--no-annotate-index``.
 """
 
 from .base import ClickOption

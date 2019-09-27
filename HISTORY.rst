@@ -1,24 +1,38 @@
 History
 =======
 
+1.5.8 (2019-09-27)
+------------------
+
+* Add option ``--annotate-index`` (thanks to @john-bodley #160).
+
 1.5.7 (2019-09-27)
 ------------------
 
-* Enable accidentially disabled --upgrade option.
+* Enable accidentially disabled ``--upgrade`` option.
+
+.. _1.5.6:
 
 1.5.6 (2019-09-18)
 ------------------
 
 * Minor fixes to packaging and documentation.
 
-Note: this version is broken and won't pass ``--upgrade`` option to ``pip-compile``.
+Warning: this version is broken and won't pass ``--upgrade`` option to ``pip-compile``.
+If you have this version installed, you need to manually upgrade it.
+For example, using command::
+
+    pip-compile-multi --upgrade-package pip-compile-multi
+
+Like in this `PR <https://github.com/mozilla-releng/shipit/pull/1>`_.
 
 1.5.4 (2019-09-16)
 ------------------
 
 * Fixed MANIFEST to include features directory
 
-Note: this version is broken and won't pass ``--upgrade`` option to ``pip-compile``.
+Warning: this version is broken and won't pass ``--upgrade`` option to ``pip-compile``.
+See notes for 1.5.6_ for details.
 
 1.5.3 (2019-09-14)
 ------------------
@@ -27,7 +41,8 @@ Note: this version is broken and won't pass ``--upgrade`` option to ``pip-compil
 * Allow passing verify options after verify command.
 * Trim irrelevant entries from the traceback.
 
-Note: this version is broken and won't install ``features`` directory.
+Warning: this version is broken and won't install ``features`` directory.
+See notes for 1.5.6_ for details.
 
 1.5.2 (2019-09-12)
 ------------------
