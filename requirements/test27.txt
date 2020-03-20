@@ -7,4 +7,4 @@
 #
 -r py27.txt
 -r test35.txt
-contextlib2==0.5.5
+contextlib2==0.6.0.post1

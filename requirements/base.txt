@@ -5,7 +5,7 @@
 #
 #    pip-compile-multi
 #
-click==7.0
-pip-tools==4.1.0
-six==1.12.0               # via pip-tools
-toposort==1.5
+click==7.1.1              # via -r requirements/base.in, pip-tools
+pip-tools==4.5.1          # via -r requirements/base.in
+six==1.14.0               # via pip-tools
+toposort==1.5             # via -r requirements/base.in
