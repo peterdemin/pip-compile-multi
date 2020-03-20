@@ -28,6 +28,15 @@ class BaseDir(BaseFeature):
         help_text='Directory path with requirements files.',
     )
 
+    @property
+    def path(self):
+        """Get the base directory path.
+
+        >>> BaseDir().path == 'requirements'
+        True
+        """
+        return self.value
+
     def file_path(self, file_name):
         """Compose file path for a given file name.
 
