@@ -99,7 +99,7 @@ class Environment(object):
     @property
     def workingdir(self):
         """Working directory for pip-compile command"""
-        return FEATURES.base_dir.file_path('')
+        return FEATURES.base_dir.path
 
     @property
     def pin_command(self):
