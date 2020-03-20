@@ -36,7 +36,7 @@ Run
 Trusted by
 ----------
 
-|nih| |uber| |mozilla|
+|nih| |uber| |mozilla| |skydio|
 
 
 Read the Docs
@@ -58,3 +58,6 @@ Read the Docs
    :width: 200 px
    :height: 200 px
 
+.. |skydio| image:: docs/skydio-logo-black.svg
+   :width: 200 px
+   :height: 200 px
