@@ -6,3 +6,6 @@ future
 futures
 singledispatch
 scandir
+
+# Constrain transitive dependencies:
+six < 2

@@ -1,15 +1,62 @@
 -r test.in
 
-tox
-twine
-wheel
-bump2version
-prospector<1
+tox < 4
+twine < 2
+wheel < 1
+bump2version < 1
+prospector < 1
 flake8~=3.5.0  # waiting for prospector to catch up with pyflakes constraint
-collective.checkdocs
-pygments
-pre-commit
-pipdeptree
-pydocstyle<=3
-pylint!=1.9.5  # Missing for 3.7
-sphinx<2  # Dropped Python 2.7 support
+collective.checkdocs < 1
+pygments < 3
+pre-commit < 2
+pipdeptree < 1
+pydocstyle < 4
+pylint != 1.9.5  # Missing for 3.7
+sphinx < 2  # Dropped Python 2.7 support
+
+# Constrain transitive dependencies:
+alabaster < 1
+aspy.yaml < 2
+astroid < 2
+babel < 3
+bleach < 4
+bump2version < 1
+certifi < 2020
+cfgv < 3
+chardet < 4
+docutils < 1
+dodgy < 1
+filelock < 4
+flake8-polyfill < 2
+identify < 2
+idna < 3
+imagesize < 2
+importlib-resources < 2
+isort < 5
+jinja2 < 3
+lazy-object-proxy < 2
+markupsafe < 2
+mccabe < 1
+nodeenv < 2
+pep8-naming < 1
+pkginfo < 2
+prospector < 1
+pycodestyle < 3
+pyflakes < 2
+pylint-common < 1
+pylint-plugin-utils < 1
+pytz  # no constraint
+pyyaml < 6
+readme-renderer < 25
+requests-toolbelt < 1
+requests < 3
+requirements-detector < 1
+setoptconf < 1
+snowballstemmer < 2
+sphinxcontrib-websupport < 2
+toml < 1
+tqdm < 5
+urllib3 < 2
+virtualenv < 17
+webencodings < 1
+wrapt < 2

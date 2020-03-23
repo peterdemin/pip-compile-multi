@@ -1,1 +1,1 @@
-pathlib2
+pathlib2 < 3
