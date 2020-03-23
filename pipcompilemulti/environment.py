@@ -53,6 +53,7 @@ class Environment(object):
             self.pin_command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            cwd=self.workingdir,
         )
         stdout, stderr = process.communicate()
         if process.returncode == 0:
@@ -96,6 +97,11 @@ class Environment(object):
         return FEATURES.compose_output_file_path(self.name)
 
     @property
+    def workingdir(self):
+        """Working directory for pip-compile command"""
+        return FEATURES.base_dir.path
+
+    @property
     def pin_command(self):
         """Compose pip-compile shell command"""
         parts = [
@@ -104,7 +110,9 @@ class Environment(object):
             '--verbose',
         ]
         parts.extend(FEATURES.pin_options(self.name))
-        parts.extend(['--output-file', self.outfile, self.infile])
+        parts.extend(['--output-file',
+                      os.path.relpath(self.outfile, self.workingdir),
+                      os.path.relpath(self.infile, self.workingdir)])
         return parts
 
     def fix_lockfile(self):
