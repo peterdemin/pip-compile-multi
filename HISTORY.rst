@@ -1,6 +1,12 @@
 History
 =======
 
+1.5.9 (2020-03-23)
+------------------
+
+* Remove directory path from "via" annotations (thanks to @HALtheWise #166 #167).
+
+
 1.5.8 (2019-09-27)
 ------------------
 
