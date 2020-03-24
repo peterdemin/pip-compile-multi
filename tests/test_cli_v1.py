@@ -1,5 +1,6 @@
 """End to end tests for CLI v2"""
 
+import sys
 from click.testing import CliRunner
 import pytest
 from pipcompilemulti.cli_v1 import cli
@@ -19,11 +20,16 @@ def requirements_dir():
                                      '--upgrade-package=pip-tools'])
 def test_v1_command_exits_with_zero(command):
     """Run pip-compile-multi on self"""
+    local = (
+        'local'
+        if sys.version_info[0] >= 3
+        else 'local27'
+    )
     runner = CliRunner()
-    parameters = ['--only-name', 'local']
+    parameters = ['--only-name', local]
     parameters.append(command)
     result = runner.invoke(cli, parameters)
-    parameters[:0] = ['--generate-hashes', 'local',
+    parameters[:0] = ['--generate-hashes', local,
                       '--in-ext', 'txt',
                       '--out-ext', 'hash']
     result = runner.invoke(cli, parameters)
