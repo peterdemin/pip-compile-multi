@@ -3,7 +3,7 @@
 pytest ~= 4.6  # 4.6 is last to support Python2.7
 pytest-cov < 3
 mock < 4
-six < 2
+six  # unconstrained
 more-itertools < 6.0  # 6.0 dropped Python2.7 support
 
 # Constrain transitive dependencies:

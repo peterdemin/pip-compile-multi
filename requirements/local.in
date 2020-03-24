@@ -1,6 +1,6 @@
 -r test.in
 
-tox < 4
+tox <= 3.14.0
 twine < 2
 wheel < 1
 bump2version < 1
@@ -17,7 +17,7 @@ sphinx < 2  # Dropped Python 2.7 support
 # Constrain transitive dependencies:
 alabaster < 1
 aspy.yaml < 2
-astroid < 2
+astroid < 2.3.3
 babel < 3
 bleach < 4
 bump2version < 1
