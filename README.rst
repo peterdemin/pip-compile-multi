@@ -49,15 +49,19 @@ Read the Docs
 .. |nih| image:: docs/NIH_logo.svg
    :width: 200 px
    :height: 200 px
+   :target: https://www.nih.gov/
 
 .. |uber| image:: docs/Uber_Logo_Black_RGB.svg
    :width: 200 px
    :height: 200 px
+   :target: https://www.uber.com/
 
 .. |mozilla| image:: docs/moz-logo-bw-rgb.svg
    :width: 200 px
    :height: 200 px
+   :target: https://www.mozilla.org/
 
 .. |skydio| image:: docs/skydio-logo-black.svg
    :width: 200 px
    :height: 200 px
+   :target: https://www.skydio.com/
