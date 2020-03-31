@@ -5,26 +5,43 @@
 #
 #    pip-compile-multi
 #
--r test.txt
--r test27.txt
 astroid==1.6.6            # via -r local27.in, pylint, requirements-detector
-bleach==3.1.3             # via -r local27.in, readme-renderer
+atomicwrites==1.3.0       # via -r test.in, pytest
+attrs==19.3.0             # via -r test.in, pytest
+backports.functools-lru-cache==1.6.1  # via -r py27.in, astroid, isort, pylint
+bleach==3.1.4             # via -r local27.in, readme-renderer
 bump2version==0.5.11      # via -r local27.in
 certifi==2019.11.28       # via -r local27.in, requests
 chardet==3.0.4            # via -r local27.in, requests
+click==7.1.1              # via -r base.in, pip-tools
 collective.checkdocs==0.2  # via -r local27.in
+configparser==4.0.2       # via -r py27.in, flake8, importlib-metadata, pydocstyle, pylint
+contextlib2==0.6.0.post1  # via -r test27.in, importlib-metadata
+coverage==4.5.4           # via -r test.in, pytest-cov
 docutils==0.16            # via -r local27.in, collective.checkdocs, readme-renderer
 dodgy==0.2.1              # via -r local27.in, prospector
+enum34==1.1.10            # via -r py27.in, astroid, flake8
 filelock==3.0.12          # via -r local27.in, tox
 flake8-polyfill==1.0.2    # via -r local27.in, pep8-naming
 flake8==3.5.0             # via -r local27.in, flake8-polyfill
+funcsigs==1.0.2           # via -r py27.in, mock, pytest
+future==0.18.2            # via -r py27.in
+futures==3.3.0            # via -r py27.in, isort
 idna==2.9                 # via -r local27.in, requests
+importlib-metadata==0.23  # via -r test.in, pluggy, pytest, tox
 isort==4.3.21             # via -r local27.in, pylint
 lazy-object-proxy==1.4.3  # via -r local27.in, astroid
 mccabe==0.6.1             # via -r local27.in, flake8, prospector, pylint
+mock==3.0.5               # via -r test.in
+more-itertools==5.0.0     # via -r test.in, pytest, zipp
+packaging==19.2           # via -r test.in, pytest, tox
+pathlib2==2.3.5           # via -r test35.in, importlib-metadata, pytest
 pep8-naming==0.10.0       # via -r local27.in, prospector
+pip-tools==4.5.1          # via -r base.in
 pkginfo==1.5.0.1          # via -r local27.in, twine
+pluggy==0.13.1            # via -r test.in, pytest, tox
 prospector==0.12.11       # via -r local27.in
+py==1.8.1                 # via -r test.in, pytest, tox
 pycodestyle==2.3.1        # via -r local27.in, flake8, prospector
 pydocstyle==3.0.0         # via -r local27.in, prospector
 pyflakes==1.6.0           # via -r local27.in, flake8, prospector
@@ -32,22 +49,31 @@ pygments==2.5.2           # via -r local27.in, readme-renderer
 pylint-common==0.2.5      # via -r local27.in, prospector
 pylint-plugin-utils==0.6  # via -r local27.in, prospector, pylint-common
 pylint==1.9.5             # via -r local27.in, prospector, pylint-common, pylint-plugin-utils
+pyparsing==2.4.6          # via -r test.in, packaging
+pytest-cov==2.8.1         # via -r test.in
+pytest==4.6.9             # via -r test.in, pytest-cov
 pyyaml==5.3.1             # via -r local27.in, prospector
 readme-renderer==24.0     # via -r local27.in, twine
 requests-toolbelt==0.9.1  # via -r local27.in, twine
 requests==2.23.0          # via -r local27.in, requests-toolbelt, twine
 requirements-detector==0.6  # via -r local27.in, prospector
+scandir==1.10.0           # via -r py27.in, pathlib2
 setoptconf==0.2.0         # via -r local27.in, prospector
+singledispatch==3.4.0.3   # via -r py27.in, astroid, pylint
+six==1.14.0               # via -r test.in, astroid, bleach, mock, more-itertools, packaging, pathlib2, pip-tools, pydocstyle, pylint, pytest, readme-renderer, singledispatch, tox
 snowballstemmer==1.9.1    # via -r local27.in, pydocstyle
 toml==0.10.0              # via -r local27.in, tox
+toposort==1.5             # via -r base.in
 tox==3.14.5               # via -r local27.in
 tqdm==4.43.0              # via -r local27.in, twine
 twine==1.15.0             # via -r local27.in
 urllib3==1.25.8           # via -r local27.in, requests
 virtualenv==16.7.10       # via -r local27.in, tox
+wcwidth==0.1.9            # via -r test.in, pytest
 webencodings==0.5.1       # via -r local27.in, bleach
 wheel==0.34.2             # via -r local27.in
 wrapt==1.12.1             # via -r local27.in, astroid
+zipp==0.6.0               # via -r test.in, importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
