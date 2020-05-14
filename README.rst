@@ -36,7 +36,9 @@ Run
 Trusted by
 ----------
 
-|nih| |uber| |mozilla| |skydio|
+|nih| |uber| |mozilla|
+
+|skydio| |pallets|
 
 
 Read the Docs
@@ -65,3 +67,8 @@ Read the Docs
    :width: 200 px
    :height: 200 px
    :target: https://www.skydio.com/
+
+.. |pallets| image:: docs/pallets.png
+   :width: 200 px
+   :height: 200 px
+   :target: https://palletsprojects.com/
