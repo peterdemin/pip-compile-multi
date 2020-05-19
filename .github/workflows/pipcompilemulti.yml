@@ -3,7 +3,7 @@ on:
   schedule:
     - cron:  '0 10 * * 1'
 jobs:
-  update-dep:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
