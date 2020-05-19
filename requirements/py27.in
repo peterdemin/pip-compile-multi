@@ -1,8 +1,0 @@
-backports.functools-lru-cache
-configparser
-enum34
-funcsigs
-future
-futures
-singledispatch
-scandir

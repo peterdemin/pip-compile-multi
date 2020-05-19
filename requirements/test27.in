@@ -1,4 +1,0 @@
--r py27.in
--r test35.in
-
-contextlib2 < 1

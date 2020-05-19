@@ -1,19 +1,6 @@
 -r base.in
 
-pytest ~= 4.6  # 4.6 is last to support Python2.7
-pytest-cov < 3
-mock < 4
-six  # unconstrained
-more-itertools < 6.0  # 6.0 dropped Python2.7 support
-
-# Constrain transitive dependencies:
-atomicwrites < 2
-attrs < 20
-coverage < 5
-importlib-metadata < 1
-packaging < 20
-pluggy < 1
-py < 2
-pyparsing < 3
-wcwidth < 1
-zipp < 1
+pytest
+pytest-cov
+mock
+more-itertools
