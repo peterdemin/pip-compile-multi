@@ -27,17 +27,6 @@ jobs:
         run: |
           git config user.name 'pip-compile-multi'
           git config user.email 'pip-compile-multi@users.noreply.github.com'
-          tail -n+3 HISTORY.rst > HISTORY.rst.tail
-          mv HISTORY.rst HISTORY.rst.tmp
-          head -n2 HISTORY.rst.tmp > HISTORY.rst
-          rm HISTORY.rst.tmp
-          date '+UNRELEASED (%Y-%m-%d)' >> HISTORY.rst
-          echo '-----------------------' >> HISTORY.rst
-          echo '' >> HISTORY.rst
-          echo '* Update dependencies' >> HISTORY.rst
-          echo '' >> HISTORY.rst
-          cat HISTORY.rst.tail >> HISTORY.rst
-          rm HISTORY.rst.tail
           git commit -am "Update dependencies"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
