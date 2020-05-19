@@ -2,18 +2,13 @@ sudo: false
 language: python
 
 python:
-  - "3.7"
   - "3.6"
-  - "3.5"
-  - "2.7"
-  - "pypy"
+  - "3.7"
+  - "3.8"
 
 
 matrix:
   include:
-    - os: linux
-      python: 2.7
-      env: TOXENV=lint2
     - os: linux
       python: 3.6
       env: TOXENV=lint3
