@@ -4,12 +4,14 @@ tox
 twine
 wheel
 bump2version
-prospector
 flake8
 collective.checkdocs
 pygments
 pre-commit
 pipdeptree
+pylint
+pep8-naming
+pycodestyle
 pydocstyle
 pylint
 sphinx
