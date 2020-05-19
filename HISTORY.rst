@@ -1,6 +1,13 @@
 History
 =======
 
+2.0.0 (2020-05-18)
+------------------
+
+* Drop Python 2.7 support. pip-tools 4 no longer works with the latest pip,
+  there's no way to continue Python 2.7 support.
+
+
 1.5.9 (2020-03-23)
 ------------------
 
