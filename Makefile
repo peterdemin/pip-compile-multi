@@ -20,7 +20,7 @@ sync: requirements/local.hash virtual_env_set
 
 .PHONY: upgrade
 upgrade: virtual_env_set
-	tox -e upgrade2 -e upgrade3
+	tox -e upgrade3
 
 ### CI ###
 .PHONY: test
