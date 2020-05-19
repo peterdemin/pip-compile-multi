@@ -5,6 +5,11 @@ UNRELEASED (2020-05-19)
 
 * Update dependencies
 
+UNRELEASED (2020-05-19)
+-----------------------
+
+* Update dependencies
+
 
 2.0.0 (2020-05-18)
 ------------------
