@@ -60,12 +60,12 @@ sphinxcontrib-jsmath==1.0.1  # via sphinx
 sphinxcontrib-qthelp==1.0.3  # via sphinx
 sphinxcontrib-serializinghtml==1.1.4  # via sphinx
 toml==0.10.1              # via pre-commit, pylint, tox
-tox==3.15.0               # via -r local.in
+tox==3.15.1               # via -r local.in
 tqdm==4.46.0              # via twine
 twine==3.1.1              # via -r local.in
 typed-ast==1.4.1          # via astroid
 urllib3==1.25.9           # via requests
-virtualenv==20.0.20       # via pre-commit, tox
+virtualenv==20.0.21       # via pre-commit, tox
 webencodings==0.5.1       # via bleach
 wheel==0.34.2             # via -r local.in
 wrapt==1.12.1             # via astroid
