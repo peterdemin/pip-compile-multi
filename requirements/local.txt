@@ -23,7 +23,7 @@ docutils==0.16            # via collective.checkdocs, readme-renderer, sphinx
 filelock==3.0.12          # via tox, virtualenv
 flake8-polyfill==1.0.2    # via pep8-naming
 flake8==3.8.2             # via -r local.in, flake8-polyfill
-identify==1.4.17          # via pre-commit
+identify==1.4.18          # via pre-commit
 idna==2.9                 # via requests
 imagesize==1.2.0          # via sphinx
 importlib-resources==1.5.0  # via pre-commit, virtualenv
