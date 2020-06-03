@@ -16,8 +16,8 @@ pluggy==0.13.1            # via pytest
 py==1.8.1                 # via pytest
 pyparsing==2.4.7          # via packaging
 pytest-cov==2.9.0         # via -r test.in
-pytest==5.4.2             # via -r test.in, pytest-cov
-wcwidth==0.1.9            # via pytest
+pytest==5.4.3             # via -r test.in, pytest-cov
+wcwidth==0.2.3            # via pytest
 zipp==3.1.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
