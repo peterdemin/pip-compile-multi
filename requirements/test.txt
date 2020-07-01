@@ -8,12 +8,12 @@
 -r base.txt
 attrs==19.3.0             # via pytest
 coverage==5.1             # via pytest-cov
-importlib-metadata==1.6.1  # via pluggy, pytest
+importlib-metadata==1.7.0  # via pluggy, pytest
 mock==4.0.2               # via -r test.in
 more-itertools==8.4.0     # via -r test.in, pytest
 packaging==20.4           # via pytest
 pluggy==0.13.1            # via pytest
-py==1.8.2                 # via pytest
+py==1.9.0                 # via pytest
 pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.0        # via -r test.in
 pytest==5.4.3             # via -r test.in, pytest-cov
