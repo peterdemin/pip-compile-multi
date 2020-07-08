@@ -39,7 +39,7 @@ nodeenv==1.4.0            # via pre-commit
 pep8-naming==0.11.1       # via -r local.in
 pipdeptree==1.0.0         # via -r local.in
 pkginfo==1.5.0.1          # via twine
-pre-commit==2.5.1         # via -r local.in
+pre-commit==2.6.0         # via -r local.in
 pycodestyle==2.6.0        # via -r local.in, flake8
 pycparser==2.20           # via cffi
 pydocstyle==5.0.2         # via -r local.in
@@ -54,7 +54,7 @@ requests==2.24.0          # via requests-toolbelt, sphinx, twine
 rfc3986==1.4.0            # via twine
 secretstorage==3.1.2      # via keyring
 snowballstemmer==2.0.0    # via pydocstyle, sphinx
-sphinx==3.1.1             # via -r local.in
+sphinx==3.1.2             # via -r local.in
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx
 sphinxcontrib-htmlhelp==1.0.3  # via sphinx
@@ -67,7 +67,7 @@ tqdm==4.47.0              # via twine
 twine==3.2.0              # via -r local.in
 typed-ast==1.4.1          # via astroid
 urllib3==1.25.9           # via requests
-virtualenv==20.0.25       # via pre-commit, tox
+virtualenv==20.0.26       # via pre-commit, tox
 webencodings==0.5.1       # via bleach
 wheel==0.34.2             # via -r local.in
 wrapt==1.12.1             # via astroid
