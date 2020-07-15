@@ -24,7 +24,7 @@ docutils==0.16            # via collective.checkdocs, readme-renderer, sphinx
 filelock==3.0.12          # via tox, virtualenv
 flake8-polyfill==1.0.2    # via pep8-naming
 flake8==3.8.3             # via -r local.in, flake8-polyfill
-identify==1.4.21          # via pre-commit
+identify==1.4.23          # via pre-commit
 idna==2.10                # via requests
 imagesize==1.2.0          # via sphinx
 importlib-resources==3.0.0  # via pre-commit, virtualenv
@@ -62,7 +62,7 @@ sphinxcontrib-jsmath==1.0.1  # via sphinx
 sphinxcontrib-qthelp==1.0.3  # via sphinx
 sphinxcontrib-serializinghtml==1.1.4  # via sphinx
 toml==0.10.1              # via pre-commit, pylint, tox
-tox==3.16.1               # via -r local.in
+tox==3.17.0               # via -r local.in
 tqdm==4.47.0              # via twine
 twine==3.2.0              # via -r local.in
 typed-ast==1.4.1          # via astroid
