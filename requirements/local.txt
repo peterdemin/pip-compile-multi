@@ -13,8 +13,8 @@ babel==2.8.0              # via sphinx
 bleach==3.1.5             # via readme-renderer
 bump2version==1.0.0       # via -r local.in
 certifi==2020.6.20        # via requests
-cffi==1.14.0              # via cryptography
-cfgv==3.1.0               # via pre-commit
+cffi==1.14.1              # via cryptography
+cfgv==3.2.0               # via pre-commit
 chardet==3.0.4            # via requests
 collective.checkdocs==0.2  # via -r local.in
 colorama==0.4.3           # via twine
@@ -31,7 +31,7 @@ importlib-resources==3.0.0  # via pre-commit, virtualenv
 isort==4.3.21             # via pylint
 jeepney==0.4.3            # via keyring, secretstorage
 jinja2==2.11.2            # via sphinx
-keyring==21.2.1           # via twine
+keyring==21.3.0           # via twine
 lazy-object-proxy==1.4.3  # via astroid
 markupsafe==1.1.1         # via jinja2
 mccabe==0.6.1             # via flake8, pylint
@@ -61,13 +61,12 @@ sphinxcontrib-htmlhelp==1.0.3  # via sphinx
 sphinxcontrib-jsmath==1.0.1  # via sphinx
 sphinxcontrib-qthelp==1.0.3  # via sphinx
 sphinxcontrib-serializinghtml==1.1.4  # via sphinx
-toml==0.10.1              # via pre-commit, pylint, tox
-tox==3.17.1               # via -r local.in
-tqdm==4.48.0              # via twine
+tox==3.18.1               # via -r local.in
+tqdm==4.48.2              # via twine
 twine==3.2.0              # via -r local.in
 typed-ast==1.4.1          # via astroid
-urllib3==1.25.9           # via requests
-virtualenv==20.0.27       # via pre-commit, tox
+urllib3==1.25.10          # via requests
+virtualenv==20.0.30       # via pre-commit, tox
 webencodings==0.5.1       # via bleach
 wheel==0.34.2             # via -r local.in
 wrapt==1.12.1             # via astroid
