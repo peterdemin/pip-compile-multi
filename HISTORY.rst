@@ -1,9 +1,11 @@
 History
 =======
-UNRELEASED (2020-05-19)
------------------------
 
-* Update dependencies
+2.1.0 (2020-08-19)
+------------------
+
+* Update dependencies.
+* Revert relative path normalization, introduced in #167 (thanks to @john-bodley #200).
 
 
 2.0.0 (2020-05-18)
