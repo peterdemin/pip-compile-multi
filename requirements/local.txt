@@ -13,7 +13,7 @@ babel==2.8.0              # via sphinx
 bleach==3.1.5             # via readme-renderer
 bump2version==1.0.0       # via -r local.in
 certifi==2020.6.20        # via requests
-cffi==1.14.1              # via cryptography
+cffi==1.14.2              # via cryptography
 cfgv==3.2.0               # via pre-commit
 chardet==3.0.4            # via requests
 collective.checkdocs==0.2  # via -r local.in
@@ -24,7 +24,7 @@ docutils==0.16            # via collective.checkdocs, readme-renderer, sphinx
 filelock==3.0.12          # via tox, virtualenv
 flake8-polyfill==1.0.2    # via pep8-naming
 flake8==3.8.3             # via -r local.in, flake8-polyfill
-identify==1.4.25          # via pre-commit
+identify==1.4.28          # via pre-commit
 idna==2.10                # via requests
 imagesize==1.2.0          # via sphinx
 importlib-resources==3.0.0  # via pre-commit, virtualenv
@@ -54,7 +54,7 @@ requests==2.24.0          # via requests-toolbelt, sphinx, twine
 rfc3986==1.4.0            # via twine
 secretstorage==3.1.2      # via keyring
 snowballstemmer==2.0.0    # via pydocstyle, sphinx
-sphinx==3.2.0             # via -r local.in
+sphinx==3.2.1             # via -r local.in
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx
 sphinxcontrib-htmlhelp==1.0.3  # via sphinx
@@ -66,9 +66,9 @@ tqdm==4.48.2              # via twine
 twine==3.2.0              # via -r local.in
 typed-ast==1.4.1          # via astroid
 urllib3==1.25.10          # via requests
-virtualenv==20.0.30       # via pre-commit, tox
+virtualenv==20.0.31       # via pre-commit, tox
 webencodings==0.5.1       # via bleach
-wheel==0.34.2             # via -r local.in
+wheel==0.35.1             # via -r local.in
 wrapt==1.12.1             # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
