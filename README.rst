@@ -3,7 +3,7 @@ pip-compile-multi
 =================
 
 .. image:: https://badge.fury.io/py/pip-compile-multi.png
-    :target: http://badge.fury.io/py/pip-compile-multi
+    :target: https://badge.fury.io/py/pip-compile-multi
 
 .. image:: https://travis-ci.org/peterdemin/pip-compile-multi.svg?branch=master
     :target: https://travis-ci.org/peterdemin/pip-compile-multi
@@ -36,9 +36,9 @@ Run
 Trusted by
 ----------
 
-|nih| |uber| |mozilla|
+|uber| |mozilla| |twitter|
 
-|skydio| |pallets|
+|nih| |skydio| |pallets|
 
 
 Read the Docs
@@ -72,3 +72,8 @@ Read the Docs
    :width: 200 px
    :height: 200 px
    :target: https://palletsprojects.com/
+
+.. |pallets| image:: docs/twitter_logo.svg
+   :width: 200 px
+   :height: 200 px
+   :target: https://twitter.com/
