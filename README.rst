@@ -73,7 +73,7 @@ Read the Docs
    :height: 200 px
    :target: https://palletsprojects.com/
 
-.. |pallets| image:: docs/twitter_logo.svg
+.. |twitter| image:: docs/twitter_logo.svg
    :width: 200 px
    :height: 200 px
    :target: https://twitter.com/
