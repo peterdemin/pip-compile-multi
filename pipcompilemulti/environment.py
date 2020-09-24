@@ -9,7 +9,6 @@ from .dependency import Dependency
 from .features import FEATURES
 from .deduplicate import PackageDeduplicator
 
-
 logger = logging.getLogger("pip-compile-multi")
 
 
@@ -103,6 +102,9 @@ class Environment(object):
             '--no-header',
             '--verbose',
         ]
+        pip_extra_index_url = os.getenv("PIP_EXTRA_INDEX_URL", None)
+        if pip_extra_index_url is not None:
+            parts.extend(['--extra-index-url=${PIP_EXTRA_INDEX_URL}'])
         parts.extend(FEATURES.pin_options(self.name))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
