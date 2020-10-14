@@ -7,7 +7,7 @@
 #
 -r test.txt
 atomicwrites==1.4.0       # via -r requirements/testwin.in
-colorama==0.4.3           # via -r requirements/testwin.in
+colorama==0.4.4           # via -r requirements/testwin.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
