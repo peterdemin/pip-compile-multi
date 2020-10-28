@@ -19,7 +19,7 @@ pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.1        # via -r requirements/test.in
 pytest==6.1.1             # via -r requirements/test.in, pytest-cov
 toml==0.10.1              # via pytest
-zipp==3.3.1               # via importlib-metadata
+zipp==3.4.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
