@@ -6,7 +6,7 @@
 #    pip-compile-multi
 #
 -r base.txt
-attrs==20.2.0             # via pytest
+attrs==20.3.0             # via pytest
 coverage==5.3             # via pytest-cov
 importlib-metadata==2.0.0  # via pluggy, pytest
 iniconfig==1.1.1          # via pytest
