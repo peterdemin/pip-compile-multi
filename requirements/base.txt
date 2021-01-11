@@ -5,9 +5,14 @@
 #
 #    pip-compile-multi
 #
-click==7.1.2              # via -r requirements/base.in, pip-tools
-pip-tools==5.5.0          # via -r requirements/base.in
-toposort==1.6             # via -r requirements/base.in
+click==7.1.2
+# via
+#   -r requirements/base.in
+#   pip-tools
+pip-tools==5.5.0
+# via -r requirements/base.in
+toposort==1.6
+# via -r requirements/base.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

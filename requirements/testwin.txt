@@ -6,8 +6,34 @@
 #    pip-compile-multi
 #
 -r test.txt
-atomicwrites==1.4.0       # via -r requirements/testwin.in
-colorama==0.4.4           # via -r requirements/testwin.in
+atomicwrites==1.4.0
+# via -r requirements/testwin.in
+# via pytest
+# via
+#   -r requirements/base.in
+#   pip-tools
+colorama==0.4.4
+# via -r requirements/testwin.in
+# via pytest-cov
+# via
+#   pluggy
+#   pytest
+# via pytest
+# via -r requirements/test.in
+# via -r requirements/test.in
+# via pytest
+# via -r requirements/base.in
+# via pytest
+# via pytest
+# via packaging
+# via -r requirements/test.in
+# via
+#   -r requirements/test.in
+#   pytest-cov
+# via pytest
+# via -r requirements/base.in
+# via importlib-metadata
+# via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
