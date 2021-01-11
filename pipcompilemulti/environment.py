@@ -1,6 +1,5 @@
 """Environment class"""
 
-import os
 import re
 import logging
 import subprocess
@@ -8,6 +7,7 @@ import subprocess
 from .dependency import Dependency
 from .features import FEATURES
 from .deduplicate import PackageDeduplicator
+from .utils import extract_env_name
 
 
 logger = logging.getLogger("pip-compile-multi")
@@ -18,13 +18,14 @@ class Environment(object):
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
 
-    def __init__(self, name, deduplicator=None):
+    def __init__(self, in_path, deduplicator=None):
         """
-        name - name of the environment, e.g. base, test
+        Args:
+            in_path: relative path to input file, e.g. requirements/base.in
         """
-        self.name = name
+        self.in_path = in_path
         self._dedup = deduplicator or PackageDeduplicator()
-        self.ignore = self._dedup.ignored_packages(name)
+        self.ignore = self._dedup.ignored_packages(in_path)
         self.packages = {}
         self._outfile_pkg_names = None
 
@@ -35,9 +36,13 @@ class Environment(object):
         Populate package ignore set in either case and return
         boolean indicating whether outfile was written.
         """
-        logger.info("Locking %s to %s. References: %r",
-                    self.infile, self.outfile, sorted(self._dedup.recursive_refs(self.name)))
-        if not FEATURES.affected(self.name):
+        logger.info(
+            "Locking %s to %s. References: %r",
+            self.infile,
+            self.outfile,
+            sorted(self._dedup.recursive_refs(self.in_path)),
+        )
+        if not FEATURES.affected(self.in_path):
             self.fix_lockfile()  # populate ignore set
             return False
         self.create_lockfile()
@@ -73,27 +78,30 @@ class Environment(object):
         or
         --requirement file.in
 
-        return set of matched file names without extension.
-        E.g. ['file']
+        return set of matched file names.
+        E.g. {'file1.in', 'file2.in'}
         """
         references = set()
         for line in open(filename):
             matched = cls.RE_REF.match(line)
             if matched:
-                reference = matched.group('path')
-                reference_base = os.path.splitext(reference)[0]
-                references.add(reference_base)
+                references.add(matched.group('path'))
         return references
+
+    @property
+    def name(self):
+        """Generate environment name from in_path."""
+        return extract_env_name(self.in_path)
 
     @property
     def infile(self):
         """Path of the input file"""
-        return FEATURES.compose_input_file_path(self.name)
+        return self.in_path
 
     @property
     def outfile(self):
         """Path of the output file"""
-        return FEATURES.compose_output_file_path(self.name)
+        return FEATURES.compose_output_file_path(self.in_path)
 
     @property
     def pin_command(self):
@@ -103,7 +111,7 @@ class Environment(object):
             '--no-header',
             '--verbose',
         ]
-        parts.extend(FEATURES.pin_options(self.name))
+        parts.extend(FEATURES.pin_options(self.in_path))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 
@@ -120,7 +128,7 @@ class Environment(object):
                 for line in lines
                 if line is not None
             ])
-        self._dedup.register_packages_for_env(self.name, self.packages)
+        self._dedup.register_packages_for_env(self.in_path, self.packages)
 
     @staticmethod
     def concatenated(fp):
@@ -164,13 +172,13 @@ class Environment(object):
                         )
                 return None
             self.packages[dep.package] = dep.version
-            dep.drop_post(self.name)
+            dep.drop_post(self.in_path)
             return dep.serialize()
         return line.strip()
 
-    def add_references(self, other_names):
-        """Add references to other_names in outfile"""
-        if not other_names:
+    def add_references(self, other_in_paths):
+        """Add references to other_in_paths in outfile"""
+        if not other_in_paths:
             # Skip on empty list
             return
         with open(self.outfile, 'rt') as fp:
@@ -179,9 +187,9 @@ class Environment(object):
             fp.writelines(header)
             fp.writelines(
                 '-r {0}\n'.format(
-                    FEATURES.compose_output_file_name(other_name)
+                    FEATURES.compose_output_file_path(other_in_path)
                 )
-                for other_name in sorted(other_names)
+                for other_in_path in sorted(other_in_paths)
             )
             fp.writelines(body)
 

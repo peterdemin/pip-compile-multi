@@ -10,6 +10,7 @@ from .file_extensions import InputExtension, OutputExtension
 from .forbid_post import ForbidPost
 from .header import CustomHeader
 from .limit_envs import LimitEnvs
+from .limit_in_paths import LimitInPaths
 from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
@@ -27,10 +28,11 @@ class FeaturesController:
         self.base_dir = BaseDir()
         self.compatible = Compatible()
         self.forbid_post = ForbidPost()
-        self.add_hashes = AddHashes()
+        self.add_hashes = AddHashes(self)
         self.upgrade_all = UpgradeAll(self)
         self.upgrade_selected = UpgradeSelected(self)
-        self.limit_envs = LimitEnvs()
+        self.limit_envs = LimitEnvs(self)
+        self.limit_in_paths = LimitInPaths()
         self.header = CustomHeader()
         self.allow_unsafe = AllowUnsafe()
         self._features = [
@@ -44,6 +46,7 @@ class FeaturesController:
             self.add_hashes,
             self.upgrade_all,
             self.upgrade_selected,
+            self.limit_in_paths,
             self.limit_envs,
             self.header,
             self.allow_unsafe,
@@ -62,36 +65,30 @@ class FeaturesController:
             save_command_options = feature.bind(save_command_options)
         return save_command_options
 
-    def pin_options(self, env_name):
+    def pin_options(self, in_path):
         """Return list of options to pin command."""
         options = []
         options.extend(self.use_cache.pin_options())
-        options.extend(self.add_hashes.pin_options(env_name))
+        options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.allow_unsafe.pin_options())
         options.extend(self.upgrade_all.pin_options())
-        options.extend(self.upgrade_selected.pin_options(env_name))
+        options.extend(self.upgrade_selected.pin_options(in_path))
         options.extend(self.annotate_index.pin_options())
         return options
 
-    def compose_input_file_path(self, env_name):
+    def compose_input_file_path(self, basename):
         """Return input file path by environment name."""
         return self.base_dir.file_path(
-            self.input_extension.compose_input_file_name(env_name)
+            self.input_extension.compose_input_file_name(basename)
         )
 
-    def compose_output_file_path(self, env_name):
+    def compose_output_file_path(self, in_path):
         """Return output file path by environment name."""
-        return self.base_dir.file_path(
-            self.output_extension.compose_output_file_name(env_name)
-        )
+        return self.output_extension.compose_output_file_path(in_path)
 
-    def compose_output_file_name(self, env_name):
-        """Return output file name by environment name."""
-        return self.output_extension.compose_output_file_name(env_name)
-
-    def drop_post(self, env_name, package_name, version):
+    def drop_post(self, in_path, package_name, version):
         """Whether post versions are forbidden for passed environment name."""
-        if self.forbid_post.post_forbidden(env_name):
+        if self.forbid_post.post_forbidden(in_path):
             return self.forbid_post.drop_post(version)
         if self.compatible.is_matched(package_name):
             return self.forbid_post.drop_post(version)
@@ -105,17 +102,20 @@ class FeaturesController:
         """Configure features with a list of discovered environments."""
         self.add_hashes.on_discover(env_confs)
         self.limit_envs.on_discover(env_confs)
+        self.limit_in_paths.on_discover(env_confs)
         self.upgrade_selected.reset()
 
-    def affected(self, env_name):
+    def affected(self, in_path):
         """Whether environment was affected by upgrade command."""
         if self.upgrade_all.enabled:
             return True
-        return self.upgrade_selected.affected(env_name)
+        return self.upgrade_selected.affected(in_path)
 
-    def included(self, env_name):
-        """Whether environment is included directly or by reference."""
-        return self.limit_envs.included(env_name)
+    def included(self, in_path):
+        """Whether in_path is included directly or by reference."""
+        return (
+            self.limit_envs.included(in_path) and self.limit_in_paths.included(in_path)
+        )
 
     def get_header_text(self):
         """Text to put in the beginning of each generated file."""

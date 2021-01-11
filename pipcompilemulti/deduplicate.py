@@ -19,19 +19,19 @@ class PackageDeduplicator:
         """Save environment references."""
         self.env_confs = env_confs
 
-    def register_packages_for_env(self, env_name, packages):
+    def register_packages_for_env(self, in_path, packages):
         """Save environment packages."""
-        self.env_packages[env_name] = packages
+        self.env_packages[in_path] = packages
 
-    def ignored_packages(self, env_name):
+    def ignored_packages(self, in_path):
         """Get package mapping from name to version for referenced environments."""
         if self.env_confs is None:
             return {}
-        rrefs = recursive_refs(self.env_confs, env_name)
+        rrefs = recursive_refs(self.env_confs, in_path)
         return merged_packages(self.env_packages, rrefs)
 
-    def recursive_refs(self, env_name):
-        """Return recursive list of environment names referenced by env_name."""
+    def recursive_refs(self, in_path):
+        """Return recursive list of environment names referenced by in_path."""
         if self.env_confs is None:
             return {}
-        return recursive_refs(self.env_confs, env_name)
+        return recursive_refs(self.env_confs, in_path)
