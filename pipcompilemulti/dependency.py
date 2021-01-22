@@ -6,7 +6,39 @@ from .features import FEATURES
 
 
 class Dependency(object):
-    """Single dependency line"""
+    r"""Single dependency.
+
+    Comment may span multiple lines.
+
+    >>> print(Dependency(
+    ...   "six==1.0\n "
+    ...   "    --hash=abcdef\n"
+    ...   "    # via\n"
+    ...   "    #   app\n"
+    ...   "    #   pkg"
+    ... ).serialize())
+    six==1.0 \
+        --hash=abcdef
+        # via
+        #   app
+        #   pkg
+    >>> print(Dependency(
+    ...   "six==1.0\n"
+    ...   "    # via\n"
+    ...   "    #   app\n"
+    ...   "    #   pkg"
+    ... ).serialize())
+    six==1.0
+        # via
+        #   app
+        #   pkg
+    >>> # Old-style one-line
+    >>> print(Dependency("six==1.0    # via pkg").serialize())
+    six==1.0                      # via pkg
+    >>> print(Dependency("-e https://site#egg=pkg==1\n   # via lib").serialize())
+    https://site#egg=pkg==1
+       # via lib
+    """
 
     COMMENT_JUSTIFICATION = 26
 
@@ -17,9 +49,8 @@ class Dependency(object):
         r'(?iu)(?P<package>\S+)'
         r'=='
         r'(?P<version>\S+)'
-        r'\s*'
-        r'(?P<hashes>(?:--hash=\S+\s*)+)?'
-        r'(?P<comment>#.*)?$'
+        r'(?P<hashes>(?:\s*--hash=\S+)+)?'
+        r'(?P<comment>(?:\s*#.*)+)?$'
     )
     RE_EDITABLE_FLAG = re.compile(
         r'^-e '
@@ -33,8 +64,7 @@ class Dependency(object):
         r'(?P<prefix>\S+#egg=)'
         r'(?P<package>[a-z0-9-_.]+)'
         r'(?P<postfix>\S+)'
-        r'\s*'
-        r'(?P<comment>#.*)?$'
+        r'(?P<comment>(?:\s*#.*)+)?$'
     )
 
     def __init__(self, line):
@@ -45,7 +75,7 @@ class Dependency(object):
             self.package = regular.group('package')
             self.version = regular.group('version').strip()
             self.hashes = (regular.group('hashes') or '').strip()
-            self.comment = (regular.group('comment') or '').strip()
+            self.comment = (regular.group('comment') or '').rstrip()
             return
         vcs = self.RE_VCS_DEPENDENCY.match(line)
         if vcs:
@@ -54,7 +84,7 @@ class Dependency(object):
             self.package = vcs.group('package')
             self.version = ''
             self.hashes = ''  # No way!
-            self.comment = (vcs.group('comment') or '').strip()
+            self.comment = (vcs.group('comment') or '').rstrip()
             self.line = line
             return
         self.valid = False
@@ -77,10 +107,13 @@ class Dependency(object):
             hashes = self.hashes.split()
             lines = [package_version.strip()]
             lines.extend(hashes)
+            result = ' \\\n    '.join(lines)
             if self.comment:
-                lines.append(self.comment)
-            return ' \\\n    '.join(lines)
+                result += self.comment
+            return result
         else:
+            if self.comment.startswith('\n'):
+                return (package_version.rstrip() + self.comment).rstrip()
             return '{0}{1}'.format(
                 package_version.ljust(self.COMMENT_JUSTIFICATION),
                 self.comment,

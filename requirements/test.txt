@@ -7,44 +7,39 @@
 #
 -r base.txt
 attrs==20.3.0
-# via pytest
-# via
-#   -r requirements/base.in
-#   pip-tools
+    # via pytest
 coverage==5.3.1
-# via pytest-cov
+    # via pytest-cov
 importlib-metadata==3.4.0
-# via
-#   pluggy
-#   pytest
+    # via
+    #   pluggy
+    #   pytest
 iniconfig==1.1.1
-# via pytest
+    # via pytest
 mock==4.0.3
-# via -r requirements/test.in
+    # via -r requirements/test.in
 more-itertools==8.6.0
-# via -r requirements/test.in
+    # via -r requirements/test.in
 packaging==20.8
-# via pytest
-# via -r requirements/base.in
+    # via pytest
 pluggy==0.13.1
-# via pytest
+    # via pytest
 py==1.10.0
-# via pytest
+    # via pytest
 pyparsing==2.4.7
-# via packaging
+    # via packaging
 pytest-cov==2.11.1
-# via -r requirements/test.in
+    # via -r requirements/test.in
 pytest==6.2.1
-# via
-#   -r requirements/test.in
-#   pytest-cov
+    # via
+    #   -r requirements/test.in
+    #   pytest-cov
 toml==0.10.2
-# via pytest
-# via -r requirements/base.in
+    # via pytest
 typing-extensions==3.7.4.3
-# via importlib-metadata
+    # via importlib-metadata
 zipp==3.4.0
-# via importlib-metadata
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

@@ -17,6 +17,7 @@ class Environment(object):
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
+    RE_COMMENT = re.compile(r'^\s*#.*$')
 
     def __init__(self, in_path, deduplicator=None):
         """
@@ -116,26 +117,34 @@ class Environment(object):
         return parts
 
     def fix_lockfile(self):
-        """Run each line of outfile through fix_pin"""
+        """Run each section of outfile through fix_pin"""
         with open(self.outfile, 'rt') as fp:
-            lines = [
-                self.fix_pin(line)
-                for line in self.concatenated(fp)
+            sections = [
+                self.fix_pin(section)
+                for section in self.parse_sections(self.concatenated(fp))
             ]
         with open(self.outfile, 'wt') as fp:
             fp.writelines([
-                line + '\n'
-                for line in lines
-                if line is not None
+                section + '\n'
+                for section in sections
+                if section is not None
             ])
         self._dedup.register_packages_for_env(self.in_path, self.packages)
 
     @staticmethod
     def concatenated(fp):
-        """Read lines from fp concatenating on backslash (\\)"""
+        r"""Read lines from fp concatenating on backslash (\\)
+
+        >>> env = Environment('')
+        >>> list(env.concatenated([
+        ...     'pkg', 'pkg  # comment', 'pkg', '# comment', '# one more',
+        ...     'foo', '  # via', '', '  # pkg',
+        ... ]))
+        ['pkg', 'pkg  # comment', 'pkg', '# comment', '# one more', 'foo', '  # via', '', '  # pkg']
+        """
         line_parts = []
         for line in fp:
-            line = line.strip()
+            line = line.rstrip()
             if line.endswith('\\'):
                 line_parts.append(line[:-1].rstrip())
             else:
@@ -146,7 +155,28 @@ class Environment(object):
             # Impossible:
             raise RuntimeError("Compiled file ends with backslash \\")
 
-    def fix_pin(self, line):
+    def parse_sections(self, lines):
+        r"""Combine lines with following comments into sections.
+
+        >>> env = Environment('')
+        >>> list(env.parse_sections([
+        ...     'pkg', 'pkg  # comment', 'pkg', '# comment', '# one more',
+        ...     'foo', '  # via', '', '  # pkg',
+        ... ]))
+        ['pkg', 'pkg  # comment', 'pkg\n# comment\n# one more', 'foo\n  # via', '\n  # pkg']
+        """
+        section = []
+        for line in lines:
+            if self.RE_COMMENT.match(line):
+                section.append(line)
+            else:
+                if section:
+                    yield '\n'.join(section)
+                section = [line]
+        if section:
+            yield '\n'.join(section)
+
+    def fix_pin(self, section):
         """
         Fix dependency by removing post-releases from versions
         and loosing constraints on internal packages.
@@ -154,7 +184,7 @@ class Environment(object):
 
         Also populate packages set
         """
-        dep = Dependency(line)
+        dep = Dependency(section)
         if dep.valid:
             if dep.package in self.ignore:
                 ignored_version = self.ignore[dep.package]
@@ -174,7 +204,7 @@ class Environment(object):
             self.packages[dep.package] = dep.version
             dep.drop_post(self.in_path)
             return dep.serialize()
-        return line.strip()
+        return section.rstrip()
 
     def add_references(self, other_in_paths):
         """Add references to other_in_paths in outfile"""

@@ -5,6 +5,7 @@ History
 ------------------
 
 * Auto-discover requirements in other directories by following references (PR #221).
+* Add support for new-style multiline "via" comments from pip-tools (PR #222).
 
 2.1.0 (2020-08-19)
 ------------------
