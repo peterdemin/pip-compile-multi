@@ -35,6 +35,9 @@ class Dependency(object):
     >>> # Old-style one-line
     >>> print(Dependency("six==1.0    # via pkg").serialize())
     six==1.0                      # via pkg
+    >>> print(Dependency("-e https://site#egg=pkg==1\n   # via lib").serialize())
+    https://site#egg=pkg==1
+       # via lib
     """
 
     COMMENT_JUSTIFICATION = 26
@@ -61,8 +64,7 @@ class Dependency(object):
         r'(?P<prefix>\S+#egg=)'
         r'(?P<package>[a-z0-9-_.]+)'
         r'(?P<postfix>\S+)'
-        r'\s*'
-        r'(?P<comment>#.*)?$'
+        r'(?P<comment>(?:\s*#.*)+)?$'
     )
 
     def __init__(self, line):
