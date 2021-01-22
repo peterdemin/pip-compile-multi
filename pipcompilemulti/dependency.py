@@ -34,7 +34,7 @@ class Dependency(object):
         #   pkg
     >>> # Old-style one-line
     >>> print(Dependency("six==1.0    # via pkg").serialize())
-    six==1.0                      # via pkg
+    six==1.0                  # via pkg
     >>> print(Dependency("-e https://site#egg=pkg==1\n   # via lib").serialize())
     https://site#egg=pkg==1
        # via lib
@@ -116,7 +116,7 @@ class Dependency(object):
                 return (package_version.rstrip() + self.comment).rstrip()
             return '{0}{1}'.format(
                 package_version.ljust(self.COMMENT_JUSTIFICATION),
-                self.comment,
+                self.comment.lstrip(),
             ).rstrip()  # rstrip for empty comment
 
     @classmethod

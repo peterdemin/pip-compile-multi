@@ -98,7 +98,7 @@ def test_concatenation():
         '?\n',
         'MMM\n',
     ])
-    assert list(lines) == ['abc 123 ?', 'MMM']
+    assert list(lines) == ['abc    123 ?', 'MMM']
 
 
 def test_parse_hashes_with_comment():
@@ -127,8 +127,7 @@ def test_serialize_hashes():
     assert text == (
         "lib==ver \\\n"
         "    --hash=123 \\\n"
-        "    --hash=abc \\\n"
-        "    # comment"
+        "    --hash=abc    # comment"
     )
 
 
