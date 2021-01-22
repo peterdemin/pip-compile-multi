@@ -65,7 +65,7 @@ def verify_environments():
     env_confs = discover(FEATURES.compose_input_file_path('*'))
     success = True
     for conf in env_confs:
-        env = Environment(name=conf['name'])
+        env = Environment(in_path=conf['in_path'])
         current_comment = generate_hash_comment(env.infile)
         existing_comment = parse_hash_comment(env.outfile)
         if current_comment == existing_comment:

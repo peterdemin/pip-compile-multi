@@ -11,6 +11,7 @@ While this is a common naming pattern, each project can use it's own:
     -o, --out-ext TEXT     File extension of output files
 """
 
+import os
 from .base import BaseFeature, ClickOption
 
 
@@ -26,13 +27,13 @@ class InputExtension(BaseFeature):
         help_text='File extension of input files.',
     )
 
-    def compose_input_file_name(self, env_name):
+    def compose_input_file_name(self, base_name):
         """Compose file name given environment name.
 
         >>> InputExtension().compose_input_file_name('base')
         'base.in'
         """
-        return '{0}.{1}'.format(env_name, self.value)
+        return '{0}.{1}'.format(base_name, self.value)
 
 
 class OutputExtension(BaseFeature):
@@ -47,10 +48,10 @@ class OutputExtension(BaseFeature):
         help_text='File extension of output files.',
     )
 
-    def compose_output_file_name(self, env_name):
+    def compose_output_file_path(self, in_path):
         """Compose file name given environment name.
 
-        >>> OutputExtension().compose_output_file_name('base')
-        'base.txt'
+        >>> OutputExtension().compose_output_file_path('sub/base.in')
+        'sub/base.txt'
         """
-        return '{0}.{1}'.format(env_name, self.value)
+        return '{0}.{1}'.format(os.path.splitext(in_path)[0], self.value)

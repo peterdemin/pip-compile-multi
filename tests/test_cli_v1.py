@@ -19,7 +19,11 @@ def requirements_dir():
 @pytest.mark.parametrize('command', ['--no-upgrade', '--upgrade',
                                      '--upgrade-package=pip-tools'])
 def test_v1_command_exits_with_zero(command):
-    """Run pip-compile-multi on self"""
+    """Run pip-compile-multi on self.
+
+    pip-compile-multi --only-name local --generate-hashes local \
+            --in-ext txt --out-ext hash --use-cache
+    """
     local = (
         'local'
         if sys.version_info[0] >= 3
@@ -31,7 +35,8 @@ def test_v1_command_exits_with_zero(command):
     result = runner.invoke(cli, parameters)
     parameters[:0] = ['--generate-hashes', local,
                       '--in-ext', 'txt',
-                      '--out-ext', 'hash']
+                      '--out-ext', 'hash',
+                      '--use-cache']
     result = runner.invoke(cli, parameters)
     assert result.exit_code == 0
 

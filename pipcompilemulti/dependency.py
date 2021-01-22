@@ -99,6 +99,6 @@ class Dependency(object):
             return line
         return cls.RE_EDITABLE_FLAG.sub('', line)
 
-    def drop_post(self, env_name):
+    def drop_post(self, in_path):
         """Remove .postXXXX postfix from version if needed."""
-        self.version = FEATURES.drop_post(env_name, self.package, self.version)
+        self.version = FEATURES.drop_post(in_path, self.package, self.version)

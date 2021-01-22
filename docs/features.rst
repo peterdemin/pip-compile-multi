@@ -19,6 +19,10 @@ Features
 
 .. automodule:: pipcompilemulti.features.header
 
+.. automodule:: pipcompilemulti.features.limit_in_paths
+
+.. automodule:: pipcompilemulti.features.limit_envs
+
 .. automodule:: pipcompilemulti.features.annotate_index
 
 .. automodule:: pipcompilemulti.verify

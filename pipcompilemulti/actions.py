@@ -15,9 +15,9 @@ def recompile():
     deduplicator = PackageDeduplicator()
     deduplicator.on_discover(env_confs)
     for conf in env_confs:
-        if not FEATURES.included(conf['name']):
+        if not FEATURES.included(conf['in_path']):
             continue
-        env = Environment(name=conf['name'], deduplicator=deduplicator)
+        env = Environment(in_path=conf['in_path'], deduplicator=deduplicator)
         if env.maybe_create_lockfile():
             # Only munge lockfile if it was written.
             header_text = generate_hash_comment(env.infile) + FEATURES.get_header_text()
