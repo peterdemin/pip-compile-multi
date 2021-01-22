@@ -1,6 +1,11 @@
 History
 =======
 
+2.2.0 (UNRELEASED)
+------------------
+
+* Auto-discover requirements in other directories by following references (PR #221).
+
 2.1.0 (2020-08-19)
 ------------------
 
