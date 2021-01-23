@@ -1,4 +1,6 @@
 """
+.. _autoresolve:
+
 Autoresolve cross-file conflicts
 ================================
 

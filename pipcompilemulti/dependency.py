@@ -109,11 +109,14 @@ class Dependency(object):
             lines.extend(hashes)
             result = ' \\\n    '.join(lines)
             if self.comment:
-                result += self.comment
+                result += FEATURES.process_dependency_comments(self.comment)
             return result
         else:
             if self.comment.startswith('\n'):
-                return (package_version.rstrip() + self.comment).rstrip()
+                return (
+                    package_version.rstrip() +
+                    FEATURES.process_dependency_comments(self.comment).rstrip()
+                )
             return '{0}{1}'.format(
                 package_version.ljust(self.COMMENT_JUSTIFICATION),
                 self.comment.lstrip(),

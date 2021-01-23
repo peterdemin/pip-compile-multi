@@ -16,6 +16,7 @@ from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
 from .autoresolve import Autoresolve
+from .skip_constraint_comments import SkipConstraintComments
 
 
 class FeaturesController:
@@ -38,6 +39,7 @@ class FeaturesController:
         self.header = CustomHeader()
         self.allow_unsafe = AllowUnsafe()
         self.autoresolve = Autoresolve()
+        self.skip_constraint_comments = SkipConstraintComments()
         self._features = [
             self.annotate_index,
             self.use_cache,
@@ -54,6 +56,7 @@ class FeaturesController:
             self.header,
             self.allow_unsafe,
             self.autoresolve,
+            self.skip_constraint_comments,
         ]
 
     def bind(self, command):
@@ -139,3 +142,7 @@ class FeaturesController:
         if not os.path.exists(outfile):
             return None
         return outfile
+
+    def process_dependency_comments(self, comment):
+        """Process comments of locked dependency (e.g. # via xxx)."""
+        return self.skip_constraint_comments.process_dependency_comments(comment)

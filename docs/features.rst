@@ -27,4 +27,6 @@ Features
 
 .. automodule:: pipcompilemulti.features.autoresolve
 
+.. automodule:: pipcompilemulti.features.skip_constraint_comments
+
 .. automodule:: pipcompilemulti.verify
