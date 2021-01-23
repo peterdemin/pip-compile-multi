@@ -6,6 +6,4 @@
 #    pip-compile-multi
 #
 six==1.15.0
-    # via
-    #   -c nested/diamond.txt
-    #   -r nested/up.in
+    # via -r nested/up.in

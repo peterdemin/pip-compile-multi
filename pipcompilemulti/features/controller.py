@@ -1,5 +1,6 @@
 """Aggregate all features in a single controller."""
 
+import os
 from functools import wraps
 
 from .add_hashes import AddHashes
@@ -127,4 +128,10 @@ class FeaturesController:
 
     def sink_path(self):
         """Return sink path if it's enabled. Otherwise None"""
-        return self.compose_output_file_path(self.autoresolve.sink_path())
+        infile = self.autoresolve.sink_path()
+        if not infile:
+            return None
+        outfile = self.compose_output_file_path(infile)
+        if not os.path.exists(outfile):
+            return None
+        return outfile

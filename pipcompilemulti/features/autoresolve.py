@@ -42,7 +42,7 @@ class Autoresolve(BaseFeature):
     CLICK_OPTION = ClickOption(
         long_option='--autoresolve/--no-autoresolve',
         is_flag=True,
-        default=True,
+        default=False,
         help_text='Automatically resolve cross-file conflicts.',
     )
 
