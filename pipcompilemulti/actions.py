@@ -14,6 +14,14 @@ def recompile():
     FEATURES.on_discover(env_confs)
     deduplicator = PackageDeduplicator()
     deduplicator.on_discover(env_confs)
+    sink_path = FEATURES.sink_path()
+    if sink_path:
+        Environment(in_path=sink_path).create_lockfile()
+    compile_topologically(env_confs, deduplicator)
+
+
+def compile_topologically(env_confs, deduplicator):
+    """Compile environments in topological order of reference."""
     for conf in env_confs:
         if not FEATURES.included(conf['in_path']):
             continue

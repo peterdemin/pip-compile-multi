@@ -1,5 +1,6 @@
 """Aggregate all features in a single controller."""
 
+import os
 from functools import wraps
 
 from .add_hashes import AddHashes
@@ -14,6 +15,7 @@ from .limit_in_paths import LimitInPaths
 from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
+from .autoresolve import Autoresolve
 
 
 class FeaturesController:
@@ -35,6 +37,7 @@ class FeaturesController:
         self.limit_in_paths = LimitInPaths()
         self.header = CustomHeader()
         self.allow_unsafe = AllowUnsafe()
+        self.autoresolve = Autoresolve()
         self._features = [
             self.annotate_index,
             self.use_cache,
@@ -50,6 +53,7 @@ class FeaturesController:
             self.limit_envs,
             self.header,
             self.allow_unsafe,
+            self.autoresolve,
         ]
 
     def bind(self, command):
@@ -104,6 +108,7 @@ class FeaturesController:
         self.limit_envs.on_discover(env_confs)
         self.limit_in_paths.on_discover(env_confs)
         self.upgrade_selected.reset()
+        self.autoresolve.on_discover(env_confs)
 
     def affected(self, in_path):
         """Whether environment was affected by upgrade command."""
@@ -120,3 +125,13 @@ class FeaturesController:
     def get_header_text(self):
         """Text to put in the beginning of each generated file."""
         return self.header.text
+
+    def sink_path(self):
+        """Return sink path if it's enabled. Otherwise None"""
+        infile = self.autoresolve.sink_path()
+        if not infile:
+            return None
+        outfile = self.compose_output_file_path(infile)
+        if not os.path.exists(outfile):
+            return None
+        return outfile

@@ -32,13 +32,18 @@ def recursive_refs(envs, in_path):
     """
     Return set of recursive refs for given env name
 
-    >>> local_refs = sorted(recursive_refs([
+    >>> sorted(recursive_refs([
     ...     {'in_path': 'base.in', 'refs': []},
     ...     {'in_path': 'sub/test.in', 'refs': ['../base.in']},
     ...     {'in_path': 'local.in', 'refs': ['sub/test.in']},
     ... ], 'local.in'))
-    >>> local_refs
     ['base.in', 'sub/test.in']
+    >>> sorted(recursive_refs([
+    ...     {'in_path': 'base.in', 'refs': []},
+    ...     {'in_path': 'sub/test.in', 'refs': ['../base.in']},
+    ...     {'in_path': 'local.in', 'refs': ['sub/test.in']},
+    ... ], 'sub/test.in'))
+    ['base.in']
     """
     refs_by_in_path = {
         env['in_path']: {

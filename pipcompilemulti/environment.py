@@ -1,5 +1,6 @@
 """Environment class"""
 
+import os
 import re
 import logging
 import subprocess
@@ -55,12 +56,21 @@ class Environment(object):
         with hard-pinned versions.
         Then fix it.
         """
-        process = subprocess.Popen(
-            self.pin_command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        stdout, stderr = process.communicate()
+        original_in_file = ""
+        sink_path = FEATURES.sink_path()
+        try:
+            if sink_path and sink_path != self.outfile:
+                original_in_file = self._read_infile()
+                self._inject_sink()
+            process = subprocess.Popen(
+                self.pin_command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            stdout, stderr = process.communicate()
+        finally:
+            if original_in_file:
+                self._restore_in_file(original_in_file)
         if process.returncode == 0:
             self.fix_lockfile()
         else:
@@ -247,3 +257,19 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.write(header_text)
             fp.writelines(body)
+
+    def _read_infile(self):
+        with open(self.infile, "rt") as fp:
+            return fp.read()
+
+    def _restore_in_file(self, content):
+        with open(self.infile, "wt") as fp:
+            return fp.write(content)
+
+    def _inject_sink(self):
+        rel_sink_path = os.path.normpath(os.path.relpath(
+            FEATURES.sink_path(),
+            os.path.dirname(self.infile),
+        ))
+        with open(self.infile, "at") as fp:
+            return fp.write("\n\n-c {}\n".format(rel_sink_path))
