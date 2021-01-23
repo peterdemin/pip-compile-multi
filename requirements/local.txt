@@ -14,12 +14,14 @@ astroid==2.4.2
     # via pylint
 babel==2.9.0
     # via sphinx
-bleach==3.2.1
+bleach==3.2.2
     # via readme-renderer
 bump2version==1.0.1
     # via -r requirements/local.in
 certifi==2020.12.5
     # via requests
+cffi==1.14.4
+    # via cryptography
 cfgv==3.2.0
     # via pre-commit
 chardet==4.0.0
@@ -28,6 +30,8 @@ collective.checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.4
     # via twine
+cryptography==3.3.1
+    # via secretstorage
 distlib==0.3.1
     # via virtualenv
 docutils==0.16
@@ -57,6 +61,10 @@ importlib-resources==5.1.0
     #   virtualenv
 isort==5.7.0
     # via pylint
+jeepney==0.6.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==2.11.2
     # via sphinx
 keyring==21.8.0
@@ -83,6 +91,8 @@ pycodestyle==2.6.0
     # via
     #   -r requirements/local.in
     #   flake8
+pycparser==2.20
+    # via cffi
 pydocstyle==5.1.1
     # via -r requirements/local.in
 pyflakes==2.2.0
@@ -96,7 +106,7 @@ pylint==2.6.0
     # via -r requirements/local.in
 pytz==2020.5
     # via babel
-pyyaml==5.4
+pyyaml==5.4.1
     # via pre-commit
 readme-renderer==28.0
     # via twine
@@ -109,14 +119,17 @@ requests==2.25.1
     #   twine
 rfc3986==1.4.0
     # via twine
+secretstorage==3.3.0
+    # via keyring
 six==1.15.0
     # via
     #   astroid
     #   bleach
+    #   cryptography
     #   readme-renderer
     #   tox
     #   virtualenv
-snowballstemmer==2.0.0
+snowballstemmer==2.1.0
     # via
     #   pydocstyle
     #   sphinx

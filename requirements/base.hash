@@ -20,6 +20,8 @@ toposort==1.6 \
     --hash=sha256:a7428f56ef844f5055bb9e9e44b343983773ae6dce0fe5b101e08e27ffbd50ac
     # via -r requirements/base.txt
 
-# WARNING: The following packages were not pinned, but pip requires them to be
-# pinned when the requirements file includes hashes. Consider using the --allow-unsafe flag.
-# pip
+# The following packages are considered to be unsafe in a requirements file:
+pip==20.3.3 \
+    --hash=sha256:79c1ac8a9dccbec8752761cb5a2df833224263ca661477a2a9ed03ddf4e0e3ba \
+    --hash=sha256:fab098c8a1758295dd9f57413c199f23571e8fde6cc39c22c78c961b4ac6286d
+    # via pip-tools
