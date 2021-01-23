@@ -4,6 +4,7 @@ History
 2.2.0 (UNRELEASED)
 ------------------
 
+* Add --autoresolve option for conflict-free compilations (PR #224).
 * Auto-discover requirements in other directories by following references (PR #221).
 * Add support for new-style multiline "via" comments from pip-tools (PR #222).
 
