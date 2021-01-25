@@ -57,9 +57,9 @@ class Environment(object):
         Then fix it.
         """
         original_in_file = ""
-        sink_path = FEATURES.sink_path()
+        sink_out_path = FEATURES.sink_out_path()
         try:
-            if sink_path and sink_path != self.outfile:
+            if sink_out_path and sink_out_path != self.outfile:
                 original_in_file = self._read_infile()
                 self._inject_sink()
             process = subprocess.Popen(
@@ -267,9 +267,9 @@ class Environment(object):
             return fp.write(content)
 
     def _inject_sink(self):
-        rel_sink_path = os.path.normpath(os.path.relpath(
-            FEATURES.sink_path(),
+        rel_sink_out_path = os.path.normpath(os.path.relpath(
+            FEATURES.sink_out_path(),
             os.path.dirname(self.infile),
         ))
         with open(self.infile, "at") as fp:
-            return fp.write("\n\n-c {}\n".format(rel_sink_path))
+            return fp.write("\n\n-c {}\n".format(rel_sink_out_path))

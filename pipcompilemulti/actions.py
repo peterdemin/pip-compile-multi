@@ -14,9 +14,9 @@ def recompile():
     FEATURES.on_discover(env_confs)
     deduplicator = PackageDeduplicator()
     deduplicator.on_discover(env_confs)
-    sink_path = FEATURES.sink_path()
-    if sink_path:
-        Environment(in_path=sink_path).create_lockfile()
+    sink_in_path = FEATURES.sink_in_path()
+    if sink_in_path:
+        Environment(in_path=sink_in_path).create_lockfile()
     compile_topologically(env_confs, deduplicator)
 
 

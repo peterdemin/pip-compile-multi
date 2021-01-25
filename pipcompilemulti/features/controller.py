@@ -126,8 +126,12 @@ class FeaturesController:
         """Text to put in the beginning of each generated file."""
         return self.header.text
 
-    def sink_path(self):
-        """Return sink path if it's enabled. Otherwise None"""
+    def sink_in_path(self):
+        """Return input sink path if it's enabled. Otherwise None"""
+        return self.autoresolve.sink_path()
+
+    def sink_out_path(self):
+        """Return sink output path if it's enabled and exists. Otherwise None"""
         infile = self.autoresolve.sink_path()
         if not infile:
             return None
