@@ -1,6 +1,11 @@
 History
 =======
 
+2.2.1 (UNRELEASED)
+------------------
+
+* Fix bootstrapping for autoresolve case with missing output files.
+
 2.2.0 (2020-01-22)
 ------------------
 
