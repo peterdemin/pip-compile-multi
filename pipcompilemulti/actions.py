@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 """High level actions to be called from CLI"""
 
+import logging
+
 from .discover import discover
 from .environment import Environment
 from .verify import generate_hash_comment
 from .features import FEATURES
 from .deduplicate import PackageDeduplicator
+
+
+logger = logging.getLogger("pip-compile-multi")
 
 
 def recompile():
@@ -16,7 +21,12 @@ def recompile():
     deduplicator.on_discover(env_confs)
     sink_in_path = FEATURES.sink_in_path()
     if sink_in_path:
-        Environment(in_path=sink_in_path).create_lockfile()
+        sink_env = Environment(in_path=sink_in_path)
+        logger.info(
+            "Creating a temporary file with all dependencies at %s",
+            sink_env.outfile,
+        )
+        sink_env.create_lockfile()
     compile_topologically(env_confs, deduplicator)
 
 
