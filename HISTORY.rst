@@ -1,7 +1,7 @@
 History
 =======
 
-2.2.1 (UNRELEASED)
+2.2.1 (2021-01-29)
 ------------------
 
 * Add ``--skip-constraints`` option.
