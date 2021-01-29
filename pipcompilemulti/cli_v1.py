@@ -59,3 +59,7 @@ def trim_traceback(traceback):
         level += 1
         new_traceback = new_traceback.tb_next
     return traceback
+
+
+if __name__ == '__main__':
+    cli()

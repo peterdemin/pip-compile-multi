@@ -86,3 +86,7 @@ def run_configurations(callback, sections_reader):
                      section, OPTIONS)
         results.append(callback())
     return results
+
+
+if __name__ == '__main__':
+    cli()

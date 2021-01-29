@@ -118,7 +118,7 @@ class Environment(object):
     def pin_command(self):
         """Compose pip-compile shell command"""
         parts = [
-            'pip-compile',
+            'python', '-m', 'piptools', 'compile',
             '--no-header',
             '--verbose',
         ]

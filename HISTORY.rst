@@ -1,6 +1,12 @@
 History
 =======
 
+2.2.2 (2021-01-29)
+------------------
+
+* Add support for calling using `python -m pipcompilemulti.cli_v1` notation.
+
+
 2.2.1 (2021-01-29)
 ------------------
 
