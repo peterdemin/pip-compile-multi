@@ -21,7 +21,7 @@ toposort==1.6 \
     # via -r requirements/base.txt
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==21.0 \
-    --hash=sha256:b330cf6467afd5d15f4c1c56f5c95e56a2bfb941c869bed4c1aa517bcb16de25 \
-    --hash=sha256:cf2410eedf8735fd842e0fecd4117ca79025d7fe7c161e32f8640ed6ebe5ecb9
+pip==21.0.1 \
+    --hash=sha256:37fd50e056e2aed635dec96594606f0286640489b0db0ce7607f7e51890372d5 \
+    --hash=sha256:99bbde183ec5ec037318e774b0d8ae0a64352fe53b2c7fd630be1d07e94f41e5
     # via pip-tools
