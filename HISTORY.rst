@@ -1,6 +1,14 @@
 History
 =======
 
+2.2.3 (UNRELEASED)
+------------------
+
+* Make SHA1 hashes of input files in a more robust way (Issue `#215`_).
+  Now it ignores changes to comments, whitespace and order of packages.
+
+.. _#215: https://github.com/peterdemin/pip-compile-multi/issues/215
+
 2.2.2 (2021-01-29)
 ------------------
 
