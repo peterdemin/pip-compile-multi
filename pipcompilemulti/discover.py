@@ -18,16 +18,17 @@ def discover(glob_pattern):
 
     Recursively follow referenced files not matched by glob_pattern.
 
-    >>> envs = discover("requirements/*.in")
+    >>> import os
+    >>> envs = discover(os.path.join('requirements', '*.in'))
     >>> # import pprint; pprint.pprint(envs)
     >>> envs == [
-    ...  {'in_path': 'requirements/base.in', 'name': 'base',
+    ...  {'in_path': os.path.join('requirements', 'base.in'), 'name': 'base',
     ...   'refs': set()},
-    ...  {'in_path': 'requirements/test.in', 'name': 'test',
+    ...  {'in_path': os.path.join('requirements', 'test.in'), 'name': 'test',
     ...   'refs': {'base.in'}},
-    ...  {'in_path': 'requirements/local.in', 'name': 'local',
+    ...  {'in_path': os.path.join('requirements', 'local.in'), 'name': 'local',
     ...   'refs': {'test.in'}},
-    ...  {'in_path': 'requirements/testwin.in', 'name': 'testwin',
+    ...  {'in_path': os.path.join('requirements', 'testwin.in'), 'name': 'testwin',
     ...   'refs': {'test.in'}}
     ... ]
     True
