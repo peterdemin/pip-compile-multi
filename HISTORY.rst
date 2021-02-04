@@ -1,7 +1,7 @@
 History
 =======
 
-2.2.3 (2021-02-04)
+2.3.0 (2021-02-04)
 ------------------
 
 * Make SHA1 hashes of input files in a more robust way (Issue `#215`_).
