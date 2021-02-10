@@ -5,19 +5,20 @@
 #
 #    pip-compile-multi
 #
--r test.txt
 alabaster==0.7.12
     # via sphinx
 appdirs==1.4.4
     # via virtualenv
 astroid==2.4.2
     # via pylint
+attrs==20.3.0
+    # via pytest
 babel==2.9.0
     # via sphinx
 bleach==3.3.0
     # via readme-renderer
 bump2version==1.0.1
-    # via -r requirements/local.in
+    # via -r local.in
 certifi==2020.12.5
     # via requests
 cffi==1.14.4
@@ -26,11 +27,17 @@ cfgv==3.2.0
     # via pre-commit
 chardet==4.0.0
     # via requests
+click==7.1.2
+    # via
+    #   -r base.in
+    #   pip-tools
 collective.checkdocs==0.2
-    # via -r requirements/local.in
+    # via -r local.in
 colorama==0.4.4
     # via twine
-cryptography==3.3.1
+coverage==5.4
+    # via pytest-cov
+cryptography==3.3.2
     # via secretstorage
 distlib==0.3.1
     # via virtualenv
@@ -47,7 +54,7 @@ flake8-polyfill==1.0.2
     # via pep8-naming
 flake8==3.8.4
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   flake8-polyfill
 identify==1.5.13
     # via pre-commit
@@ -55,10 +62,8 @@ idna==2.10
     # via requests
 imagesize==1.2.0
     # via sphinx
-importlib-resources==5.1.0
-    # via
-    #   pre-commit
-    #   virtualenv
+iniconfig==1.1.1
+    # via pytest
 isort==5.7.0
     # via pylint
 jeepney==0.6.0
@@ -77,33 +82,61 @@ mccabe==0.6.1
     # via
     #   flake8
     #   pylint
+mock==4.0.3
+    # via -r test.in
+more-itertools==8.6.0
+    # via -r test.in
 nodeenv==1.5.0
     # via pre-commit
+packaging==20.9
+    # via
+    #   bleach
+    #   pytest
+    #   sphinx
+    #   tox
 pep8-naming==0.11.1
-    # via -r requirements/local.in
+    # via -r local.in
+pip-tools==5.5.0
+    # via -r base.in
 pipdeptree==2.0.0
-    # via -r requirements/local.in
+    # via -r local.in
 pkginfo==1.7.0
     # via twine
+pluggy==0.13.1
+    # via
+    #   pytest
+    #   tox
 pre-commit==2.10.0
-    # via -r requirements/local.in
+    # via -r local.in
+py==1.10.0
+    # via
+    #   pytest
+    #   tox
 pycodestyle==2.6.0
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   flake8
 pycparser==2.20
     # via cffi
 pydocstyle==5.1.1
-    # via -r requirements/local.in
+    # via -r local.in
 pyflakes==2.2.0
     # via flake8
 pygments==2.7.4
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   readme-renderer
     #   sphinx
 pylint==2.6.0
-    # via -r requirements/local.in
+    # via -r local.in
+pyparsing==2.4.7
+    # via packaging
+pytest-cov==2.11.1
+    # via -r test.in
+pytest==6.2.2
+    # via
+    #   -r test.in
+    #   pytest-cov
 pytz==2021.1
     # via babel
 pyyaml==5.4.1
@@ -134,7 +167,7 @@ snowballstemmer==2.1.0
     #   pydocstyle
     #   sphinx
 sphinx==3.4.3
-    # via -r requirements/local.in
+    # via -r local.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
@@ -147,14 +180,20 @@ sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.4
     # via sphinx
+toml==0.10.2
+    # via
+    #   pre-commit
+    #   pylint
+    #   pytest
+    #   tox
+toposort==1.6
+    # via -r base.in
 tox==3.21.4
-    # via -r requirements/local.in
+    # via -r local.in
 tqdm==4.56.0
     # via twine
 twine==3.3.0
-    # via -r requirements/local.in
-typed-ast==1.4.2
-    # via astroid
+    # via -r local.in
 urllib3==1.26.3
     # via requests
 virtualenv==20.4.2
@@ -164,7 +203,7 @@ virtualenv==20.4.2
 webencodings==0.5.1
     # via bleach
 wheel==0.36.2
-    # via -r requirements/local.in
+    # via -r local.in
 wrapt==1.12.1
     # via astroid
 
