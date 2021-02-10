@@ -30,7 +30,7 @@ collective.checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.4
     # via twine
-cryptography==3.3.1
+cryptography==3.4.4
     # via secretstorage
 distlib==0.3.1
     # via virtualenv
@@ -85,7 +85,7 @@ pipdeptree==2.0.0
     # via -r requirements/local.in
 pkginfo==1.7.0
     # via twine
-pre-commit==2.10.0
+pre-commit==2.10.1
     # via -r requirements/local.in
 pycodestyle==2.6.0
     # via
@@ -119,13 +119,12 @@ requests==2.25.1
     #   twine
 rfc3986==1.4.0
     # via twine
-secretstorage==3.3.0
+secretstorage==3.3.1
     # via keyring
 six==1.15.0
     # via
     #   astroid
     #   bleach
-    #   cryptography
     #   readme-renderer
     #   tox
     #   virtualenv
@@ -149,7 +148,7 @@ sphinxcontrib-serializinghtml==1.1.4
     # via sphinx
 tox==3.21.4
     # via -r requirements/local.in
-tqdm==4.56.0
+tqdm==4.56.1
     # via twine
 twine==3.3.0
     # via -r requirements/local.in
