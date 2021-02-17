@@ -1,6 +1,16 @@
 History
 =======
 
+2.3.1 (2021-02-16)
+------------------
+
+* Fix for a bug introduced in 2.2.2 when running pip-compile-multi
+  installed for Python 3, and having ``python`` symlinked to Python 2.
+  (Issue `#233`_, PR `#234`_).
+
+.. _#233: https://github.com/peterdemin/pip-compile-multi/issues/233
+.. _#234: https://github.com/peterdemin/pip-compile-multi/pull/234
+
 2.3.0 (2021-02-04)
 ------------------
 
