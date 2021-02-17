@@ -2,6 +2,7 @@
 
 import os
 import re
+import sys
 import logging
 import subprocess
 
@@ -117,8 +118,10 @@ class Environment(object):
     @property
     def pin_command(self):
         """Compose pip-compile shell command"""
+        # Use the same interpreter binary
+        python = sys.executable or 'python'
         parts = [
-            'python', '-m', 'piptools', 'compile',
+            python, '-m', 'piptools', 'compile',
             '--no-header',
             '--verbose',
         ]
