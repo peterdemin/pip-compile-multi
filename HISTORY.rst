@@ -1,6 +1,14 @@
 History
 =======
 
+2.3.2 (2021-02-18)
+------------------
+
+* Fix cross-feature logic for --autoresolve and --upgrade-package.
+  (PR `#236`_).
+
+.. _#236: https://github.com/peterdemin/pip-compile-multi/pull/236
+
 2.3.1 (2021-02-16)
 ------------------
 
