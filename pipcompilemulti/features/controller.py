@@ -114,10 +114,12 @@ class FeaturesController:
         self.autoresolve.on_discover(env_confs)
 
     def affected(self, in_path):
-        """Whether environment was affected by upgrade command."""
+        """Whether environment is affected by upgrade command."""
         if self.upgrade_all.enabled:
             return True
-        return self.upgrade_selected.affected(in_path)
+        if self.upgrade_selected.affected(in_path):
+            return True
+        return in_path == self.autoresolve.sink_path()
 
     def included(self, in_path):
         """Whether in_path is included directly or by reference."""
