@@ -29,22 +29,7 @@ def fix_reference_path(orig_path, ref_path):
 
 
 def recursive_refs(envs, in_path):
-    """
-    Return set of recursive refs for given env name
-
-    >>> sorted(recursive_refs([
-    ...     {'in_path': 'base.in', 'refs': []},
-    ...     {'in_path': 'sub/test.in', 'refs': ['../base.in']},
-    ...     {'in_path': 'local.in', 'refs': ['sub/test.in']},
-    ... ], 'local.in'))
-    ['base.in', 'sub/test.in']
-    >>> sorted(recursive_refs([
-    ...     {'in_path': 'base.in', 'refs': []},
-    ...     {'in_path': 'sub/test.in', 'refs': ['../base.in']},
-    ...     {'in_path': 'local.in', 'refs': ['sub/test.in']},
-    ... ], 'sub/test.in'))
-    ['base.in']
-    """
+    """Return set of recursive refs for given env name."""
     refs_by_in_path = {
         env['in_path']: {
             fix_reference_path(env['in_path'], ref)
