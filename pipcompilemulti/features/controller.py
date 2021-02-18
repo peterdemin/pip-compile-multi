@@ -79,7 +79,7 @@ class FeaturesController:
         options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.allow_unsafe.pin_options())
         options.extend(self.upgrade_all.pin_options())
-        options.extend(self.upgrade_selected.pin_options(in_path))
+        options.extend(self.upgrade_selected.pin_options())
         options.extend(self.annotate_index.pin_options())
         return options
 
