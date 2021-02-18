@@ -20,7 +20,7 @@ bump2version==1.0.1
     # via -r requirements/local.in
 certifi==2020.12.5
     # via requests
-cffi==1.14.4
+cffi==1.14.5
     # via cryptography
 cfgv==3.2.0
     # via pre-commit
@@ -30,7 +30,7 @@ collective.checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.4
     # via twine
-cryptography==3.4.4
+cryptography==3.4.6
     # via secretstorage
 distlib==0.3.1
     # via virtualenv
@@ -97,12 +97,12 @@ pydocstyle==5.1.1
     # via -r requirements/local.in
 pyflakes==2.2.0
     # via flake8
-pygments==2.7.4
+pygments==2.8.0
     # via
     #   -r requirements/local.in
     #   readme-renderer
     #   sphinx
-pylint==2.6.0
+pylint==2.6.2
     # via -r requirements/local.in
 pytz==2021.1
     # via babel
@@ -132,7 +132,7 @@ snowballstemmer==2.1.0
     # via
     #   pydocstyle
     #   sphinx
-sphinx==3.4.3
+sphinx==3.5.1
     # via -r requirements/local.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
@@ -146,9 +146,9 @@ sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.4
     # via sphinx
-tox==3.21.4
+tox==3.22.0
     # via -r requirements/local.in
-tqdm==4.56.1
+tqdm==4.56.2
     # via twine
 twine==3.3.0
     # via -r requirements/local.in
