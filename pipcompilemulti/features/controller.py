@@ -79,7 +79,7 @@ class FeaturesController:
         options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.allow_unsafe.pin_options())
         options.extend(self.upgrade_all.pin_options())
-        options.extend(self.upgrade_selected.pin_options(in_path))
+        options.extend(self.upgrade_selected.pin_options())
         options.extend(self.annotate_index.pin_options())
         return options
 
@@ -114,10 +114,12 @@ class FeaturesController:
         self.autoresolve.on_discover(env_confs)
 
     def affected(self, in_path):
-        """Whether environment was affected by upgrade command."""
+        """Whether environment is affected by upgrade command."""
         if self.upgrade_all.enabled:
             return True
-        return self.upgrade_selected.affected(in_path)
+        if self.upgrade_selected.affected(in_path):
+            return True
+        return in_path == self.autoresolve.sink_path()
 
     def included(self, in_path):
         """Whether in_path is included directly or by reference."""

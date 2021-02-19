@@ -88,12 +88,11 @@ class UpgradeSelected(BaseFeature):
         """Whether selective upgrade is active."""
         return bool(self.package_names)
 
-    def pin_options(self, in_path):
+    def pin_options(self):
         """Pin command options for upgrading specific packages."""
         return [
             '--upgrade-package=' + package
             for package in self.package_names
-            if self.has_package(in_path, package)
         ]
 
     def has_package(self, in_path, package_name):
