@@ -1,14 +1,24 @@
 environment:
   matrix:
     - PYTHON: "C:\\Python36"
-      PYTHON_VERSION: "3.6.4"
+      PYTHON_VERSION: "3.6.13"
       PYTHON_ARCH: "32"
       TOX_ENV: "py36"
 
     - PYTHON: "C:\\Python37"
-      PYTHON_VERSION: "3.7.3"
+      PYTHON_VERSION: "3.7.10"
       PYTHON_ARCH: "32"
       TOX_ENV: "py37"
+
+    - PYTHON: "C:\\Python38"
+      PYTHON_VERSION: "3.8.7"
+      PYTHON_ARCH: "32"
+      TOX_ENV: "py38"
+
+    - PYTHON: "C:\\Python39"
+      PYTHON_VERSION: "3.9.1"
+      PYTHON_ARCH: "32"
+      TOX_ENV: "py39"
 
 init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
