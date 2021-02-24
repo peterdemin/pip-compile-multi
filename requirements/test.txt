@@ -10,7 +10,7 @@ attrs==20.3.0
     # via pytest
 coverage==5.4
     # via pytest-cov
-importlib-metadata==3.4.0
+importlib-metadata==3.6.0
     # via
     #   pluggy
     #   pytest
