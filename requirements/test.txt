@@ -10,7 +10,7 @@ attrs==20.3.0
     # via pytest
 coverage==5.5
     # via pytest-cov
-importlib-metadata==3.7.0
+importlib-metadata==3.7.2
     # via
     #   pluggy
     #   pytest
@@ -38,7 +38,7 @@ toml==0.10.2
     # via pytest
 typing-extensions==3.7.4.3
     # via importlib-metadata
-zipp==3.4.0
+zipp==3.4.1
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
