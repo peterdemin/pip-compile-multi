@@ -45,11 +45,11 @@ filelock==3.0.12
     #   virtualenv
 flake8-polyfill==1.0.2
     # via pep8-naming
-flake8==3.8.4
+flake8==3.9.0
     # via
     #   -r requirements/local.in
     #   flake8-polyfill
-identify==2.1.1
+identify==2.1.3
     # via pre-commit
 idna==2.10
     # via requests
@@ -87,7 +87,7 @@ pkginfo==1.7.0
     # via twine
 pre-commit==2.11.1
     # via -r requirements/local.in
-pycodestyle==2.6.0
+pycodestyle==2.7.0
     # via
     #   -r requirements/local.in
     #   flake8
@@ -95,7 +95,7 @@ pycparser==2.20
     # via cffi
 pydocstyle==5.1.1
     # via -r requirements/local.in
-pyflakes==2.2.0
+pyflakes==2.3.0
     # via flake8
 pygments==2.8.1
     # via
@@ -149,13 +149,13 @@ tox==3.23.0
     # via -r requirements/local.in
 tqdm==4.59.0
     # via twine
-twine==3.3.0
+twine==3.4.1
     # via -r requirements/local.in
 typed-ast==1.4.2
     # via astroid
-urllib3==1.26.3
+urllib3==1.26.4
     # via requests
-virtualenv==20.4.2
+virtualenv==20.4.3
     # via
     #   pre-commit
     #   tox
