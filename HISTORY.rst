@@ -1,7 +1,7 @@
 History
 =======
 
-2.3.3 (2021-03-17)
+2.4.0 (2021-03-17)
 ------------------
 
 * Update --index/--no-index to --emit-index-url/--no-emit-index-url
