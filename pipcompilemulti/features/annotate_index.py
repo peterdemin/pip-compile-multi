@@ -3,7 +3,7 @@ Add index URL annotation
 ========================
 
 This flag provides the ability to annotate the index URL mimicking the logic of
-the ``pip-compile`` ``--index`` and ``--no-index`` flag by opting to add or not
+the ``pip-compile`` ``--emit-index-url`` and ``--no--emit-index-url`` flag by opting to add or not
 add the ``pip`` index to the generated files.
 
 .. code-block:: text
@@ -27,5 +27,5 @@ class AnnotateIndex(ForwardOption):
         is_flag=True,
         help_text="Add the index URL to generated files (default false).",
     )
-    enabled_pin_options = ["--index"]
-    disabled_pin_options = ["--no-index"]
+    enabled_pin_options = ["--emit-index-url"]
+    disabled_pin_options = ["--no-emit-index-url"]

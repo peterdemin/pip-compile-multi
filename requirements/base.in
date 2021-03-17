@@ -1,3 +1,3 @@
 click
-pip-tools
+pip-tools>=5.2.0  # https://github.com/jazzband/pip-tools/releases/tag/5.2.0
 toposort
