@@ -1,6 +1,15 @@
 History
 =======
 
+2.3.3 (2021-03-17)
+------------------
+
+* Update --index/--no-index to --emit-index-url/--no-emit-index-url
+  for compatibility with pip-tools 6.0.
+  (Issue `#243`_).
+
+.. _#243: https://github.com/peterdemin/pip-compile-multi/issues/243
+
 2.3.2 (2021-02-18)
 ------------------
 
