@@ -63,11 +63,22 @@ class Environment(object):
             if sink_out_path and sink_out_path != self.outfile:
                 original_in_file = self._read_infile()
                 self._inject_sink()
+
+            verbose = True
             process = subprocess.Popen(
                 self.pin_command,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                stderr=None if verbose else subprocess.PIPE,
             )
+            if verbose:
+                while True:
+                    output = process.stdout.readline()
+                    if output == b'' and process.poll() is not None:
+                        break
+                    if output:
+                        print(output.strip())
+                rc = process.poll()
+
             stdout, stderr = process.communicate()
         finally:
             if original_in_file:
