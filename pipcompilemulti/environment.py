@@ -67,19 +67,9 @@ class Environment(object):
             verbose = True
             process = subprocess.Popen(
                 self.pin_command,
-                stdout=subprocess.PIPE,
+                stdout=None if verbose else subprocess.PIPE,
                 stderr=None if verbose else subprocess.PIPE,
             )
-            if verbose:
-                while True:
-                    output = process.stdout.readline()
-                    if output == b'' and process.poll() is not None:
-                        break
-                    if output:
-                        print(output.strip())
-                # TODO: Decide what to do about this
-                # stdout, stderr = process.poll(), None
-
             stdout, stderr = process.communicate()
         finally:
             if original_in_file:
