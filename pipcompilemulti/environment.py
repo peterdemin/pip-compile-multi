@@ -77,7 +77,8 @@ class Environment(object):
                         break
                     if output:
                         print(output.strip())
-                rc = process.poll()
+                # TODO: Decide what to do about this
+                # stdout, stderr = process.poll(), None
 
             stdout, stderr = process.communicate()
         finally:
