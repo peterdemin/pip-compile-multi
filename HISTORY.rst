@@ -1,6 +1,26 @@
 History
 =======
 
+2.4.1 (2021-04-02)
+------------------
+
+* Add ``--live/--no-live`` option to control when to print debug output.
+  Thanks to `John Sandall`_ and `Thomas Grainger`_.
+  (Issue `#153`_, PRs `#247`_ and `#251`_).
+
+* Add ``--extra-index-url <url>`` option.
+  Thanks to `Erik Jan de Vries`_.
+  (PRs `#250` and `#252`).
+
+.. _#153: https://github.com/peterdemin/pip-compile-multi/issues/153
+.. _#247: https://github.com/peterdemin/pip-compile-multi/pull/247
+.. _#250: https://github.com/peterdemin/pip-compile-multi/pull/250
+.. _#251: https://github.com/peterdemin/pip-compile-multi/pull/251
+.. _#252: https://github.com/peterdemin/pip-compile-multi/pull/252
+.. _John Sandall: https://github.com/john-sandall
+.. _Thomas Grainger: https://github.com/graingert
+.. _Erik Jan de Vries: https://github.com/erikjandevries
+
 2.4.0 (2021-03-17)
 ------------------
 
