@@ -8,8 +8,6 @@ Override it with
 .. code-block:: text
 
     -h, --header TEXT      File path with custom header text for generated files
-
-.. automodule:: pipcompilemulti.features.limit_envs
 """
 
 from .base import BaseFeature, ClickOption

@@ -2,12 +2,14 @@
 
 import os
 import re
+import sys
 import logging
 import subprocess
 
 from .dependency import Dependency
 from .features import FEATURES
 from .deduplicate import PackageDeduplicator
+from .utils import extract_env_name
 
 logger = logging.getLogger("pip-compile-multi")
 
@@ -16,14 +18,16 @@ class Environment(object):
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
+    RE_COMMENT = re.compile(r'^\s*#.*$')
 
-    def __init__(self, name, deduplicator=None):
+    def __init__(self, in_path, deduplicator=None):
         """
-        name - name of the environment, e.g. base, test
+        Args:
+            in_path: relative path to input file, e.g. requirements/base.in
         """
-        self.name = name
+        self.in_path = in_path
         self._dedup = deduplicator or PackageDeduplicator()
-        self.ignore = self._dedup.ignored_packages(name)
+        self.ignore = self._dedup.ignored_packages(in_path)
         self.packages = {}
         self._outfile_pkg_names = None
 
@@ -34,9 +38,13 @@ class Environment(object):
         Populate package ignore set in either case and return
         boolean indicating whether outfile was written.
         """
-        logger.info("Locking %s to %s. References: %r",
-                    self.infile, self.outfile, sorted(self._dedup.recursive_refs(self.name)))
-        if not FEATURES.affected(self.name):
+        logger.info(
+            "Locking %s to %s. References: %r",
+            self.infile,
+            self.outfile,
+            sorted(self._dedup.recursive_refs(self.in_path)),
+        )
+        if not FEATURES.affected(self.in_path):
             self.fix_lockfile()  # populate ignore set
             return False
         self.create_lockfile()
@@ -48,12 +56,21 @@ class Environment(object):
         with hard-pinned versions.
         Then fix it.
         """
-        process = subprocess.Popen(
-            self.pin_command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        stdout, stderr = process.communicate()
+        original_in_file = ""
+        sink_out_path = FEATURES.sink_out_path()
+        try:
+            if sink_out_path and sink_out_path != self.outfile:
+                original_in_file = self._read_infile()
+                self._inject_sink()
+            process = subprocess.Popen(
+                self.pin_command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            stdout, stderr = process.communicate()
+        finally:
+            if original_in_file:
+                self._restore_in_file(original_in_file)
         if process.returncode == 0:
             self.fix_lockfile()
         else:
@@ -72,64 +89,77 @@ class Environment(object):
         or
         --requirement file.in
 
-        return set of matched file names without extension.
-        E.g. ['file']
+        return set of matched file names.
+        E.g. {'file1.in', 'file2.in'}
         """
         references = set()
         for line in open(filename):
             matched = cls.RE_REF.match(line)
             if matched:
-                reference = matched.group('path')
-                reference_base = os.path.splitext(reference)[0]
-                references.add(reference_base)
+                references.add(matched.group('path'))
         return references
+
+    @property
+    def name(self):
+        """Generate environment name from in_path."""
+        return extract_env_name(self.in_path)
 
     @property
     def infile(self):
         """Path of the input file"""
-        return FEATURES.compose_input_file_path(self.name)
+        return self.in_path
 
     @property
     def outfile(self):
         """Path of the output file"""
-        return FEATURES.compose_output_file_path(self.name)
+        return FEATURES.compose_output_file_path(self.in_path)
 
     @property
     def pin_command(self):
         """Compose pip-compile shell command"""
+        # Use the same interpreter binary
+        python = sys.executable or 'python'
         parts = [
-            'pip-compile',
+            python, '-m', 'piptools', 'compile',
             '--no-header',
             '--verbose',
         ]
         pip_extra_index_url = os.getenv("PIP_EXTRA_INDEX_URL", None)
         if pip_extra_index_url is not None:
             parts.extend(['--extra-index-url=${PIP_EXTRA_INDEX_URL}'])
-        parts.extend(FEATURES.pin_options(self.name))
+        parts.extend(FEATURES.pin_options(self.in_path))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 
     def fix_lockfile(self):
-        """Run each line of outfile through fix_pin"""
+        """Run each section of outfile through fix_pin"""
         with open(self.outfile, 'rt') as fp:
-            lines = [
-                self.fix_pin(line)
-                for line in self.concatenated(fp)
+            sections = [
+                self.fix_pin(section)
+                for section in self.parse_sections(self.concatenated(fp))
             ]
         with open(self.outfile, 'wt') as fp:
             fp.writelines([
-                line + '\n'
-                for line in lines
-                if line is not None
+                section + '\n'
+                for section in sections
+                if section is not None
             ])
-        self._dedup.register_packages_for_env(self.name, self.packages)
+        self._dedup.register_packages_for_env(self.in_path, self.packages)
 
     @staticmethod
     def concatenated(fp):
-        """Read lines from fp concatenating on backslash (\\)"""
+        r"""Read lines from fp concatenating on backslash (\\)
+
+        >>> env = Environment('')
+        >>> list(env.concatenated([
+        ...     'pkg', 'pkg  # comment', 'pkg', '# comment', '# one more',
+        ...     'foo', '  # via', '', '  # pkg',
+        ... ]))
+        ['pkg', 'pkg  # comment', 'pkg', '# comment', '# one more', 'foo', '  # via', '', '  # pkg']
+        """
         line_parts = []
         for line in fp:
-            line = line.strip()
+            line = line.rstrip()
             if line.endswith('\\'):
                 line_parts.append(line[:-1].rstrip())
             else:
@@ -140,7 +170,28 @@ class Environment(object):
             # Impossible:
             raise RuntimeError("Compiled file ends with backslash \\")
 
-    def fix_pin(self, line):
+    def parse_sections(self, lines):
+        r"""Combine lines with following comments into sections.
+
+        >>> env = Environment('')
+        >>> list(env.parse_sections([
+        ...     'pkg', 'pkg  # comment', 'pkg', '# comment', '# one more',
+        ...     'foo', '  # via', '', '  # pkg',
+        ... ]))
+        ['pkg', 'pkg  # comment', 'pkg\n# comment\n# one more', 'foo\n  # via', '\n  # pkg']
+        """
+        section = []
+        for line in lines:
+            if self.RE_COMMENT.match(line):
+                section.append(line)
+            else:
+                if section:
+                    yield '\n'.join(section)
+                section = [line]
+        if section:
+            yield '\n'.join(section)
+
+    def fix_pin(self, section):
         """
         Fix dependency by removing post-releases from versions
         and loosing constraints on internal packages.
@@ -148,7 +199,7 @@ class Environment(object):
 
         Also populate packages set
         """
-        dep = Dependency(line)
+        dep = Dependency(section)
         if dep.valid:
             if dep.package in self.ignore:
                 ignored_version = self.ignore[dep.package]
@@ -166,13 +217,13 @@ class Environment(object):
                         )
                 return None
             self.packages[dep.package] = dep.version
-            dep.drop_post(self.name)
+            dep.drop_post(self.in_path)
             return dep.serialize()
-        return line.strip()
+        return section.rstrip()
 
-    def add_references(self, other_names):
-        """Add references to other_names in outfile"""
-        if not other_names:
+    def add_references(self, other_in_paths):
+        """Add references to other_in_paths in outfile"""
+        if not other_in_paths:
             # Skip on empty list
             return
         with open(self.outfile, 'rt') as fp:
@@ -181,9 +232,9 @@ class Environment(object):
             fp.writelines(header)
             fp.writelines(
                 '-r {0}\n'.format(
-                    FEATURES.compose_output_file_name(other_name)
+                    FEATURES.compose_output_file_path(other_in_path)
                 )
-                for other_name in sorted(other_names)
+                for other_in_path in sorted(other_in_paths)
             )
             fp.writelines(body)
 
@@ -211,3 +262,19 @@ class Environment(object):
         with open(self.outfile, 'wt') as fp:
             fp.write(header_text)
             fp.writelines(body)
+
+    def _read_infile(self):
+        with open(self.infile, "rt") as fp:
+            return fp.read()
+
+    def _restore_in_file(self, content):
+        with open(self.infile, "wt") as fp:
+            return fp.write(content)
+
+    def _inject_sink(self):
+        rel_sink_out_path = os.path.normpath(os.path.relpath(
+            FEATURES.sink_out_path(),
+            os.path.dirname(self.infile),
+        ))
+        with open(self.infile, "at") as fp:
+            return fp.write("\n\n-c {}\n".format(rel_sink_out_path))

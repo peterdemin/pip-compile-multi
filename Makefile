@@ -1,7 +1,3 @@
-.PHONY: build
-build: clean
-	python setup.py sdist bdist_wheel
-
 .PHONY: virtual_env_set
 virtual_env_set:
 ifndef VIRTUAL_ENV
@@ -27,13 +23,21 @@ upgrade: virtual_env_set
 test:
 	tox
 
-### MISC ###
 .PHONY: clean
 clean:
 	rm -rf build dist pip-compile-multi.egg-info docs/_build
 	find . -name "*.pyc" -delete
 	find * -type d -name '__pycache__' | xargs rm -rf
 
+.PHONY: build
+build: clean
+	python setup.py sdist bdist_wheel
+
+.PHONY: release
+release: build
+	twine upload dist/*
+
+### MISC ###
 .PHONY: docs
 docs: virtual_env_set
 	make -C docs html

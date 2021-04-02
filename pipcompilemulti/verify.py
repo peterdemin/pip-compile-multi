@@ -65,16 +65,17 @@ def verify_environments():
     env_confs = discover(FEATURES.compose_input_file_path('*'))
     success = True
     for conf in env_confs:
-        env = Environment(name=conf['name'])
+        env = Environment(in_path=conf['in_path'])
         current_comment = generate_hash_comment(env.infile)
+        robust_comment = generate_robust_hash_comment(env.infile)
         existing_comment = parse_hash_comment(env.outfile)
-        if current_comment == existing_comment:
+        if existing_comment in (robust_comment, current_comment):
             logger.info("OK - %s was generated from %s.",
                         env.outfile, env.infile)
         else:
             logger.error("ERROR! %s was not regenerated after changes in %s.",
                          env.outfile, env.infile)
-            logger.error("Expecting: %s", current_comment.strip())
+            logger.error("Expecting: %s", robust_comment.strip())
             logger.error("Found:     %s", existing_comment.strip())
             success = False
     return success
@@ -90,6 +91,24 @@ def generate_hash_comment(file_path):
     """
     with open(file_path, 'rb') as fp:
         hexdigest = hashlib.sha1(fp.read().strip()).hexdigest()
+    return "# SHA1:{0}\n".format(hexdigest)
+
+
+def generate_robust_hash_comment(file_path):
+    """
+    Read file with given file_path and return string of format
+
+        # SHA1:da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+    which is hex representation of SHA1 file content hash.
+    File content is pre-processed by stripping comments, whitespace and newlines.
+    """
+    with open(file_path, 'rt') as fp:
+        essense = ''.join(sorted(
+            line.split('#')[0].strip()
+            for line in fp
+        ))
+    hexdigest = hashlib.sha1(essense.encode("utf-8")).hexdigest()
     return "# SHA1:{0}\n".format(hexdigest)
 
 

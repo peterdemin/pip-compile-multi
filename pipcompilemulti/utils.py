@@ -1,5 +1,6 @@
 """Functional utilities for lists and dicts manipulation."""
 
+import os
 import logging
 import itertools
 
@@ -7,23 +8,36 @@ import itertools
 logger = logging.getLogger("pip-compile-multi")
 
 
-def recursive_refs(envs, name):
-    """
-    Return set of recursive refs for given env name
+def extract_env_name(file_path):
+    """Return environment name for given requirements file path.
 
-    >>> local_refs = sorted(recursive_refs([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
-    ... ], 'local'))
-    >>> local_refs == ['base', 'test']
-    True
+    >>> extract_env_name("base.in")
+    'base'
+    >>> extract_env_name("sub/req.in")
+    'req'
     """
-    refs_by_name = {
-        env['name']: set(env['refs'])
+    return os.path.splitext(os.path.basename(file_path))[0]
+
+
+def fix_reference_path(orig_path, ref_path):
+    """Find actual path to reference using relative path to original file.
+
+    >>> fix_reference_path("dir/file", "../ref")
+    'ref'
+    """
+    return os.path.normpath(os.path.join(os.path.dirname(orig_path), ref_path))
+
+
+def recursive_refs(envs, in_path):
+    """Return set of recursive refs for given env name."""
+    refs_by_in_path = {
+        env['in_path']: {
+            fix_reference_path(env['in_path'], ref)
+            for ref in env['refs']
+        }
         for env in envs
     }
-    refs = refs_by_name[name]
+    refs = refs_by_in_path[in_path]
     if refs:
         indirect_refs = set(
             subref
@@ -73,25 +87,25 @@ def merged_packages(env_packages, names):
     return result
 
 
-def reference_cluster(envs, name):
+def reference_cluster(envs, in_path):
     """
-    Return set of all env names referencing or
-    referenced by given name.
+    Return set of all env in_paths referencing or
+    referenced by given in_path.
 
     >>> cluster = sorted(reference_cluster([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'local', 'refs': ['test']},
+    ...     {'in_path': 'base', 'refs': []},
+    ...     {'in_path': 'test', 'refs': ['base']},
+    ...     {'in_path': 'local', 'refs': ['test']},
     ... ], 'test'))
     >>> cluster == ['base', 'local', 'test']
     True
     """
     edges = [
-        set([env['name'], ref])
+        set([env['in_path'], fix_reference_path(env['in_path'], ref)])
         for env in envs
         for ref in env['refs']
     ]
-    prev, cluster = set(), set([name])
+    prev, cluster = set(), set([in_path])
     while prev != cluster:
         # While cluster grows
         prev = set(cluster)

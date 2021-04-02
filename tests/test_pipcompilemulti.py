@@ -38,7 +38,10 @@ def test_no_fix_incompatible_pin():
 def test_pin_is_ommitted_if_set_to_ignore():
     """Test ignored files won't pass"""
     dedup = PackageDeduplicator()
-    dedup.on_discover([{'name': 'a', 'refs': ['b']}, {'name': 'b', 'refs': []}])
+    dedup.on_discover([
+        {'in_path': 'a', 'refs': ['b']},
+        {'in_path': 'b', 'refs': []}
+    ])
     dedup.register_packages_for_env('b', {'pycodestyle': '2.3.1'})
     env = Environment('a', deduplicator=dedup)
     result = env.fix_pin(PIN)
@@ -62,16 +65,16 @@ def test_forbid_post_releases():
     assert result == PIN
 
 
-@pytest.mark.parametrize('name, refs', [
+@pytest.mark.parametrize('in_path, refs', [
     ('base.in', set()),
-    ('test.in', {'base'}),
-    ('local.in', {'test'}),
+    ('test.in', {'base.in'}),
+    ('local.in', {'test.in'}),
 ])
-def test_parse_references(name, refs):
+def test_parse_references(in_path, refs):
     """Check references are parsed for sample files"""
     env = Environment('')
     result = env.parse_references(
-        os.path.join('requirements', name)
+        os.path.join('requirements', in_path)
     )
     assert result == refs
 
@@ -95,7 +98,7 @@ def test_concatenation():
         '?\n',
         'MMM\n',
     ])
-    assert list(lines) == ['abc 123 ?', 'MMM']
+    assert list(lines) == ['abc    123 ?', 'MMM']
 
 
 def test_parse_hashes_with_comment():
@@ -124,8 +127,7 @@ def test_serialize_hashes():
     assert text == (
         "lib==ver \\\n"
         "    --hash=123 \\\n"
-        "    --hash=abc \\\n"
-        "    # comment"
+        "    --hash=abc    # comment"
     )
 
 
@@ -133,11 +135,11 @@ def test_reference_cluster():
     """Check cluster propagets both ways"""
     for entry in ['base', 'test', 'local', 'doc']:
         cluster = reference_cluster([
-            {'name': 'base', 'refs': []},
-            {'name': 'test', 'refs': ['base']},
-            {'name': 'local', 'refs': ['test']},
-            {'name': 'doc', 'refs': ['base']},
-            {'name': 'side', 'refs': []},
+            {'in_path': 'base', 'refs': []},
+            {'in_path': 'test', 'refs': ['base']},
+            {'in_path': 'local', 'refs': ['test']},
+            {'in_path': 'doc', 'refs': ['base']},
+            {'in_path': 'side', 'refs': []},
         ], entry)
         assert cluster == set(['base', 'doc', 'local', 'test'])
 
@@ -254,7 +256,10 @@ def test_merged_packages_raise_for_conflict():
 def test_fix_pin_detects_version_conflict():
     """Check that package x can't be locked to versions 1 and 2"""
     dedup = PackageDeduplicator()
-    dedup.on_discover([{'name': 'a', 'refs': ['b']}, {'name': 'b', 'refs': []}])
+    dedup.on_discover([
+        {'in_path': 'a', 'refs': ['b']},
+        {'in_path': 'b', 'refs': []}
+    ])
     dedup.register_packages_for_env('b', {'x': '1'})
     env = Environment('a', deduplicator=dedup)
     ignored_pin = env.fix_pin('x==1')

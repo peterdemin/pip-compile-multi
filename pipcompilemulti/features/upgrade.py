@@ -88,24 +88,23 @@ class UpgradeSelected(BaseFeature):
         """Whether selective upgrade is active."""
         return bool(self.package_names)
 
-    def pin_options(self, env_name):
+    def pin_options(self):
         """Pin command options for upgrading specific packages."""
         return [
             '--upgrade-package=' + package
             for package in self.package_names
-            if self.has_package(env_name, package)
         ]
 
-    def has_package(self, env_name, package_name):
+    def has_package(self, in_path, package_name):
         """Whether specified package name is already in the outfile."""
-        return package_name.lower() in self._env_packages(env_name)
+        return package_name.lower() in self._get_packages(in_path)
 
-    def _env_packages(self, env_name):
-        if env_name not in self._env_packages_cache:
-            self._env_packages_cache[env_name] = self._read_packages(
-                self._compose_output_file_path(env_name)
+    def _get_packages(self, in_path):
+        if in_path not in self._env_packages_cache:
+            self._env_packages_cache[in_path] = self._read_packages(
+                self._compose_output_file_path(in_path)
             )
-        return self._env_packages_cache[env_name]
+        return self._env_packages_cache[in_path]
 
     @staticmethod
     def _read_packages(outfile):
@@ -120,14 +119,14 @@ class UpgradeSelected(BaseFeature):
             # Act as if file is empty
             return set()
 
-    def _compose_output_file_path(self, env_name):
-        return self._controller.compose_output_file_path(env_name)
+    def _compose_output_file_path(self, in_path):
+        return self._controller.compose_output_file_path(in_path)
 
-    def affected(self, env_name):
+    def affected(self, in_path):
         """Whether environment was affected by upgraded packages."""
         if not self.active:
             return True
         return any(
-            self.has_package(env_name, package_name)
+            self.has_package(in_path, package_name)
             for package_name in self.package_names
         )

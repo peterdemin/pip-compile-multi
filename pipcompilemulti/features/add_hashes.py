@@ -7,13 +7,15 @@ Format for this option is
 
 .. code-block:: text
 
-  -g, --generate-hashes TEXT  Environment name (base, test, etc.) that needs
-                              packages hashes. Can be supplied multiple times.
-
+  -g, --generate-hashes TEXT  Input file name (base.in, requirements/test.in, etc)
+                              that needs packages hashes.
+                              Can be supplied multiple times.
+                              For backwards compatibility can be short
+                              environment name (base, test, etc.)
 
 Example invocation:
 
-.. code-block:: text
+.. code-block:: shell
 
     $ pip-compile-multi -g base -g docs
 
@@ -33,61 +35,61 @@ Example output:
 ``pip-compile-multi`` will recursively propagate this option to all
 environments that are referencing or referenced by selected environments.
 """  # noqa: E501
+import os
 
 from pipcompilemulti.utils import reference_cluster
 from .base import BaseFeature, ClickOption
 
 
 class AddHashes(BaseFeature):
-    """Write hashes for pinned packages.
-
-    >>> from pipcompilemulti.options import OPTIONS
-    >>> add_hashes = AddHashes()
-    >>> OPTIONS[add_hashes.OPTION_NAME] = ['test']
-    >>> add_hashes.on_discover([
-    ...     {'name': 'base', 'refs': []},
-    ...     {'name': 'test', 'refs': ['base']},
-    ...     {'name': 'docs', 'refs': []},
-    ... ])
-    >>> add_hashes.pin_options('base')
-    ['--generate-hashes']
-    >>> add_hashes.pin_options('docs')
-    []
-    """
+    """Write hashes for pinned packages."""
 
     OPTION_NAME = 'add_hashes'
     CLICK_OPTION = ClickOption(
         long_option='--generate-hashes',
         short_option='-g',
         multiple=True,
-        help_text='Environment name (base, test, etc) that needs '
-                  'packages hashes. '
+        help_text='Input file name (base.in, requirements/test.in, etc) '
+                  'that needs packages hashes. '
                   'Can be supplied multiple times.',
 
     )
 
-    def __init__(self):
+    def __init__(self, controller):
+        self._controller = controller
         self._hashed_by_reference = None
 
     @property
-    def enabled_envs(self):
-        """Convert list of environment names to a set."""
-        return set(self.value or [])
+    def enabled_in_paths(self):
+        """Convert list of .in paths to a set.
+
+        For backwards compatibility, check if passed value is env name
+        and convert it to in_path.
+        """
+        names_or_paths = self.value or []
+        in_paths = set()
+        for name_or_path in names_or_paths:
+            in_path = self._controller.compose_input_file_path(name_or_path)
+            if os.path.exists(in_path):
+                in_paths.add(in_path)
+            else:
+                in_paths.add(name_or_path)
+        return in_paths
 
     def on_discover(self, env_confs):
         """Save environment names that need hashing."""
         self._hashed_by_reference = set()
-        for name in self.enabled_envs:
+        for in_path in self.enabled_in_paths:
             self._hashed_by_reference.update(
-                reference_cluster(env_confs, name)
+                reference_cluster(env_confs, in_path)
             )
 
-    def _needs_hashes(self, env_name):
+    def _needs_hashes(self, in_path):
         assert self._hashed_by_reference is not None
-        return env_name in self._hashed_by_reference
+        return in_path in self._hashed_by_reference
 
-    def pin_options(self, env_name):
+    def pin_options(self, in_path):
         """Return --generate-hashes if env requires it."""
-        if self._needs_hashes(env_name):
+        if self._needs_hashes(in_path):
             return ['--generate-hashes']
         return []

@@ -1,6 +1,62 @@
 History
 =======
 
+2.4.0 (2021-03-17)
+------------------
+
+* Update --index/--no-index to --emit-index-url/--no-emit-index-url
+  for compatibility with pip-tools 6.0.
+  (Issue `#243`_).
+
+.. _#243: https://github.com/peterdemin/pip-compile-multi/issues/243
+
+2.3.2 (2021-02-18)
+------------------
+
+* Fix cross-feature logic for --autoresolve and --upgrade-package.
+  (PR `#236`_).
+
+.. _#236: https://github.com/peterdemin/pip-compile-multi/pull/236
+
+2.3.1 (2021-02-16)
+------------------
+
+* Fix for a bug introduced in 2.2.2 when running pip-compile-multi
+  installed for Python 3, and having ``python`` symlinked to Python 2.
+  (Issue `#233`_, PR `#234`_).
+
+.. _#233: https://github.com/peterdemin/pip-compile-multi/issues/233
+.. _#234: https://github.com/peterdemin/pip-compile-multi/pull/234
+
+2.3.0 (2021-02-04)
+------------------
+
+* Make SHA1 hashes of input files in a more robust way (Issue `#215`_).
+  Now it ignores changes to comments, whitespace and order of packages.
+
+.. _#215: https://github.com/peterdemin/pip-compile-multi/issues/215
+
+2.2.2 (2021-01-29)
+------------------
+
+* Add support for calling using `python -m pipcompilemulti.cli_v1` notation.
+
+
+2.2.1 (2021-01-29)
+------------------
+
+* Add ``--skip-constraints`` option.
+* Fix bootstrapping for autoresolve case with missing output files.
+
+
+2.2.0 (2020-01-22)
+------------------
+
+* Add ``--autoresolve`` option for conflict-free compilations (PR #224).
+* Auto-discover requirements in other directories by following references (PR #221).
+* Add support for new-style multiline "via" comments from pip-tools (PR #222).
+
+
 2.1.0 (2020-08-19)
 ------------------
 
