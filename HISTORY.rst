@@ -10,7 +10,7 @@ History
 
 * Add ``--extra-index-url <url>`` option.
   Thanks to `Erik Jan de Vries`_.
-  (PRs `#250` and `#252`).
+  (PRs `#250`_ and `#252`_).
 
 .. _#153: https://github.com/peterdemin/pip-compile-multi/issues/153
 .. _#247: https://github.com/peterdemin/pip-compile-multi/pull/247
