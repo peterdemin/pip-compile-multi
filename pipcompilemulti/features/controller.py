@@ -18,6 +18,7 @@ from .use_cache import UseCache
 from .autoresolve import Autoresolve
 from .skip_constraint_comments import SkipConstraintComments
 from .live_output import LiveOutput
+from .extra_index_url import ExtraIndexUrl
 
 
 class FeaturesController:
@@ -42,6 +43,7 @@ class FeaturesController:
         self.autoresolve = Autoresolve()
         self.skip_constraint_comments = SkipConstraintComments()
         self.live_output = LiveOutput()
+        self.extra_index_url = ExtraIndexUrl()
         self._features = [
             self.annotate_index,
             self.use_cache,
@@ -60,6 +62,7 @@ class FeaturesController:
             self.autoresolve,
             self.skip_constraint_comments,
             self.live_output,
+            self.extra_index_url,
         ]
 
     def bind(self, command):
@@ -84,6 +87,7 @@ class FeaturesController:
         options.extend(self.upgrade_all.pin_options())
         options.extend(self.upgrade_selected.pin_options())
         options.extend(self.annotate_index.pin_options())
+        options.extend(self.extra_index_url.pin_options())
         return options
 
     def compose_input_file_path(self, basename):
