@@ -17,6 +17,7 @@ from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
 from .autoresolve import Autoresolve
 from .skip_constraint_comments import SkipConstraintComments
+from .live_output import LiveOutput
 
 
 class FeaturesController:
@@ -40,6 +41,7 @@ class FeaturesController:
         self.allow_unsafe = AllowUnsafe()
         self.autoresolve = Autoresolve()
         self.skip_constraint_comments = SkipConstraintComments()
+        self.live_output = LiveOutput()
         self._features = [
             self.annotate_index,
             self.use_cache,
@@ -57,6 +59,7 @@ class FeaturesController:
             self.allow_unsafe,
             self.autoresolve,
             self.skip_constraint_comments,
+            self.live_output,
         ]
 
     def bind(self, command):
@@ -148,3 +151,7 @@ class FeaturesController:
     def process_dependency_comments(self, comment):
         """Process comments of locked dependency (e.g. # via xxx)."""
         return self.skip_constraint_comments.process_dependency_comments(comment)
+
+    def pipe_arguments(self):
+        """Values for stdout and stderr arguments to subprocess.Popen."""
+        return self.live_output.pipe_arguments()

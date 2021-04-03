@@ -65,8 +65,7 @@ class Environment(object):
                 self._inject_sink()
             process = subprocess.Popen(
                 self.pin_command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                **FEATURES.pipe_arguments(),
             )
             stdout, stderr = process.communicate()
         finally:
@@ -77,8 +76,10 @@ class Environment(object):
         else:
             logger.critical("ERROR executing %s", ' '.join(self.pin_command))
             logger.critical("Exit code: %s", process.returncode)
-            logger.critical(stdout.decode('utf-8'))
-            logger.critical(stderr.decode('utf-8'))
+            if stdout:
+                logger.critical(stdout.decode('utf-8'))
+            if stderr:
+                logger.critical(stderr.decode('utf-8'))
             raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
 
     @classmethod
