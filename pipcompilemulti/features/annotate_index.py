@@ -1,10 +1,24 @@
 """
+.. _annotate_index:
+
 Add index URL annotation
 ========================
 
 This flag provides the ability to annotate the index URL mimicking the logic of
 the ``pip-compile`` ``--emit-index-url`` and ``--no-emit-index-url`` flag
 by opting to add or not add the ``pip`` index to the generated files.
+
+The URL can be set in the input file as in this example:
+
+.. code-block:: text
+
+    --index-url=https://pypi.tuna.tsinghua.edu.cn/simple/
+    six
+    click
+
+This option is similar to `extra_index_url`_.
+The difference is that URL is saved in the output files,
+which means that it doesn't need to be configured in every environment.
 
 .. code-block:: text
 

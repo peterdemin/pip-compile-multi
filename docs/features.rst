@@ -25,6 +25,8 @@ Features
 
 .. automodule:: pipcompilemulti.features.annotate_index
 
+.. automodule:: pipcompilemulti.features.extra_index_url
+
 .. automodule:: pipcompilemulti.features.autoresolve
 
 .. automodule:: pipcompilemulti.features.skip_constraint_comments
