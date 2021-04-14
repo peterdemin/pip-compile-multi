@@ -10,7 +10,7 @@ alabaster==0.7.12
     # via sphinx
 appdirs==1.4.4
     # via virtualenv
-astroid==2.5.2
+astroid==2.5.3
     # via pylint
 babel==2.9.0
     # via sphinx
@@ -34,7 +34,7 @@ cryptography==3.4.7
     # via secretstorage
 distlib==0.3.1
     # via virtualenv
-docutils==0.17
+docutils==0.16
     # via
     #   collective.checkdocs
     #   readme-renderer
@@ -49,7 +49,7 @@ flake8==3.9.0
     # via
     #   -r requirements/local.in
     #   flake8-polyfill
-identify==2.2.2
+identify==2.2.3
     # via pre-commit
 idna==2.10
     # via requests
@@ -77,7 +77,7 @@ mccabe==0.6.1
     # via
     #   flake8
     #   pylint
-nodeenv==1.5.0
+nodeenv==1.6.0
     # via pre-commit
 pep8-naming==0.11.1
     # via -r requirements/local.in
@@ -131,7 +131,7 @@ snowballstemmer==2.1.0
     # via
     #   pydocstyle
     #   sphinx
-sphinx==3.5.3
+sphinx==3.5.4
     # via -r requirements/local.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
@@ -151,7 +151,7 @@ tqdm==4.60.0
     # via twine
 twine==3.4.1
     # via -r requirements/local.in
-typed-ast==1.4.2
+typed-ast==1.4.3
     # via astroid
 urllib3==1.26.4
     # via requests
