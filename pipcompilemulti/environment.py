@@ -122,11 +122,15 @@ class Environment(object):
         # Use the same interpreter binary
         python = sys.executable or 'python'
         parts = [
-            python, '-m', 'piptools', 'compile',
+            python,
+            '-m',
+            'piptools',
+            'compile',
             '--no-header',
             '--verbose',
+            *FEATURES.pin_options(self.in_path),
         ]
-        parts.extend(FEATURES.pin_options(self.in_path))
+
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
 

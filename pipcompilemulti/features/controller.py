@@ -80,8 +80,7 @@ class FeaturesController:
 
     def pin_options(self, in_path):
         """Return list of options to pin command."""
-        options = []
-        options.extend(self.use_cache.pin_options())
+        options = list(self.use_cache.pin_options())
         options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.allow_unsafe.pin_options())
         options.extend(self.upgrade_all.pin_options())

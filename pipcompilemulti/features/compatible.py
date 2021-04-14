@@ -57,7 +57,4 @@ class Compatible(BaseFeature):
     def is_matched(self, package_name):
         """Whether package name matches one of configured glob patterns."""
         package = package_name.lower()
-        for pattern in self.patterns:
-            if fnmatch(package, pattern):
-                return True
-        return False
+        return any(fnmatch(package, pattern) for pattern in self.patterns)

@@ -51,7 +51,7 @@ class LimitEnvs(LimitInPaths):
     @property
     def direct_envs(self):
         """Set of environments included by command line options."""
-        return set(
+        return {
             self._controller.compose_input_file_path(env_name)
             for env_name in self.value or []
-        )
+        }

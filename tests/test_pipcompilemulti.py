@@ -58,9 +58,9 @@ def test_post_releases_are_kept_by_default():
 
 def test_forbid_post_releases():
     """Test postXXX versions are kept if allow_post=True"""
-    pin = 'pycodestyle==2.3.1.post2231  # via flake8'
     with mock.patch.dict(OPTIONS, {'forbid_post': ['env']}):
         env = Environment('env')
+        pin = 'pycodestyle==2.3.1.post2231  # via flake8'
         result = env.fix_pin(pin)
     assert result == PIN
 

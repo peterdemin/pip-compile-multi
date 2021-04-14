@@ -39,11 +39,10 @@ def recursive_refs(envs, in_path):
     }
     refs = refs_by_in_path[in_path]
     if refs:
-        indirect_refs = set(
-            subref
-            for ref in refs
-            for subref in recursive_refs(envs, ref)
-        )
+        indirect_refs = {
+            subref for ref in refs for subref in recursive_refs(envs, ref)
+        }
+
     else:
         indirect_refs = set()
     return set.union(refs, indirect_refs)

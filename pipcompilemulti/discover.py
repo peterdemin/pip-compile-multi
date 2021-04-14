@@ -60,10 +60,12 @@ def order_by_refs(envs):
     I.e. all referenced environments are placed before their references.
     """
     topology = {
-        env['in_path']: set(fix_reference_path(env['in_path'], ref)
-                            for ref in env['refs'])
+        env['in_path']: {
+            fix_reference_path(env['in_path'], ref) for ref in env['refs']
+        }
         for env in envs
     }
+
     by_in_path = {
         env['in_path']: env
         for env in envs

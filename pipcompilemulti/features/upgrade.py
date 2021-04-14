@@ -110,11 +110,8 @@ class UpgradeSelected(BaseFeature):
     def _read_packages(outfile):
         try:
             with open(outfile) as fp:
-                return set(
-                    line.split('==', 1)[0].lower()
-                    for line in fp
-                    if '==' in line
-                )
+                return {line.split('==', 1)[0].lower() for line in fp
+                                if '==' in line}
         except IOError:
             # Act as if file is empty
             return set()

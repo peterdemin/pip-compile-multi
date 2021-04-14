@@ -41,10 +41,7 @@ class CustomHeader(BaseFeature):
     def text(self):
         """Text to put in the beginning of each generated file."""
         if self._header_text is None:
-            if self.value:
-                self._header_text = self._read_header_text()
-            else:
-                self._header_text = DEFAULT_HEADER
+            self._header_text = self._read_header_text() if self.value else DEFAULT_HEADER
         return self._header_text
 
     def _read_header_text(self):

@@ -30,8 +30,7 @@ def test_v1_command_exits_with_zero(command):
         else 'local27'
     )
     runner = CliRunner()
-    parameters = ['--only-name', local]
-    parameters.append(command)
+    parameters = ['--only-name', local, command]
     result = runner.invoke(cli, parameters)
     parameters[:0] = ['--generate-hashes', local,
                       '--in-ext', 'txt',
