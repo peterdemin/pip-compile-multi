@@ -9,11 +9,11 @@ click==7.1.2
     # via
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==3.10.0
+importlib-metadata==3.10.1
     # via pep517
 pep517==0.10.0
     # via pip-tools
-pip-tools==6.0.1
+pip-tools==6.1.0
     # via -r requirements/base.in
 toml==0.10.2
     # via pep517
