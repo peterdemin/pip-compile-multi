@@ -63,11 +63,8 @@ class Environment(object):
             if sink_out_path and sink_out_path != self.outfile:
                 original_in_file = self._read_infile()
                 self._inject_sink()
-            process = subprocess.Popen(
-                self.pin_command,
-                **FEATURES.pipe_arguments(),
-            )
-            stdout, stderr = process.communicate()
+            with subprocess.Popen(self.pin_command, **FEATURES.pipe_arguments()) as process:
+                stdout, stderr = process.communicate()
         finally:
             if original_in_file:
                 self._restore_in_file(original_in_file)
