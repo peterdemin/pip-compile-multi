@@ -19,7 +19,7 @@ toml==0.10.2
     # via pep517
 toposort==1.6
     # via -r requirements/base.in
-typing-extensions==3.7.4.3
+typing-extensions==3.10.0.0
     # via importlib-metadata
 zipp==3.4.1
     # via

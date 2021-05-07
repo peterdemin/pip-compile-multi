@@ -97,7 +97,7 @@ pydocstyle==6.0.0
     # via -r requirements/local.in
 pyflakes==2.3.1
     # via flake8
-pygments==2.8.1
+pygments==2.9.0
     # via
     #   -r requirements/local.in
     #   readme-renderer
@@ -121,7 +121,7 @@ rfc3986==1.4.0
     # via twine
 secretstorage==3.3.1
     # via keyring
-six==1.15.0
+six==1.16.0
     # via
     #   bleach
     #   readme-renderer
@@ -155,7 +155,7 @@ typed-ast==1.4.3
     # via astroid
 urllib3==1.26.4
     # via requests
-virtualenv==20.4.4
+virtualenv==20.4.5
     # via
     #   pre-commit
     #   tox
