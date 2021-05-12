@@ -5,7 +5,7 @@
 #
 #    pip-compile-multi
 #
-click==7.1.2
+click==8.0.0
     # via
     #   -r requirements/base.in
     #   pip-tools
