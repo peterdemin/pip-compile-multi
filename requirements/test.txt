@@ -6,7 +6,7 @@
 #    pip-compile-multi
 #
 -r base.txt
-attrs==20.3.0
+attrs==21.2.0
     # via pytest
 coverage==5.5
     # via pytest-cov
