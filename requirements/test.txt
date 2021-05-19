@@ -8,7 +8,7 @@
 -r base.txt
 attrs==21.2.0
     # via pytest
-coverage==5.5
+coverage[toml]==5.5
     # via pytest-cov
 iniconfig==1.1.1
     # via pytest
@@ -24,7 +24,7 @@ py==1.10.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
-pytest-cov==2.11.1
+pytest-cov==2.12.0
     # via -r requirements/test.in
 pytest==6.2.4
     # via
