@@ -18,7 +18,7 @@ bleach==3.3.0
     # via readme-renderer
 bump2version==1.0.1
     # via -r requirements/local.in
-certifi==2020.12.5
+certifi==2021.5.30
     # via requests
 cffi==1.14.5
     # via cryptography
@@ -32,7 +32,7 @@ colorama==0.4.4
     # via twine
 cryptography==3.4.7
     # via secretstorage
-distlib==0.3.1
+distlib==0.3.2
     # via virtualenv
 docutils==0.17.1
     # via
@@ -49,7 +49,7 @@ flake8==3.9.2
     # via
     #   -r requirements/local.in
     #   flake8-polyfill
-identify==2.2.6
+identify==2.2.7
     # via pre-commit
 idna==2.10
     # via requests
@@ -102,7 +102,7 @@ pygments==2.9.0
     #   -r requirements/local.in
     #   readme-renderer
     #   sphinx
-pylint==2.8.2
+pylint==2.8.3
     # via -r requirements/local.in
 pytz==2021.1
     # via babel
@@ -153,7 +153,7 @@ twine==3.4.1
     # via -r requirements/local.in
 typed-ast==1.4.3
     # via astroid
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 virtualenv==20.4.7
     # via
