@@ -49,7 +49,7 @@ flake8==3.9.2
     # via
     #   -r requirements/local.in
     #   flake8-polyfill
-identify==2.2.7
+identify==2.2.10
     # via pre-commit
 idna==2.10
     # via requests
