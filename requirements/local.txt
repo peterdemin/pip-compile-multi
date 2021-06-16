@@ -147,7 +147,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tox==3.23.1
     # via -r requirements/local.in
-tqdm==4.61.0
+tqdm==4.61.1
     # via twine
 twine==3.4.1
     # via -r requirements/local.in
