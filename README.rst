@@ -80,7 +80,7 @@ Read the Docs
    :height: 200 px
    :target: https://twitter.com/
 
-.. |moveworks| image:: Moveworks.svg
+.. |moveworks| image:: docs/Moveworks.svg
    :width: 400 px
    :height: 200 px
    :target: https://moveworks.com/
