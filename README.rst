@@ -40,6 +40,8 @@ Trusted by
 
 |nih| |skydio| |pallets|
 
+|moveworks|
+
 
 Read the Docs
 -------------
@@ -77,3 +79,8 @@ Read the Docs
    :width: 200 px
    :height: 200 px
    :target: https://twitter.com/
+
+.. |moveworks| image:: Moveworks.svg
+   :width: 400 px
+   :height: 200 px
+   :target: https://moveworks.com/
