@@ -24,12 +24,12 @@ py==1.10.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
-pytest-cov==2.12.1
-    # via -r requirements/test.in
 pytest==6.2.4
     # via
     #   -r requirements/test.in
     #   pytest-cov
+pytest-cov==2.12.1
+    # via -r requirements/test.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

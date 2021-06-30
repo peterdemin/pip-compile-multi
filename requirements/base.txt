@@ -9,7 +9,7 @@ click==8.0.1
     # via
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==4.5.0
+importlib-metadata==4.6.0
     # via
     #   click
     #   pep517
