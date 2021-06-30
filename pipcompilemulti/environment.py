@@ -92,10 +92,11 @@ class Environment(object):
         E.g. {'file1.in', 'file2.in'}
         """
         references = set()
-        for line in open(filename):
-            matched = cls.RE_REF.match(line)
-            if matched:
-                references.add(matched.group('path'))
+        with open(filename) as fobj:
+            for line in fobj:
+                matched = cls.RE_REF.match(line)
+                if matched:
+                    references.add(matched.group('path'))
         return references
 
     @property
