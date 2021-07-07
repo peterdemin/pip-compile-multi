@@ -47,6 +47,7 @@ flake8==3.9.2
     # via
     #   -r requirements/local.in
     #   flake8-polyfill
+    #   pep8-naming
 flake8-polyfill==1.0.2
     # via pep8-naming
 identify==2.2.10
@@ -79,7 +80,7 @@ mccabe==0.6.1
     #   pylint
 nodeenv==1.6.0
     # via pre-commit
-pep8-naming==0.11.1
+pep8-naming==0.12.0
     # via -r requirements/local.in
 pipdeptree==2.0.0
     # via -r requirements/local.in
@@ -102,7 +103,7 @@ pygments==2.9.0
     #   -r requirements/local.in
     #   readme-renderer
     #   sphinx
-pylint==2.9.1
+pylint==2.9.3
     # via -r requirements/local.in
 pytz==2021.1
     # via babel
@@ -131,7 +132,7 @@ snowballstemmer==2.1.0
     # via
     #   pydocstyle
     #   sphinx
-sphinx==4.0.2
+sphinx==4.0.3
     # via -r requirements/local.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
@@ -147,7 +148,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tox==3.23.1
     # via -r requirements/local.in
-tqdm==4.61.1
+tqdm==4.61.2
     # via twine
 twine==3.4.1
     # via -r requirements/local.in
