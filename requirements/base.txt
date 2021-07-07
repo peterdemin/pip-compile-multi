@@ -9,7 +9,7 @@ click==8.0.1
     # via
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==4.6.0
+importlib-metadata==4.6.1
     # via
     #   click
     #   pep517
@@ -25,7 +25,7 @@ typing-extensions==3.10.0.0
     # via importlib-metadata
 wheel==0.36.2
     # via pip-tools
-zipp==3.4.1
+zipp==3.5.0
     # via
     #   importlib-metadata
     #   pep517
