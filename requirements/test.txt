@@ -30,6 +30,10 @@ pytest==6.2.4
     #   pytest-cov
 pytest-cov==2.12.1
     # via -r requirements/test.in
+toml==0.10.2
+    # via
+    #   pytest
+    #   pytest-cov
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
