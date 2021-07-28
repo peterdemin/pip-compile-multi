@@ -86,7 +86,7 @@ pipdeptree==2.0.0
     # via -r requirements/local.in
 pkginfo==1.7.1
     # via twine
-platformdirs==2.0.2
+platformdirs==2.1.0
     # via virtualenv
 pre-commit==2.13.0
     # via -r requirements/local.in
@@ -134,7 +134,7 @@ snowballstemmer==2.1.0
     # via
     #   pydocstyle
     #   sphinx
-sphinx==4.1.1
+sphinx==4.1.2
     # via -r requirements/local.in
 sphinxcontrib-applehelp==1.0.2
     # via sphinx
