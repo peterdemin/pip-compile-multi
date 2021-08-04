@@ -9,7 +9,7 @@ click==8.0.1
     # via
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==4.6.1
+importlib-metadata==4.6.3
     # via
     #   click
     #   pep517
@@ -17,7 +17,7 @@ pep517==0.11.0
     # via pip-tools
 pip-tools==6.2.0
     # via -r requirements/base.in
-tomli==1.0.4
+tomli==1.2.0
     # via pep517
 toposort==1.6
     # via -r requirements/base.in
