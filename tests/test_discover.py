@@ -8,7 +8,7 @@ import pytest
 from pipcompilemulti.discover import discover
 
 
-@pytest.mark.skipif(sys.platform == "win32", reason="Pass normalization is wonky under Windows")
+@pytest.mark.skipif(sys.platform == "win32", reason="Path normalization is wonky under Windows")
 def test_discover_nested():
     """Test references to other dirs are discovered."""
     envs = discover(os.path.join("nested", "*.in"))
