@@ -1,5 +1,6 @@
 """Environment discovery"""
 
+import os
 import glob
 from collections import deque
 
@@ -33,7 +34,7 @@ def discover(glob_pattern):
     ... ]
     True
     """
-    to_visit = deque(glob.glob(glob_pattern))
+    to_visit = deque(map(os.path.normpath, glob.glob(glob_pattern)))
     envs, all_in_paths = {}, set()
     while to_visit:
         in_path = to_visit.pop()
