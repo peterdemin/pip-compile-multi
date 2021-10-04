@@ -63,20 +63,11 @@ class Dependency(object):
         r'\s*'
         r'(?P<prefix>\S+#egg=)'
         r'(?P<package>[a-z0-9-_.]+)'
-        r'(?P<postfix>\S+)'
+        r'(?P<postfix>\S*)'
         r'(?P<comment>(?:\s*#.*)+)?$'
     )
 
     def __init__(self, line):
-        regular = self.RE_DEPENDENCY.match(line)
-        if regular:
-            self.valid = True
-            self.is_vcs = False
-            self.package = regular.group('package')
-            self.version = regular.group('version').strip()
-            self.hashes = (regular.group('hashes') or '').strip()
-            self.comment = (regular.group('comment') or '').rstrip()
-            return
         vcs = self.RE_VCS_DEPENDENCY.match(line)
         if vcs:
             self.valid = True
@@ -86,6 +77,15 @@ class Dependency(object):
             self.hashes = ''  # No way!
             self.comment = (vcs.group('comment') or '').rstrip()
             self.line = line
+            return
+        regular = self.RE_DEPENDENCY.match(line)
+        if regular:
+            self.valid = True
+            self.is_vcs = False
+            self.package = regular.group('package')
+            self.version = regular.group('version').strip()
+            self.hashes = (regular.group('hashes') or '').strip()
+            self.comment = (regular.group('comment') or '').rstrip()
             return
         self.valid = False
 
