@@ -1,6 +1,11 @@
 History
 =======
 
+2.4.3 (Unreleased)
+------------------
+
+* Prioritize URL depedencies when parsing to enable URLs with version pins inside
+
 2.4.2 (2021-09-01)
 ------------------
 
