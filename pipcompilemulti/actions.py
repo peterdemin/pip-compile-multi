@@ -15,8 +15,9 @@ logger = logging.getLogger("pip-compile-multi")
 
 def recompile():
     """Compile requirements files for all environments."""
-    env_confs = discover(FEATURES.compose_input_file_path('*'))
-    FEATURES.on_discover(env_confs)
+    env_confs = FEATURES.on_discover(
+        discover(FEATURES.compose_input_file_path('*'))
+    )
     deduplicator = PackageDeduplicator()
     deduplicator.on_discover(env_confs)
     sink_in_path = FEATURES.sink_in_path()
@@ -33,8 +34,6 @@ def recompile():
 def compile_topologically(env_confs, deduplicator):
     """Compile environments in topological order of reference."""
     for conf in env_confs:
-        if not FEATURES.included(conf['in_path']):
-            continue
         env = Environment(in_path=conf['in_path'], deduplicator=deduplicator)
         if env.maybe_create_lockfile():
             # Only munge lockfile if it was written.
