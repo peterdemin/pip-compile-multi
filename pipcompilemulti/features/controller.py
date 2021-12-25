@@ -113,12 +113,17 @@ class FeaturesController:
         return self.compatible.constraint(package_name)
 
     def on_discover(self, env_confs):
-        """Configure features with a list of discovered environments."""
-        self.add_hashes.on_discover(env_confs)
+        """Configure features with a list of discovered environments.
+
+        Returns a new possibly shorter env list.
+        """
+        self.upgrade_selected.reset()
         self.limit_envs.on_discover(env_confs)
         self.limit_in_paths.on_discover(env_confs)
-        self.upgrade_selected.reset()
-        self.autoresolve.on_discover(env_confs)
+        limited_env_confs = [env for env in env_confs if self.included(env['in_path'])]
+        self.add_hashes.on_discover(limited_env_confs)
+        self.autoresolve.on_discover(limited_env_confs)
+        return limited_env_confs
 
     def affected(self, in_path):
         """Whether environment is affected by upgrade command."""
