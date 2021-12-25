@@ -4,7 +4,7 @@ import os
 from setuptools import setup, find_packages
 
 
-VERSION = "2.4.3"
+VERSION = "2.4.2"
 
 
 README = """
@@ -83,6 +83,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
