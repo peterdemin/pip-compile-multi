@@ -1,6 +1,5 @@
-"""End to end tests for CLI v2"""
+"""End to end tests for CLI v1"""
 
-import sys
 from click.testing import CliRunner
 import pytest
 from pipcompilemulti.cli_v1 import cli
@@ -22,21 +21,17 @@ def test_v1_command_exits_with_zero(command):
     """Run pip-compile-multi on self.
 
     pip-compile-multi --only-name local --generate-hashes local \
-            --in-ext txt --out-ext hash --use-cache
+            --in-ext txt --out-ext hash --use-cache \
+            --autoresolve
     """
-    local = (
-        'local'
-        if sys.version_info[0] >= 3
-        else 'local27'
-    )
     runner = CliRunner()
-    parameters = ['--only-name', local]
-    parameters.append(command)
+    parameters = [command, '--autoresolve', '--only-name', 'local', '--use-cache']
     result = runner.invoke(cli, parameters)
-    parameters[:0] = ['--generate-hashes', local,
-                      '--in-ext', 'txt',
-                      '--out-ext', 'hash',
-                      '--use-cache']
+    parameters.extend([
+        '--generate-hashes', 'local',
+        '--in-ext', 'txt',
+        '--out-ext', 'hash',
+    ])
     result = runner.invoke(cli, parameters)
     assert result.exit_code == 0
 
