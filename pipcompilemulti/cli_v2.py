@@ -68,6 +68,7 @@ def run_configurations(callback, sections_reader):
         'base_dir': 'requirements',
         'in_ext': 'in',
         'out_ext': 'txt',
+        'autoresolve': True,
     }
     sections = sections_reader()
     if sections is None:
