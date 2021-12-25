@@ -4,7 +4,8 @@ History
 2.4.3 (Unreleased)
 ------------------
 
-* Prioritize URL depedencies when parsing to enable URLs with version pins inside
+* Prioritize URL depedencies when parsing to enable URLs that have version pins.
+* Make ``--autoresolve`` work correctly with ``-t`` and ``-n`` options.
 
 2.4.2 (2021-09-01)
 ------------------
