@@ -66,6 +66,15 @@ class Dependency(object):
         r'(?P<postfix>\S*)'
         r'(?P<comment>(?:\s*#.*)+)?$'
     )
+    # docutils @ git+https://github.com/ansible/docutils.git@master
+    RE_AT_DEPENDENCY = re.compile(
+        r'(?iu)(?P<editable>-e)?'
+        r'\s*'
+        r'(?P<package>[a-z0-9-_.]+)'
+        r' @ '
+        r'(?P<url>\S+)'
+        r'(?P<comment>(?:\s*#.*)+)?$'
+    )
 
     def __init__(self, line):
         vcs = self.RE_VCS_DEPENDENCY.match(line)
@@ -76,6 +85,16 @@ class Dependency(object):
             self.version = ''
             self.hashes = ''  # No way!
             self.comment = (vcs.group('comment') or '').rstrip()
+            self.line = line
+            return
+        at_url = self.RE_AT_DEPENDENCY.match(line)
+        if at_url:
+            self.valid = True
+            self.is_vcs = True
+            self.package = at_url.group('package')
+            self.version = ''
+            self.hashes = ''  # ???
+            self.comment = (at_url.group('comment') or '').rstrip()
             self.line = line
             return
         regular = self.RE_DEPENDENCY.match(line)
