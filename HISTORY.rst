@@ -1,11 +1,12 @@
 History
 =======
 
-2.4.3 (Unreleased)
+2.4.3 (2022-01-19)
 ------------------
 
 * Prioritize URL depedencies when parsing to enable URLs that have version pins.
 * Make ``--autoresolve`` work correctly with ``-t`` and ``-n`` options.
+* Add support for "package @ url" notation.
 
 2.4.2 (2021-09-01)
 ------------------
