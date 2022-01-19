@@ -14,4 +14,4 @@ pep8-naming
 pycodestyle
 pydocstyle
 pylint
-sphinx
+sphinx<4.4.0  # conflicts in importlib-metadata version with flake8

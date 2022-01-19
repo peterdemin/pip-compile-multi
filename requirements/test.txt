@@ -6,34 +6,55 @@
 #    pip-compile-multi
 #
 -r base.txt
-attrs==21.2.0
-    # via pytest
-coverage==5.5
-    # via pytest-cov
-iniconfig==1.1.1
-    # via pytest
-mock==4.0.3
-    # via -r requirements/test.in
-more-itertools==8.8.0
-    # via -r requirements/test.in
-packaging==21.0
-    # via pytest
-pluggy==0.13.1
-    # via pytest
-py==1.10.0
-    # via pytest
-pyparsing==2.4.7
-    # via packaging
-pytest==6.2.4
+attrs==21.4.0
     # via
+    #   -c requirements/local.txt
+    #   pytest
+coverage[toml]==6.2
+    # via
+    #   -c requirements/local.txt
+    #   pytest-cov
+iniconfig==1.1.1
+    # via
+    #   -c requirements/local.txt
+    #   pytest
+mock==4.0.3
+    # via
+    #   -c requirements/local.txt
+    #   -r requirements/test.in
+more-itertools==8.12.0
+    # via
+    #   -c requirements/local.txt
+    #   -r requirements/test.in
+packaging==21.3
+    # via
+    #   -c requirements/local.txt
+    #   pytest
+pluggy==1.0.0
+    # via
+    #   -c requirements/local.txt
+    #   pytest
+py==1.11.0
+    # via
+    #   -c requirements/local.txt
+    #   pytest
+pyparsing==3.0.6
+    # via
+    #   -c requirements/local.txt
+    #   packaging
+pytest==6.2.5
+    # via
+    #   -c requirements/local.txt
     #   -r requirements/test.in
     #   pytest-cov
-pytest-cov==2.12.1
-    # via -r requirements/test.in
+pytest-cov==3.0.0
+    # via
+    #   -c requirements/local.txt
+    #   -r requirements/test.in
 toml==0.10.2
     # via
+    #   -c requirements/local.txt
     #   pytest
-    #   pytest-cov
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
