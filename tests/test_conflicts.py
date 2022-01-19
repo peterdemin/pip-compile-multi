@@ -1,7 +1,8 @@
 """End to end tests checking conflicts detection"""
 
-from click.testing import CliRunner
+import os
 import pytest
+from click.testing import CliRunner
 from pipcompilemulti.cli_v1 import cli
 
 
@@ -13,6 +14,9 @@ def test_conflict_detected(conflict):
     2. File adds new constraint on package from referenced file.
     """
     runner = CliRunner()
-    result = runner.invoke(cli, ['--directory', 'conflicting-in-' + conflict])
+    result = runner.invoke(
+        cli,
+        ['--directory', os.path.join('tests', 'conflicting-in-' + conflict)],
+    )
     assert result.exit_code == 1
     assert 'Please add constraints' in str(result.exception)

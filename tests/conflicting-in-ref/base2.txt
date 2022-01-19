@@ -1,0 +1,94 @@
+amqp==5.0.9
+    # via kombu
+billiard==3.6.4.0
+    # via celery
+cached-property==1.5.2
+    # via kombu
+celery==5.0.2
+    # via
+    #   django-celery-results
+    #   opal
+certifi==2021.10.8
+    # via requests
+chardet==3.0.4
+    # via requests
+click==8.0.3
+    # via
+    #   celery
+    #   click-didyoumean
+    #   click-repl
+click-didyoumean==0.3.0
+    # via celery
+click-repl==0.2.0
+    # via celery
+django==2.2.16
+    # via
+    #   -r tests/conflicting-in-ref/base1.in
+    #   django-appconf
+    #   django-reversion
+    #   djangorestframework
+    #   opal
+django-appconf==1.0.5
+    # via django-compressor
+django-celery-results==2.0.0
+    # via opal
+django-compressor==2.4
+    # via opal
+django-reversion==3.0.8
+    # via opal
+djangorestframework==3.12.2
+    # via opal
+ffs==0.0.8.2
+    # via opal
+idna==2.10
+    # via requests
+importlib-metadata==4.8.3
+    # via
+    #   click
+    #   kombu
+jinja2==2.10.1
+    # via opal
+kombu==5.1.0
+    # via celery
+markupsafe==1.1.1
+    # via
+    #   jinja2
+    #   opal
+opal==0.21.0
+    # via -r tests/conflicting-in-ref/base2.in
+prompt-toolkit==3.0.24
+    # via click-repl
+python-dateutil==2.8.1
+    # via opal
+pytz==2021.3
+    # via
+    #   celery
+    #   django
+rcssmin==1.0.6
+    # via django-compressor
+requests==2.25.0
+    # via opal
+rjsmin==1.1.0
+    # via django-compressor
+six==1.15.0
+    # via
+    #   click-repl
+    #   django-compressor
+    #   ffs
+    #   opal
+    #   python-dateutil
+sqlparse==0.4.2
+    # via django
+typing-extensions==4.0.1
+    # via importlib-metadata
+urllib3==1.26.8
+    # via requests
+vine==5.0.0
+    # via
+    #   amqp
+    #   celery
+    #   kombu
+wcwidth==0.2.5
+    # via prompt-toolkit
+zipp==3.6.0
+    # via importlib-metadata
