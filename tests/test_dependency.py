@@ -59,3 +59,24 @@ def test_parse_url_with_postfix():
         "valid": True,
         "version": "",
     }
+
+
+def test_parse_at_url_notation():
+    """Package URL with package and constraint references."""
+    dependency = Dependency(
+        "dep @ https://site.com/path\n  # via\n  # -c constraint\n  # -r pkg"
+    )
+    assert vars(dependency) == {
+        "comment": "\n  # via\n  # -c constraint\n  # -r pkg",
+        "hashes": "",
+        "is_vcs": True,
+        "line": (
+            "dep @ https://site.com/path\n"
+            "  # via\n"
+            "  # -c constraint\n"
+            "  # -r pkg"
+        ),
+        "package": "dep",
+        "valid": True,
+        "version": "",
+    }
