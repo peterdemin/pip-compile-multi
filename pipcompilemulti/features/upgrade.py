@@ -109,7 +109,7 @@ class UpgradeSelected(BaseFeature):
     @staticmethod
     def _read_packages(outfile):
         try:
-            with open(outfile) as fp:
+            with open(outfile, encoding="utf-8") as fp:
                 return set(
                     line.split('==', 1)[0].lower()
                     for line in fp

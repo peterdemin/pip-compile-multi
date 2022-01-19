@@ -48,5 +48,5 @@ class CustomHeader(BaseFeature):
         return self._header_text
 
     def _read_header_text(self):
-        with open(self.value) as fp:
+        with open(self.value, encoding="utf-8") as fp:
             return fp.read()

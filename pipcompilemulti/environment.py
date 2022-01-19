@@ -92,7 +92,7 @@ class Environment(object):
         E.g. {'file1.in', 'file2.in'}
         """
         references = set()
-        with open(filename) as fobj:
+        with open(filename, encoding="utf-8") as fobj:
             for line in fobj:
                 matched = cls.RE_REF.match(line)
                 if matched:
@@ -130,12 +130,12 @@ class Environment(object):
 
     def fix_lockfile(self):
         """Run each section of outfile through fix_pin"""
-        with open(self.outfile, 'rt') as fp:
+        with open(self.outfile, 'rt', encoding="utf-8") as fp:
             sections = [
                 self.fix_pin(section)
                 for section in self.parse_sections(self.concatenated(fp))
             ]
-        with open(self.outfile, 'wt') as fp:
+        with open(self.outfile, 'wt', encoding="utf-8") as fp:
             fp.writelines([
                 section + '\n'
                 for section in sections
@@ -223,9 +223,9 @@ class Environment(object):
         if not other_in_paths:
             # Skip on empty list
             return
-        with open(self.outfile, 'rt') as fp:
+        with open(self.outfile, 'rt', encoding="utf-8") as fp:
             header, body = self.split_header(fp)
-        with open(self.outfile, 'wt') as fp:
+        with open(self.outfile, 'wt', encoding="utf-8") as fp:
             fp.writelines(header)
             fp.writelines(
                 '-r {0}\n'.format(
@@ -254,18 +254,18 @@ class Environment(object):
 
     def replace_header(self, header_text):
         """Replace pip-compile header with custom text"""
-        with open(self.outfile, 'rt') as fp:
+        with open(self.outfile, 'rt', encoding="utf-8") as fp:
             _, body = self.split_header(fp)
-        with open(self.outfile, 'wt') as fp:
+        with open(self.outfile, 'wt', encoding="utf-8") as fp:
             fp.write(header_text)
             fp.writelines(body)
 
     def _read_infile(self):
-        with open(self.infile, "rt") as fp:
+        with open(self.infile, "rt", encoding="utf-8") as fp:
             return fp.read()
 
     def _restore_in_file(self, content):
-        with open(self.infile, "wt") as fp:
+        with open(self.infile, "wt", encoding="utf-8") as fp:
             return fp.write(content)
 
     def _inject_sink(self):
@@ -273,5 +273,5 @@ class Environment(object):
             FEATURES.sink_out_path(),
             os.path.dirname(self.infile),
         ))
-        with open(self.infile, "at") as fp:
+        with open(self.infile, "at", encoding="utf-8") as fp:
             return fp.write("\n\n-c {}\n".format(rel_sink_out_path))

@@ -18,7 +18,7 @@ class AddHashesTestCase(unittest.TestCase):
 
     def test_pin_options(self):
         assert self._add_hashes.pin_options('base') == ['--generate-hashes']
-        assert self._add_hashes.pin_options('docs') == []
+        assert not self._add_hashes.pin_options('docs')
 
 
 class FakeController():

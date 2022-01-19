@@ -130,6 +130,7 @@ disable=print-statement,
         useless-object-inheritance,
         no-else-return,
         no-init,
+        consider-using-f-string,
         old-style-class
 
 # Enable the message, report, category or checker with the given id(s). You can

@@ -91,7 +91,7 @@ def generate_hash_comment(file_path):
     """
     with open(file_path, 'rb') as fp:
         hexdigest = hashlib.sha1(fp.read().strip()).hexdigest()
-    return "# SHA1:{0}\n".format(hexdigest)
+    return f"# SHA1:{hexdigest}\n"
 
 
 def generate_robust_hash_comment(file_path):
@@ -103,13 +103,13 @@ def generate_robust_hash_comment(file_path):
     which is hex representation of SHA1 file content hash.
     File content is pre-processed by stripping comments, whitespace and newlines.
     """
-    with open(file_path, 'rt') as fp:
+    with open(file_path, 'rt', encoding="utf-8") as fp:
         essense = ''.join(sorted(
             line.split('#')[0].strip()
             for line in fp
         ))
     hexdigest = hashlib.sha1(essense.encode("utf-8")).hexdigest()
-    return "# SHA1:{0}\n".format(hexdigest)
+    return f"# SHA1:{hexdigest}\n"
 
 
 def parse_hash_comment(file_path):
@@ -119,7 +119,7 @@ def parse_hash_comment(file_path):
 
         # SHA1:da39a3ee5e6b4b0d3255bfef95601890afd80709
     """
-    with open(file_path) as fp:
+    with open(file_path, encoding="utf-8") as fp:
         for line in fp:
             if line.startswith("# SHA1:"):
                 return line
