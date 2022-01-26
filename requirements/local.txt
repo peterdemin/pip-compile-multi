@@ -153,7 +153,7 @@ tqdm==4.62.3
     # via twine
 twine==3.7.1
     # via -r requirements/local.in
-typed-ast==1.5.1
+typed-ast==1.5.2
     # via astroid
 urllib3==1.26.8
     # via requests
