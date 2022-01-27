@@ -79,3 +79,7 @@ class BaseFeature:
     def value(self):
         """Option value."""
         return OPTIONS.get(self.OPTION_NAME, self.CLICK_OPTION.default)
+
+    @value.setter
+    def value(self, new_value):
+        OPTIONS[self.OPTION_NAME] = new_value

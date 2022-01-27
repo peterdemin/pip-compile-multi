@@ -1,6 +1,11 @@
 History
 =======
 
+2.4.4 (UNRELEASED)
+------------------
+
+* Fix ``--skip-constraints`` feature for URL dependencies.
+
 2.4.3 (2022-01-19)
 ------------------
 

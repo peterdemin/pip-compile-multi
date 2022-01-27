@@ -5,7 +5,7 @@ import re
 from .features import FEATURES
 
 
-class Dependency(object):
+class Dependency(object):  # pylint: disable=too-many-instance-attributes
     r"""Single dependency.
 
     Comment may span multiple lines.
@@ -77,34 +77,35 @@ class Dependency(object):
     )
 
     def __init__(self, line):
+        self.is_vcs = False
+        self.is_at = False
+        self.valid = True
+        self.line = line
         vcs = self.RE_VCS_DEPENDENCY.match(line)
         if vcs:
-            self.valid = True
             self.is_vcs = True
             self.package = vcs.group('package')
             self.version = ''
             self.hashes = ''  # No way!
             self.comment = (vcs.group('comment') or '').rstrip()
-            self.line = line
+            self.comment_span = self._adjust_span(vcs.span('comment'), vcs)
             return
         at_url = self.RE_AT_DEPENDENCY.match(line)
         if at_url:
-            self.valid = True
-            self.is_vcs = True
+            self.is_at = True
             self.package = at_url.group('package')
             self.version = ''
             self.hashes = ''  # ???
             self.comment = (at_url.group('comment') or '').rstrip()
-            self.line = line
+            self.comment_span = self._adjust_span(at_url.span('comment'), at_url)
             return
         regular = self.RE_DEPENDENCY.match(line)
         if regular:
-            self.valid = True
-            self.is_vcs = False
             self.package = regular.group('package')
             self.version = regular.group('version').strip()
             self.hashes = (regular.group('hashes') or '').strip()
             self.comment = (regular.group('comment') or '').rstrip()
+            self.comment_span = self._adjust_span(regular.span('comment'), regular)
             return
         self.valid = False
 
@@ -114,8 +115,11 @@ class Dependency(object):
             ~= if package is internal
             == otherwise
         """
-        if self.is_vcs:
-            return self.without_editable(self.line).strip()
+        if self.is_vcs or self.is_at:
+            return "{}{}".format(
+                self.without_editable(self.line[:self.comment_span[0]]).strip(),
+                FEATURES.process_dependency_comments(self.comment),
+            )
         equal = FEATURES.constraint(self.package)
         package_version = '{package}{equal}{version}  '.format(
             package=self.without_editable(self.package),
@@ -127,8 +131,7 @@ class Dependency(object):
             lines = [package_version.strip()]
             lines.extend(hashes)
             result = ' \\\n    '.join(lines)
-            if self.comment:
-                result += FEATURES.process_dependency_comments(self.comment)
+            result += FEATURES.process_dependency_comments(self.comment)
             return result
         else:
             if self.comment.startswith('\n'):
@@ -157,3 +160,10 @@ class Dependency(object):
     def drop_post(self, in_path):
         """Remove .postXXXX postfix from version if needed."""
         self.version = FEATURES.drop_post(in_path, self.package, self.version)
+
+    @staticmethod
+    def _adjust_span(span, matchobj):
+        if span == (-1, -1):
+            length = matchobj.span()[1]
+            return (length, length)
+        return span
