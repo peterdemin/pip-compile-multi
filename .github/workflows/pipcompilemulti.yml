@@ -28,6 +28,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
         with:
+            author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
             token: ${{ secrets.PAT }}
             title: Update dependencies
             body: |
