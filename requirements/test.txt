@@ -42,7 +42,7 @@ pyparsing==3.0.7
     # via
     #   -c requirements/local.txt
     #   packaging
-pytest==6.2.5
+pytest==7.0.0
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in
@@ -51,10 +51,6 @@ pytest-cov==3.0.0
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in
-toml==0.10.2
-    # via
-    #   -c requirements/local.txt
-    #   pytest
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
