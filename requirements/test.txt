@@ -42,7 +42,7 @@ pyparsing==3.0.7
     # via
     #   -c requirements/local.txt
     #   packaging
-pytest==7.0.0
+pytest==7.0.1
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in
