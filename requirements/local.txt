@@ -108,7 +108,7 @@ pygments==2.11.2
     #   sphinx
 pylint==2.12.2
     # via -r requirements/local.in
-pytz==2021.3
+pytz==2022.1
     # via babel
 pyyaml==6.0
     # via pre-commit
@@ -165,7 +165,7 @@ urllib3==1.26.9
     # via
     #   requests
     #   twine
-virtualenv==20.13.3
+virtualenv==20.13.4
     # via
     #   pre-commit
     #   tox
