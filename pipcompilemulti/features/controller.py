@@ -19,7 +19,7 @@ from .autoresolve import Autoresolve
 from .skip_constraint_comments import SkipConstraintComments
 from .live_output import LiveOutput
 from .extra_index_url import ExtraIndexUrl
-from .no_build_isolation import NoBuildIsolation
+from .build_isolation import BuildIsolation
 
 
 class FeaturesController:
@@ -45,7 +45,7 @@ class FeaturesController:
         self.skip_constraint_comments = SkipConstraintComments()
         self.live_output = LiveOutput()
         self.extra_index_url = ExtraIndexUrl()
-        self.no_build_isolation = NoBuildIsolation()
+        self.build_isolation = BuildIsolation()
         self._features = [
             self.annotate_index,
             self.use_cache,
@@ -65,7 +65,7 @@ class FeaturesController:
             self.skip_constraint_comments,
             self.live_output,
             self.extra_index_url,
-            self.no_build_isolation,
+            self.build_isolation,
         ]
 
     def bind(self, command):
