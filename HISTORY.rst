@@ -1,10 +1,17 @@
 History
 =======
 
-2.4.4 (UNRELEASED)
+2.4.4 (2022-03-30)
 ------------------
 
+* Add ``--build-isolation`` flag.
+  Thanks to `Jake Schmidt`_.
+  (PR `#311`_).
 * Fix ``--skip-constraints`` feature for URL dependencies.
+
+.. _Jake Schmidt: https://github.com/schmidt-jake
+.. _#311: https://github.com/peterdemin/pip-compile-multi/pull/311
+
 
 2.4.3 (2022-01-19)
 ------------------
