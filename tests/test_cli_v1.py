@@ -16,7 +16,7 @@ def requirements_dir():
 
 
 @pytest.mark.parametrize('command', ['--no-upgrade', '--upgrade',
-                                     '--upgrade-package=pip-tools'])
+                                     '--upgrade-package=pip-tools', '--no-build-isolation'])
 def test_v1_command_exits_with_zero(command):
     """Run pip-compile-multi on self.
 
