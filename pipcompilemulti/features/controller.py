@@ -91,6 +91,7 @@ class FeaturesController:
         options.extend(self.upgrade_selected.pin_options())
         options.extend(self.annotate_index.pin_options())
         options.extend(self.extra_index_url.pin_options())
+        options.extend(self.build_isolation.pin_options())
         return options
 
     def compose_input_file_path(self, basename):
