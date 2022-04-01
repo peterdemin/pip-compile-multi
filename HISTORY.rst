@@ -1,6 +1,16 @@
 History
 =======
 
+2.4.5 (2022-04-01)
+------------------
+
+* Fix ``--build-isolation`` flag passing.
+  Thanks to `Jake Schmidt`_.
+  (Issue `#312`_, PR `#313`_).
+
+.. _#312: https://github.com/peterdemin/pip-compile-multi/issues/312
+.. _#313: https://github.com/peterdemin/pip-compile-multi/pull/313
+
 2.4.4 (2022-03-30)
 ------------------
 
