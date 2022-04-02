@@ -101,3 +101,21 @@ def test_parse_at_url_notation():
          "dep @ https://site.com/path\n"
          "  # via -r pkg"
     )
+
+
+def test_sanitize_package_version():
+    """Simple package name with a single "via" reference."""
+    dependency = Dependency("gcsfs==2022.02.1    # via pkg")
+    assert vars(dependency) == {
+        "is_at": False,
+        "is_vcs": False,
+        "comment": "    # via pkg",
+        "comment_span": (16, 29),
+        "hashes": "",
+        "package": "gcsfs",
+        "valid": True,
+        "version": "2022.2.1",
+        "line": "gcsfs==2022.02.1    # via pkg",
+    }
+    OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
+    assert dependency.serialize() == "gcsfs==2022.2.1           # via pkg"
