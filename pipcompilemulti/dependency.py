@@ -75,6 +75,8 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         r'(?P<url>\S+)'
         r'(?P<comment>(?:\s*#.*)+)?$'
     )
+    # Example: 2022.02.1 -> 2022.2.1
+    RE_IGNORED_ZEROS = re.compile(r"(?<=\.)0+(?=\d)")
 
     def __init__(self, line):
         self.is_vcs = False
@@ -102,8 +104,7 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         regular = self.RE_DEPENDENCY.match(line)
         if regular:
             self.package = regular.group('package')
-            _version = regular.group('version').strip()
-            self.version = re.sub(r"(?<=\.)0+(?=\d+)", "", _version)  # strip leading zeros
+            self.version = self.RE_IGNORED_ZEROS.sub("", regular.group('version').strip())
             self.hashes = (regular.group('hashes') or '').strip()
             self.comment = (regular.group('comment') or '').rstrip()
             self.comment_span = self._adjust_span(regular.span('comment'), regular)
