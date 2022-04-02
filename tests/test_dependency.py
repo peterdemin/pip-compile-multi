@@ -104,7 +104,7 @@ def test_parse_at_url_notation():
 
 
 def test_sanitize_package_version():
-    """Simple package name with a single "via" reference."""
+    """Simple package name with leading zeros in the version, with a single "via" reference."""
     dependency = Dependency("gcsfs==2022.02.1    # via pkg")
     assert vars(dependency) == {
         "is_at": False,
