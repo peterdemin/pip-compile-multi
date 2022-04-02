@@ -102,8 +102,8 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         regular = self.RE_DEPENDENCY.match(line)
         if regular:
             self.package = regular.group('package')
-            self.version = regular.group('version').strip()
-            self.version = re.sub(r"\.(0)\d+", "", self.version)  # strip leading zeros
+            _version = regular.group('version').strip()
+            self.version = re.sub(r"\.(0)\d+", "", _version)  # strip leading zeros
             self.hashes = (regular.group('hashes') or '').strip()
             self.comment = (regular.group('comment') or '').rstrip()
             self.comment_span = self._adjust_span(regular.span('comment'), regular)
