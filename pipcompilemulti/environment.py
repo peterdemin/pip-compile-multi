@@ -18,7 +18,7 @@ logger = logging.getLogger("pip-compile-multi")
 class Environment(object):
     """requirements file"""
 
-    RE_REF = re.compile(r'^(?:-r|--requirement|-c|--constraint)\s*(?P<path>\S+).*$')
+    RE_REF = re.compile(r'^(?:-r|--requirement|-c|--constraint)\s*(?P<path>\S+)$')
     RE_COMMENT = re.compile(r'^\s*#.*$')
 
     def __init__(self, in_path, deduplicator=None):
