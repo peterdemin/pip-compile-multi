@@ -38,7 +38,7 @@ py==1.11.0
     # via
     #   -c requirements/local.txt
     #   pytest
-pyparsing==3.0.7
+pyparsing==3.0.8
     # via
     #   -c requirements/local.txt
     #   packaging
