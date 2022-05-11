@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.12
     # via sphinx
-astroid==2.11.4
+astroid==2.11.5
     # via pylint
 babel==2.10.1
     # via sphinx
