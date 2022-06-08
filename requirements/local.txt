@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.12
     # via sphinx
-astroid==2.11.4
+astroid==2.11.5
     # via pylint
 babel==2.10.1
     # via sphinx
@@ -16,7 +16,7 @@ bleach==4.1.0
     # via readme-renderer
 bump2version==1.0.1
     # via -r requirements/local.in
-certifi==2021.10.8
+certifi==2022.5.18.1
     # via requests
 cffi==1.15.0
     # via cryptography
@@ -46,10 +46,7 @@ filelock==3.4.1
 flake8==4.0.1
     # via
     #   -r requirements/local.in
-    #   flake8-polyfill
     #   pep8-naming
-flake8-polyfill==1.0.2
-    # via pep8-naming
 identify==2.4.4
     # via pre-commit
 idna==3.3
@@ -81,7 +78,7 @@ mccabe==0.6.1
     #   pylint
 nodeenv==1.6.0
     # via pre-commit
-pep8-naming==0.12.1
+pep8-naming==0.13.0
     # via -r requirements/local.in
 pipdeptree==2.2.1
     # via -r requirements/local.in
@@ -108,7 +105,7 @@ pygments==2.12.0
     #   -r requirements/local.in
     #   readme-renderer
     #   sphinx
-pylint==2.13.8
+pylint==2.13.9
     # via -r requirements/local.in
 pytz==2022.1
     # via babel
@@ -160,7 +157,7 @@ tqdm==4.64.0
     # via twine
 twine==3.8.0
     # via -r requirements/local.in
-typed-ast==1.5.3
+typed-ast==1.5.4
     # via astroid
 urllib3==1.26.9
     # via
