@@ -103,7 +103,7 @@ Now installation command is
 
 .. code-block:: shell
 
-    pip install -e requirements/test.in
+    pip install -r requirements/test.in
 
 For one single time (exceptionally to show how unacceptable is this task)
 let's manually compose ``requirements/test.txt``.
