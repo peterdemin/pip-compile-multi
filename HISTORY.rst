@@ -1,6 +1,11 @@
 History
 =======
 
+2.4.6 (2022-07-22)
+------------------
+
+* Add support for `PEP-426: environment markers <https://peps.python.org/pep-0426/>`_.
+
 2.4.5 (2022-04-01)
 ------------------
 
@@ -94,7 +99,6 @@ History
 ------------------
 
 * Add support for calling using `python -m pipcompilemulti.cli_v1` notation.
-
 
 2.2.1 (2021-01-29)
 ------------------
