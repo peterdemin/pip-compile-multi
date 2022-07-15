@@ -56,3 +56,4 @@ boilerplate/
 Session.vim
 /htmlcov/
 /.idea/
+*.swp

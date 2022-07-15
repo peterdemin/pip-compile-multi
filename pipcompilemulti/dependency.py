@@ -38,6 +38,8 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
     >>> print(Dependency("-e https://site#egg=pkg==1\n   # via lib").serialize())
     https://site#egg=pkg==1
        # via lib
+    >>> print(Dependency('dep==1 ; sys_platform == "darwin"').serialize())
+    dep==1 ; sys_platform == "darwin"
     """
 
     COMMENT_JUSTIFICATION = 26
@@ -49,6 +51,7 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         r'(?iu)(?P<package>\S+)'
         r'=='
         r'(?P<version>\S+)'
+        r'(?P<markers>\s+;\s+.+?)?'
         r'(?P<hashes>(?:\s*--hash=\S+)+)?'
         r'(?P<comment>(?:\s*#.*)+)?$'
     )
@@ -64,8 +67,10 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         r'(?P<prefix>\S+#egg=)'
         r'(?P<package>[a-z0-9-_.]+)'
         r'(?P<postfix>\S*)'
+        r'(?P<markers>\s+;\s+.+?)?'
         r'(?P<comment>(?:\s*#.*)+)?$'
     )
+    # New format, replacing old VCS dependency:
     # docutils @ git+https://github.com/ansible/docutils.git@master
     RE_AT_DEPENDENCY = re.compile(
         r'(?iu)(?P<editable>-e)?'
@@ -73,6 +78,7 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         r'(?P<package>[a-z0-9-_.]+)'
         r' @ '
         r'(?P<url>\S+)'
+        r'(?P<markers>\s+;\s+.+?)?'
         r'(?P<comment>(?:\s*#.*)+)?$'
     )
     # Example: 2022.02.1 -> 2022.2.1
@@ -88,6 +94,7 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
             self.is_vcs = True
             self.package = vcs.group('package')
             self.version = ''
+            self.markers = vcs.group('markers') or ''
             self.hashes = ''  # No way!
             self.comment = (vcs.group('comment') or '').rstrip()
             self.comment_span = self._adjust_span(vcs.span('comment'), vcs)
@@ -97,6 +104,7 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
             self.is_at = True
             self.package = at_url.group('package')
             self.version = ''
+            self.markers = at_url.group('markers') or ''
             self.hashes = ''  # ???
             self.comment = (at_url.group('comment') or '').rstrip()
             self.comment_span = self._adjust_span(at_url.span('comment'), at_url)
@@ -105,6 +113,7 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
         if regular:
             self.package = regular.group('package')
             self.version = self.RE_IGNORED_ZEROS.sub("", regular.group('version').strip())
+            self.markers = regular.group('markers') or ''
             self.hashes = (regular.group('hashes') or '').strip()
             self.comment = (regular.group('comment') or '').rstrip()
             self.comment_span = self._adjust_span(regular.span('comment'), regular)
@@ -128,6 +137,8 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
             version=self.version,
             equal=equal,
         )
+        if self.markers:
+            package_version = '{}{}  '.format(package_version.strip(), self.markers)
         if self.hashes:
             hashes = self.hashes.split()
             lines = [package_version.strip()]

@@ -17,6 +17,7 @@ def test_parse_package_name():
         "package": "six",
         "valid": True,
         "version": "1.0",
+        "markers": "",
         "line": "six==1.0    # via pkg",
     }
     OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
@@ -42,6 +43,7 @@ def test_parse_url_without_postfix():
         ),
         "package": "dep",
         "valid": True,
+        "markers": "",
         "version": "",
     }
 
@@ -67,11 +69,11 @@ def test_parse_url_with_postfix():
         "package": "dep",
         "valid": True,
         "version": "",
+        "markers": "",
     }
     OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
     assert dependency.serialize() == (
-        "git+https://site@0.4.1#egg=dep==1.2.3_git&sub=dir\n"
-        "  # via -r pkg"
+        "git+https://site@0.4.1#egg=dep==1.2.3_git&sub=dir\n" "  # via -r pkg"
     )
 
 
@@ -95,12 +97,10 @@ def test_parse_at_url_notation():
         "package": "dep",
         "valid": True,
         "version": "",
+        "markers": "",
     }
     OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
-    assert dependency.serialize() == (
-         "dep @ https://site.com/path\n"
-         "  # via -r pkg"
-    )
+    assert dependency.serialize() == ("dep @ https://site.com/path\n" "  # via -r pkg")
 
 
 def test_sanitize_package_version():
@@ -115,7 +115,27 @@ def test_sanitize_package_version():
         "package": "gcsfs",
         "valid": True,
         "version": "2022.2.1",
+        "markers": "",
         "line": "gcsfs==2022.02.1    # via pkg",
     }
     OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
     assert dependency.serialize() == "gcsfs==2022.2.1           # via pkg"
+
+
+def test_parse_sys_platform():
+    """Package URL with package and constraint references."""
+    dependency = Dependency('dep==1 ; sys_platform == "darwin" # Comment')
+    assert vars(dependency) == {
+        "line": 'dep==1 ; sys_platform == "darwin" # Comment',
+        "valid": True,
+        "is_at": False,
+        "is_vcs": False,
+        "package": "dep",
+        "version": "1",
+        "markers": ' ; sys_platform == "darwin"',
+        "hashes": "",
+        "comment": " # Comment",
+        "comment_span": (33, 43),
+    }
+    OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
+    assert dependency.serialize() == ('dep==1 ; sys_platform == "darwin"  # Comment')
