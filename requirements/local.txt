@@ -32,7 +32,7 @@ cryptography==37.0.4
     # via secretstorage
 dill==0.3.4
     # via pylint
-distlib==0.3.4
+distlib==0.3.5
     # via virtualenv
 docutils==0.17.1
     # via
@@ -78,7 +78,7 @@ mccabe==0.6.1
     #   pylint
 nodeenv==1.6.0
     # via pre-commit
-pep8-naming==0.13.0
+pep8-naming==0.13.1
     # via -r requirements/local.in
 pipdeptree==2.2.1
     # via -r requirements/local.in
