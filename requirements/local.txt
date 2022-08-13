@@ -32,7 +32,7 @@ cryptography==37.0.4
     # via secretstorage
 dill==0.3.4
     # via pylint
-distlib==0.3.4
+distlib==0.3.5
     # via virtualenv
 docutils==0.17.1
     # via
@@ -43,7 +43,7 @@ filelock==3.4.1
     # via
     #   tox
     #   virtualenv
-flake8==4.0.1
+flake8==5.0.3
     # via
     #   -r requirements/local.in
     #   pep8-naming
@@ -72,13 +72,13 @@ lazy-object-proxy==1.7.1
     # via astroid
 markupsafe==2.0.1
     # via jinja2
-mccabe==0.6.1
+mccabe==0.7.0
     # via
     #   flake8
     #   pylint
 nodeenv==1.6.0
     # via pre-commit
-pep8-naming==0.13.0
+pep8-naming==0.13.1
     # via -r requirements/local.in
 pipdeptree==2.2.1
     # via -r requirements/local.in
@@ -90,7 +90,7 @@ platformdirs==2.4.0
     #   virtualenv
 pre-commit==2.17.0
     # via -r requirements/local.in
-pycodestyle==2.8.0
+pycodestyle==2.9.0
     # via
     #   -r requirements/local.in
     #   flake8
@@ -98,7 +98,7 @@ pycparser==2.21
     # via cffi
 pydocstyle==6.1.1
     # via -r requirements/local.in
-pyflakes==2.4.0
+pyflakes==2.5.0
     # via flake8
 pygments==2.12.0
     # via
@@ -128,7 +128,6 @@ six==1.16.0
     # via
     #   bleach
     #   tox
-    #   virtualenv
 snowballstemmer==2.2.0
     # via
     #   pydocstyle
@@ -159,11 +158,11 @@ twine==3.8.0
     # via -r requirements/local.in
 typed-ast==1.5.4
     # via astroid
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   requests
     #   twine
-virtualenv==20.15.1
+virtualenv==20.16.2
     # via
     #   pre-commit
     #   tox
