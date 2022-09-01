@@ -7,12 +7,17 @@ endif
 ### DEPENDENCIES ###
 .PHONY: install
 install: requirements/local.hash virtual_env_set
-	pip install -Ue . -r requirements/local.hash
+	pip install -r requirements/local.hash
+	pip install -e . --no-deps
 
 .PHONY: sync
 sync: requirements/local.hash virtual_env_set
 	pip-sync requirements/local.hash
 	pip install -e . --no-deps
+
+.PHONY: lock
+lock: virtual_env_set
+	tox -e lock
 
 .PHONY: upgrade
 upgrade: virtual_env_set
