@@ -28,7 +28,7 @@ collective.checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.5
     # via twine
-cryptography==37.0.4
+cryptography==38.0.1
     # via secretstorage
 dill==0.3.4
     # via pylint
@@ -152,7 +152,7 @@ toml==0.10.2
     #   tox
 tox==3.25.1
     # via -r requirements/local.in
-tqdm==4.64.0
+tqdm==4.64.1
     # via twine
 twine==3.8.0
     # via -r requirements/local.in
