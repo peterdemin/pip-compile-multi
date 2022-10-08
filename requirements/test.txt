@@ -47,7 +47,7 @@ pytest==7.0.1
     #   -c requirements/local.txt
     #   -r requirements/test.in
     #   pytest-cov
-pytest-cov==3.0.0
+pytest-cov==4.0.0
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in

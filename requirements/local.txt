@@ -16,7 +16,7 @@ bleach==4.1.0
     # via readme-renderer
 bump2version==1.0.1
     # via -r requirements/local.in
-certifi==2022.6.15
+certifi==2022.9.24
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -49,7 +49,7 @@ flake8==5.0.4
     #   pep8-naming
 identify==2.4.4
     # via pre-commit
-idna==3.3
+idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
@@ -107,7 +107,7 @@ pygments==2.13.0
     #   sphinx
 pylint==2.13.9
     # via -r requirements/local.in
-pytz==2022.2.1
+pytz==2022.4
     # via babel
 pyyaml==6.0
     # via pre-commit
@@ -150,7 +150,7 @@ toml==0.10.2
     # via
     #   pre-commit
     #   tox
-tox==3.25.1
+tox==3.26.0
     # via -r requirements/local.in
 tqdm==4.64.1
     # via twine
