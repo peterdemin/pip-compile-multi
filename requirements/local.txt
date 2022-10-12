@@ -118,7 +118,7 @@ requests==2.27.1
     #   requests-toolbelt
     #   sphinx
     #   twine
-requests-toolbelt==0.9.1
+requests-toolbelt==0.10.0
     # via twine
 rfc3986==1.5.0
     # via twine
