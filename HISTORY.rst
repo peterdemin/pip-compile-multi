@@ -4,10 +4,10 @@ History
 2.5.0 (2022-11-03)
 ------------------
 
-* Add ``--emit_trusted_host/--no-emit_trusted_host`` flag.
-  `Docs <https://pip-compile-multi.readthedocs.io/en/latest/features.html#add-trusted-host-annotation>`_.
-  Thanks to `Phil Blackwood`_.
-  (Issue `#351`_, PR `#353`_)
+* Add ``--emit_trusted_host/--no-emit_trusted_host`` flag
+  (`docs <https://pip-compile-multi.readthedocs.io/en/latest/features.html#add-trusted-host-annotation>`_).
+  Thanks to `Phil Blackwood`_
+  (Issue `#351`_, PR `#353`_).
 
 .. _Phil Blackwood: https://github.com/philblckwd
 .. _#351: https://github.com/peterdemin/pip-compile-multi/issues/351
@@ -22,7 +22,7 @@ History
 ------------------
 
 * Fix ``--build-isolation`` flag passing.
-  Thanks to `Jake Schmidt`_.
+  Thanks to `Jake Schmidt`_
   (Issue `#312`_, PR `#313`_).
 
 .. _#312: https://github.com/peterdemin/pip-compile-multi/issues/312
@@ -32,7 +32,7 @@ History
 ------------------
 
 * Add ``--build-isolation`` flag.
-  Thanks to `Jake Schmidt`_.
+  Thanks to `Jake Schmidt`_
   (PR `#311`_).
 * Fix ``--skip-constraints`` feature for URL dependencies.
 
@@ -56,11 +56,11 @@ History
 ------------------
 
 * Add ``--live/--no-live`` option to control when to print debug output.
-  Thanks to `John Sandall`_ and `Thomas Grainger`_.
+  Thanks to `John Sandall`_ and `Thomas Grainger`_
   (Issue `#153`_, PRs `#247`_ and `#251`_).
 
 * Add ``--extra-index-url <url>`` option.
-  Thanks to `Erik Jan de Vries`_.
+  Thanks to `Erik Jan de Vries`_
   (PRs `#250`_ and `#252`_).
 
 .. _#153: https://github.com/peterdemin/pip-compile-multi/issues/153
@@ -76,7 +76,7 @@ History
 ------------------
 
 * Update --index/--no-index to --emit-index-url/--no-emit-index-url
-  for compatibility with pip-tools 6.0.
+  for compatibility with pip-tools 6.0
   (Issue `#243`_).
 
 .. _#243: https://github.com/peterdemin/pip-compile-multi/issues/243
@@ -84,7 +84,7 @@ History
 2.3.2 (2021-02-18)
 ------------------
 
-* Fix cross-feature logic for --autoresolve and --upgrade-package.
+* Fix cross-feature logic for --autoresolve and --upgrade-package
   (PR `#236`_).
 
 .. _#236: https://github.com/peterdemin/pip-compile-multi/pull/236
@@ -93,7 +93,7 @@ History
 ------------------
 
 * Fix for a bug introduced in 2.2.2 when running pip-compile-multi
-  installed for Python 3, and having ``python`` symlinked to Python 2.
+  installed for Python 3, and having ``python`` symlinked to Python 2
   (Issue `#233`_, PR `#234`_).
 
 .. _#233: https://github.com/peterdemin/pip-compile-multi/issues/233
