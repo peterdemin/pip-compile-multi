@@ -1,4 +1,4 @@
-# pylint: disable=too-few-public-methods,no-self-use,missing-module-docstring
+# pylint: disable=too-few-public-methods,missing-module-docstring
 # pylint: disable=missing-function-docstring,missing-class-docstring
 import unittest
 
