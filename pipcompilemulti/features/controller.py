@@ -20,6 +20,7 @@ from .skip_constraint_comments import SkipConstraintComments
 from .live_output import LiveOutput
 from .extra_index_url import ExtraIndexUrl
 from .build_isolation import BuildIsolation
+from .emit_trusted_host import EmitTrustedHost
 
 
 class FeaturesController:
@@ -46,6 +47,7 @@ class FeaturesController:
         self.live_output = LiveOutput()
         self.extra_index_url = ExtraIndexUrl()
         self.build_isolation = BuildIsolation()
+        self.emit_trusted_host = EmitTrustedHost()
         self._features = [
             self.annotate_index,
             self.use_cache,
@@ -66,6 +68,7 @@ class FeaturesController:
             self.live_output,
             self.extra_index_url,
             self.build_isolation,
+            self.emit_trusted_host
         ]
 
     def bind(self, command):
@@ -92,6 +95,7 @@ class FeaturesController:
         options.extend(self.annotate_index.pin_options())
         options.extend(self.extra_index_url.pin_options())
         options.extend(self.build_isolation.pin_options())
+        options.extend(self.emit_trusted_host.pin_options())
         return options
 
     def compose_input_file_path(self, basename):
