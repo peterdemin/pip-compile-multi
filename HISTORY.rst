@@ -1,6 +1,17 @@
 History
 =======
 
+2.5.0 (2022-11-03)
+------------------
+
+* Add :ref:`--emit-trusted-host flag <emit_trusted_host>`.
+  Thanks to `Phil Blackwood`_.
+  (Issue `#351`_, PR `#353`_)
+
+.. _Phil Blackwood: https://github.com/philblckwd
+.. _#351: https://github.com/peterdemin/pip-compile-multi/issues/351
+.. _#353: https://github.com/peterdemin/pip-compile-multi/pull/353
+
 2.4.6 (2022-07-22)
 ------------------
 

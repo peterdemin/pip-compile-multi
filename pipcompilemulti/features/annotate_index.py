@@ -4,11 +4,10 @@
 Add index URL annotation
 ========================
 
-This flag provides the ability to annotate the index URL mimicking the logic of
-the ``pip-compile`` ``--emit-index-url`` and ``--no-emit-index-url`` flag
-by opting to add or not add the ``pip`` index to the generated files.
+Control addition of ``--index-url`` options to the output files.
+Corresponds to ``pip-compile``'s  ``--emit-index-url / --no-emit-index-url`` flag.
 
-The URL can be set in the input file as in this example:
+The URL can be defined in the input file as in this example:
 
 .. code-block:: text
 
@@ -22,9 +21,11 @@ which means that it doesn't need to be configured in every environment.
 
 .. code-block:: text
 
-    --annotate-index / --no-annotate-index    Add index URL to generated files (default false)
+    --annotate-index / --no-annotate-index
+                                    Add index URL to generated files
+                                    (default false)
 
-Note the default behavior is not to add the index, i.e., ``--no-annotate-index``.
+Note: the default behavior is not to add the index, i.e., ``--no-annotate-index``.
 """
 
 from .base import ClickOption

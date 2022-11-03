@@ -27,6 +27,8 @@ Features
 
 .. automodule:: pipcompilemulti.features.extra_index_url
 
+.. automodule:: pipcompilemulti.features.emit_trusted_host
+
 .. automodule:: pipcompilemulti.features.autoresolve
 
 .. automodule:: pipcompilemulti.features.skip_constraint_comments

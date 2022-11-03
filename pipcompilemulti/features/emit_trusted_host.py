@@ -1,16 +1,30 @@
 """
-Add trusted host annotation
-========================
+.. _emit_trusted_host:
 
-This flag provides the ability to annotate the trusted host mimicking the logic of
-the ``pip-compile`` ``--emit-trusted-host`` and ``--no-emit-trusted-host`` flag
-by opting to add or not add the ``pip`` trusted host to the generated files.
+Add trusted host annotation
+===========================
+
+Control addition of trusted hosts for index URLs to generated files.
+Trusted hosts can be defined in ``pip.conf`` file, input requirements file,
+or through an argument to ``pip`` command.
+Trusted hosts can have invalid HTTPS certificate, or use unencrypted HTTP protocol.
+
+By default, trusted hosts are saved in the generated files.
+Pass ``--no-emit-trusted-host`` to remove it.
+
+If no trusted hosts are defined, this flag doesn't have any effect.
 
 .. code-block:: text
 
-    --emit-trusted-host / --no-emit-trusted-host    Add trusted host to generated files (default true)
+    --emit-trusted-host / --no-emit-trusted-host
+                                    Add trusted host to generated files
+                                    (default true)
 
-Note the default behavior is to add the trusted host, i.e., ``--emit-trusted-host``.
+See also: `annotate_index`_ and `extra_index_url`_ options.
+
+See pip-tools issue `#382`_ for more details.
+
+.. _#382: https://github.com/jazzband/pip-tools/issues/382
 """
 
 from .base import ClickOption
