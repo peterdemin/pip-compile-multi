@@ -14,7 +14,5 @@ pep8-naming
 pycodestyle
 pydocstyle
 pylint
-
-# Constraints can be removed after dropping Python<3.8 support:
-sphinx<4.4.0  # conflicts in importlib-metadata version with flake8
-virtualenv==20.16.2  # Newer versions conflict with flake8 through importlib-metadata
+sphinx
+virtualenv

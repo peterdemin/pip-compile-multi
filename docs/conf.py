@@ -15,14 +15,14 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = u'pip-compile-multi'
-copyright = u'2019, Peter Demin'
-author = u'Peter Demin'
+project = 'pip-compile-multi'
+copyright = '2019, Peter Demin'
+author = 'Peter Demin'
 
 # The short X.Y version
-version = u''
+version = ''
 # The full version, including alpha/beta/rc tags
-release = u'1.5.1'
+release = '1.5.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -58,12 +58,12 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -146,8 +146,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pip-compile-multi.tex', u'pip-compile-multi Documentation',
-     u'Peter Demin', 'manual'),
+    (master_doc, 'pip-compile-multi.tex', 'pip-compile-multi Documentation',
+     'Peter Demin', 'manual'),
 ]
 
 
@@ -156,7 +156,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pip-compile-multi', u'pip-compile-multi Documentation',
+    (master_doc, 'pip-compile-multi', 'pip-compile-multi Documentation',
      [author], 1)
 ]
 
@@ -167,7 +167,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pip-compile-multi', u'pip-compile-multi Documentation',
+    (master_doc, 'pip-compile-multi', 'pip-compile-multi Documentation',
      author, 'pip-compile-multi', 'One line description of project.',
      'Miscellaneous'),
 ]
