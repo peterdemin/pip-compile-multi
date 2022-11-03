@@ -53,11 +53,10 @@ idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-resources==5.2.3
+importlib-metadata==4.2.0
     # via
-    #   pre-commit
-    #   tqdm
-    #   virtualenv
+    #   keyring
+    #   twine
 isort==5.10.1
     # via pylint
 jeepney==0.7.1
@@ -147,17 +146,17 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 toml==0.10.2
-    # via
-    #   pre-commit
-    #   tox
+    # via pre-commit
 tox==3.26.0
     # via -r requirements/local.in
 tqdm==4.64.1
     # via twine
 twine==3.8.0
     # via -r requirements/local.in
-typed-ast==1.5.4
-    # via astroid
+typing-extensions==4.1.1
+    # via
+    #   astroid
+    #   pylint
 urllib3==1.26.12
     # via
     #   requests
@@ -171,6 +170,8 @@ webencodings==0.5.1
     # via bleach
 wrapt==1.14.1
     # via astroid
+zipp==3.6.0
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
