@@ -4,7 +4,8 @@ History
 2.5.0 (2022-11-03)
 ------------------
 
-* Add :ref:`--emit-trusted-host flag <emit_trusted_host>`.
+* Add ``--emit_trusted_host/--no-emit_trusted_host`` flag.
+  `Docs <https://pip-compile-multi.readthedocs.io/en/latest/features.html#add-trusted-host-annotation>`_.
   Thanks to `Phil Blackwood`_.
   (Issue `#351`_, PR `#353`_)
 
