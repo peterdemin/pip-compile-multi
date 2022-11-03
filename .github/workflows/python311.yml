@@ -21,4 +21,4 @@ jobs:
         python -m pip install tox
     - name: Run tox
       run: |
-        tox || true
+        tox -e py311-linux || true
