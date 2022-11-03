@@ -5,8 +5,8 @@ pip-compile-multi
 .. image:: https://badge.fury.io/py/pip-compile-multi.png
     :target: https://badge.fury.io/py/pip-compile-multi
 
-.. image:: https://github.com/peterdemin/pip-compile-multi/actions/workflows/python36.yml/badge.svg
-    :target: https://github.com/peterdemin/pip-compile-multi/actions/workflows/python36.yml
+.. image:: https://github.com/peterdemin/pip-compile-multi/actions/workflows/python38.yml/badge.svg
+    :target: https://github.com/peterdemin/pip-compile-multi/actions/workflows/python38.yml
 
 .. image:: https://ci.appveyor.com/api/projects/status/1spvqh9hlqtv2a81?svg=true
     :target: https://ci.appveyor.com/project/peterdemin/pip-compile-multi

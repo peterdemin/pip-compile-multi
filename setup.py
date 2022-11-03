@@ -39,11 +39,11 @@ Links
 """
 
 
-with open('HISTORY.rst') as fp:
+with open('HISTORY.rst', encoding='utf-8') as fp:
     HISTORY = fp.read().replace('.. :changelog:', '')
 
 
-with open(os.path.join('requirements', 'base.in')) as fp:
+with open(os.path.join('requirements', 'base.in'), encoding='utf-8') as fp:
     REQUIREMENTS = list(fp)
 
 
@@ -79,11 +79,10 @@ setup(
         'Natural Language :: English',
         'Environment :: Console',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
