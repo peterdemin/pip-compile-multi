@@ -1,25 +1,24 @@
 environment:
   matrix:
-    - PYTHON: "C:\\Python36"
-      PYTHON_VERSION: "3.6.13"
-      PYTHON_ARCH: "32"
-      TOX_ENV: "py36"
-
-    - PYTHON: "C:\\Python37"
-      PYTHON_VERSION: "3.7.10"
-      PYTHON_ARCH: "32"
-      TOX_ENV: "py37"
-
     - PYTHON: "C:\\Python38"
-      PYTHON_VERSION: "3.8.7"
+      PYTHON_VERSION: "3.8.15"
       PYTHON_ARCH: "32"
       TOX_ENV: "py38"
 
-    # NOT WORKING AS OF FEB 2021
-    # - PYTHON: "C:\\Python39"
-    #   PYTHON_VERSION: "3.9.1"
+    - PYTHON: "C:\\Python39"
+      PYTHON_VERSION: "3.9.15"
+      PYTHON_ARCH: "32"
+      TOX_ENV: "py39"
+
+    - PYTHON: "C:\\Python310"
+      PYTHON_VERSION: "3.10.8"
+      PYTHON_ARCH: "32"
+      TOX_ENV: "py310"
+
+    # - PYTHON: "C:\\Python311"
+    #   PYTHON_VERSION: "3.11.0"
     #   PYTHON_ARCH: "32"
-    #   TOX_ENV: "py39"
+    #   TOX_ENV: "py311"
 
 init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
