@@ -9,6 +9,10 @@ History
   Thanks to `Phil Blackwood`_
   (Issue `#351`_, PR `#353`_).
 
+* Remove Python 3.6 and 3.7 from tested versions
+  (package works, but maintaining CI becomes problematic).
+  Using Python 3.8 as the base version going forward.
+
 .. _Phil Blackwood: https://github.com/philblckwd
 .. _#351: https://github.com/peterdemin/pip-compile-multi/issues/351
 .. _#353: https://github.com/peterdemin/pip-compile-multi/pull/353
