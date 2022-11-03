@@ -10,10 +10,14 @@ attrs==22.1.0
     # via
     #   -c requirements/local.txt
     #   pytest
-coverage[toml]==6.2
+coverage[toml]==6.5.0
     # via
     #   -c requirements/local.txt
     #   pytest-cov
+exceptiongroup==1.0.0
+    # via
+    #   -c requirements/local.txt
+    #   pytest
 iniconfig==1.1.1
     # via
     #   -c requirements/local.txt
@@ -22,27 +26,15 @@ mock==4.0.3
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in
-more-itertools==8.14.0
+more-itertools==9.0.0
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in
-packaging==21.3
-    # via
-    #   -c requirements/local.txt
-    #   pytest
 pluggy==1.0.0
     # via
     #   -c requirements/local.txt
     #   pytest
-py==1.11.0
-    # via
-    #   -c requirements/local.txt
-    #   pytest
-pyparsing==3.0.9
-    # via
-    #   -c requirements/local.txt
-    #   packaging
-pytest==7.0.1
+pytest==7.2.0
     # via
     #   -c requirements/local.txt
     #   -r requirements/test.in
