@@ -7,42 +7,25 @@
 #
 -r base.txt
 attrs==22.1.0
-    # via
-    #   -c requirements/local.txt
-    #   pytest
+    # via pytest
 coverage[toml]==6.5.0
-    # via
-    #   -c requirements/local.txt
-    #   pytest-cov
+    # via pytest-cov
 exceptiongroup==1.0.0
-    # via
-    #   -c requirements/local.txt
-    #   pytest
+    # via pytest
 iniconfig==1.1.1
-    # via
-    #   -c requirements/local.txt
-    #   pytest
+    # via pytest
 mock==4.0.3
-    # via
-    #   -c requirements/local.txt
-    #   -r requirements/test.in
+    # via -r requirements/test.in
 more-itertools==9.0.0
-    # via
-    #   -c requirements/local.txt
-    #   -r requirements/test.in
+    # via -r requirements/test.in
 pluggy==1.0.0
-    # via
-    #   -c requirements/local.txt
-    #   pytest
+    # via pytest
 pytest==7.2.0
     # via
-    #   -c requirements/local.txt
     #   -r requirements/test.in
     #   pytest-cov
 pytest-cov==4.0.0
-    # via
-    #   -c requirements/local.txt
-    #   -r requirements/test.in
+    # via -r requirements/test.in
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
