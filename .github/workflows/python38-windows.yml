@@ -21,4 +21,4 @@ jobs:
         python -m pip install tox
     - name: Run tox
       run: |
-        tox
+        tox -e py38-windows
