@@ -10,7 +10,7 @@ attrs==22.1.0
     # via pytest
 coverage[toml]==6.5.0
     # via pytest-cov
-exceptiongroup==1.0.0
+exceptiongroup==1.0.1
     # via pytest
 iniconfig==1.1.1
     # via pytest
