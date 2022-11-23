@@ -1,6 +1,17 @@
 History
 =======
 
+2.6.1 (2022-11-23)
+------------------
+
+* Add ``--backtracking/--no-backtracking`` flag
+  (`backtracking docs <https://pip-compile-multi.readthedocs.io/en/latest/features.html#backtracking-resolver>`_).
+  (Issue `#345`_, PR `#360`_)
+* Bumped ``pip-tools`` minimum version constraint to ``6.8.0`` to support ``--resolver`` option.
+
+.. _#345: https://github.com/peterdemin/pip-compile-multi/issues/345
+.. _#360: https://github.com/peterdemin/pip-compile-multi/pull/360
+
 2.6.0 (2022-11-23)
 ------------------
 
@@ -10,7 +21,7 @@ History
 ------------------
 
 * Add ``--emit_trusted_host/--no-emit_trusted_host`` flag
-  (`docs <https://pip-compile-multi.readthedocs.io/en/latest/features.html#add-trusted-host-annotation>`_).
+  (`trusted host annotation docs <https://pip-compile-multi.readthedocs.io/en/latest/features.html#add-trusted-host-annotation>`_).
   Thanks to `Phil Blackwood`_
   (Issue `#351`_, PR `#353`_).
 
