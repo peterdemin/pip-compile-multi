@@ -15,6 +15,18 @@ sync: requirements/local.hash virtual_env_set
 	pip-sync requirements/local.hash
 	pip install -e . --no-deps
 
+.PHONY: %-docker
+%-docker:  ## Could be lock-docker or upgrade-docker
+	docker run --rm -it -v $(PWD):/pcm $$(docker build -q .) /usr/bin/make $*-ubuntu
+
+.PHONY: %-ubuntu
+%-ubuntu: .venv38
+	.venv38/bin/python3 -m pip install tox
+	.venv38/bin/python3 -m tox -e $*
+
+.venv38:
+	python3.8 -m venv .venv38
+
 .PHONY: lock
 lock: virtual_env_set
 	tox -e lock
@@ -31,6 +43,7 @@ test:
 .PHONY: clean
 clean:
 	rm -rf build dist pip-compile-multi.egg-info docs/_build
+	rm -rf .venv38
 	find . -name "*.pyc" -delete
 	find * -type d -name '__pycache__' | xargs rm -rf
 
