@@ -1,6 +1,11 @@
 History
 =======
 
+2.6.0 (2022-11-23)
+------------------
+
+* Fix cross-env package names matching when they use delimiters (-_.) and upper/lower case.
+
 2.5.0 (2022-11-03)
 ------------------
 
