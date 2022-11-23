@@ -31,6 +31,8 @@ Features
 
 .. automodule:: pipcompilemulti.features.autoresolve
 
+.. automodule:: pipcompilemulti.features.backtracking
+
 .. automodule:: pipcompilemulti.features.skip_constraint_comments
 
 .. automodule:: pipcompilemulti.features.live_output

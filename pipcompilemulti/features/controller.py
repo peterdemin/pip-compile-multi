@@ -5,22 +5,23 @@ from functools import wraps
 
 from .add_hashes import AddHashes
 from .annotate_index import AnnotateIndex
+from .autoresolve import Autoresolve
+from .backtracking import Backtracking
 from .base_dir import BaseDir
+from .build_isolation import BuildIsolation
 from .compatible import Compatible
+from .emit_trusted_host import EmitTrustedHost
+from .extra_index_url import ExtraIndexUrl
 from .file_extensions import InputExtension, OutputExtension
 from .forbid_post import ForbidPost
 from .header import CustomHeader
 from .limit_envs import LimitEnvs
 from .limit_in_paths import LimitInPaths
+from .live_output import LiveOutput
+from .skip_constraint_comments import SkipConstraintComments
 from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
-from .autoresolve import Autoresolve
-from .skip_constraint_comments import SkipConstraintComments
-from .live_output import LiveOutput
-from .extra_index_url import ExtraIndexUrl
-from .build_isolation import BuildIsolation
-from .emit_trusted_host import EmitTrustedHost
 
 
 class FeaturesController:
@@ -28,47 +29,49 @@ class FeaturesController:
     # pylint: disable=too-many-instance-attributes
 
     def __init__(self):
-        self.annotate_index = AnnotateIndex()
-        self.use_cache = UseCache()
-        self.input_extension = InputExtension()
-        self.output_extension = OutputExtension()
-        self.base_dir = BaseDir()
-        self.compatible = Compatible()
-        self.forbid_post = ForbidPost()
         self.add_hashes = AddHashes(self)
-        self.upgrade_all = UpgradeAll(self)
-        self.upgrade_selected = UpgradeSelected(self)
+        self.allow_unsafe = AllowUnsafe()
+        self.annotate_index = AnnotateIndex()
+        self.autoresolve = Autoresolve()
+        self.backtracking = Backtracking()
+        self.base_dir = BaseDir()
+        self.build_isolation = BuildIsolation()
+        self.compatible = Compatible()
+        self.emit_trusted_host = EmitTrustedHost()
+        self.extra_index_url = ExtraIndexUrl()
+        self.forbid_post = ForbidPost()
+        self.header = CustomHeader()
+        self.input_extension = InputExtension()
         self.limit_envs = LimitEnvs(self)
         self.limit_in_paths = LimitInPaths()
-        self.header = CustomHeader()
-        self.allow_unsafe = AllowUnsafe()
-        self.autoresolve = Autoresolve()
-        self.skip_constraint_comments = SkipConstraintComments()
         self.live_output = LiveOutput()
-        self.extra_index_url = ExtraIndexUrl()
-        self.build_isolation = BuildIsolation()
-        self.emit_trusted_host = EmitTrustedHost()
+        self.output_extension = OutputExtension()
+        self.skip_constraint_comments = SkipConstraintComments()
+        self.upgrade_all = UpgradeAll(self)
+        self.upgrade_selected = UpgradeSelected(self)
+        self.use_cache = UseCache()
         self._features = [
-            self.annotate_index,
-            self.use_cache,
-            self.input_extension,
-            self.output_extension,
-            self.base_dir,
-            self.compatible,
-            self.forbid_post,
             self.add_hashes,
+            self.allow_unsafe,
+            self.annotate_index,
+            self.autoresolve,
+            self.backtracking,
+            self.base_dir,
+            self.build_isolation,
+            self.compatible,
+            self.emit_trusted_host,
+            self.extra_index_url,
+            self.forbid_post,
+            self.header,
+            self.input_extension,
+            self.limit_envs,
+            self.limit_in_paths,
+            self.live_output,
+            self.output_extension,
+            self.skip_constraint_comments,
             self.upgrade_all,
             self.upgrade_selected,
-            self.limit_in_paths,
-            self.limit_envs,
-            self.header,
-            self.allow_unsafe,
-            self.autoresolve,
-            self.skip_constraint_comments,
-            self.live_output,
-            self.extra_index_url,
-            self.build_isolation,
-            self.emit_trusted_host
+            self.use_cache,
         ]
 
     def bind(self, command):
@@ -87,15 +90,16 @@ class FeaturesController:
     def pin_options(self, in_path):
         """Return list of options to pin command."""
         options = []
-        options.extend(self.use_cache.pin_options())
         options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.allow_unsafe.pin_options())
-        options.extend(self.upgrade_all.pin_options())
-        options.extend(self.upgrade_selected.pin_options())
         options.extend(self.annotate_index.pin_options())
-        options.extend(self.extra_index_url.pin_options())
+        options.extend(self.backtracking.pin_options())
         options.extend(self.build_isolation.pin_options())
         options.extend(self.emit_trusted_host.pin_options())
+        options.extend(self.extra_index_url.pin_options())
+        options.extend(self.upgrade_all.pin_options())
+        options.extend(self.upgrade_selected.pin_options())
+        options.extend(self.use_cache.pin_options())
         return options
 
     def compose_input_file_path(self, basename):
