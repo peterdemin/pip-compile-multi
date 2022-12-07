@@ -39,7 +39,7 @@ docutils==0.19
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.8.0
+filelock==3.8.2
     # via
     #   tox
     #   virtualenv
@@ -86,7 +86,7 @@ pipdeptree==2.3.3
     # via -r requirements/local.in
 pkginfo==1.9.2
     # via twine
-platformdirs==2.5.4
+platformdirs==2.6.0
     # via
     #   pylint
     #   virtualenv
@@ -110,7 +110,7 @@ pygments==2.13.0
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==2.15.7
+pylint==2.15.8
     # via -r requirements/local.in
 pytz==2022.6
     # via babel
@@ -159,7 +159,7 @@ tomlkit==0.11.6
     # via pylint
 tox==3.27.1
     # via -r requirements/local.in
-twine==4.0.1
+twine==4.0.2
     # via -r requirements/local.in
 typing-extensions==4.4.0
     # via
@@ -170,7 +170,7 @@ urllib3==1.26.13
     # via
     #   requests
     #   twine
-virtualenv==20.17.0
+virtualenv==20.17.1
     # via
     #   -r requirements/local.in
     #   pre-commit
