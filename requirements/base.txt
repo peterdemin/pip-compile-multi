@@ -15,7 +15,7 @@ packaging==22.0
     # via build
 pep517==0.13.0
     # via build
-pip-tools==6.12.0
+pip-tools==6.12.1
     # via -r requirements/base.in
 tomli==2.0.1
     # via
