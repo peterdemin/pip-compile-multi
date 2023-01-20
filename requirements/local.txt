@@ -6,9 +6,9 @@
 #    pip-compile-multi
 #
 -r test.txt
-alabaster==0.7.12
+alabaster==0.7.13
     # via sphinx
-astroid==2.12.13
+astroid==2.13.2
     # via pylint
 babel==2.11.0
     # via sphinx
@@ -16,7 +16,7 @@ bleach==5.0.1
     # via readme-renderer
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==5.2.0
+cachetools==5.2.1
     # via tox
 certifi==2022.12.7
     # via requests
@@ -26,7 +26,7 @@ cfgv==3.3.1
     # via pre-commit
 chardet==5.1.0
     # via tox
-charset-normalizer==2.1.1
+charset-normalizer==3.0.1
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
@@ -53,7 +53,7 @@ flake8==6.0.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.12
+identify==2.5.13
     # via pre-commit
 idna==3.4
     # via requests
@@ -78,9 +78,9 @@ jinja2==3.1.2
     # via sphinx
 keyring==23.13.1
     # via twine
-lazy-object-proxy==1.8.0
+lazy-object-proxy==1.9.0
     # via astroid
-markupsafe==2.1.1
+markupsafe==2.1.2
     # via jinja2
 mccabe==0.7.0
     # via
@@ -92,7 +92,7 @@ pep8-naming==0.13.3
     # via -r requirements/local.in
 pipdeptree==2.3.3
     # via -r requirements/local.in
-pkginfo==1.9.3
+pkginfo==1.9.6
     # via twine
 platformdirs==2.6.2
     # via
@@ -107,7 +107,7 @@ pycodestyle==2.10.0
     #   flake8
 pycparser==2.21
     # via cffi
-pydocstyle==6.2.2
+pydocstyle==6.3.0
     # via -r requirements/local.in
 pyflakes==3.0.1
     # via flake8
@@ -117,17 +117,17 @@ pygments==2.14.0
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==2.15.9
+pylint==2.15.10
     # via -r requirements/local.in
-pyproject-api==1.3.0
+pyproject-api==1.5.0
     # via tox
-pytz==2022.7
+pytz==2022.7.1
     # via babel
 pyyaml==6.0
     # via pre-commit
 readme-renderer==37.3
     # via twine
-requests==2.28.1
+requests==2.28.2
     # via
     #   requests-toolbelt
     #   sphinx
@@ -136,7 +136,7 @@ requests-toolbelt==0.10.1
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.0.0
+rich==13.1.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -146,9 +146,9 @@ snowballstemmer==2.2.0
     # via
     #   pydocstyle
     #   sphinx
-sphinx==6.0.0
+sphinx==6.1.3
     # via -r requirements/local.in
-sphinxcontrib-applehelp==1.0.2
+sphinxcontrib-applehelp==1.0.3
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
     # via sphinx
@@ -162,7 +162,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.11.6
     # via pylint
-tox==4.2.1
+tox==4.3.4
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
@@ -171,7 +171,7 @@ typing-extensions==4.4.0
     #   astroid
     #   pylint
     #   rich
-urllib3==1.26.13
+urllib3==1.26.14
     # via
     #   requests
     #   twine
