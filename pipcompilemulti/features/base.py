@@ -29,11 +29,11 @@ class ClickOption:
     def decorator(self):
         """Create click command decorator with this option."""
         args = [self.long_option]
-        kwargs = dict(
-            is_flag=self.is_flag,
-            multiple=self.multiple,
-            help=self.help_text,
-        )
+        kwargs = {
+            "is_flag": self.is_flag,
+            "multiple": self.multiple,
+            "help": self.help_text,
+        }
         if self.short_option:
             args.append(self.short_option)
         if self.default:
