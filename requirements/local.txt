@@ -5,17 +5,20 @@
 #
 #    pip-compile-multi
 #
--r test.txt
 alabaster==0.7.13
     # via sphinx
 astroid==2.13.3
     # via pylint
+attrs==22.2.0
+    # via pytest
 babel==2.11.0
     # via sphinx
 bleach==6.0.0
     # via readme-renderer
+build==0.10.0
+    # via pip-tools
 bump2version==1.0.1
-    # via -r requirements/local.in
+    # via -r local.in
 cachetools==5.3.0
     # via tox
 certifi==2022.12.7
@@ -28,11 +31,17 @@ chardet==5.1.0
     # via tox
 charset-normalizer==3.0.1
     # via requests
+click==8.1.3
+    # via
+    #   -r base.in
+    #   pip-tools
 collective-checkdocs==0.2
-    # via -r requirements/local.in
+    # via -r local.in
 colorama==0.4.6
     # via tox
-cryptography==39.0.0
+coverage[toml]==7.1.0
+    # via pytest-cov
+cryptography==39.0.1
     # via secretstorage
 dill==0.3.6
     # via pylint
@@ -49,7 +58,7 @@ filelock==3.9.0
     #   virtualenv
 flake8==6.0.0
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   pep8-naming
 identify==2.5.15
     # via pre-commit
@@ -60,10 +69,9 @@ imagesize==1.4.1
 importlib-metadata==6.0.0
     # via
     #   keyring
-    #   sphinx
     #   twine
-importlib-resources==5.10.2
-    # via keyring
+iniconfig==2.0.0
+    # via pytest
 isort==5.11.4
     # via pylint
 jaraco-classes==3.2.3
@@ -88,12 +96,27 @@ mccabe==0.7.0
     #   pylint
 mdurl==0.1.2
     # via markdown-it-py
+mock==5.0.1
+    # via -r test.in
+more-itertools==9.0.0
+    # via
+    #   -r test.in
+    #   jaraco-classes
 nodeenv==1.7.0
     # via pre-commit
+packaging==23.0
+    # via
+    #   build
+    #   pyproject-api
+    #   pytest
+    #   sphinx
+    #   tox
 pep8-naming==0.13.3
-    # via -r requirements/local.in
+    # via -r local.in
+pip-tools==6.12.1
+    # via -r base.in
 pipdeptree==2.3.3
-    # via -r requirements/local.in
+    # via -r local.in
 pkginfo==1.9.6
     # via twine
 platformdirs==2.6.2
@@ -101,28 +124,40 @@ platformdirs==2.6.2
     #   pylint
     #   tox
     #   virtualenv
+pluggy==1.0.0
+    # via
+    #   pytest
+    #   tox
 pre-commit==3.0.0
-    # via -r requirements/local.in
+    # via -r local.in
 pycodestyle==2.10.0
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   flake8
 pycparser==2.21
     # via cffi
 pydocstyle==6.3.0
-    # via -r requirements/local.in
+    # via -r local.in
 pyflakes==3.0.1
     # via flake8
 pygments==2.14.0
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   readme-renderer
     #   rich
     #   sphinx
 pylint==2.15.10
-    # via -r requirements/local.in
+    # via -r local.in
 pyproject-api==1.5.0
     # via tox
+pyproject-hooks==1.0.0
+    # via build
+pytest==7.2.1
+    # via
+    #   -r test.in
+    #   pytest-cov
+pytest-cov==4.0.0
+    # via -r test.in
 pytz==2022.7.1
     # via babel
 pyyaml==6.0
@@ -149,7 +184,7 @@ snowballstemmer==2.2.0
     #   pydocstyle
     #   sphinx
 sphinx==6.1.3
-    # via -r requirements/local.in
+    # via -r local.in
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
@@ -164,32 +199,31 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.11.6
     # via pylint
+toposort==1.9
+    # via -r base.in
 tox==4.3.5
-    # via -r requirements/local.in
+    # via -r local.in
 twine==4.0.2
-    # via -r requirements/local.in
-typing-extensions==4.4.0
-    # via
-    #   astroid
-    #   pylint
-    #   rich
+    # via -r local.in
 urllib3==1.26.14
     # via
     #   requests
     #   twine
 virtualenv==20.17.1
     # via
-    #   -r requirements/local.in
+    #   -r local.in
     #   pre-commit
     #   tox
 webencodings==0.5.1
     # via bleach
+wheel==0.38.4
+    # via
+    #   -r local.in
+    #   pip-tools
 wrapt==1.14.1
     # via astroid
 zipp==3.11.0
-    # via
-    #   importlib-metadata
-    #   importlib-resources
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
