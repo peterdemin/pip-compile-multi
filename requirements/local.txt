@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==2.13.3
+astroid==2.14.1
     # via pylint
 babel==2.11.0
     # via sphinx
@@ -32,7 +32,7 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==39.0.0
+cryptography==39.0.1
     # via secretstorage
 dill==0.3.6
     # via pylint
@@ -51,7 +51,7 @@ flake8==6.0.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.15
+identify==2.5.17
     # via pre-commit
 idna==3.4
     # via requests
@@ -64,7 +64,7 @@ importlib-metadata==6.0.0
     #   twine
 importlib-resources==5.10.2
     # via keyring
-isort==5.11.4
+isort==5.12.0
     # via pylint
 jaraco-classes==3.2.3
     # via keyring
@@ -96,12 +96,12 @@ pipdeptree==2.3.3
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
-platformdirs==2.6.2
+platformdirs==3.0.0
     # via
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==3.0.0
+pre-commit==3.0.4
     # via -r requirements/local.in
 pycodestyle==2.10.0
     # via
@@ -119,7 +119,7 @@ pygments==2.14.0
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==2.15.10
+pylint==2.16.1
     # via -r requirements/local.in
 pyproject-api==1.5.0
     # via tox
@@ -138,7 +138,7 @@ requests-toolbelt==0.10.1
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.2.0
+rich==13.3.1
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -154,7 +154,7 @@ sphinxcontrib-applehelp==1.0.4
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
     # via sphinx
-sphinxcontrib-htmlhelp==2.0.0
+sphinxcontrib-htmlhelp==2.0.1
     # via sphinx
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
@@ -164,7 +164,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.11.6
     # via pylint
-tox==4.3.5
+tox==4.4.5
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
@@ -177,7 +177,7 @@ urllib3==1.26.14
     # via
     #   requests
     #   twine
-virtualenv==20.17.1
+virtualenv==20.19.0
     # via
     #   -r requirements/local.in
     #   pre-commit
@@ -186,7 +186,7 @@ webencodings==0.5.1
     # via bleach
 wrapt==1.14.1
     # via astroid
-zipp==3.11.0
+zipp==3.12.1
     # via
     #   importlib-metadata
     #   importlib-resources
