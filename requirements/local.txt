@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==2.14.1
+astroid==2.14.2
     # via pylint
 babel==2.11.0
     # via sphinx
@@ -51,7 +51,7 @@ flake8==6.0.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.17
+identify==2.5.18
     # via pre-commit
 idna==3.4
     # via requests
@@ -119,7 +119,7 @@ pygments==2.14.0
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==2.16.1
+pylint==2.16.2
     # via -r requirements/local.in
 pyproject-api==1.5.0
     # via tox
@@ -168,7 +168,7 @@ tox==4.4.5
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
-typing-extensions==4.4.0
+typing-extensions==4.5.0
     # via
     #   astroid
     #   pylint
@@ -186,7 +186,7 @@ webencodings==0.5.1
     # via bleach
 wrapt==1.14.1
     # via astroid
-zipp==3.12.1
+zipp==3.13.0
     # via
     #   importlib-metadata
     #   importlib-resources
