@@ -1,6 +1,12 @@
 History
 =======
 
+2.6.2 (2023-02-23)
+------------------
+
+* Fix package name normalization for names with delimiters (``urltemplate`` != ``url-template``).
+
+
 2.6.1 (2022-11-23)
 ------------------
 

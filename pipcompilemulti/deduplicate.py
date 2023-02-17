@@ -62,5 +62,5 @@ class IgnoredPackages:
     @classmethod
     def _make_stem(cls, name):
         for delim in cls._DELIMITERS:
-            name = name.replace(delim, '')
+            name = name.replace(delim, '-')
         return name.lower()
