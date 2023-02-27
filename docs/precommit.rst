@@ -6,7 +6,7 @@ To verify that ``pip-compile-multi`` has been run after changing ``.in`` files a
 .. code-block:: yaml
 
     - repo: https://github.com/peterdemin/pip-compile-multi
-      rev: v1.3.2
+      rev: v2.6.2
       hooks:
         - id: pip-compile-multi-verify
 
