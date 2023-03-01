@@ -13,13 +13,13 @@ click==8.1.3
     #   pip-tools
 packaging==23.0
     # via build
-pip-tools==6.12.2
+pip-tools==6.12.3
     # via -r requirements/base.in
 pyproject-hooks==1.0.0
     # via build
 tomli==2.0.1
     # via build
-toposort==1.9
+toposort==1.10
     # via -r requirements/base.in
 wheel==0.38.4
     # via pip-tools

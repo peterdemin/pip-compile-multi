@@ -10,7 +10,7 @@ alabaster==0.7.13
     # via sphinx
 astroid==2.14.2
     # via pylint
-babel==2.11.0
+babel==2.12.1
     # via sphinx
 bleach==6.0.0
     # via readme-renderer
@@ -101,7 +101,7 @@ platformdirs==3.0.0
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==3.0.4
+pre-commit==3.1.1
     # via -r requirements/local.in
 pycodestyle==2.10.0
     # via
@@ -177,16 +177,16 @@ urllib3==1.26.14
     # via
     #   requests
     #   twine
-virtualenv==20.19.0
+virtualenv==20.20.0
     # via
     #   -r requirements/local.in
     #   pre-commit
     #   tox
 webencodings==0.5.1
     # via bleach
-wrapt==1.14.1
+wrapt==1.15.0
     # via astroid
-zipp==3.14.0
+zipp==3.15.0
     # via
     #   importlib-metadata
     #   importlib-resources
