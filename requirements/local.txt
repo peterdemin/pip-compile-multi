@@ -43,7 +43,7 @@ docutils==0.19
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.9.1
+filelock==3.10.0
     # via
     #   tox
     #   virtualenv
@@ -51,13 +51,13 @@ flake8==6.0.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.20
+identify==2.5.21
     # via pre-commit
 idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.0.0
+importlib-metadata==6.1.0
     # via
     #   keyring
     #   sphinx
@@ -92,7 +92,7 @@ nodeenv==1.7.0
     # via pre-commit
 pep8-naming==0.13.3
     # via -r requirements/local.in
-pipdeptree==2.5.2
+pipdeptree==2.6.0
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
@@ -101,7 +101,7 @@ platformdirs==3.1.1
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==3.1.1
+pre-commit==3.2.0
     # via -r requirements/local.in
 pycodestyle==2.10.0
     # via
