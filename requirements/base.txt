@@ -11,7 +11,7 @@ click==8.1.3
     # via
     #   -r requirements/base.in
     #   pip-tools
-packaging==23.0
+packaging==23.1
     # via build
 pip-tools==6.13.0
     # via -r requirements/base.in

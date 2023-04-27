@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==2.15.2
+astroid==2.15.4
     # via pylint
 babel==2.12.1
     # via sphinx
@@ -32,7 +32,7 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==40.0.1
+cryptography==40.0.2
     # via secretstorage
 dill==0.3.6
     # via pylint
@@ -43,7 +43,7 @@ docutils==0.19
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.11.0
+filelock==3.12.0
     # via
     #   tox
     #   virtualenv
@@ -51,13 +51,13 @@ flake8==6.0.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.22
+identify==2.5.23
     # via pre-commit
 idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.3.0
+importlib-metadata==6.6.0
     # via
     #   keyring
     #   sphinx
@@ -96,7 +96,7 @@ pipdeptree==2.7.0
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
-platformdirs==3.2.0
+platformdirs==3.3.0
     # via
     #   pylint
     #   tox
@@ -113,13 +113,13 @@ pydocstyle==6.3.0
     # via -r requirements/local.in
 pyflakes==3.0.1
     # via flake8
-pygments==2.15.0
+pygments==2.15.1
     # via
     #   -r requirements/local.in
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==2.17.2
+pylint==2.17.3
     # via -r requirements/local.in
 pyproject-api==1.5.1
     # via tox
@@ -138,7 +138,7 @@ requests-toolbelt==0.10.1
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.3.3
+rich==13.3.4
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -148,7 +148,7 @@ snowballstemmer==2.2.0
     # via
     #   pydocstyle
     #   sphinx
-sphinx==6.1.3
+sphinx==6.2.1
     # via -r requirements/local.in
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
@@ -164,7 +164,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.11.7
     # via pylint
-tox==4.4.11
+tox==4.5.0
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
@@ -177,7 +177,7 @@ urllib3==1.26.15
     # via
     #   requests
     #   twine
-virtualenv==20.21.0
+virtualenv==20.22.0
     # via
     #   -r requirements/local.in
     #   pre-commit
