@@ -1,5 +1,10 @@
 """End to end tests for CLI v1"""
 
+import shutil
+import os.path
+import tempfile
+from pathlib import Path
+
 from click.testing import CliRunner
 import pytest
 from pipcompilemulti.cli_v1 import cli
@@ -41,3 +46,35 @@ def test_v1_verify_exits_with_zero():
     runner = CliRunner()
     result = runner.invoke(cli, ['verify'])
     assert result.exit_code == 0
+
+
+def _load_tree(root):
+    return {
+        x.relative_to(root).name: x.read_text().replace(str(root), 'ROOT')
+        for x in root.glob('**/*.txt')
+    }
+
+
+@pytest.mark.parametrize('name, args', [
+    ('upgrade', ['-P', 'markupsafe']),
+])
+def test_package_upgrade(name, args):
+    """Run pip-compile-multi with various upgrade arguments"""
+    root = os.path.join('tests', name)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        os.rmdir(tmp_dir)
+        shutil.copytree(root, tmp_dir)
+
+        runner = CliRunner()
+        result = runner.invoke(
+            cli,
+            [*args, '--directory', tmp_dir],
+        )
+        assert result.exit_code == 0
+
+        expected_root = Path(root + '-expected')
+        actual_root = Path(tmp_dir)
+        expected = _load_tree(expected_root)
+        actual = _load_tree(actual_root)
+
+        assert actual == expected
