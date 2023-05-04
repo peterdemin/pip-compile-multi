@@ -33,6 +33,8 @@ Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
         https://github.com/jazzband/pip-tools#updating-requirements
 """
 
+import re
+
 from .base import BaseFeature, ClickOption
 from .forward import ForwardOption
 
@@ -79,9 +81,18 @@ class UpgradeSelected(BaseFeature):
         self._env_packages_cache = {}
 
     @property
+    def package_specs(self):
+        """List of package specs to upgrade."""
+        return self.value or []
+
+    @property
     def package_names(self):
         """List of package names to upgrade."""
-        return self.value or []
+        def name_from_spec(name):
+            match = re.match(r'(?P<package>[a-z0-9-_.]+)', name)
+            assert match is not None
+            return match.group(0)
+        return [name_from_spec(x) for x in self.package_specs]
 
     @property
     def active(self):
@@ -92,7 +103,7 @@ class UpgradeSelected(BaseFeature):
         """Pin command options for upgrading specific packages."""
         return [
             '--upgrade-package=' + package
-            for package in self.package_names
+            for package in self.package_specs
         ]
 
     def has_package(self, in_path, package_name):
