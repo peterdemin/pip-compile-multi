@@ -58,6 +58,7 @@ def _load_tree(root):
 @pytest.mark.parametrize('name, args', [
     ('upgrade', ['-P', 'markupsafe']),
     ('upgrade-with-range', ['-P', 'markupsafe<2.1.2']),
+    ('upgrade-autoresolve-with-range', ['--autoresolve', '-P', 'markupsafe<2.1.2']),
 ])
 def test_package_upgrade(name, args):
     """Run pip-compile-multi with various upgrade arguments"""
