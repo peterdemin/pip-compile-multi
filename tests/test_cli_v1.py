@@ -1,7 +1,6 @@
 """End to end tests for CLI v1"""
 
 import shutil
-import os.path
 import tempfile
 from pathlib import Path
 
@@ -60,23 +59,20 @@ def _load_tree(root):
     ('upgrade-with-range', ['-P', 'markupsafe<2.1.2']),
     ('upgrade-autoresolve-with-range', ['--autoresolve', '-P', 'markupsafe<2.1.2']),
 ])
-def test_package_upgrade(name, args):
+def test_package_upgrade(test_data_tmpdir, name, args):
     """Run pip-compile-multi with various upgrade arguments"""
-    root = os.path.join('tests', name)
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        os.rmdir(tmp_dir)
-        shutil.copytree(root, tmp_dir)
 
-        runner = CliRunner()
-        result = runner.invoke(
-            cli,
-            [*args, '--directory', tmp_dir],
-        )
-        assert result.exit_code == 0
+    working_root = test_data_tmpdir(name)
 
-        expected_root = Path(root + '-expected')
-        actual_root = Path(tmp_dir)
-        expected = _load_tree(expected_root)
-        actual = _load_tree(actual_root)
+    runner = CliRunner()
+    result = runner.invoke(
+        cli,
+        [*args, '--directory', str(working_root)],
+    )
+    assert result.exit_code == 0
 
-        assert actual == expected
+    expected_root = Path('tests') / (name + '-expected')
+    expected = _load_tree(expected_root)
+    actual = _load_tree(working_root)
+
+    assert actual == expected
