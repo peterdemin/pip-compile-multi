@@ -94,7 +94,10 @@ class UpgradeSelected(BaseFeature):
         """List of package names to upgrade."""
         def name_from_spec(name):
             match = self.RE_PACKAGE_NAME.match(name)
-            assert match is not None
+            if match is None:
+                raise ValueError(
+                    f"{name!r} does not appear to be a valid package spec",
+                )
             return match.group(0)
         return [name_from_spec(x) for x in self.package_specs]
 
