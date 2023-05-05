@@ -72,6 +72,10 @@ class UpgradeSelected(BaseFeature):
                   'Can be supplied multiple times.',
     )
 
+    RE_PACKAGE_NAME = re.compile(
+        r'(?iu)(?P<package>[a-z0-9-_.]+)',
+    )
+
     def __init__(self, controller):
         self._controller = controller
         self.reset()
@@ -89,7 +93,7 @@ class UpgradeSelected(BaseFeature):
     def package_names(self):
         """List of package names to upgrade."""
         def name_from_spec(name):
-            match = re.match(r'(?P<package>[a-z0-9-_.]+)', name)
+            match = self.RE_PACKAGE_NAME.match(name)
             assert match is not None
             return match.group(0)
         return [name_from_spec(x) for x in self.package_specs]
