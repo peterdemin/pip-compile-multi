@@ -48,9 +48,11 @@ def test_v1_verify_exits_with_zero():
     assert result.exit_code == 0
 
 
-def _load_tree(root):
+def _load_tree(root, replace_name=None):
+    if not replace_name:
+        replace_name = str(root)
     return {
-        x.relative_to(root).name: x.read_text().replace(str(root), 'ROOT')
+        x.relative_to(root).name: x.read_text().replace(replace_name, 'ROOT')
         for x in root.glob('**/*.txt')
     }
 
@@ -76,7 +78,11 @@ def test_package_upgrade(name, args):
 
         expected_root = Path(root + '-expected')
         actual_root = Path(tmp_dir)
-        expected = _load_tree(expected_root)
+        expected = _load_tree(
+            expected_root,
+            # Cope with posix style reference data on Windows
+            replace_name=str(expected_root).replace(os.path.sep, '/'),
+        )
         actual = _load_tree(actual_root)
 
         assert actual == expected
