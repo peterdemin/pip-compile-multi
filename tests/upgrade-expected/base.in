@@ -1,0 +1,5 @@
+# Set an upper bound for test stability
+markupsafe<2.1.3
+
+# Another package which shouldn't be upgraded
+wheel
