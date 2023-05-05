@@ -1,6 +1,16 @@
 History
 =======
 
+2.6.3 (2023-05-05)
+------------------
+
+* Allow version constraints in ``--upgrade-package`` parameters.
+  (Issue `#392`_, PR `#394`_, thanks to `Peter Law`_.)
+
+.. _#392: https://github.com/peterdemin/pip-compile-multi/issues/392
+.. _#394: https://github.com/peterdemin/pip-compile-multi/pull/394
+.. _Peter Law: https://github.com/PeterJCLaw
+
 2.6.2 (2023-02-23)
 ------------------
 
