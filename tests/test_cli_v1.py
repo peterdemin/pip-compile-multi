@@ -52,7 +52,7 @@ def _load_tree(root, replace_name=None):
     if not replace_name:
         replace_name = str(root)
     return {
-        x.relative_to(root).name: x.read_text().replace(replace_name, 'ROOT')
+        x.relative_to(root).name: x.read_text().replace(replace_name, 'ROOT').replace('\\', '/')
         for x in root.glob('**/*.txt')
     }
 
