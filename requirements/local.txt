@@ -16,7 +16,7 @@ bleach==6.0.0
     # via readme-renderer
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==5.3.0
+cachetools==5.3.1
     # via tox
 certifi==2023.5.7
     # via requests
@@ -32,7 +32,7 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==40.0.2
+cryptography==41.0.0
     # via secretstorage
 dill==0.3.6
     # via pylint
@@ -101,7 +101,7 @@ platformdirs==3.5.1
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==3.3.1
+pre-commit==3.3.2
     # via -r requirements/local.in
 pycodestyle==2.10.0
     # via
@@ -129,7 +129,7 @@ pyyaml==6.0
     # via pre-commit
 readme-renderer==37.3
     # via twine
-requests==2.30.0
+requests==2.31.0
     # via
     #   requests-toolbelt
     #   sphinx
@@ -164,11 +164,11 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.11.8
     # via pylint
-tox==4.5.1
+tox==4.5.2
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
-typing-extensions==4.5.0
+typing-extensions==4.6.2
     # via
     #   astroid
     #   pylint
