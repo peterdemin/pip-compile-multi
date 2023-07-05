@@ -74,7 +74,7 @@ jeepney==0.8.0
     #   secretstorage
 jinja2==3.1.2
     # via sphinx
-keyring==24.0.0
+keyring==24.2.0
     # via twine
 lazy-object-proxy==1.9.0
     # via astroid
@@ -96,7 +96,7 @@ pipdeptree==2.9.3
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
-platformdirs==3.7.0
+platformdirs==3.8.0
     # via
     #   pylint
     #   tox
@@ -168,7 +168,7 @@ tox==4.6.3
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
-typing-extensions==4.6.3
+typing-extensions==4.7.1
     # via
     #   astroid
     #   pylint
