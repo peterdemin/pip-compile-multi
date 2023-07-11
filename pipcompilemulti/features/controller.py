@@ -19,6 +19,7 @@ from .limit_envs import LimitEnvs
 from .limit_in_paths import LimitInPaths
 from .live_output import LiveOutput
 from .skip_constraint_comments import SkipConstraintComments
+from .strip_extras import StripExtras
 from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
@@ -47,6 +48,7 @@ class FeaturesController:
         self.live_output = LiveOutput()
         self.output_extension = OutputExtension()
         self.skip_constraint_comments = SkipConstraintComments()
+        self.strip_extras = StripExtras()
         self.upgrade_all = UpgradeAll(self)
         self.upgrade_selected = UpgradeSelected(self)
         self.use_cache = UseCache()
@@ -69,6 +71,7 @@ class FeaturesController:
             self.live_output,
             self.output_extension,
             self.skip_constraint_comments,
+            self.strip_extras,
             self.upgrade_all,
             self.upgrade_selected,
             self.use_cache,
@@ -100,6 +103,7 @@ class FeaturesController:
         options.extend(self.upgrade_all.pin_options())
         options.extend(self.upgrade_selected.pin_options())
         options.extend(self.use_cache.pin_options())
+        options.extend(self.strip_extras.pin_options())
         return options
 
     def compose_input_file_path(self, basename):
