@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==2.15.5
+astroid==2.15.6
     # via pylint
 babel==2.12.1
     # via sphinx
@@ -26,13 +26,13 @@ cfgv==3.3.1
     # via pre-commit
 chardet==5.1.0
     # via tox
-charset-normalizer==3.1.0
+charset-normalizer==3.2.0
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==41.0.1
+cryptography==41.0.2
     # via secretstorage
 dill==0.3.6
     # via pylint
@@ -57,16 +57,16 @@ idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.7.0
+importlib-metadata==6.8.0
     # via
     #   keyring
     #   sphinx
     #   twine
-importlib-resources==5.12.0
+importlib-resources==6.0.0
     # via keyring
 isort==5.12.0
     # via pylint
-jaraco-classes==3.2.3
+jaraco-classes==3.3.0
     # via keyring
 jeepney==0.8.0
     # via
@@ -74,7 +74,7 @@ jeepney==0.8.0
     #   secretstorage
 jinja2==3.1.2
     # via sphinx
-keyring==24.0.0
+keyring==24.2.0
     # via twine
 lazy-object-proxy==1.9.0
     # via astroid
@@ -92,11 +92,11 @@ nodeenv==1.8.0
     # via pre-commit
 pep8-naming==0.13.3
     # via -r requirements/local.in
-pipdeptree==2.9.3
+pipdeptree==2.9.5
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
-platformdirs==3.7.0
+platformdirs==3.8.1
     # via
     #   pylint
     #   tox
@@ -121,7 +121,7 @@ pygments==2.15.1
     #   sphinx
 pylint==2.17.4
     # via -r requirements/local.in
-pyproject-api==1.5.2
+pyproject-api==1.5.3
     # via tox
 pytz==2023.3
     # via babel
@@ -164,11 +164,11 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.11.8
     # via pylint
-tox==4.6.3
+tox==4.6.4
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
-typing-extensions==4.6.3
+typing-extensions==4.7.1
     # via
     #   astroid
     #   pylint
@@ -186,7 +186,7 @@ webencodings==0.5.1
     # via bleach
 wrapt==1.15.0
     # via astroid
-zipp==3.15.0
+zipp==3.16.0
     # via
     #   importlib-metadata
     #   importlib-resources

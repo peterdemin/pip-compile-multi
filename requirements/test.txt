@@ -8,17 +8,17 @@
 -r base.txt
 coverage[toml]==7.2.7
     # via pytest-cov
-exceptiongroup==1.1.1
+exceptiongroup==1.1.2
     # via pytest
 iniconfig==2.0.0
     # via pytest
-mock==5.0.2
+mock==5.1.0
     # via -r requirements/test.in
 more-itertools==9.1.0
     # via -r requirements/test.in
 pluggy==1.2.0
     # via pytest
-pytest==7.3.2
+pytest==7.4.0
     # via
     #   -r requirements/test.in
     #   pytest-cov
