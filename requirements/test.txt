@@ -14,7 +14,7 @@ iniconfig==2.0.0
     # via pytest
 mock==5.1.0
     # via -r requirements/test.in
-more-itertools==9.1.0
+more-itertools==10.0.0
     # via -r requirements/test.in
 pluggy==1.2.0
     # via pytest
