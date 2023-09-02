@@ -16,7 +16,7 @@ mock==5.1.0
     # via -r requirements/test.in
 more-itertools==10.1.0
     # via -r requirements/test.in
-pluggy==1.2.0
+pluggy==1.3.0
     # via pytest
 pytest==7.4.0
     # via
