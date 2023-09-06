@@ -57,11 +57,6 @@ idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.8.0
-    # via
-    #   keyring
-    #   sphinx
-    #   twine
 importlib-resources==6.0.1
     # via keyring
 isort==5.12.0
@@ -101,7 +96,7 @@ platformdirs==3.10.0
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==3.3.3
+pre-commit==3.4.0
     # via -r requirements/local.in
 pycodestyle==2.11.0
     # via
@@ -123,7 +118,7 @@ pylint==2.17.5
     # via -r requirements/local.in
 pyproject-api==1.6.1
     # via tox
-pytz==2023.3
+pytz==2023.3.post1
     # via babel
 pyyaml==6.0.1
     # via pre-commit
@@ -164,7 +159,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.12.1
     # via pylint
-tox==4.11.0
+tox==4.11.1
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
@@ -187,10 +182,6 @@ webencodings==0.5.1
     # via bleach
 wrapt==1.15.0
     # via astroid
-zipp==3.16.2
-    # via
-    #   importlib-metadata
-    #   importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
