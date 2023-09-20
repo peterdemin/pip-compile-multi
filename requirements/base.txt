@@ -28,7 +28,7 @@ toposort==1.10
     # via -r requirements/base.in
 wheel==0.41.2
     # via pip-tools
-zipp==3.16.2
+zipp==3.17.0
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
