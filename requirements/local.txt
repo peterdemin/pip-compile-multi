@@ -8,9 +8,9 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==2.15.8
+astroid==3.0.0
     # via pylint
-babel==2.12.1
+babel==2.13.0
     # via sphinx
 bump2version==1.0.1
     # via -r requirements/local.in
@@ -18,13 +18,13 @@ cachetools==5.3.1
     # via tox
 certifi==2023.7.22
     # via requests
-cffi==1.15.1
+cffi==1.16.0
     # via cryptography
 cfgv==3.4.0
     # via pre-commit
 chardet==5.2.0
     # via tox
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
@@ -49,7 +49,7 @@ flake8==6.1.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.29
+identify==2.5.30
     # via pre-commit
 idna==3.4
     # via requests
@@ -69,8 +69,6 @@ jinja2==3.1.2
     # via sphinx
 keyring==24.2.0
     # via twine
-lazy-object-proxy==1.9.0
-    # via astroid
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.3
@@ -91,7 +89,7 @@ pipdeptree==2.13.0
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
-platformdirs==3.10.0
+platformdirs==3.11.0
     # via
     #   pylint
     #   tox
@@ -114,7 +112,7 @@ pygments==2.16.1
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==2.17.6
+pylint==3.0.0
     # via -r requirements/local.in
 pyproject-api==1.6.1
     # via tox
@@ -133,7 +131,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.5.3
+rich==13.6.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -166,7 +164,7 @@ typing-extensions==4.8.0
     #   astroid
     #   pylint
     #   rich
-urllib3==2.0.5
+urllib3==2.0.6
     # via
     #   requests
     #   twine
@@ -175,8 +173,6 @@ virtualenv==20.24.5
     #   -r requirements/local.in
     #   pre-commit
     #   tox
-wrapt==1.15.0
-    # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
