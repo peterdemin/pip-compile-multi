@@ -112,7 +112,7 @@ pygments==2.16.1
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==3.0.0
+pylint==3.0.1
     # via -r requirements/local.in
 pyproject-api==1.6.1
     # via tox
