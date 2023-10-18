@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==3.0.0
+astroid==3.0.1
     # via pylint
 babel==2.13.0
     # via sphinx
@@ -94,9 +94,9 @@ platformdirs==3.11.0
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==3.4.0
+pre-commit==3.5.0
     # via -r requirements/local.in
-pycodestyle==2.11.0
+pycodestyle==2.11.1
     # via
     #   -r requirements/local.in
     #   flake8
@@ -164,7 +164,7 @@ typing-extensions==4.8.0
     #   astroid
     #   pylint
     #   rich
-urllib3==2.0.6
+urllib3==2.0.7
     # via
     #   requests
     #   twine
