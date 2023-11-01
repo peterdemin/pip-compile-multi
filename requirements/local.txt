@@ -24,7 +24,7 @@ cfgv==3.4.0
     # via pre-commit
 chardet==5.2.0
     # via tox
-charset-normalizer==3.3.1
+charset-normalizer==3.3.2
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
@@ -41,7 +41,7 @@ docutils==0.20.1
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.12.4
+filelock==3.13.1
     # via
     #   tox
     #   virtualenv
@@ -49,7 +49,7 @@ flake8==6.1.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.30
+identify==2.5.31
     # via pre-commit
 idna==3.4
     # via requests
