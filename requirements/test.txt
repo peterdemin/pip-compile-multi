@@ -8,7 +8,7 @@
 -r base.txt
 coverage[toml]==7.3.2
     # via pytest-cov
-exceptiongroup==1.1.3
+exceptiongroup==1.2.0
     # via pytest
 iniconfig==2.0.0
     # via pytest
