@@ -30,7 +30,7 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==41.0.5
+cryptography==41.0.7
     # via secretstorage
 dill==0.3.7
     # via pylint
@@ -51,7 +51,7 @@ flake8==6.1.0
     #   pep8-naming
 identify==2.5.32
     # via pre-commit
-idna==3.4
+idna==3.6
     # via requests
 imagesize==1.4.1
     # via sphinx
@@ -155,7 +155,7 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.12.3
     # via pylint
-tox==4.11.3
+tox==4.11.4
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
