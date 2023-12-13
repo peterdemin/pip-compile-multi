@@ -8,9 +8,9 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==3.0.1
+astroid==3.0.2
     # via pylint
-babel==2.13.1
+babel==2.14.0
     # via sphinx
 bump2version==1.0.1
     # via -r requirements/local.in
@@ -34,7 +34,7 @@ cryptography==41.0.7
     # via secretstorage
 dill==0.3.7
     # via pylint
-distlib==0.3.7
+distlib==0.3.8
     # via virtualenv
 docutils==0.20.1
     # via
@@ -49,7 +49,7 @@ flake8==6.1.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.32
+identify==2.5.33
     # via pre-commit
 idna==3.6
     # via requests
@@ -57,7 +57,7 @@ imagesize==1.4.1
     # via sphinx
 importlib-resources==6.1.1
     # via keyring
-isort==5.12.0
+isort==5.13.1
     # via pylint
 jaraco-classes==3.3.0
     # via keyring
@@ -79,7 +79,7 @@ mccabe==0.7.0
     #   pylint
 mdurl==0.1.2
     # via markdown-it-py
-nh3==0.2.14
+nh3==0.2.15
     # via readme-renderer
 nodeenv==1.8.0
     # via pre-commit
@@ -89,7 +89,7 @@ pipdeptree==2.13.1
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
-platformdirs==4.0.0
+platformdirs==4.1.0
     # via
     #   pylint
     #   tox
@@ -112,7 +112,7 @@ pygments==2.17.2
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==3.0.2
+pylint==3.0.3
     # via -r requirements/local.in
 pyproject-api==1.6.1
     # via tox
@@ -159,7 +159,7 @@ tox==4.11.4
     # via -r requirements/local.in
 twine==4.0.2
     # via -r requirements/local.in
-typing-extensions==4.8.0
+typing-extensions==4.9.0
     # via
     #   astroid
     #   pylint
@@ -168,7 +168,7 @@ urllib3==2.1.0
     # via
     #   requests
     #   twine
-virtualenv==20.24.7
+virtualenv==20.25.0
     # via
     #   -r requirements/local.in
     #   pre-commit
