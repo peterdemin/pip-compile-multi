@@ -20,4 +20,6 @@ build:
   commands:
     - pip install -r requirements/local.hash
     - pip install -e .
-    - make -C docs html || true
+    - make -C docs html
+    - mkdir -p $READTHEDOCS_OUTPUT/
+    - mv docs/_build/html $READTHEDOCS_OUTPUT/
