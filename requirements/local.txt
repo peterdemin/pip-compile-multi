@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.13
     # via sphinx
-astroid==3.0.2
+astroid==3.0.3
     # via pylint
 babel==2.14.0
     # via sphinx
@@ -16,7 +16,7 @@ bump2version==1.0.1
     # via -r requirements/local.in
 cachetools==5.3.2
     # via tox
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 cffi==1.16.0
     # via cryptography
@@ -30,7 +30,7 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==42.0.2
+cryptography==42.0.4
     # via secretstorage
 dill==0.3.8
     # via pylint
@@ -49,7 +49,7 @@ flake8==7.0.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.5.33
+identify==2.5.35
     # via pre-commit
 idna==3.6
     # via requests
@@ -59,7 +59,7 @@ importlib-resources==6.1.1
     # via keyring
 isort==5.13.2
     # via pylint
-jaraco-classes==3.3.0
+jaraco-classes==3.3.1
     # via keyring
 jeepney==0.8.0
     # via
@@ -71,7 +71,7 @@ keyring==24.3.0
     # via twine
 markdown-it-py==3.0.0
     # via rich
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via jinja2
 mccabe==0.7.0
     # via
@@ -85,7 +85,7 @@ nodeenv==1.8.0
     # via pre-commit
 pep8-naming==0.13.3
     # via -r requirements/local.in
-pipdeptree==2.13.2
+pipdeptree==2.14.0
     # via -r requirements/local.in
 pkginfo==1.9.6
     # via twine
@@ -116,7 +116,7 @@ pylint==3.0.3
     # via -r requirements/local.in
 pyproject-api==1.6.1
     # via tox
-pytz==2023.4
+pytz==2024.1
     # via babel
 pyyaml==6.0.1
     # via pre-commit
@@ -155,16 +155,16 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 tomlkit==0.12.3
     # via pylint
-tox==4.12.1
+tox==4.13.0
     # via -r requirements/local.in
-twine==4.0.2
+twine==5.0.0
     # via -r requirements/local.in
 typing-extensions==4.9.0
     # via
     #   astroid
     #   pylint
     #   rich
-urllib3==2.2.0
+urllib3==2.2.1
     # via
     #   requests
     #   twine
