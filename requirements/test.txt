@@ -6,7 +6,7 @@
 #    pip-compile-multi
 #
 -r base.txt
-coverage[toml]==7.4.1
+coverage[toml]==7.4.3
     # via pytest-cov
 exceptiongroup==1.2.0
     # via pytest
@@ -18,7 +18,7 @@ more-itertools==10.2.0
     # via -r requirements/test.in
 pluggy==1.4.0
     # via pytest
-pytest==8.0.0
+pytest==8.1.1
     # via
     #   -r requirements/test.in
     #   pytest-cov
