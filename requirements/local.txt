@@ -55,7 +55,7 @@ idna==3.6
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-resources==6.3.0
+importlib-resources==6.3.2
     # via keyring
 isort==5.13.2
     # via pylint
