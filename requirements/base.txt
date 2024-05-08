@@ -5,19 +5,19 @@
 #
 #    pip-compile-multi
 #
-build==1.1.1
+build==1.2.1
     # via pip-tools
 click==8.1.7
     # via
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==7.0.2
+importlib-metadata==7.1.0
     # via build
 packaging==24.0
     # via build
 pip-tools==7.4.1
     # via -r requirements/base.in
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
@@ -25,12 +25,11 @@ tomli==2.0.1
     # via
     #   build
     #   pip-tools
-    #   pyproject-hooks
 toposort==1.10
     # via -r requirements/base.in
 wheel==0.43.0
     # via pip-tools
-zipp==3.18.0
+zipp==3.18.1
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
