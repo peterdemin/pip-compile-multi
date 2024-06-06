@@ -35,6 +35,8 @@ Features
 
 .. automodule:: pipcompilemulti.features.skip_constraint_comments
 
+.. automodule:: pipcompilemulti.features.strip_extras
+
 .. automodule:: pipcompilemulti.features.live_output
 
 .. automodule:: pipcompilemulti.verify
