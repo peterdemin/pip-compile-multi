@@ -1,11 +1,20 @@
 History
 =======
 
+2.6.4 (2023-06-06)
+------------------
+
+* Add ``--strip-extras`` pass-through flag.
+  (PR `#455`_, thanks to `Tim Vergenz`_).
+
+.. _#455: https://github.com/peterdemin/pip-compile-multi/pull/455
+.. _Tim Vergenz: https://github.com/vergenzt
+
 2.6.3 (2023-05-05)
 ------------------
 
 * Allow version constraints in ``--upgrade-package`` parameters.
-  (Issue `#392`_, PR `#394`_, thanks to `Peter Law`_.)
+  (Issue `#392`_, PR `#394`_, thanks to `Peter Law`_).
 
 .. _#392: https://github.com/peterdemin/pip-compile-multi/issues/392
 .. _#394: https://github.com/peterdemin/pip-compile-multi/pull/394
