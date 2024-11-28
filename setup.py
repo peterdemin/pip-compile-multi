@@ -18,7 +18,7 @@ Install
 
 .. code-block:: shell
 
-    pip install pip-compile-multi
+    pip install pip_compile_multi
 
 Run
 ----
@@ -57,7 +57,7 @@ if os.environ.get('PCM_ALPHA') == 'ON':
 
 
 setup(
-    name='pip-compile-multi',
+    name='pip_compile_multi',
     version=VERSION,
     description="Compile multiple requirements files "
                 "to lock dependency versions",
