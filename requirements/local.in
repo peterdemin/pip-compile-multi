@@ -16,3 +16,4 @@ pydocstyle
 pylint
 sphinx
 virtualenv
+pkginfo<1.11
