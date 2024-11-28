@@ -4,7 +4,7 @@ import os
 from setuptools import setup, find_packages
 
 
-VERSION = "2.6.4"
+VERSION = "2.7.0"
 
 
 README = """
