@@ -11,6 +11,7 @@ class ClickOption:
     def __init__(self,
                  long_option='',
                  short_option='',
+                 *,
                  is_flag=False,
                  default=None,
                  multiple=False,
