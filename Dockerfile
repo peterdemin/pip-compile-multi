@@ -1,5 +1,5 @@
-FROM ubuntu:24.04
+FROM python:3.9
 
-RUN apt-get update -y && apt-get install -y python3.9-venv make
+RUN apt-get update && apt-get install -y build-essential
 
 WORKDIR /pcm
