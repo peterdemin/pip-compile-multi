@@ -1,6 +1,12 @@
 History
 =======
 
+2.7.0 (2024-11-27)
+------------------
+
+* Remove Python 3.8 from tested versions
+  Using Python 3.9 as the base version going forward.
+
 2.6.4 (2023-06-06)
 ------------------
 
