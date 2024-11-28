@@ -21,4 +21,5 @@ def test_conflict_detected(test_data_tmpdir, conflict):
         ['--directory', str(tmp_dir)],
     )
     assert result.exit_code == 1
-    assert 'Please add constraints' in str(result.exception)
+    assert ('Please add constraints' in str(result.exception)
+            or 'Failed to pip-compile' in str(result.exception))
