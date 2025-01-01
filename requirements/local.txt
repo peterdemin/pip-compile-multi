@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==0.7.16
     # via sphinx
-astroid==3.3.6
+astroid==3.3.8
     # via pylint
 babel==2.16.0
     # via sphinx
@@ -26,7 +26,7 @@ cfgv==3.4.0
     # via pre-commit
 chardet==5.2.0
     # via tox
-charset-normalizer==3.4.0
+charset-normalizer==3.4.1
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
@@ -51,7 +51,7 @@ flake8==7.1.1
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.6.3
+identify==2.6.4
     # via pre-commit
 idna==3.10
     # via requests
@@ -69,9 +69,9 @@ jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-jinja2==3.1.4
+jinja2==3.1.5
     # via sphinx
-keyring==25.5.0
+keyring==25.6.0
     # via twine
 markdown-it-py==3.0.0
     # via rich
@@ -118,7 +118,7 @@ pygments==2.18.0
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==3.3.2
+pylint==3.3.3
     # via -r requirements/local.in
 pyproject-api==1.8.0
     # via tox
@@ -169,7 +169,7 @@ typing-extensions==4.12.2
     #   pylint
     #   rich
     #   tox
-urllib3==2.2.3
+urllib3==2.3.0
     # via
     #   requests
     #   twine
