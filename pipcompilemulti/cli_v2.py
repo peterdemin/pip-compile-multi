@@ -9,7 +9,7 @@ from .config import read_config, read_sections
 from .actions import recompile
 from .verify import verify_environments
 from .features import FEATURES
-
+from .environment import Environment
 
 logger = logging.getLogger("pip-compile-multi")
 
@@ -22,7 +22,7 @@ def cli():
 
 def check_uv_availability():
     """Check if UV is available when the flag is enabled."""
-    from .environment import Environment
+    
     if FEATURES.use_uv.get() and not Environment._check_uv_available():
         raise click.UsageError(
             "UV package is not available. Please install it with: pip install uv>=0.1.0"
