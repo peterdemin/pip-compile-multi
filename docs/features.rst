@@ -39,4 +39,6 @@ Features
 
 .. automodule:: pipcompilemulti.features.live_output
 
+.. automodule:: pipcompilemulti.features.use_uv
+
 .. automodule:: pipcompilemulti.verify
