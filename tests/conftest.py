@@ -7,7 +7,14 @@ import tempfile
 import contextlib
 
 import pytest
+from click.testing import CliRunner
 from pipcompilemulti.options import OPTIONS
+
+
+@pytest.fixture()
+def runner():
+    """Fixture for invoking CLI commands."""
+    return CliRunner()
 
 
 @pytest.fixture(autouse=True)
