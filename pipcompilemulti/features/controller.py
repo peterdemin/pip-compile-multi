@@ -23,6 +23,7 @@ from .strip_extras import StripExtras
 from .unsafe import AllowUnsafe
 from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
+from .use_uv import UseUV
 
 
 class FeaturesController:
@@ -52,6 +53,7 @@ class FeaturesController:
         self.upgrade_all = UpgradeAll(self)
         self.upgrade_selected = UpgradeSelected(self)
         self.use_cache = UseCache()
+        self.use_uv = UseUV()
         self._features = [
             self.add_hashes,
             self.allow_unsafe,
@@ -75,6 +77,7 @@ class FeaturesController:
             self.upgrade_all,
             self.upgrade_selected,
             self.use_cache,
+            self.use_uv,
         ]
 
     def bind(self, command):
