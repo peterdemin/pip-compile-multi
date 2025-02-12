@@ -8,17 +8,17 @@
 -r test.txt
 alabaster==0.7.16
     # via sphinx
-astroid==3.3.6
+astroid==3.3.8
     # via pylint
-babel==2.16.0
+babel==2.17.0
     # via sphinx
 backports-tarfile==1.2.0
     # via jaraco-context
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==5.5.0
+cachetools==5.5.1
     # via tox
-certifi==2024.12.14
+certifi==2025.1.31
     # via requests
 cffi==1.17.1
     # via cryptography
@@ -26,13 +26,13 @@ cfgv==3.4.0
     # via pre-commit
 chardet==5.2.0
     # via tox
-charset-normalizer==3.4.0
+charset-normalizer==3.4.1
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==44.0.0
+cryptography==44.0.1
     # via secretstorage
 dill==0.3.9
     # via pylint
@@ -43,7 +43,7 @@ docutils==0.21.2
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.16.1
+filelock==3.17.0
     # via
     #   tox
     #   virtualenv
@@ -51,13 +51,15 @@ flake8==7.1.1
     # via
     #   -r requirements/local.in
     #   pep8-naming
-identify==2.6.3
+id==1.5.0
+    # via twine
+identify==2.6.7
     # via pre-commit
 idna==3.10
     # via requests
 imagesize==1.4.1
     # via sphinx
-isort==5.13.2
+isort==6.0.0
     # via pylint
 jaraco-classes==3.4.0
     # via keyring
@@ -69,9 +71,9 @@ jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-jinja2==3.1.4
+jinja2==3.1.5
     # via sphinx
-keyring==25.5.0
+keyring==25.6.0
     # via twine
 markdown-it-py==3.0.0
     # via rich
@@ -89,18 +91,16 @@ nodeenv==1.9.1
     # via pre-commit
 pep8-naming==0.14.1
     # via -r requirements/local.in
-pipdeptree==2.24.0
+pipdeptree==2.25.0
     # via -r requirements/local.in
 pkginfo==1.10.0
-    # via
-    #   -r requirements/local.in
-    #   twine
+    # via -r requirements/local.in
 platformdirs==4.3.6
     # via
     #   pylint
     #   tox
     #   virtualenv
-pre-commit==4.0.1
+pre-commit==4.1.0
     # via -r requirements/local.in
 pycodestyle==2.12.1
     # via
@@ -112,15 +112,15 @@ pydocstyle==6.3.0
     # via -r requirements/local.in
 pyflakes==3.2.0
     # via flake8
-pygments==2.18.0
+pygments==2.19.1
     # via
     #   -r requirements/local.in
     #   readme-renderer
     #   rich
     #   sphinx
-pylint==3.3.2
+pylint==3.3.4
     # via -r requirements/local.in
-pyproject-api==1.8.0
+pyproject-api==1.9.0
     # via tox
 pyyaml==6.0.2
     # via pre-commit
@@ -128,6 +128,7 @@ readme-renderer==44.0
     # via twine
 requests==2.32.3
     # via
+    #   id
     #   requests-toolbelt
     #   sphinx
     #   twine
@@ -159,9 +160,9 @@ sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
 tomlkit==0.13.2
     # via pylint
-tox==4.23.2
+tox==4.24.1
     # via -r requirements/local.in
-twine==6.0.1
+twine==6.1.0
     # via -r requirements/local.in
 typing-extensions==4.12.2
     # via
@@ -169,11 +170,11 @@ typing-extensions==4.12.2
     #   pylint
     #   rich
     #   tox
-urllib3==2.2.3
+urllib3==2.3.0
     # via
     #   requests
     #   twine
-virtualenv==20.28.0
+virtualenv==20.29.2
     # via
     #   -r requirements/local.in
     #   pre-commit
