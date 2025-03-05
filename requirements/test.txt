@@ -6,19 +6,19 @@
 #    pip-compile-multi
 #
 -r base.txt
-coverage[toml]==7.6.9
+coverage[toml]==7.6.12
     # via pytest-cov
 exceptiongroup==1.2.2
     # via pytest
 iniconfig==2.0.0
     # via pytest
-mock==5.1.0
+mock==5.2.0
     # via -r requirements/test.in
-more-itertools==10.5.0
+more-itertools==10.6.0
     # via -r requirements/test.in
 pluggy==1.5.0
     # via pytest
-pytest==8.3.4
+pytest==8.3.5
     # via
     #   -r requirements/test.in
     #   pytest-cov
