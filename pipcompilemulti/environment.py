@@ -115,7 +115,7 @@ class Environment(object):
         return FEATURES.compose_output_file_path(self.in_path)
 
     @staticmethod
-    def _check_uv_available():
+    def check_uv_available():
         """Check if uv package is available"""
         try:
             subprocess.run(
@@ -133,10 +133,10 @@ class Environment(object):
         """Compose dependency resolution command based on selected tool"""
         # Use the same interpreter binary
         python = sys.executable or 'python'
-        
+
         # Check if uv is enabled
         if FEATURES.use_uv.get():
-            if not self._check_uv_available():
+            if not self.check_uv_available():
                 raise RuntimeError(
                     "UV package is not available. Please install it with: "
                     "pip install uv>=0.1.0"
@@ -152,7 +152,7 @@ class Environment(object):
                 '--no-header',
                 '--verbose',
             ]
-        
+
         parts.extend(FEATURES.pin_options(self.in_path))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts

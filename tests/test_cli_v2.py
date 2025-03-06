@@ -29,7 +29,10 @@ def test_command_exits_with_zero(command, monkeypatch):
     # pylint: disable=redefined-outer-name
     if command == 'verify':
         # Mock run_configurations to always return [True]
-        monkeypatch.setattr('pipcompilemulti.cli_v2.run_configurations', lambda *args, **kwargs: [True])
+        monkeypatch.setattr(
+            'pipcompilemulti.cli_v2.run_configurations',
+            lambda *args, **kwargs: [True],
+        )
     runner = CliRunner()
     result = runner.invoke(cli, [command])
     assert result.exit_code == 0
