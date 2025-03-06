@@ -20,14 +20,6 @@ def cli():
     logging.basicConfig(level=logging.DEBUG, format="%(message)s")
 
 
-def check_uv_availability():
-    """Check if UV is available when the flag is enabled."""
-
-    if FEATURES.use_uv.get() and not Environment.check_uv_available():
-        raise click.UsageError(
-            "UV package is not available. Please install it with: pip install uv>=0.1.0"
-        )
-
 @cli.command()
 @click.option('-u', '--uv', is_flag=True, help='Use uv for faster dependency resolution')
 def lock(uv):
@@ -36,9 +28,7 @@ def lock(uv):
     Use uv for faster dependency resolution if --uv is passed.
     """
     OPTIONS['upgrade'] = False
-    FEATURES.use_uv.set(bool(uv))
-    check_uv_availability()
-    run_configurations(recompile, read_config, use_uv=bool(uv))
+    run_configurations(recompile, read_config)
 
 
 @cli.command()
@@ -50,9 +40,7 @@ def upgrade(uv):
     """
     OPTIONS['upgrade'] = True
     OPTIONS['upgrade_packages'] = []
-    FEATURES.use_uv.set(bool(uv))
-    check_uv_availability()
-    run_configurations(recompile, read_config, use_uv=bool(uv))
+    run_configurations(recompile, read_config)
 
 
 @cli.command()
@@ -63,12 +51,9 @@ def verify(ctx, uv):
 
     Use uv for faster dependency resolution if --uv is passed.
     """
-    FEATURES.use_uv.set(bool(uv))
-    check_uv_availability()
     oks = run_configurations(
         skipper(verify_environments),
         read_sections,
-        use_uv=bool(uv)
     )
     ctx.exit(0
              if False not in oks
@@ -90,20 +75,18 @@ def skipper(func):
     return wrapped
 
 
-def run_configurations(callback, sections_reader, use_uv=False):
+def run_configurations(callback, sections_reader):
     """Parse configurations and execute callback for matching.
 
     Args:
         callback: Function to execute for each matching section
         sections_reader: Function that returns configuration sections
-        use_uv: Whether to use uv instead of pip-compile for dependency resolution
     """
     base = {
         'base_dir': 'requirements',
         'in_ext': 'in',
         'out_ext': 'txt',
         'autoresolve': True,
-        'use_uv': use_uv,
     }
     sections = sections_reader()
     if sections is None:

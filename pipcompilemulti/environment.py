@@ -114,45 +114,12 @@ class Environment(object):
         """Path of the output file"""
         return FEATURES.compose_output_file_path(self.in_path)
 
-    @staticmethod
-    def check_uv_available():
-        """Check if uv package is available"""
-        try:
-            subprocess.run(
-                [sys.executable, '-m', 'uv', '--version'],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True
-            )
-            return True
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            return False
-
     @property
     def pin_command(self):
         """Compose dependency resolution command based on selected tool"""
         # Use the same interpreter binary
-        python = sys.executable or 'python'
-
-        # Check if uv is enabled
-        if FEATURES.use_uv.get():
-            if not self.check_uv_available():
-                raise RuntimeError(
-                    "UV package is not available. Please install it with: "
-                    "pip install uv>=0.1.0"
-                )
-            parts = [
-                python, '-m', 'uv', 'pip', 'compile',
-                '--no-header',
-                '--no-annotate',  # uv doesn't support pip-tools style annotations
-            ]
-        else:
-            parts = [
-                python, '-m', 'piptools', 'compile',
-                '--no-header',
-                '--verbose',
-            ]
-
+        parts = [sys.executable or 'python', '-m']
+        parts.extend(FEATURES.pin_command())
         parts.extend(FEATURES.pin_options(self.in_path))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts
