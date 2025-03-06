@@ -119,15 +119,16 @@ class FeaturesController:
         """Return list of options to pin command."""
         options = []
         options.extend(self.add_hashes.pin_options(in_path))
-        options.extend(self.allow_unsafe.pin_options())
         options.extend(self.annotate_index.pin_options())
-        options.extend(self.backtracking.pin_options())
         options.extend(self.build_isolation.pin_options())
-        options.extend(self.emit_trusted_host.pin_options())
         options.extend(self.extra_index_url.pin_options())
         options.extend(self.upgrade_all.pin_options())
         options.extend(self.upgrade_selected.pin_options())
-        options.extend(self.use_cache.pin_options())
+        if not self.use_uv.value:
+            options.extend(self.allow_unsafe.pin_options())
+            options.extend(self.emit_trusted_host.pin_options())
+            options.extend(self.backtracking.pin_options())
+            options.extend(self.use_cache.pin_options())
         options.extend(self.strip_extras.pin_options())
         return options
 
