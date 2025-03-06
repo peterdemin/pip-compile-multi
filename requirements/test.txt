@@ -6,25 +6,44 @@
 #    pip-compile-multi
 #
 -r base.txt
-coverage[toml]==7.6.9
-    # via pytest-cov
-exceptiongroup==1.2.2
-    # via pytest
-iniconfig==2.0.0
-    # via pytest
-mock==5.1.0
-    # via -r requirements/test.in
-more-itertools==10.5.0
-    # via -r requirements/test.in
-pluggy==1.5.0
-    # via pytest
-pytest==8.3.4
+coverage[toml]==7.6.12
     # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   pytest-cov
+exceptiongroup==1.2.2
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   pytest
+iniconfig==2.0.0
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   pytest
+mock==5.2.0
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   -r requirements/test.in
+more-itertools==10.6.0
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   -r requirements/test.in
+pluggy==1.5.0
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   pytest
+pytest==8.3.5
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
     #   -r requirements/test.in
     #   pytest-cov
 pytest-cov==6.0.0
-    # via -r requirements/test.in
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   -r requirements/test.in
 uv==0.6.4
-    # via -r requirements/test.in
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   -r requirements/test.in
 
 # The following packages are considered to be unsafe in a requirements file:
+# pip
+# setuptools

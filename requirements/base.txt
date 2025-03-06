@@ -6,34 +6,41 @@
 #    pip-compile-multi
 #
 build==1.2.2.post1
-    # via pip-tools
-click==8.1.7
     # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   pip-tools
+click==8.1.8
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==8.5.0
-    # via build
 packaging==24.2
-    # via build
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   build
 pip-tools==7.4.1
-    # via -r requirements/base.in
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   -r requirements/base.in
 pyproject-hooks==1.2.0
     # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
     #   build
     #   pip-tools
 tomli==2.2.1
     # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
     #   build
     #   pip-tools
 toposort==1.10
-    # via -r requirements/base.in
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   -r requirements/base.in
 wheel==0.45.1
-    # via pip-tools
-zipp==3.21.0
-    # via importlib-metadata
+    # via
+    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.txt
+    #   pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==24.3.1
-    # via pip-tools
-setuptools==75.6.0
-    # via pip-tools
+# pip
+# setuptools
