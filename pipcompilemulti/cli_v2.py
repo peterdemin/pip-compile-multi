@@ -22,8 +22,8 @@ def cli():
 
 def check_uv_availability():
     """Check if UV is available when the flag is enabled."""
-    
-    if FEATURES.use_uv.get() and not Environment._check_uv_available():
+
+    if FEATURES.use_uv.get() and not Environment.check_uv_available():
         raise click.UsageError(
             "UV package is not available. Please install it with: pip install uv>=0.1.0"
         )
@@ -32,7 +32,7 @@ def check_uv_availability():
 @click.option('-u', '--uv', is_flag=True, help='Use uv for faster dependency resolution')
 def lock(uv):
     """Lock new dependencies without upgrading.
-    
+
     Use uv for faster dependency resolution if --uv is passed.
     """
     OPTIONS['upgrade'] = False
@@ -45,7 +45,7 @@ def lock(uv):
 @click.option('-u', '--uv', is_flag=True, help='Use uv for faster dependency resolution')
 def upgrade(uv):
     """Upgrade locked dependency versions.
-    
+
     Use uv for faster dependency resolution if --uv is passed.
     """
     OPTIONS['upgrade'] = True
@@ -60,7 +60,7 @@ def upgrade(uv):
 @click.pass_context
 def verify(ctx, uv):
     """Verify environments.
-    
+
     Use uv for faster dependency resolution if --uv is passed.
     """
     FEATURES.use_uv.set(bool(uv))
@@ -92,7 +92,7 @@ def skipper(func):
 
 def run_configurations(callback, sections_reader, use_uv=False):
     """Parse configurations and execute callback for matching.
-    
+
     Args:
         callback: Function to execute for each matching section
         sections_reader: Function that returns configuration sections

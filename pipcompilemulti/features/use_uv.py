@@ -33,7 +33,7 @@ from .base import BaseFeature
 
 class UseUV(BaseFeature):
     """Use uv for dependency resolution.
-    
+
     This feature enables using uv's fast Rust-based dependency resolver
     instead of pip-tools. UV must be installed (pip install uv>=0.1.0)
     before using this feature.
@@ -43,9 +43,9 @@ class UseUV(BaseFeature):
         """Initialize with disabled state."""
         self.enabled = False
 
-    def extract_option(self, options):
+    def extract_option(self, kwargs):
         """Extract use_uv option."""
-        self.enabled = options.pop('use_uv', False)
+        self.enabled = kwargs.pop('use_uv', False)
 
     def bind(self, command):
         """Add --uv option to command."""
