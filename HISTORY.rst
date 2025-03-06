@@ -1,6 +1,15 @@
 History
 =======
 
+2.8.0 (2024-11-27)
+------------------
+
+* Add ``--uv`` flag to use UV instead of pip-tools.
+  (PR `#483`_, thanks to `Mustafa Tevfik Kadan`_).
+
+.. _#483: https://github.com/peterdemin/pip-compile-multi/pull/483
+.. _Mustafa Tevfik Kadan: https://github.com/ktevfik
+
 2.7.0 (2024-11-27)
 ------------------
 
