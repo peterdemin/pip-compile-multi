@@ -93,6 +93,28 @@ class FeaturesController:
             save_command_options = feature.bind(save_command_options)
         return save_command_options
 
+    def pin_command(self):
+        """Return list of pin command parameters."""
+        if self.use_uv.value:
+            if not self.use_uv.is_available():
+                raise RuntimeError(
+                    "UV package is not available. "
+                    "Please install it with: pip install uv"
+                )
+            return [
+                'uv',
+                'pip',
+                'compile',
+                '--no-header',
+                '--no-annotate',  # uv doesn't support pip-tools style annotations
+            ]
+        return [
+            'piptools',
+            'compile',
+            '--no-header',
+            '--verbose',
+        ]
+
     def pin_options(self, in_path):
         """Return list of options to pin command."""
         options = []

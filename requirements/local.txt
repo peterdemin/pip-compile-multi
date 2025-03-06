@@ -20,8 +20,6 @@ cachetools==5.5.0
     # via tox
 certifi==2024.12.14
     # via requests
-cffi==1.17.1
-    # via cryptography
 cfgv==3.4.0
     # via pre-commit
 chardet==5.2.0
@@ -32,8 +30,6 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==44.0.0
-    # via secretstorage
 dill==0.3.9
     # via pylint
 distlib==0.3.9
@@ -65,10 +61,6 @@ jaraco-context==6.0.1
     # via keyring
 jaraco-functools==4.1.0
     # via keyring
-jeepney==0.8.0
-    # via
-    #   keyring
-    #   secretstorage
 jinja2==3.1.4
     # via sphinx
 keyring==25.5.0
@@ -106,8 +98,6 @@ pycodestyle==2.12.1
     # via
     #   -r requirements/local.in
     #   flake8
-pycparser==2.22
-    # via cffi
 pydocstyle==6.3.0
     # via -r requirements/local.in
 pyflakes==3.2.0
@@ -137,8 +127,6 @@ rfc3986==2.0.0
     # via twine
 rich==13.9.4
     # via twine
-secretstorage==3.3.3
-    # via keyring
 snowballstemmer==2.2.0
     # via
     #   pydocstyle
