@@ -8,8 +8,6 @@ from .options import OPTIONS
 from .config import read_config, read_sections
 from .actions import recompile
 from .verify import verify_environments
-from .features import FEATURES
-from .environment import Environment
 
 logger = logging.getLogger("pip-compile-multi")
 
@@ -21,36 +19,24 @@ def cli():
 
 
 @cli.command()
-@click.option('-u', '--uv', is_flag=True, help='Use uv for faster dependency resolution')
-def lock(uv):
-    """Lock new dependencies without upgrading.
-
-    Use uv for faster dependency resolution if --uv is passed.
-    """
+def lock():
+    """Lock new dependencies without upgrading."""
     OPTIONS['upgrade'] = False
     run_configurations(recompile, read_config)
 
 
 @cli.command()
-@click.option('-u', '--uv', is_flag=True, help='Use uv for faster dependency resolution')
-def upgrade(uv):
-    """Upgrade locked dependency versions.
-
-    Use uv for faster dependency resolution if --uv is passed.
-    """
+def upgrade():
+    """Upgrade locked dependency versions."""
     OPTIONS['upgrade'] = True
     OPTIONS['upgrade_packages'] = []
     run_configurations(recompile, read_config)
 
 
 @cli.command()
-@click.option('-u', '--uv', is_flag=True, help='Use uv for faster dependency resolution')
 @click.pass_context
-def verify(ctx, uv):
-    """Verify environments.
-
-    Use uv for faster dependency resolution if --uv is passed.
-    """
+def verify(ctx):
+    """Verify environments."""
     oks = run_configurations(
         skipper(verify_environments),
         read_sections,
