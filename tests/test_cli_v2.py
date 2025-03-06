@@ -24,7 +24,7 @@ def requirements_dir():
 
 
 @pytest.mark.parametrize('command', ['lock', 'upgrade', 'verify'])
-def test_command_exits_with_zero(command, monkeypatch):
+def test_command_exits_with_zero(command):
     """Run requirements command on self"""
     runner = CliRunner()
     result = runner.invoke(cli, [command])

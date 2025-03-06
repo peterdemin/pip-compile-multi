@@ -38,6 +38,12 @@ To use UV:
 - Install ``uv`` (``pip install uv``)
 - Use the ``--uv`` flag with commands: ``lock --uv``, ``upgrade --uv``, ``verify --uv``
 """
+try:
+    import uv  #
+    del uv
+    UV_AVAILABLE = True
+except ImportError:
+    UV_AVAILABLE = False
 
 from .base import BaseFeature, ClickOption
 
@@ -61,10 +67,4 @@ class UseUV(BaseFeature):
     @staticmethod
     def is_available():
         """Check if uv package is available"""
-        try:
-            import uv
-            del uv
-            return True
-        except ImportError:
-            return False
-
+        return UV_AVAILABLE
