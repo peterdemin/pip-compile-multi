@@ -71,55 +71,44 @@ coverage[toml]==7.6.12 \
     --hash=sha256:f60a297c3987c6c02ffb29effc70eadcbb412fe76947d394a1091a3615948e2f \
     --hash=sha256:f973643ef532d4f9be71dd88cf7588936685fdb576d93a79fe9f65bc337d9d73
     # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
     #   -r requirements/test.txt
     #   pytest-cov
 exceptiongroup==1.2.2 \
     --hash=sha256:3111b9d131c238bec2f8f516e123e14ba243563fb135d3fe885990585aa7795b \
     --hash=sha256:47c2edf7c6738fafb49fd34290706d1a1a2f4d1c6df275526b62cbb4aa5393cc
     # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
     #   -r requirements/test.txt
     #   pytest
 iniconfig==2.0.0 \
     --hash=sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3 \
     --hash=sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374
     # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
     #   -r requirements/test.txt
     #   pytest
 mock==5.2.0 \
     --hash=sha256:4e460e818629b4b173f32d08bf30d3af8123afbb8e04bb5707a1fd4799e503f0 \
     --hash=sha256:7ba87f72ca0e915175596069dbbcc7c75af7b5e9b9bc107ad6349ede0819982f
-    # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
-    #   -r requirements/test.txt
+    # via -r requirements/test.txt
 more-itertools==10.6.0 \
     --hash=sha256:2cd7fad1009c31cc9fb6a035108509e6547547a7a738374f10bd49a09eb3ee3b \
     --hash=sha256:6eb054cb4b6db1473f6e15fcc676a08e4732548acd47c708f0e179c2c7c01e89
-    # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
-    #   -r requirements/test.txt
+    # via -r requirements/test.txt
 pluggy==1.5.0 \
     --hash=sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1 \
     --hash=sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669
     # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
     #   -r requirements/test.txt
     #   pytest
 pytest==8.3.5 \
     --hash=sha256:c69214aa47deac29fad6c2a4f590b9c4a9fdb16a403176fe154b79c0b4d4d820 \
     --hash=sha256:f4efe70cc14e511565ac476b57c279e12a855b11f48f212af1080ef2263d3845
     # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
     #   -r requirements/test.txt
     #   pytest-cov
 pytest-cov==6.0.0 \
     --hash=sha256:eee6f1b9e61008bd34975a4d5bab25801eb31898b032dd55addc93e96fcaaa35 \
     --hash=sha256:fde0b595ca248bb8e2d76f020b465f3b107c9632e6a1d1705f17834c89dcadc0
-    # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
-    #   -r requirements/test.txt
+    # via -r requirements/test.txt
 uv==0.6.4 \
     --hash=sha256:1c5d5732165b91caeb5a05111d2f6bc5189003a378a91c77c89c9ee9ac24269f \
     --hash=sha256:27a40ddeef491e4c8bba240e14511663c920a978d5214cdfe81bdab78791d969 \
@@ -139,12 +128,6 @@ uv==0.6.4 \
     --hash=sha256:d3517a11127cb0c7efb6cab050b644a979afa7e461762a51c384500a50b03c9c \
     --hash=sha256:e8af445b2c5c39200093dbc1a3d99b0c5ebf42acb0848de2e2154ffa8d286ba1 \
     --hash=sha256:ff342965f8a50e64e97275ff350c91fb09c75aa484d098cf57a7b2cf74938b79
-    # via
-    #   -c /Users/peterdemin/pip-compile-multi/requirements/local.hash
-    #   -r requirements/test.txt
+    # via -r requirements/test.txt
 
-# WARNING: The following packages were not pinned, but pip requires them to be
-# pinned when the requirements file includes hashes and the requirement is not
-# satisfied by a package already installed. Consider using the --allow-unsafe flag.
-# pip
-# setuptools
+# The following packages are considered to be unsafe in a requirements file:
