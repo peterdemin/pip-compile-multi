@@ -47,7 +47,7 @@ filelock==3.18.0
     # via
     #   tox
     #   virtualenv
-flake8==7.1.2
+flake8==7.2.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
@@ -102,7 +102,7 @@ platformdirs==4.3.7
     #   virtualenv
 pre-commit==4.2.0
     # via -r requirements/local.in
-pycodestyle==2.12.1
+pycodestyle==2.13.0
     # via
     #   -r requirements/local.in
     #   flake8
@@ -110,7 +110,7 @@ pycparser==2.22
     # via cffi
 pydocstyle==6.3.0
     # via -r requirements/local.in
-pyflakes==3.2.0
+pyflakes==3.3.2
     # via flake8
 pygments==2.19.1
     # via
@@ -136,7 +136,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.9.4
+rich==14.0.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -160,7 +160,7 @@ sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
 tomlkit==0.13.2
     # via pylint
-tox==4.24.2
+tox==4.25.0
     # via -r requirements/local.in
 twine==6.1.0
     # via -r requirements/local.in
@@ -174,7 +174,7 @@ urllib3==2.3.0
     # via
     #   requests
     #   twine
-virtualenv==20.29.3
+virtualenv==20.30.0
     # via
     #   -r requirements/local.in
     #   pre-commit
