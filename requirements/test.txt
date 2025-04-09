@@ -6,7 +6,7 @@
 #    pip-compile-multi
 #
 -r base.txt
-coverage[toml]==7.7.1
+coverage[toml]==7.8.0
     # via pytest-cov
 exceptiongroup==1.2.2
     # via pytest
@@ -22,9 +22,9 @@ pytest==8.3.5
     # via
     #   -r requirements/test.in
     #   pytest-cov
-pytest-cov==6.0.0
+pytest-cov==6.1.1
     # via -r requirements/test.in
-uv==0.6.10
+uv==0.6.13
     # via -r requirements/test.in
 
 # The following packages are considered to be unsafe in a requirements file:
