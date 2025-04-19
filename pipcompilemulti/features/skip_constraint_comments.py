@@ -10,18 +10,23 @@ pip-compile adds it to "via" comments. For example::
          #   -c constraints.txt
          #   google-auth
 
-When this option is enabled that snippet will be converted to::
+When this option is enabled (default) that snippet will be converted to::
 
     rsa==3.4.2
          # via google-auth
 
 Saving two lines in .txt file.
+This feature is especially useful in combination with :ref:`autoresolve`.
 
 .. code-block:: text
 
-    --skip-constraints      Remove constraints from "via" comments.
+    --skip-constraints / --no-skip-constraints
+                                  Remove constraints from "via" comments.
 
-This feature is especially useful in combination with :ref:`autoresolve`.
+To include constraint comments, set it to ``False`` in a configuration file::
+
+    [requirements]
+    skip_constraints = False
 """
 
 import re
@@ -34,9 +39,9 @@ class SkipConstraintComments(BaseFeature):
 
     OPTION_NAME = 'skip_constraints'
     CLICK_OPTION = ClickOption(
-        long_option='--skip-constraints',
+        long_option='--skip-constraints/--no-skip-constraints',
         is_flag=True,
-        default=False,
+        default=True,
         help_text='Remove constraints from "via" comments.',
     )
     _RE_VIA_COMMENT = re.compile(

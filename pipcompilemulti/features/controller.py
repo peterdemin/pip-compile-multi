@@ -15,7 +15,6 @@ from .extra_index_url import ExtraIndexUrl
 from .file_extensions import InputExtension, OutputExtension
 from .forbid_post import ForbidPost
 from .header import CustomHeader
-from .limit_envs import LimitEnvs
 from .limit_in_paths import LimitInPaths
 from .live_output import LiveOutput
 from .skip_constraint_comments import SkipConstraintComments
@@ -44,7 +43,6 @@ class FeaturesController:
         self.forbid_post = ForbidPost()
         self.header = CustomHeader()
         self.input_extension = InputExtension()
-        self.limit_envs = LimitEnvs(self)
         self.limit_in_paths = LimitInPaths()
         self.live_output = LiveOutput()
         self.output_extension = OutputExtension()
@@ -68,7 +66,6 @@ class FeaturesController:
             self.forbid_post,
             self.header,
             self.input_extension,
-            self.limit_envs,
             self.limit_in_paths,
             self.live_output,
             self.output_extension,
@@ -160,7 +157,6 @@ class FeaturesController:
         Returns a new possibly shorter env list.
         """
         self.upgrade_selected.reset()
-        self.limit_envs.on_discover(env_confs)
         self.limit_in_paths.on_discover(env_confs)
         limited_env_confs = [env for env in env_confs if self.included(env['in_path'])]
         self.add_hashes.on_discover(limited_env_confs)
@@ -177,9 +173,7 @@ class FeaturesController:
 
     def included(self, in_path):
         """Whether in_path is included directly or by reference."""
-        return (
-            self.limit_envs.included(in_path) and self.limit_in_paths.included(in_path)
-        )
+        return self.limit_in_paths.included(in_path)
 
     def get_header_text(self):
         """Text to put in the beginning of each generated file."""

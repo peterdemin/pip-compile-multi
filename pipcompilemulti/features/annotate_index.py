@@ -25,6 +25,11 @@ which means that it doesn't need to be configured in every environment.
                                     Add index URL to generated files
                                     (default false)
 
+In configuration file, use ``annotate_index`` option::
+
+    [requirements]
+    annotate_index = True
+
 Note: the default behavior is not to add the index, i.e., ``--no-annotate-index``.
 """
 

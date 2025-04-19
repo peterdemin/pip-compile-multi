@@ -8,6 +8,11 @@ while assuring the constraints compatibility.
 .. code-block:: text
 
     --strip-extras          Try avoiding use of extras.
+
+In configuration file, use ``strip_extras`` option::
+
+    [requirements]
+    strip_extras = True
 """
 from .base import ClickOption
 from .forward import ForwardOption

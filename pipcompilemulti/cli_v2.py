@@ -4,33 +4,36 @@ import logging
 
 import click
 
-from .options import OPTIONS
-from .config import read_config, read_sections
 from .actions import recompile
+from .config import read_config, read_sections
+from .options import OPTIONS
 from .verify import verify_environments
 
 logger = logging.getLogger("pip-compile-multi")
+DEFAULT_OPTIONS = {
+    'directory': 'requirements',
+    'in_ext': 'in',
+    'out_ext': 'txt',
+    'autoresolve': True,
+}
 
 
 @click.group()
 def cli():
     """Human-friendly interface to pip-compile-multi"""
-    logging.basicConfig(level=logging.DEBUG, format="%(message)s")
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 
 @cli.command()
 def lock():
     """Lock new dependencies without upgrading."""
-    OPTIONS['upgrade'] = False
-    run_configurations(recompile, read_config)
+    run_configurations(recompile, read_config, upgrade=False)
 
 
 @cli.command()
 def upgrade():
     """Upgrade locked dependency versions."""
-    OPTIONS['upgrade'] = True
-    OPTIONS['upgrade_packages'] = []
-    run_configurations(recompile, read_config)
+    run_configurations(recompile, read_config, upgrade=True, upgrade_packages=[])
 
 
 @cli.command()
@@ -53,7 +56,7 @@ def skipper(func):
     @functools.wraps(func)
     def wrapped():
         """Dummy docstring to make pylint happy."""
-        key = (OPTIONS['base_dir'], OPTIONS['in_ext'], OPTIONS['out_ext'])
+        key = (OPTIONS['directory'], OPTIONS['in_ext'], OPTIONS['out_ext'])
         if key not in seen:
             seen[key] = func()
         return seen[key]
@@ -61,19 +64,13 @@ def skipper(func):
     return wrapped
 
 
-def run_configurations(callback, sections_reader):
+def run_configurations(callback, sections_reader, **overrides):
     """Parse configurations and execute callback for matching.
 
     Args:
         callback: Function to execute for each matching section
         sections_reader: Function that returns configuration sections
     """
-    base = {
-        'base_dir': 'requirements',
-        'in_ext': 'in',
-        'out_ext': 'txt',
-        'autoresolve': True,
-    }
     sections = sections_reader()
     if sections is None:
         logger.info("Configuration not found in .ini files. "
@@ -85,8 +82,9 @@ def run_configurations(callback, sections_reader):
     results = []
     for section, options in sections:
         OPTIONS.clear()
-        OPTIONS.update(base)
+        OPTIONS.update(DEFAULT_OPTIONS)
         OPTIONS.update(options)
+        OPTIONS.update(overrides)
         logger.debug("Running configuration from section \"%s\". OPTIONS: %r",
                      section, OPTIONS)
         results.append(callback())

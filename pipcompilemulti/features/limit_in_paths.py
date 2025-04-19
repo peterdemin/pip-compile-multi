@@ -17,10 +17,16 @@ For example, to compile one file under Python2.7 and another under Python3.6, ru
 
 .. code-block:: text
 
-    $ virtual-env27/bin/pip-compile-multi -t requirements/deps27.in
+    $ pip-compile-multi -t requirements/deps27.in
     Locking requirements/deps27.in to requirements/deps27.txt. References: []
-    $ virtual-env36/bin/pip-compile-multi -t requirements/deps36.in
+    $ pip-compile-multi -t requirements/deps36.in
     Locking requirements/deps36.in to requirements/deps36.txt. References: []
+
+When using ``requirements`` command, use ``include_in_paths`` configuration option with a comma-separated list of paths.
+For example::
+
+    [requirements Python 3.6]
+    include_in_paths = requirements/deps36.in
 """
 
 from pipcompilemulti.utils import recursive_refs

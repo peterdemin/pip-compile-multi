@@ -9,6 +9,11 @@ is printed only in case of failure.
 .. code-block:: text
 
     --live / --no-live              Print debug output from pip-compile live.
+
+In configuration file, use ``live`` option::
+
+    [requirements]
+    live = True
 """
 import subprocess
 

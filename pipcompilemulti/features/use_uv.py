@@ -9,6 +9,11 @@ When enabled, pip-compile-multi will use uv's dependency resolver instead of pip
 
     --uv / --no-uv      Use uv for dependency resolution.
 
+In configuration file, use ``uv`` option::
+
+    [requirements]
+    uv = True
+
 Key differences between uv and pip-tools output:
 
 1. Annotations:

@@ -13,6 +13,11 @@ See also the `a note on resolvers`_ in ``pip-compile`` project.
                                 Enable backtracking resolver. Translates to
                                 pip-compile --resolver=backtracking option.
 
+In configuration file, use ``backtracking`` option::
+
+    [requirements]
+    backtracking = True
+
 .. _backtracking: https://pip.pypa.io/en/latest/user_guide/\
         #changes-to-the-pip-dependency-resolver-in-20-3-2020
 .. _a note on resolvers: https://github.com/jazzband/pip-tools#a-note-on-resolvers

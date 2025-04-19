@@ -9,6 +9,11 @@ The directory can be overridden with this option:
 .. code-block:: text
 
     -d, --directory TEXT   Directory path with requirements files
+
+In configuration file, use ``directory`` option. For example, to use project root, specify::
+
+    [requirements]
+    directory = .
 """
 
 import os
@@ -19,7 +24,7 @@ from .base import BaseFeature, ClickOption
 class BaseDir(BaseFeature):
     """Override input file extension."""
 
-    OPTION_NAME = 'base_dir'
+    OPTION_NAME = 'directory'
     CLICK_OPTION = ClickOption(
         long_option='--directory',
         short_option='-d',

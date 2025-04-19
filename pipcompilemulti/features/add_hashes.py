@@ -13,11 +13,16 @@ Format for this option is
                               For backwards compatibility can be short
                               environment name (base, test, etc.)
 
+In configuration file, use ``generate_hashes`` option with comma-separated list of paths::
+
+    [requirements]
+    generate_hashes = requirements/base.txt, requirements/docs.txt
+
 Example invocation:
 
 .. code-block:: shell
 
-    $ pip-compile-multi -g base -g docs
+    $ pip-compile-multi -g requirements/base.txt -g requirements/docs.txt
 
 Example output:
 
@@ -44,7 +49,7 @@ from .base import BaseFeature, ClickOption
 class AddHashes(BaseFeature):
     """Write hashes for pinned packages."""
 
-    OPTION_NAME = 'add_hashes'
+    OPTION_NAME = 'generate_hashes'
     CLICK_OPTION = ClickOption(
         long_option='--generate-hashes',
         short_option='-g',

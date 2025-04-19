@@ -13,6 +13,11 @@ you can pass this option to do so:
                                 in generated requirements files. Consult
                                 pip-compile --help for more information
 
+In configuration file, use ``allow_unsafe`` option::
+
+    [requirements]
+    allow_unsafe = True
+
 This is commonly used with --generate-hashes to avoid
 generating requirements files which `cannot be installed`_.
 

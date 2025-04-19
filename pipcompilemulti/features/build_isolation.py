@@ -12,6 +12,11 @@ Build isolation is enabled by default.
                                   source distribution. Build dependencies
                                   specified by PEP 518 must be already
                                   installed if build isolation is disabled.
+
+In configuration file, use ``build_isolation`` option::
+
+    [requirements]
+    build_isolation = False
 """
 from .base import ClickOption
 from .forward import ForwardOption

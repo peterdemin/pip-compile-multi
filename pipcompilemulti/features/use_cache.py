@@ -2,26 +2,26 @@
 Use Cache
 =========
 
-By default ``pip-compile-multi`` executes ``pip-compile`` with
-``--rebuild`` flag.
-This flag clears any caches upfront and rebuilds from scratch.
-Such a strategy has proven to be more reliable in `edge cases`_,
-but causes significant performance degradation.
-
-Option ``--use-cache`` removes ``--rebuild`` flag from the call
-to ``pip-compile``.
+By default ``pip-compile-multi`` executes ``pip-compile`` without ``--rebuild`` flag.
+``--rebuild`` flag clears any caches upfront and rebuilds from scratch.
+Option ``--no-use-cache`` adds ``--rebuild`` flag.
 
 .. code-block:: text
 
-    -u, --use-cache             Use pip-tools cache to speed up compilation.
+  --use-cache / --no-use-cache    Use pip-tools cache to speed up compilation
+                                  (default true)
+
+In configuration file, use ``use_cache`` option::
+
+    [requirements]
+    use_cache = False
 
 .. note::
 
-    When using ``--use-cache``, ``pip-compile-multi`` can
-    run **10 times faster**. But if you run into "magical" issues,
-    try to rerun compilation without this flag first.
+    But if you run into "magical_" issues,
+    try rerunning compilation with ``--no-use-cache``.
 
-.. _edge cases: https://github.com/jazzband/pip-tools/issues?q=--rebuild
+.. _magical: https://github.com/jazzband/pip-tools/issues?q=--rebuild
 """
 
 from .base import ClickOption
@@ -33,10 +33,9 @@ class UseCache(ForwardOption):
 
     OPTION_NAME = 'use_cache'
     CLICK_OPTION = ClickOption(
-        long_option='--use-cache',
-        short_option='-u',
+        long_option='--use-cache/--no-use-cache',
         is_flag=True,
-        default=False,
-        help_text='Use pip-tools cache to speed up compilation.',
+        default=True,
+        help_text='Use pip-tools cache to speed up compilation (default true)',
     )
     disabled_pin_options = ['--rebuild']

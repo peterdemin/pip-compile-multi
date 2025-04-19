@@ -9,6 +9,12 @@ While this is a common naming pattern, each project can use it's own:
 
     -i, --in-ext TEXT      File extension of input files
     -o, --out-ext TEXT     File extension of output files
+
+In configuration file, use ``in_ext`` and ``out_ext`` options. For example::
+
+    [requirements Hashed]
+    in_ext = txt
+    out_ext = hash
 """
 
 import os

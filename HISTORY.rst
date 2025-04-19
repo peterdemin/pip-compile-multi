@@ -1,6 +1,14 @@
 History
 =======
 
+3.0.0 (2025-04-18)
+------------------
+
+* Add second-generation CLI entrypoint ``requirements``.
+* Make ``--use-cache`` enabled by default.
+* Make ``--skip-constraints`` enabled by default.
+* Removed deprecated ``-n, --only-name`` option. Use ``-t, --only-path`` instead.
+
 2.8.0 (2024-11-27)
 ------------------
 
@@ -13,7 +21,7 @@ History
 2.7.0 (2024-11-27)
 ------------------
 
-* Remove Python 3.8 from tested versions
+* Remove Python 3.8 from tested versions.
   Using Python 3.9 as the base version going forward.
 
 2.6.4 (2023-06-06)

@@ -20,6 +20,11 @@ If no trusted hosts are defined, this flag doesn't have any effect.
                                     Add trusted host to generated files
                                     (default true)
 
+In configuration file, use ``emit_trusted_host`` option::
+
+    [requirements]
+    emit_trusted_host = False
+
 See also: `annotate_index`_ and `extra_index_url`_ options.
 
 See pip-tools issue `#382`_ for more details.

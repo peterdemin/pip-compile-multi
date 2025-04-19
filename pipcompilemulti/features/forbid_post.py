@@ -11,6 +11,11 @@ Forbid .postX release
                                 (1.2.3.post777).
                                 Can be supplied multiple times.
 
+In configuration file, use ``forbid_post`` option with comma-separated list of packages::
+
+    [requirements]
+    forbid_post = package1, package2
+
 .. note::
 
     Be careful with this option since different maintainers treat

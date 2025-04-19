@@ -1,8 +1,9 @@
 """Get tasks options from INI file"""
 import sys
 import configparser
+from functools import lru_cache
 
-from .options import LIST_OPTIONS
+from .features.base import BaseFeature
 
 
 def read_config():
@@ -48,11 +49,27 @@ def read_sections():
     ]
 
 
+@lru_cache(maxsize=None)
+def _collect_feature_options():
+    subclasses = BaseFeature.__subclasses__()
+    for feature_class in BaseFeature.__subclasses__():
+        subclasses.extend(feature_class.__subclasses__())
+    return {
+        feature_class.OPTION_NAME: feature_class.CLICK_OPTION
+        for feature_class in subclasses
+        if feature_class.OPTION_NAME and feature_class.CLICK_OPTION
+    }
+
+
 def parse_value(key, value):
     """Parse value as comma-delimited list if key is in LIST_OPTIONS"""
-    if key in LIST_OPTIONS:
-        return [item.strip()
-                for item in value.split(',')]
+    options = _collect_feature_options()
+    click_option = options.get(key)
+    if click_option:
+        if click_option.multiple:
+            return [item.strip() for item in value.split(',')]
+        if click_option.is_flag:
+            return value.lower() not in ('false', 'off', 'no')
     return value
 
 

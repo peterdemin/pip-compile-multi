@@ -8,7 +8,7 @@ Pip accepts URLs for additional package indexes through ``--extra-index-url``.
 The same option can be passed to ``pip-compile-multi`` during compilation.
 
 This option is similar to `annotate_index`_.
-The difference is that the passed URL is not saved in any of the files,
+The difference is that the passed URL is not saved in output files,
 which is helpful if the URL contains private credentials.
 
 .. code-block:: text
@@ -17,6 +17,10 @@ which is helpful if the URL contains private credentials.
                                     for package versions. Can be supplied
                                     multiple times.
 
+In configuration file, use ``extra_index_url`` option with comma-separated list of paths::
+
+    [requirements]
+    extra_index_url = https://pypi.acme.com/simple
 
 .. warning::
 

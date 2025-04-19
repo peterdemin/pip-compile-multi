@@ -26,6 +26,11 @@ To run:
 
     pip-compile-multi
 
+Introduced in 3.0.0, the new CLI uses a configuration file `requirements.ini`:
+
+.. code-block:: shell
+
+    requirements [lock|upgrade|verify]
 
 Why use pip-compile-multi?
 ==========================

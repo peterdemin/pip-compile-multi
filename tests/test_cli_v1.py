@@ -15,7 +15,7 @@ from .utils import temp_dir
 def requirements_dir():
     """Create temporary requirements directory for test time."""
     with temp_dir() as tmp_dir:
-        OPTIONS['base_dir'] = tmp_dir
+        OPTIONS['directory'] = tmp_dir
         yield
 
 

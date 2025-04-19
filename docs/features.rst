@@ -2,6 +2,8 @@ Features
 --------
 
 ``pip-compile-multi`` supports many options to customize compilation.
+Each option can be specified in `requirements.ini` file, by replacing dashes with underscores.
+For example, `--use-cache` becomes `use_cache`.
 
 .. automodule:: pipcompilemulti.features.base_dir
 
@@ -20,8 +22,6 @@ Features
 .. automodule:: pipcompilemulti.features.header
 
 .. automodule:: pipcompilemulti.features.limit_in_paths
-
-.. automodule:: pipcompilemulti.features.limit_envs
 
 .. automodule:: pipcompilemulti.features.annotate_index
 

@@ -11,6 +11,9 @@ To recompile ``.txt`` keeping satisfying version use ``--no-upgrade``:
 
 The option has no effect if there are no existing ``.txt`` files.
 
+When using the ``requirements`` command, disabling upgrades means running ``requirements lock``.
+Upgrades are enabled when running ``requirements upgrade``.
+
 Upgrade only selected packages
 ==============================
 
@@ -21,6 +24,11 @@ use following option:
 
     -P, --upgrade-package TEXT  Only upgrade named package.
                                 Can be supplied multiple times.
+
+When using the ``requirements`` command, to upgrade only selected packages
+pass the list of packages to ``requirements upgrade`` command::
+
+    requirements upgrade Django cryptography
 
 Under the hood it uses `the same option of pip-compile`_
 and runs compilation only for files that have one of the passed packages.

@@ -6,14 +6,18 @@ Compatible Releases
 Sometimes it's useful to have some of the dependencies
 pinned using this operator.
 For example, rapidly changing internal libraries.
-The format for this option is
-
-.. code-block:: text
+The format for this option is::
 
     -c, --compatible TEXT
 
 where TEXT is a `glob`_ pattern for library name.
 This option can be supplied multiple times.
+
+In configuration file, use ``compatible`` option with comma-separated list of package names::
+
+    [requirements]
+    compatible = package1, package2
+
 
 .. _glob: https://en.wikipedia.org/wiki/Glob_(programming)
 .. _PEP-440: https://www.python.org/dev/peps/pep-0440/#compatible-release

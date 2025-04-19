@@ -49,11 +49,8 @@ with open(os.path.join('requirements', 'base.in'), encoding='utf-8') as fp:
 
 CONSOLE_SCRIPTS = [
     'pip-compile-multi = pipcompilemulti.cli_v1:cli',
+    'requirements = pipcompilemulti.cli_v2:cli',
 ]
-if os.environ.get('PCM_ALPHA') == 'ON':
-    CONSOLE_SCRIPTS.append(
-        'requirements = pipcompilemulti.cli_v2:cli'
-    )
 
 
 setup(

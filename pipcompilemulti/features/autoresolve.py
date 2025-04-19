@@ -12,6 +12,12 @@ and than use it as a constraint.
     --autoresolve/--no-autoresolve Automatically resolve
                                    cross-file conflicts.
 
+When using ``requirements`` command, this option is enabled by default.
+To disable it, set it to ``False`` in a configuration file::
+
+    [requirements]
+    autoresolve = False
+
 This strategy allows to resolve cross-file conflicts of two types:
 
 1. Files FOO and BAR both have dependency PKG, but compile it to different versions.
