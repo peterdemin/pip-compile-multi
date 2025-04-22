@@ -8,11 +8,12 @@ pip-compile-multi
 
 Pip-compile-multi is a command line utility, that compiles multiple
 requirements files to lock dependency versions.
-Underneath it uses `pip-tools`_ for actual compilation.
-Pip-compile-multi targets complex projects and provides highest
-level of automation and flexibility in class.
+Underneath it uses `pip-tools`_ or uv_ for actual compilation.
+Pip-compile-multi targets complex projects and provides high
+level of automation and flexibility.
 
 .. _pip-tools: https://github.com/jazzband/pip-tools
+.. _uv: https://docs.astral.sh/uv/
 
 To install:
 
@@ -26,7 +27,7 @@ To run:
 
     pip-compile-multi
 
-Introduced in 3.0.0, the new CLI uses a configuration file `requirements.ini`:
+Introduced in 3.0.0, the new CLI uses a configuration file ``requirements.ini`` (or ``setup.cfg`` or ``tox.ini``):
 
 .. code-block:: shell
 

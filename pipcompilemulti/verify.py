@@ -10,12 +10,25 @@ Command
 .. code-block:: shell
 
     $ pip-compile-multi verify
-    Verifying that requirements/base.txt was generated from requirements/base.in.
-    Success - comments match.
-    Verifying that requirements/test.txt was generated from requirements/test.in.
-    Success - comments match.
-    Verifying that requirements/local.txt was generated from requirements/local.in.
-    Success - comments match.
+    OK - requirements/base.txt was generated from requirements/base.in.
+    OK - requirements/test.txt was generated from requirements/test.in.
+    OK - requirements/local.txt was generated from requirements/local.in.
+    OK - requirements/testwin.txt was generated from requirements/testwin.in.
+
+Or, if using ``requirements`` command:
+
+.. code-block:: shell
+
+    $ requirements verify
+    OK - requirements/base.txt was generated from requirements/base.in.
+    OK - requirements/test.txt was generated from requirements/test.in.
+    OK - requirements/local.txt was generated from requirements/local.in.
+    OK - requirements/testwin.txt was generated from requirements/testwin.in.
+    OK - requirements/base.hash was generated from requirements/base.txt.
+    OK - requirements/test.hash was generated from requirements/test.txt.
+    OK - requirements/local.hash was generated from requirements/local.txt.
+    OK - requirements/testwin.hash was generated from requirements/testwin.txt.
+
 
 recalculates hashes for ``.in`` files and compares them with the stored values.
 
@@ -24,14 +37,12 @@ If verification fails, an error message is logged and exit code 1 is returned:
 .. code-block:: shell
 
     $ pip-compile-multi verify
-    Verifying that requirements/base.txt was generated from requirements/base.in.
-    Success - comments match.
-    Verifying that requirements/test.txt was generated from requirements/test.in.
-    FAILURE!
-    Expecting: # SHA1:c93d71964e14b04f3c8327d16dbc4d6b1bbc3b1d
-    Found:     # SHA1:6c2562322ca1bdc8309b08581a2aa4efbb5a4534
-    Verifying that requirements/local.txt was generated from requirements/local.in.
-    Success - comments match.
+    ERROR! requirements/base.txt was not regenerated after changes in requirements/base.in.
+    Expecting: # SHA1:7d82ce5a82b0a6cf91b2c4debe90eb1e5ef37f37
+    Found:     # SHA1:32737333f763ceffd22b7fcb76fbe62a538296fa
+    OK - requirements/test.txt was generated from requirements/test.in.
+    OK - requirements/local.txt was generated from requirements/local.in.
+    OK - requirements/testwin.txt was generated from requirements/testwin.in.
 
 
 In big teams it might be a good idea to have this check in ``tox.ini``:
