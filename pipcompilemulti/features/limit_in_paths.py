@@ -22,7 +22,8 @@ For example, to compile one file under Python2.7 and another under Python3.6, ru
     $ pip-compile-multi -t requirements/deps36.in
     Locking requirements/deps36.in to requirements/deps36.txt. References: []
 
-When using ``requirements`` command, use ``include_in_paths`` configuration option with a comma-separated list of paths.
+When using ``requirements`` command, use ``include_in_paths`` configuration
+option with a comma-separated list of paths.
 For example::
 
     [requirements Python 3.6]
