@@ -62,7 +62,7 @@ def _collect_feature_options():
 
 
 def parse_value(key, value):
-    """Parse value as comma-delimited list if key is in LIST_OPTIONS"""
+    """Parse value according to the option definition (bool or list)"""
     options = _collect_feature_options()
     click_option = options.get(key)
     if click_option:

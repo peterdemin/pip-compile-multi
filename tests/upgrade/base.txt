@@ -5,7 +5,7 @@
 #
 #    requirements upgrade
 #
-markupsafe==2.1.2
+markupsafe==2.0.1
     # via -r tests/upgrade/base.in
-wheel==0.45.1
+wheel==0.29.0
     # via -r tests/upgrade/base.in

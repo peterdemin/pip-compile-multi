@@ -90,6 +90,7 @@ def test_package_upgrade(test_data_tmpdir, name, args):
     result = runner.invoke(
         cli,
         [*args, '--directory', str(working_root)],
+        catch_exceptions=False,
     )
     assert result.exit_code == 0
 
