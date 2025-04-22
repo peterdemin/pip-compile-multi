@@ -3,11 +3,13 @@
 import os.path
 from pathlib import Path
 
-from click.testing import CliRunner
 import pytest
+from click.testing import CliRunner
+
+from pipcompilemulti import environment, verify
 from pipcompilemulti.cli_v1 import cli
 from pipcompilemulti.options import OPTIONS
-from pipcompilemulti import environment, verify
+
 from .utils import temp_dir
 
 
@@ -24,7 +26,7 @@ def requirements_dir():
 def test_v1_command_exits_with_zero(command, monkeypatch):
     """Run pip-compile-multi on self.
 
-    pip-compile-multi --only-name local --generate-hashes local \
+    pip-compile-multi --only-path local.txt --generate-hashes local \
             --in-ext txt --out-ext hash --use-cache \
             --autoresolve
     """
@@ -39,15 +41,21 @@ def test_v1_command_exits_with_zero(command, monkeypatch):
     monkeypatch.setattr('pipcompilemulti.environment.Environment.fix_pin', mock_fix_pin)
 
     runner = CliRunner()
-    parameters = [command, '--autoresolve', '--only-name', 'local', '--use-cache']
-    result = runner.invoke(cli, parameters)
-    parameters.extend([
+    common_parameters = [command, '--autoresolve', '--use-cache']
+    parameters = common_parameters + [
+        '--only-path', OPTIONS['directory'] + '/local.in',
+    ]
+    result = runner.invoke(cli, parameters, catch_exceptions=False)
+    assert result.exit_code == 0
+    parameters = common_parameters + [
         '--generate-hashes', 'local',
         '--in-ext', 'txt',
         '--out-ext', 'hash',
-    ])
-    result = runner.invoke(cli, parameters)
+        '--only-path', OPTIONS['directory'] + '/local.txt',
+    ]
+    result = runner.invoke(cli, parameters, catch_exceptions=False)
     assert result.exit_code == 0
+
 
 def test_v1_verify_exits_with_zero(monkeypatch):
     """Run pip-compile-multi on self"""
