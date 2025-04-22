@@ -1,8 +1,8 @@
 History
 =======
 
-3.0.0 (2025-04-18)
-------------------
+3.0.0 Beta 1 (2025-04-18)
+-------------------------
 
 * Add second-generation CLI entrypoint ``requirements``.
 * Make ``--use-cache`` enabled by default.
