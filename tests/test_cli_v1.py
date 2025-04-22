@@ -41,13 +41,14 @@ def test_v1_command_exits_with_zero(command, monkeypatch):
     monkeypatch.setattr('pipcompilemulti.environment.Environment.fix_pin', mock_fix_pin)
 
     runner = CliRunner()
-    common_parameters = [command, '--autoresolve', '--use-cache']
+    common_parameters = ['--autoresolve', '--use-cache']
     parameters = common_parameters + [
-        '--only-path', OPTIONS['directory'] + '/local.in',
+        command, '--only-path', OPTIONS['directory'] + '/local.in',
     ]
     result = runner.invoke(cli, parameters, catch_exceptions=False)
     assert result.exit_code == 0
     parameters = common_parameters + [
+        '--no-upgrade',
         '--generate-hashes', 'local',
         '--in-ext', 'txt',
         '--out-ext', 'hash',
