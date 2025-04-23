@@ -31,9 +31,10 @@ def lock():
 
 
 @cli.command()
-def upgrade():
+@click.argument('packages', nargs=-1)
+def upgrade(packages):
     """Upgrade locked dependency versions."""
-    run_configurations(recompile, read_config, upgrade=True, upgrade_packages=[])
+    run_configurations(recompile, read_config, upgrade=True, upgrade_packages=packages)
 
 
 @cli.command()
