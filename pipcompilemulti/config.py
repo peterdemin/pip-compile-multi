@@ -1,5 +1,6 @@
 """Get tasks options from INI file"""
 import sys
+import os
 import configparser
 from functools import lru_cache
 
@@ -33,20 +34,51 @@ def filter_sections(sections):
 
 
 def read_sections():
-    """Read ini files and return list of pairs (name, options)"""
-    config = configparser.ConfigParser()
-    config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
-    return [
-        (
-            name,
-            {
-                key: parse_value(key, config[name][key])
-                for key in config[name]
-            }
-        )
-        for name in config.sections()
-        if 'requirements' in name
-    ]
+    """Read ini/toml files and return list of pairs (name, options)"""
+    if sys.version_info >= (3, 11):
+        import tomllib
+    else:
+        import tomli as tomllib
+
+    config = None
+    if os.path.isfile("pyproject.toml"):
+        with open("pyproject.toml", mode="rb") as fp:
+            toml_config = tomllib.load(fp)
+
+        config = toml_config.get("tool", {}).get("pip-compile-multi", {})
+
+    # TOML supports richer data types than ini files (strings, arrays, floats, ints, etc),
+    # however we need to convert all scalar values to str for compatibility with the rest
+    # of the configuration system, which expects strings only.
+    def make_scalar(v: object) -> str | list[str]:
+        return v if isinstance(v, list) else str(v)
+
+    if config:
+        return [
+            (
+                name,
+                {
+                    key: parse_value(key, make_scalar(config[name][key]))
+                    for key in config[name]
+                }
+            )
+            for name in config
+            if 'requirements' in name
+        ]
+    else:
+        config = configparser.ConfigParser()
+        config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
+        return [
+            (
+                name,
+                {
+                    key: parse_value(key, config[name][key])
+                    for key in config[name]
+                }
+            )
+            for name in config.sections()
+            if 'requirements' in name
+        ]
 
 
 @lru_cache(maxsize=None)
