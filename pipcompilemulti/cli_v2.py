@@ -74,8 +74,8 @@ def run_configurations(callback, sections_reader, **overrides):
     """
     sections = sections_reader()
     if sections is None:
-        logger.info("Configuration not found in .ini files. "
-                    "Running with default settings")
+        logger.info("Configuration not found in pyproject.toml "
+                    "or one of .ini files. Running with default settings")
         recompile()
     elif sections == []:
         logger.info("Configuration does not match current runtime. "
