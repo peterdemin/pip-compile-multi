@@ -8,7 +8,7 @@ Supported configuration files: ``pyproject.toml``, ``requirements.ini``, ``setup
 
 In INI files, use section name starting with ``requirements:``, for example: ``[requirements:Python 3]``
 
-In ``pyproject.toml`` prefix section name with ``tool.pip-compile-multi``, for example: ``[tool.pip-compile-multi.requirements]``.
+In ``pyproject.toml`` prefix section name with ``tool.requirements``, for example: ``[tool.requirements.python3]`` or ``[tool.requirements]``.
 
 .. automodule:: pipcompilemulti.features.base_dir
 

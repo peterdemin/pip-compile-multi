@@ -61,14 +61,20 @@ def _read_cfg_sections():
 
 def _read_toml_sections():
     # pylint: disable=import-outside-toplevel
-    if sys.version_info >= (3, 11):
+    try:
         import tomllib
-    else:
-        import tomli as tomllib
+    except ImportError:
+        try:
+            import tomli as tomllib
+        except ImportError:
+            return []
 
     with open("pyproject.toml", mode="rb") as fp:
         toml_config = tomllib.load(fp)
-    config = toml_config.get("tool", {}).get("pip-compile-multi", {})
+    config = toml_config.get("tool", {}).get("requirements")
+    if config and any(not isinstance(v, dict) for v in config.values()):
+        # Allow [tool.requirements] section
+        config = {'config': config}
     return [
         (
             name,
