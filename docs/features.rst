@@ -2,12 +2,13 @@ Features
 --------
 
 ``pip-compile-multi`` supports many options to customize compilation.
-Each option can be specified in ``requirements.ini`` file, by replacing dashes with underscores.
-Options can also be specified in the ``pyproject.toml`` file by going adding the ``[tool.pip-compile-multi.requirements]``
-section and defining the same options there using TOML syntax. If the TOML file is available with that section defined,
-it will take precedence over other pip-compile-multi configuration files
-
+Each option can be specified in requirements configuration file, by replacing dashes with underscores.
 For example, `--use-cache` becomes `use_cache`.
+Supported configuration files: ``pyproject.toml``, ``requirements.ini``, ``setup.cfg``, ``tox.ini``.
+
+In INI files, use section name starting with ``requirements:``, for example: ``[requirements:Python 3]``
+
+In ``pyproject.toml`` prefix section name with ``tool.pip-compile-multi``, for example: ``[tool.pip-compile-multi.requirements]``.
 
 .. automodule:: pipcompilemulti.features.base_dir
 

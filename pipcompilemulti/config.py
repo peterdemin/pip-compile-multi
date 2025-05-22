@@ -2,9 +2,10 @@
 import sys
 import os
 import configparser
+from typing import Dict, List, Union
 from functools import lru_cache
 
-from .features.base import BaseFeature
+from .features.base import BaseFeature, ClickOption
 
 
 def read_config():
@@ -35,54 +36,64 @@ def filter_sections(sections):
 
 def read_sections():
     """Read ini/toml files and return list of pairs (name, options)"""
+    sections = []
+    if os.path.isfile("pyproject.toml"):
+        sections.extend(_read_toml_sections())
+    sections.extend(_read_cfg_sections())
+    return sections
+
+
+def _read_cfg_sections():
+    parser = configparser.ConfigParser()
+    parser.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
+    return [
+        (
+            name,
+            {
+                key: parse_value(key, parser[name][key])
+                for key in parser[name]
+            }
+        )
+        for name in parser.sections()
+        if 'requirements' in name
+    ]
+
+
+def _read_toml_sections():
+    # pylint: disable=import-outside-toplevel
     if sys.version_info >= (3, 11):
         import tomllib
     else:
         import tomli as tomllib
 
-    config = None
-    if os.path.isfile("pyproject.toml"):
-        with open("pyproject.toml", mode="rb") as fp:
-            toml_config = tomllib.load(fp)
+    with open("pyproject.toml", mode="rb") as fp:
+        toml_config = tomllib.load(fp)
+    config = toml_config.get("tool", {}).get("pip-compile-multi", {})
+    return [
+        (
+            name,
+            {
+                key: parse_value(key, _make_toml_scalar(config[name][key]))
+                for key in config[name]
+            }
+        )
+        for name in config
+    ]
 
-        config = toml_config.get("tool", {}).get("pip-compile-multi", {})
 
-    # TOML supports richer data types than ini files (strings, arrays, floats, ints, etc),
-    # however we need to convert all scalar values to str for compatibility with the rest
-    # of the configuration system, which expects strings only.
-    def make_scalar(v: object) -> str | list[str]:
-        return v if isinstance(v, list) else str(v)
+def _make_toml_scalar(v: object) -> str:
+    """Coalesce TOML value to string.
 
-    if config:
-        return [
-            (
-                name,
-                {
-                    key: parse_value(key, make_scalar(config[name][key]))
-                    for key in config[name]
-                }
-            )
-            for name in config
-            if 'requirements' in name
-        ]
-    else:
-        config = configparser.ConfigParser()
-        config.read(('requirements.ini', 'setup.cfg', 'tox.ini'))
-        return [
-            (
-                name,
-                {
-                    key: parse_value(key, config[name][key])
-                    for key in config[name]
-                }
-            )
-            for name in config.sections()
-            if 'requirements' in name
-        ]
+    TOML supports richer data types than ini files (strings, arrays,
+    floats, ints, etc), however we need to convert all scalar values
+    to str for compatibility with the rest of the configuration system,
+    which expects strings only.
+    """
+    return ",".join(v) if isinstance(v, list) else str(v)
 
 
 @lru_cache(maxsize=None)
-def _collect_feature_options():
+def _collect_feature_options() -> Dict[str, ClickOption]:
     subclasses = BaseFeature.__subclasses__()
     for feature_class in BaseFeature.__subclasses__():
         subclasses.extend(feature_class.__subclasses__())
@@ -93,7 +104,7 @@ def _collect_feature_options():
     }
 
 
-def parse_value(key, value):
+def parse_value(key: str, value: str) -> Union[str, List[str], bool]:
     """Parse value according to the option definition (bool or list)"""
     options = _collect_feature_options()
     click_option = options.get(key)

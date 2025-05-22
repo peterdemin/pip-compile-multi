@@ -27,7 +27,7 @@ To run:
 
     pip-compile-multi
 
-Introduced in 3.0.0, the new CLI uses a configuration file ``requirements.ini`` (or ``setup.cfg`` or ``tox.ini``):
+Introduced in 3.0.0, the new CLI reads configuration from ``pyproject.toml`` (or one of INI files: ``requirements.ini``, ``setup.cfg``, ``tox.ini``):
 
 .. code-block:: shell
 
