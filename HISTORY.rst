@@ -1,6 +1,16 @@
 History
 =======
 
+3.1.0 (2025-05-23)
+------------------
+
+* Add support for ``pyproject.toml`` for ``requirements`` configuration.
+  (Issue `#496`_, PR `#498`_, thanks to `Abir A`_).
+
+.. _#496: https://github.com/peterdemin/pip-compile-multi/issues/496
+.. _#498: https://github.com/peterdemin/pip-compile-multi/pull/498
+.. _Abir A: https://github.com/Some7hing0riginal
+
 3.0.0 (2025-04-23)
 ------------------
 
