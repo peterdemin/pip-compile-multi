@@ -23,7 +23,8 @@ Key differences between uv and pip-tools output:
 To use UV:
 
 - Install ``uv`` (``pip install uv``)
-- Pass ``--uv`` flag to ``pip-compile-multi`` or add ``uv = True`` when using ``requirements`` command.
+- Pass ``--uv`` flag to ``pip-compile-multi``
+  or add ``uv = True`` when using ``requirements`` command.
 """
 try:
     import uv  #
