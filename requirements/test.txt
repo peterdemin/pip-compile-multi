@@ -22,7 +22,7 @@ pluggy==1.6.0
     #   pytest-cov
 pygments==2.19.1
     # via pytest
-pytest==8.4.0
+pytest==8.4.1
     # via
     #   -r requirements/test.in
     #   pytest-cov

@@ -158,7 +158,7 @@ tox==4.27.0
     # via -r requirements/local.in
 twine==6.1.0
     # via -r requirements/local.in
-urllib3==2.4.0
+urllib3==2.5.0
     # via
     #   requests
     #   twine
