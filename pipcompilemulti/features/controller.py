@@ -103,7 +103,6 @@ class FeaturesController:
                 'pip',
                 'compile',
                 '--no-header',
-                '--no-annotate',  # uv doesn't support pip-tools style annotations
             ]
         return [
             'piptools',
