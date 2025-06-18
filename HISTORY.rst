@@ -1,6 +1,14 @@
 History
 =======
 
+3.2.0 (2025-06-17)
+------------------
+
+* Enable annotations for uv resolver. (Requires uv>=0.7)
+  (Issue `#505`_)
+
+.. _#505: https://github.com/peterdemin/pip-compile-multi/issues/505
+
 3.1.0 (2025-05-23)
 ------------------
 
