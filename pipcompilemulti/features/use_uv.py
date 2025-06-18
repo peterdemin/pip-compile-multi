@@ -16,32 +16,14 @@ In configuration file, use ``uv`` option::
 
 Key differences between uv and pip-tools output:
 
-1. Annotations:
-
-   - UV doesn't support pip-tools style annotations (via/from comments).
-   - The ``--no-annotate`` flag is automatically added when using uv.
-
-2. Performance:
-
-   - UV is significantly faster at dependency resolution.
-   - Particularly noticeable in large projects with complex dependency trees.
-
-3. Output Format:
-
-   - UV produces cleaner output without header comments.
-   - Package versions are still pinned exactly like pip-tools.
-   - Hash generation (``--generate-hashes``) works the same way.
-
-4. Version Resolution:
-
-   - UV may occasionally resolve to slightly different versions than pip-tools.
-   - Both tools respect version constraints equally.
-   - UV's resolver is more aggressive at finding newer versions.
+1. UV is significantly faster at dependency resolution.
+   Particularly noticeable in large projects with complex dependency trees.
+2. UV's resolver is more aggressive at finding newer versions.
 
 To use UV:
 
 - Install ``uv`` (``pip install uv``)
-- Use the ``--uv`` flag with commands: ``lock --uv``, ``upgrade --uv``, ``verify --uv``
+- Pass ``--uv`` flag to ``pip-compile-multi`` or add ``uv = True`` when using ``requirements`` command.
 """
 try:
     import uv  #
