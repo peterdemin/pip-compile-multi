@@ -1,6 +1,11 @@
 History
 =======
 
+3.2.1 (2025-06-19)
+------------------
+
+* Fix a bug when loading configuration from ``pyproject.toml`` that doesn't have ``[tool.requirements]`` section.
+
 3.2.0 (2025-06-17)
 ------------------
 

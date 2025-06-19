@@ -37,8 +37,7 @@ def filter_sections(sections):
 def read_sections():
     """Read ini/toml files and return list of pairs (name, options)"""
     sections = []
-    if os.path.isfile("pyproject.toml"):
-        sections.extend(_read_toml_sections())
+    sections.extend(_read_toml_sections())
     sections.extend(_read_cfg_sections())
     return sections
 
@@ -69,21 +68,25 @@ def _read_toml_sections():
         except ImportError:
             return []
 
+    if not os.path.isfile("pyproject.toml"):
+        return []
     with open("pyproject.toml", mode="rb") as fp:
         toml_config = tomllib.load(fp)
     config = toml_config.get("tool", {}).get("requirements")
-    if config and any(not isinstance(v, dict) for v in config.values()):
+    if not config:
+        return []
+    if not all(isinstance(v, dict) for v in config.values()):
         # Allow [tool.requirements] section
         config = {'config': config}
     return [
         (
             name,
             {
-                key: parse_value(key, _make_toml_scalar(config[name][key]))
-                for key in config[name]
+                key: parse_value(key, _make_toml_scalar(value))
+                for key, value in section.items()
             }
         )
-        for name in config
+        for name, section in config.items()
     ]
 
 

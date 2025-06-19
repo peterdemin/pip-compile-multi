@@ -1,0 +1,5 @@
+[tool.requirements.one]
+uv=true
+
+[tool.requirements.two]
+generate_hashes="file.txt"
