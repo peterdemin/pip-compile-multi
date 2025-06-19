@@ -75,6 +75,8 @@ def _read_toml_sections():
     if config and any(not isinstance(v, dict) for v in config.values()):
         # Allow [tool.requirements] section
         config = {'config': config}
+    else:
+        return []
     return [
         (
             name,
