@@ -47,7 +47,7 @@ filelock==3.18.0
     # via
     #   tox
     #   virtualenv
-flake8==7.2.0
+flake8==7.3.0
     # via
     #   -r requirements/local.in
     #   pep8-naming
@@ -65,7 +65,7 @@ jaraco-classes==3.4.0
     # via keyring
 jaraco-context==6.0.1
     # via keyring
-jaraco-functools==4.1.0
+jaraco-functools==4.2.1
     # via keyring
 jeepney==0.9.0
     # via
@@ -102,7 +102,7 @@ platformdirs==4.3.8
     #   virtualenv
 pre-commit==4.2.0
     # via -r requirements/local.in
-pycodestyle==2.13.0
+pycodestyle==2.14.0
     # via
     #   -r requirements/local.in
     #   flake8
@@ -110,7 +110,7 @@ pycparser==2.22
     # via cffi
 pydocstyle==6.3.0
     # via -r requirements/local.in
-pyflakes==3.3.2
+pyflakes==3.4.0
     # via flake8
 pylint==3.3.7
     # via -r requirements/local.in
