@@ -4,7 +4,7 @@ import os
 from setuptools import setup, find_packages
 
 
-VERSION = "3.2.1"
+VERSION = "3.2.2"
 
 
 README = """
