@@ -46,7 +46,6 @@ The following issues have the highest impact for the project. Contributions are 
 
 1. `Pull requirements from pyproject.toml <https://github.com/peterdemin/pip-compile-multi/issues/283>`_
 2. `Productionize GitHub Action to update dependencies on schedule <https://github.com/peterdemin/pip-compile-multi/issues/188>`_
-3. `Add option to use Astral's uv resolver <https://github.com/peterdemin/pip-compile-multi/issues/450>`_
 
 Your mission, should you choose to accept it, is to comment on the issue you want to work on, and open a PR.
 I'll review/merge the PR in a timely fashion, and release a new version with your name in the `changelog <https://github.com/peterdemin/pip-compile-multi/blob/master/HISTORY.rst>`_.
