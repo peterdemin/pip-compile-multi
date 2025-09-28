@@ -1,6 +1,16 @@
 History
 =======
 
+3.2.2 (2025-06-19)
+------------------
+
+* Fix ``TypeError`` is not triggered when sections is None.
+  (Issue `#516`_, PR `#517`_, thanks to `Nikola Trandafilovic`_.)
+    
+.. _#516: https://github.com/peterdemin/pip-compile-multi/issues/516
+.. _#517: https://github.com/peterdemin/pip-compile-multi/pull/517
+.. _Nikola Trandafilovic: https://github.com/elrik
+
 3.2.1 (2025-06-19)
 ------------------
 
@@ -18,7 +28,7 @@ History
 ------------------
 
 * Add support for ``pyproject.toml`` for ``requirements`` configuration.
-  (Issue `#496`_, PR `#498`_, thanks to `Abir A`_).
+  (Issue `#496`_, PR `#498`_, thanks to `Abir A`_.)
 
 .. _#496: https://github.com/peterdemin/pip-compile-multi/issues/496
 .. _#498: https://github.com/peterdemin/pip-compile-multi/pull/498
