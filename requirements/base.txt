@@ -11,13 +11,13 @@ click==8.1.8
     # via
     #   -r requirements/base.in
     #   pip-tools
-importlib-metadata==8.7.0
+importlib-metadata==8.7.1
     # via build
 packaging==25.0
     # via build
-pip==25.2
+pip==25.3
     # via pip-tools
-pip-tools==7.5.1
+pip-tools==7.5.2
     # via -r requirements/base.in
 pyproject-hooks==1.2.0
     # via
