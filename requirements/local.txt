@@ -59,6 +59,8 @@ idna==3.11
     # via requests
 imagesize==1.4.1
     # via sphinx
+importlib-metadata==9.0.0
+    # via keyring
 isort==6.1.0
     # via pylint
 jaraco-classes==3.4.0
@@ -167,3 +169,5 @@ virtualenv==20.35.3
     #   -r requirements/local.in
     #   pre-commit
     #   tox
+zipp==3.23.0
+    # via importlib-metadata
