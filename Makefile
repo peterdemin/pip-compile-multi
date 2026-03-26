@@ -20,12 +20,12 @@ sync: requirements/local.hash virtual_env_set
 	docker run --rm -it -v $(PWD):/pcm $$(docker build -q .) /usr/bin/make $*-ubuntu
 
 .PHONY: %-ubuntu
-%-ubuntu: .venv39
-	.venv39/bin/python3 -m pip install tox
-	.venv39/bin/python3 -m tox -e $*
+%-ubuntu: .venv3
+	.venv3/bin/python3 -m pip install tox
+	.venv3/bin/python3 -m tox -e $*
 
-.venv39:
-	python3.9 -m venv .venv39
+.venv3:
+	python3.10 -m venv .venv3
 
 .PHONY: lock
 lock: virtual_env_set
@@ -43,7 +43,7 @@ test:
 .PHONY: clean
 clean:
 	rm -rf build dist pip-compile-multi.egg-info docs/_build
-	rm -rf .venv39
+	rm -rf .venv3
 	find . -name "*.pyc" -delete
 	find * -type d -name '__pycache__' | xargs rm -rf
 

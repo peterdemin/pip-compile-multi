@@ -1,6 +1,13 @@
 History
 =======
 
+3.3.0 (2025-03-25)
+------------------
+
+* Add Python 3.14 to supported versions.
+* Remove Python 3.9 from supported versions.
+* Using Python 3.10 as the base version going forward.
+
 3.2.2 (2025-06-19)
 ------------------
 
