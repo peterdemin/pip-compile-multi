@@ -34,6 +34,7 @@ def test_command_exits_with_zero(command):
 def patched_config(directory):
     """Override directory in each section of config."""
     config_sections = read_config()
+    assert config_sections
     for _, section in config_sections:
         section['directory'] = directory
     return config_sections
