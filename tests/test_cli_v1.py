@@ -69,7 +69,7 @@ def test_v1_verify_exits_with_zero(monkeypatch):
 
 def _load_tree(root, replace_name=None):
     if not replace_name:
-        replace_name = str(root)
+        replace_name = str(root).replace('\\', '/')
     return {
         x.relative_to(root).name: x.read_text().replace(replace_name, 'ROOT').replace('\\', '/')
         for x in root.glob('**/*.txt')
