@@ -11,6 +11,9 @@ from click.testing import CliRunner
 from pipcompilemulti.options import OPTIONS
 
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
 @pytest.fixture()
 def runner():
     """Fixture for invoking CLI commands."""
@@ -30,7 +33,7 @@ def test_data_tmpdir():
     with contextlib.ExitStack() as stack:
 
         def copy(test_data_name):
-            source = os.path.join('tests', test_data_name)
+            source = os.path.join(HERE, test_data_name)
             tmp_dir = stack.enter_context(tempfile.TemporaryDirectory())
             os.rmdir(tmp_dir)
             shutil.copytree(source, tmp_dir)

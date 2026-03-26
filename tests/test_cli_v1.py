@@ -8,16 +8,17 @@ from click.testing import CliRunner
 
 from pipcompilemulti import environment, verify
 from pipcompilemulti.cli_v1 import cli
-from pipcompilemulti.options import OPTIONS
 
 from .utils import temp_dir
+
+
+HERE = Path(__file__).parent
 
 
 @pytest.fixture(autouse=True)
 def requirements_dir():
     """Create temporary requirements directory for test time."""
-    with temp_dir() as tmp_dir:
-        OPTIONS['directory'] = tmp_dir
+    with temp_dir():
         yield
 
 
@@ -43,7 +44,7 @@ def test_v1_command_exits_with_zero(command, monkeypatch):
     runner = CliRunner()
     common_parameters = ['--autoresolve', '--use-cache']
     parameters = common_parameters + [
-        command, '--only-path', OPTIONS['directory'] + '/local.in',
+        command, '--only-path', 'requirements/local.in',
     ]
     result = runner.invoke(cli, parameters, catch_exceptions=False)
     assert result.exit_code == 0
@@ -52,7 +53,7 @@ def test_v1_command_exits_with_zero(command, monkeypatch):
         '--generate-hashes', 'local',
         '--in-ext', 'txt',
         '--out-ext', 'hash',
-        '--only-path', OPTIONS['directory'] + '/local.txt',
+        '--only-path', 'requirements/local.txt',
     ]
     result = runner.invoke(cli, parameters, catch_exceptions=False)
     assert result.exit_code == 0
@@ -94,11 +95,10 @@ def test_package_upgrade(test_data_tmpdir, name, args):
     )
     assert result.exit_code == 0
 
-    expected_root = Path('tests') / (name + '-expected')
     expected = _load_tree(
-        expected_root,
+        HERE / f'{name}-expected',
         # Cope with posix style reference data on Windows
-        replace_name=str(expected_root).replace(os.path.sep, '/'),
+        replace_name=f'tests/{name}-expected',
     )
     actual = _load_tree(working_root)
 
