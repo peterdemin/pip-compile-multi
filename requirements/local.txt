@@ -118,7 +118,7 @@ pylint==4.0.5
     # via -r requirements/local.in
 pyproject-api==1.10.0
     # via tox
-python-discovery==1.2.0
+python-discovery==1.2.1
     # via virtualenv
 pyyaml==6.0.3
     # via pre-commit
