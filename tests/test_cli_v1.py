@@ -1,6 +1,5 @@
 """End to end tests for CLI v1"""
 
-import os.path
 from pathlib import Path
 
 import pytest
