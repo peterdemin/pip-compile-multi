@@ -41,9 +41,10 @@ def test_v1_command_exits_with_zero(command, monkeypatch):
     monkeypatch.setattr('pipcompilemulti.environment.Environment.fix_pin', mock_fix_pin)
 
     runner = CliRunner()
+    requirements = Path('requirements')
     common_parameters = ['--autoresolve', '--use-cache']
     parameters = common_parameters + [
-        command, '--only-path', 'requirements/local.in',
+        command, '--only-path', str(requirements / 'local.in'),
     ]
     result = runner.invoke(cli, parameters, catch_exceptions=False)
     assert result.exit_code == 0
@@ -52,7 +53,7 @@ def test_v1_command_exits_with_zero(command, monkeypatch):
         '--generate-hashes', 'local',
         '--in-ext', 'txt',
         '--out-ext', 'hash',
-        '--only-path', 'requirements/local.txt',
+        '--only-path', str(requirements / 'local.txt'),
     ]
     result = runner.invoke(cli, parameters, catch_exceptions=False)
     assert result.exit_code == 0
