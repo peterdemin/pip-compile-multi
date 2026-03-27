@@ -31,13 +31,13 @@ def fix_reference_path(orig_path, ref_path):
 def recursive_refs(envs, in_path):
     """Return set of recursive refs for given env name."""
     refs_by_in_path = {
-        env['in_path']: {
+        os.path.normpath(env['in_path']): {
             fix_reference_path(env['in_path'], ref)
             for ref in env['refs']
         }
         for env in envs
     }
-    refs = refs_by_in_path[in_path]
+    refs = refs_by_in_path[os.path.normpath(in_path)]
     if refs:
         indirect_refs = set(
             subref
