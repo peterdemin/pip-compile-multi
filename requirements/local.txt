@@ -119,12 +119,14 @@ pylint==4.0.5
 pyproject-api==1.10.0
     # via tox
 python-discovery==1.2.1
-    # via virtualenv
+    # via
+    #   tox
+    #   virtualenv
 pyyaml==6.0.3
     # via pre-commit
 readme-renderer==44.0
     # via twine
-requests==2.33.0
+requests==2.33.1
     # via
     #   requests-toolbelt
     #   sphinx
@@ -159,7 +161,7 @@ tomli-w==1.2.0
     # via tox
 tomlkit==0.14.0
     # via pylint
-tox==4.50.3
+tox==4.52.0
     # via -r requirements/local.in
 twine==6.2.0
     # via -r requirements/local.in
