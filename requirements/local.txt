@@ -24,13 +24,13 @@ cffi==2.0.0
     # via cryptography
 cfgv==3.5.0
     # via pre-commit
-charset-normalizer==3.4.6
+charset-normalizer==3.4.7
     # via requests
 collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==46.0.6
+cryptography==46.0.7
     # via secretstorage
 dill==0.4.1
     # via pylint
@@ -41,7 +41,7 @@ docutils==0.21.2
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.25.2
+filelock==3.28.0
     # via
     #   python-discovery
     #   tox
@@ -92,11 +92,11 @@ nodeenv==1.10.0
     # via pre-commit
 pep8-naming==0.15.1
     # via -r requirements/local.in
-pipdeptree==2.34.0
+pipdeptree==2.35.1
     # via -r requirements/local.in
 pkginfo==1.10.0
     # via -r requirements/local.in
-platformdirs==4.9.4
+platformdirs==4.9.6
     # via
     #   pylint
     #   python-discovery
@@ -118,13 +118,15 @@ pylint==4.0.5
     # via -r requirements/local.in
 pyproject-api==1.10.0
     # via tox
-python-discovery==1.2.1
-    # via virtualenv
+python-discovery==1.2.2
+    # via
+    #   tox
+    #   virtualenv
 pyyaml==6.0.3
     # via pre-commit
 readme-renderer==44.0
     # via twine
-requests==2.33.0
+requests==2.33.1
     # via
     #   requests-toolbelt
     #   sphinx
@@ -133,7 +135,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==14.3.3
+rich==15.0.0
     # via twine
 secretstorage==3.5.0
     # via keyring
@@ -159,7 +161,7 @@ tomli-w==1.2.0
     # via tox
 tomlkit==0.14.0
     # via pylint
-tox==4.50.3
+tox==4.53.0
     # via -r requirements/local.in
 twine==6.2.0
     # via -r requirements/local.in
@@ -168,10 +170,10 @@ urllib3==2.6.3
     #   id
     #   requests
     #   twine
-virtualenv==21.2.0
+virtualenv==21.2.4
     # via
     #   -r requirements/local.in
     #   pre-commit
     #   tox
-zipp==3.23.0
+zipp==3.23.1
     # via importlib-metadata
