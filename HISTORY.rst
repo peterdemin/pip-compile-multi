@@ -1,6 +1,16 @@
 History
 =======
 
+3.3.1 (2025-04-19)
+------------------
+
+* Add support for `--emit-find-links/--no-emit-find-links`.
+  (Issue `#554`_, PR `#556`_, thanks to `Aidas Bendoraitis`_.)
+
+.. _#554: https://github.com/peterdemin/pip-compile-multi/issues/554
+.. _#556: https://github.com/peterdemin/pip-compile-multi/pull/556
+.. _Aidas Bendoraitis: https://github.com/archatas
+
 3.3.0 (2025-03-25)
 ------------------
 

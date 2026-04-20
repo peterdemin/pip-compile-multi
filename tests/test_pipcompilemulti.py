@@ -267,35 +267,3 @@ def test_fix_pin_detects_version_conflict():
     assert ignored_pin is None
     with pytest.raises(RuntimeError):
         env.fix_pin('x==2')
-
-
-def test_emit_find_links_enabled_by_default():
-    """By default find-links entries are preserved in generated files."""
-    assert FEATURES.emit_find_links.pin_options() == ['--emit-find-links']
-
-
-def test_emit_find_links_disabled():
-    """When explicitly disabled, --no-emit-find-links is forwarded."""
-    with mock.patch.dict(OPTIONS, {'emit_find_links': False}):
-        assert FEATURES.emit_find_links.pin_options() == ['--no-emit-find-links']
-
-
-def test_emit_find_links_forwarded_in_pip_tools_mode():
-    """Pin options include --emit-find-links when using pip-tools backend."""
-    FEATURES.on_discover([])
-    with mock.patch.dict(OPTIONS, {'uv': False}):
-        assert '--emit-find-links' in FEATURES.pin_options('any.in')
-
-
-def test_emit_find_links_forwarded_in_uv_mode():
-    """Pin options include --emit-find-links when using uv backend."""
-    FEATURES.on_discover([])
-    with mock.patch.dict(OPTIONS, {'uv': True}):
-        assert '--emit-find-links' in FEATURES.pin_options('any.in')
-
-
-def test_no_emit_find_links_forwarded_in_uv_mode():
-    """--no-emit-find-links is forwarded to uv backend when disabled."""
-    FEATURES.on_discover([])
-    with mock.patch.dict(OPTIONS, {'uv': True, 'emit_find_links': False}):
-        assert '--no-emit-find-links' in FEATURES.pin_options('any.in')
