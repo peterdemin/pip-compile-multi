@@ -10,6 +10,7 @@ from .backtracking import Backtracking
 from .base_dir import BaseDir
 from .build_isolation import BuildIsolation
 from .compatible import Compatible
+from .emit_find_links import EmitFindLinks
 from .emit_trusted_host import EmitTrustedHost
 from .extra_index_url import ExtraIndexUrl
 from .file_extensions import InputExtension, OutputExtension
@@ -38,6 +39,7 @@ class FeaturesController:
         self.base_dir = BaseDir()
         self.build_isolation = BuildIsolation()
         self.compatible = Compatible()
+        self.emit_find_links = EmitFindLinks()
         self.emit_trusted_host = EmitTrustedHost()
         self.extra_index_url = ExtraIndexUrl()
         self.forbid_post = ForbidPost()
@@ -61,6 +63,7 @@ class FeaturesController:
             self.base_dir,
             self.build_isolation,
             self.compatible,
+            self.emit_find_links,
             self.emit_trusted_host,
             self.extra_index_url,
             self.forbid_post,
@@ -117,6 +120,7 @@ class FeaturesController:
         options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.annotate_index.pin_options())
         options.extend(self.build_isolation.pin_options())
+        options.extend(self.emit_find_links.pin_options())
         options.extend(self.extra_index_url.pin_options())
         options.extend(self.upgrade_all.pin_options())
         options.extend(self.upgrade_selected.pin_options())
