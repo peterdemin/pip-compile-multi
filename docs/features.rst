@@ -34,6 +34,8 @@ In ``pyproject.toml`` prefix section name with ``tool.requirements``, for exampl
 
 .. automodule:: pipcompilemulti.features.emit_trusted_host
 
+.. automodule:: pipcompilemulti.features.emit_find_links
+
 .. automodule:: pipcompilemulti.features.autoresolve
 
 .. automodule:: pipcompilemulti.features.backtracking
