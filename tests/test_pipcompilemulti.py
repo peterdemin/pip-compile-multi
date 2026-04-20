@@ -13,7 +13,6 @@ from pipcompilemulti.dependency import Dependency
 from pipcompilemulti.options import OPTIONS
 from pipcompilemulti.deduplicate import PackageDeduplicator
 from pipcompilemulti.utils import merged_packages, reference_cluster
-from pipcompilemulti.features import FEATURES
 from pipcompilemulti.features.header import DEFAULT_HEADER
 
 
