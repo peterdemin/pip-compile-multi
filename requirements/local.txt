@@ -16,9 +16,9 @@ backports-tarfile==1.2.0
     # via jaraco-context
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==7.0.5
+cachetools==7.0.6
     # via tox
-certifi==2026.2.25
+certifi==2026.4.22
     # via requests
 cffi==2.0.0
     # via cryptography
@@ -41,7 +41,7 @@ docutils==0.21.2
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.28.0
+filelock==3.29.0
     # via
     #   python-discovery
     #   tox
@@ -52,9 +52,9 @@ flake8==7.3.0
     #   pep8-naming
 id==1.6.1
     # via twine
-identify==2.6.18
+identify==2.6.19
     # via pre-commit
-idna==3.11
+idna==3.12
     # via requests
 imagesize==2.0.0
     # via sphinx
@@ -102,7 +102,7 @@ platformdirs==4.9.6
     #   python-discovery
     #   tox
     #   virtualenv
-pre-commit==4.5.1
+pre-commit==4.6.0
     # via -r requirements/local.in
 pycodestyle==2.14.0
     # via

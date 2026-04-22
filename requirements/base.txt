@@ -7,7 +7,7 @@
 #
 build==1.4.3
     # via pip-tools
-click==8.3.2
+click==8.3.3
     # via
     #   -r requirements/base.in
     #   pip-tools
@@ -31,5 +31,5 @@ tomli==2.4.1
     #   pip-tools
 toposort==1.10
     # via -r requirements/base.in
-wheel==0.46.3
+wheel==0.47.0
     # via pip-tools
