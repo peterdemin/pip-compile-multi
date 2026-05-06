@@ -16,9 +16,9 @@ backports-tarfile==1.2.0
     # via jaraco-context
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==7.0.5
+cachetools==7.1.1
     # via tox
-certifi==2026.2.25
+certifi==2026.4.22
     # via requests
 cffi==2.0.0
     # via cryptography
@@ -30,7 +30,7 @@ collective-checkdocs==0.2
     # via -r requirements/local.in
 colorama==0.4.6
     # via tox
-cryptography==46.0.7
+cryptography==48.0.0
     # via secretstorage
 dill==0.4.1
     # via pylint
@@ -41,7 +41,7 @@ docutils==0.21.2
     #   collective-checkdocs
     #   readme-renderer
     #   sphinx
-filelock==3.28.0
+filelock==3.29.0
     # via
     #   python-discovery
     #   tox
@@ -52,9 +52,9 @@ flake8==7.3.0
     #   pep8-naming
 id==1.6.1
     # via twine
-identify==2.6.18
+identify==2.6.19
     # via pre-commit
-idna==3.11
+idna==3.13
     # via requests
 imagesize==2.0.0
     # via sphinx
@@ -76,7 +76,7 @@ jinja2==3.1.6
     # via sphinx
 keyring==25.7.0
     # via twine
-markdown-it-py==4.0.0
+markdown-it-py==4.1.0
     # via rich
 markupsafe==3.0.3
     # via jinja2
@@ -86,13 +86,13 @@ mccabe==0.7.0
     #   pylint
 mdurl==0.1.2
     # via markdown-it-py
-nh3==0.3.4
+nh3==0.3.5
     # via readme-renderer
 nodeenv==1.10.0
     # via pre-commit
 pep8-naming==0.15.1
     # via -r requirements/local.in
-pipdeptree==2.35.1
+pipdeptree==2.35.2
     # via -r requirements/local.in
 pkginfo==1.10.0
     # via -r requirements/local.in
@@ -102,7 +102,7 @@ platformdirs==4.9.6
     #   python-discovery
     #   tox
     #   virtualenv
-pre-commit==4.5.1
+pre-commit==4.6.0
     # via -r requirements/local.in
 pycodestyle==2.14.0
     # via
@@ -118,7 +118,7 @@ pylint==4.0.5
     # via -r requirements/local.in
 pyproject-api==1.10.0
     # via tox
-python-discovery==1.2.2
+python-discovery==1.3.0
     # via
     #   tox
     #   virtualenv
@@ -161,7 +161,7 @@ tomli-w==1.2.0
     # via tox
 tomlkit==0.14.0
     # via pylint
-tox==4.53.0
+tox==4.53.1
     # via -r requirements/local.in
 twine==6.2.0
     # via -r requirements/local.in
@@ -170,7 +170,7 @@ urllib3==2.6.3
     #   id
     #   requests
     #   twine
-virtualenv==21.2.4
+virtualenv==21.3.1
     # via
     #   -r requirements/local.in
     #   pre-commit
