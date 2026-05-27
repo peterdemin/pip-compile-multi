@@ -7,7 +7,7 @@
 #
 build==1.5.0
     # via pip-tools
-click==8.3.3
+click==8.4.1
     # via
     #   -r requirements/base.in
     #   pip-tools
