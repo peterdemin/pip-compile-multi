@@ -7,23 +7,23 @@
 #
 build==1.5.0
     # via pip-tools
-click==8.3.3
+click==8.5.0
     # via
     #   -r requirements/base.in
     #   pip-tools
-packaging==26.2
+packaging==26.3
     # via
     #   build
     #   wheel
-pip==26.1.1
+pip==26.2.1
     # via pip-tools
-pip-tools==7.5.3
+pip-tools==7.6.1
     # via -r requirements/base.in
 pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-setuptools==82.0.1
+setuptools==84.0.0
     # via pip-tools
 tomli==2.4.1
     # via
@@ -31,5 +31,7 @@ tomli==2.4.1
     #   pip-tools
 toposort==1.10
     # via -r requirements/base.in
-wheel==0.47.0
+typing-extensions==4.16.0
+    # via pip-tools
+wheel==0.48.0
     # via pip-tools
