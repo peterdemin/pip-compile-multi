@@ -2,7 +2,6 @@
 
 import os
 import re
-import sys
 import logging
 import subprocess
 
@@ -117,9 +116,7 @@ class Environment(object):
     @property
     def pin_command(self):
         """Compose dependency resolution command based on selected tool"""
-        # Use the same interpreter binary
-        parts = [sys.executable or 'python', '-m']
-        parts.extend(FEATURES.pin_command())
+        parts = FEATURES.pin_command()
         parts.extend(FEATURES.pin_options(self.in_path))
         parts.extend(['--output-file', self.outfile, self.infile])
         return parts

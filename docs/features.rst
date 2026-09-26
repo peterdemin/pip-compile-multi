@@ -48,4 +48,6 @@ In ``pyproject.toml`` prefix section name with ``tool.requirements``, for exampl
 
 .. automodule:: pipcompilemulti.features.use_uv
 
+.. automodule:: pipcompilemulti.features.python_target
+
 .. automodule:: pipcompilemulti.verify

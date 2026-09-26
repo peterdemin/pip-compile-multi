@@ -1,6 +1,7 @@
 """Aggregate all features in a single controller."""
 
 import os
+import sys
 from functools import wraps
 
 from .add_hashes import AddHashes
@@ -18,6 +19,7 @@ from .forbid_post import ForbidPost
 from .header import CustomHeader
 from .limit_in_paths import LimitInPaths
 from .live_output import LiveOutput
+from .python_target import PythonPlatform, PythonVersion
 from .skip_constraint_comments import SkipConstraintComments
 from .strip_extras import StripExtras
 from .unsafe import AllowUnsafe
@@ -48,6 +50,8 @@ class FeaturesController:
         self.limit_in_paths = LimitInPaths()
         self.live_output = LiveOutput()
         self.output_extension = OutputExtension()
+        self.python_platform = PythonPlatform()
+        self.python_version = PythonVersion()
         self.skip_constraint_comments = SkipConstraintComments()
         self.strip_extras = StripExtras()
         self.upgrade_all = UpgradeAll(self)
@@ -72,6 +76,8 @@ class FeaturesController:
             self.limit_in_paths,
             self.live_output,
             self.output_extension,
+            self.python_platform,
+            self.python_version,
             self.skip_constraint_comments,
             self.strip_extras,
             self.upgrade_all,
@@ -96,18 +102,21 @@ class FeaturesController:
     def pin_command(self):
         """Return list of pin command parameters."""
         if self.use_uv.value:
-            if not self.use_uv.is_available():
+            executable = self.use_uv.executable()
+            if not executable:
                 raise RuntimeError(
-                    "UV package is not available. "
-                    "Please install it with: pip install uv"
+                    "uv is not installed. "
+                    "Install it with: pip install uv, or brew install uv"
                 )
-            return [
-                'uv',
+            return executable + [
                 'pip',
                 'compile',
                 '--no-header',
             ]
+        # Use the same interpreter binary
         return [
+            sys.executable or 'python',
+            '-m',
             'piptools',
             'compile',
             '--no-header',
@@ -124,6 +133,8 @@ class FeaturesController:
         options.extend(self.extra_index_url.pin_options())
         options.extend(self.upgrade_all.pin_options())
         options.extend(self.upgrade_selected.pin_options())
+        options.extend(self.python_platform.pin_options(self.use_uv.value))
+        options.extend(self.python_version.pin_options(self.use_uv.value))
         if not self.use_uv.value:
             options.extend(self.allow_unsafe.pin_options())
             options.extend(self.emit_trusted_host.pin_options())
