@@ -1,4 +1,4 @@
--r test.in
+-c test.in
 
 colorama
 atomicwrites
