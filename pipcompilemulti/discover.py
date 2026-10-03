@@ -1,18 +1,20 @@
 """Environment discovery"""
 
-import os
 import glob
+import os
 from collections import deque
+from collections.abc import Collection
 
 from toposort import toposort_flatten
+
 from .environment import Environment
-from .utils import fix_reference_path, extract_env_name
+from .types import EnvironmentSpec
+from .utils import extract_env_name, fix_reference_path
+
+__all__ = ("discover",)
 
 
-__all__ = ('discover',)
-
-
-def discover(glob_pattern):
+def discover(glob_pattern: str) -> list[EnvironmentSpec]:
     """
     Find all files matching given glob_pattern,
     parse them, and return list of environments:
@@ -35,7 +37,8 @@ def discover(glob_pattern):
     True
     """
     to_visit = deque(map(os.path.normpath, glob.glob(glob_pattern)))
-    envs, all_in_paths = {}, set()
+    envs: dict[str, EnvironmentSpec] = {}
+    all_in_paths: set[str] = set()
     while to_visit:
         in_path = to_visit.pop()
         # name =
@@ -43,35 +46,23 @@ def discover(glob_pattern):
             continue
         all_in_paths.add(in_path)
         envs[in_path] = {
-            'in_path': in_path,
-            'name': extract_env_name(in_path),
-            'refs': Environment.parse_references(in_path),
+            "in_path": in_path,
+            "name": extract_env_name(in_path),
+            "refs": Environment.parse_references(in_path),
         }
-        for ref in envs[in_path]['refs']:
-            to_visit.append(fix_reference_path(
-                orig_path=in_path,
-                ref_path=ref
-            ))
+        for ref in envs[in_path]["refs"]:
+            to_visit.append(fix_reference_path(orig_path=in_path, ref_path=ref))
     return order_by_refs(envs.values())
 
 
-def order_by_refs(envs):
+def order_by_refs(envs: Collection[EnvironmentSpec]) -> list[EnvironmentSpec]:
     """Return topologicaly sorted list of environments.
 
     I.e. all referenced environments are placed before their references.
     """
     topology = {
-        env['in_path']: {
-            fix_reference_path(env['in_path'], ref)
-            for ref in env['refs']
-        }
+        env["in_path"]: {fix_reference_path(env["in_path"], ref) for ref in env["refs"]}
         for env in envs
     }
-    by_in_path = {
-        env['in_path']: env
-        for env in envs
-    }
-    return [
-        by_in_path[in_path]
-        for in_path in toposort_flatten(topology)
-    ]
+    by_in_path = {env["in_path"]: env for env in envs}
+    return [by_in_path[in_path] for in_path in toposort_flatten(topology)]

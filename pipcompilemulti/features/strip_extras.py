@@ -14,6 +14,7 @@ In configuration file, use ``strip_extras`` option::
     [requirements]
     strip_extras = True
 """
+
 from .base import ClickOption
 from .forward import ForwardOption
 
@@ -21,11 +22,11 @@ from .forward import ForwardOption
 class StripExtras(ForwardOption):
     """Attempt to drop extras"""
 
-    OPTION_NAME = 'strip_extras'
+    OPTION_NAME = "strip_extras"
     CLICK_OPTION = ClickOption(
-        long_option='--strip-extras',
+        long_option="--strip-extras",
         is_flag=True,
         default=False,
-        help_text='Try avoiding use of extras.'
+        help_text="Try avoiding use of extras.",
     )
-    enabled_pin_options = ['--strip-extras']
+    enabled_pin_options = ["--strip-extras"]

@@ -2,22 +2,21 @@
 """High level actions to be called from CLI"""
 
 import logging
+from collections.abc import Iterable
 
+from .deduplicate import PackageDeduplicator
 from .discover import discover
 from .environment import Environment
-from .verify import generate_robust_hash_comment
 from .features import FEATURES
-from .deduplicate import PackageDeduplicator
-
+from .types import EnvironmentSpec
+from .verify import generate_robust_hash_comment
 
 logger = logging.getLogger("pip-compile-multi")
 
 
-def recompile():
+def recompile() -> None:
     """Compile requirements files for all environments."""
-    env_confs = FEATURES.on_discover(
-        discover(FEATURES.compose_input_file_path('*'))
-    )
+    env_confs = FEATURES.on_discover(discover(FEATURES.compose_input_file_path("*")))
     deduplicator = PackageDeduplicator()
     deduplicator.on_discover(env_confs)
     sink_in_path = FEATURES.sink_in_path()
@@ -31,12 +30,14 @@ def recompile():
     compile_topologically(env_confs, deduplicator)
 
 
-def compile_topologically(env_confs, deduplicator):
+def compile_topologically(
+    env_confs: Iterable[EnvironmentSpec], deduplicator: PackageDeduplicator
+) -> None:
     """Compile environments in topological order of reference."""
     for conf in env_confs:
-        env = Environment(in_path=conf['in_path'], deduplicator=deduplicator)
+        env = Environment(in_path=conf["in_path"], deduplicator=deduplicator)
         if env.maybe_create_lockfile():
             # Only munge lockfile if it was written.
             header_text = generate_robust_hash_comment(env.infile) + FEATURES.get_header_text()
             env.replace_header(header_text)
-            env.add_references(conf['refs'])
+            env.add_references(conf["refs"])

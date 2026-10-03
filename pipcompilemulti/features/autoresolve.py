@@ -39,39 +39,43 @@ and skipping duplicate packages.
     that references (directly or indirectly) all other files.
 """
 
+from collections.abc import Collection
+
 from pipcompilemulti.utils import recursive_refs
+
+from ..types import EnvironmentSpec
 from .base import BaseFeature, ClickOption
 
 
-class Autoresolve(BaseFeature):
+class Autoresolve(BaseFeature[bool]):
     """Detect sink file and use it unless the feature is explicitly disabled."""
 
-    OPTION_NAME = 'autoresolve'
+    OPTION_NAME = "autoresolve"
     CLICK_OPTION = ClickOption(
-        long_option='--autoresolve/--no-autoresolve',
+        long_option="--autoresolve/--no-autoresolve",
         is_flag=True,
         default=False,
-        help_text='Automatically resolve cross-file conflicts.',
+        help_text="Automatically resolve cross-file conflicts.",
     )
 
-    def __init__(self):
-        self._sink_path = None
+    def __init__(self) -> None:
+        self._sink_path: str | None = None
 
     @property
-    def enabled(self):
+    def enabled(self) -> bool:
         """Whether feature was explicitly disabled or not."""
         return self.value
 
-    def on_discover(self, env_confs):
+    def on_discover(self, env_confs: Collection[EnvironmentSpec]) -> None:
         """Save set of all (recursive) included environments."""
         self._sink_path = self._find_sink(env_confs)
 
-    def sink_path(self):
+    def sink_path(self) -> str | None:
         """Return sink path if it's enabled. Otherwise None"""
         return self._sink_path if self.enabled else None
 
     @staticmethod
-    def _find_sink(envs):
+    def _find_sink(envs: Collection[EnvironmentSpec]) -> str | None:
         """Try to find requirements sink.
 
         Sink is a requirements file that references all other
@@ -98,9 +102,9 @@ class Autoresolve(BaseFeature):
         ... ])
         'all'
         """
-        all_envs = {env['in_path'] for env in envs}
+        all_envs = {env["in_path"] for env in envs}
         for env in envs:
-            included_envs = set(recursive_refs(envs, env['in_path'])) | {env['in_path']}
+            included_envs = set(recursive_refs(envs, env["in_path"])) | {env["in_path"]}
             if all_envs == included_envs:
-                return env['in_path']
+                return env["in_path"]
         return None

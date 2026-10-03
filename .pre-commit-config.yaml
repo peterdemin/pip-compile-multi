@@ -1,11 +1,38 @@
 repos:
-  - repo: https://github.com/peterdemin/pip-compile-multi
-    rev: v2.6.2
+  - repo: local
     hooks:
       - id: pip-compile-multi-verify
+        name: pip-compile-multi verify
+        language: system
+        entry: python -m pipcompilemulti.cli_v1 verify
+        files: ^requirements/
+        pass_filenames: false
+        require_serial: true
+        types: [file, non-executable, text]
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.1.0
-    hooks:
-      - id: flake8
+      - id: ruff-check
+        name: Ruff
+        language: system
+        entry: python -m ruff check --fix
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: isort
+        name: isort
+        language: system
+        entry: python -m isort
+        types_or: [python, pyi]
+        require_serial: true
+
+      - id: black
+        name: Black
+        language: system
+        entry: python -m black --config black.toml
+        types_or: [python, pyi]
+        require_serial: true
+
       - id: trailing-whitespace
+        name: Trim trailing whitespace
+        language: system
+        entry: python -m pre_commit_hooks.trailing_whitespace_fixer
+        types: [text]

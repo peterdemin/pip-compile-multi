@@ -41,91 +41,95 @@ Thanks to `Jonathan Rogers <https://github.com/JonathanRRogers>`_.
         https://github.com/jazzband/pip-tools#updating-requirements
 """
 
+from __future__ import annotations
+
 import re
+from typing import TYPE_CHECKING
 
 from .base import BaseFeature, ClickOption
 from .forward import ForwardOption
+
+if TYPE_CHECKING:
+    from .controller import FeaturesController
 
 
 class UpgradeAll(ForwardOption):
     """Upgrade all packages in all environments."""
 
-    OPTION_NAME = 'upgrade'
+    OPTION_NAME = "upgrade"
     CLICK_OPTION = ClickOption(
-        long_option='--upgrade/--no-upgrade',
+        long_option="--upgrade/--no-upgrade",
         default=True,
         is_flag=True,
-        help_text='Upgrade package version (default true)',
+        help_text="Upgrade package version (default true)",
     )
-    enabled_pin_options = ['--upgrade']
+    enabled_pin_options = ["--upgrade"]
 
-    def __init__(self, controller):
+    def __init__(self, controller: FeaturesController) -> None:
         self._controller = controller
 
     @property
-    def enabled(self):
+    def enabled(self) -> bool:
         """Whether global upgrade is enabled."""
         return self.value and not self._controller.upgrade_selected.active
 
 
-class UpgradeSelected(BaseFeature):
+class UpgradeSelected(BaseFeature[list[str] | tuple[str, ...] | None]):
     """Upgrade only specific packages in all environments."""
 
-    OPTION_NAME = 'upgrade_packages'
+    OPTION_NAME = "upgrade_packages"
     CLICK_OPTION = ClickOption(
-        long_option='--upgrade-package',
-        short_option='-P',
+        long_option="--upgrade-package",
+        short_option="-P",
         multiple=True,
-        help_text='Only upgrade named package. '
-                  'Can be supplied multiple times.',
+        help_text="Only upgrade named package. Can be supplied multiple times.",
     )
 
     RE_PACKAGE_NAME = re.compile(
-        r'(?iu)(?P<package>[a-z0-9-_.]+)',
+        r"(?iu)(?P<package>[a-z0-9-_.]+)",
     )
 
-    def __init__(self, controller):
+    def __init__(self, controller: FeaturesController) -> None:
         self._controller = controller
         self.reset()
 
-    def reset(self):
+    def reset(self) -> None:
         """Clear cached packages."""
-        self._env_packages_cache = {}
+        self._env_packages_cache: dict[str, set[str]] = {}
 
     @property
-    def package_specs(self):
+    def package_specs(self) -> list[str] | tuple[str, ...]:
         """List of package specs to upgrade."""
         return self.value or []
 
     @property
-    def package_names(self):
+    def package_names(self) -> list[str]:
         """List of package names to upgrade."""
-        def name_from_spec(name):
+
+        def name_from_spec(name: str) -> str:
             match = self.RE_PACKAGE_NAME.match(name)
             if match is None:
                 raise ValueError(
                     f"{name!r} does not appear to be a valid package spec",
                 )
             return match.group(0)
+
         return [name_from_spec(x) for x in self.package_specs]
 
     @property
-    def active(self):
+    def active(self) -> bool:
         """Whether selective upgrade is active."""
         return bool(self.package_names)
 
-    def pin_options(self):
+    def pin_options(self) -> list[str]:
         """Pin command options for upgrading specific packages."""
-        return [
-            '--upgrade-package=' + package
-            for package in self.package_specs
-        ]
+        return ["--upgrade-package=" + package for package in self.package_specs]
 
-    def has_package(self, in_path, package_name):
+    def has_package(self, in_path: str, package_name: str) -> bool:
         """Whether specified package name is already in the outfile."""
         return package_name.lower() in self._get_packages(in_path)
 
-    def _get_packages(self, in_path):
+    def _get_packages(self, in_path: str) -> set[str]:
         if in_path not in self._env_packages_cache:
             self._env_packages_cache[in_path] = self._read_packages(
                 self._compose_output_file_path(in_path)
@@ -133,26 +137,19 @@ class UpgradeSelected(BaseFeature):
         return self._env_packages_cache[in_path]
 
     @staticmethod
-    def _read_packages(outfile):
+    def _read_packages(outfile: str) -> set[str]:
         try:
             with open(outfile, encoding="utf-8") as fp:
-                return {
-                    line.split('==', 1)[0].lower()
-                    for line in fp
-                    if '==' in line
-                }
+                return {line.split("==", 1)[0].lower() for line in fp if "==" in line}
         except OSError:
             # Act as if file is empty
             return set()
 
-    def _compose_output_file_path(self, in_path):
+    def _compose_output_file_path(self, in_path: str) -> str:
         return self._controller.compose_output_file_path(in_path)
 
-    def affected(self, in_path):
+    def affected(self, in_path: str) -> bool:
         """Whether environment was affected by upgraded packages."""
         if not self.active:
             return True
-        return any(
-            self.has_package(in_path, package_name)
-            for package_name in self.package_names
-        )
+        return any(self.has_package(in_path, package_name) for package_name in self.package_names)

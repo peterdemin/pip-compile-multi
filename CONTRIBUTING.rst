@@ -66,7 +66,19 @@ Ready to contribute? Here's how to set up `pip-compile-multi` for local developm
 
     $ mkvirtualenv pip-compile-multi
     $ cd pip-compile-multi/
-    $ python setup.py develop
+    $ make install
+
+   This installs the versions locked in ``requirements/local.hash`` and the
+   local package. Use ``make sync`` to synchronize an existing environment
+   with ``uv pip sync`` and hash verification, then reinstall the local package.
+   With this virtualenv activated, install and run the commit hooks::
+
+    $ pre-commit install
+    $ pre-commit run --all-files
+
+   Hooks use ``repo: local`` and ``language: system`` to run ``python -m ...``
+   from the active virtualenv. Keep it activated when committing; pre-commit
+   does not create separate tool environments or download other tool versions.
 
 4. Create a branch for local development::
 
@@ -74,13 +86,23 @@ Ready to contribute? Here's how to set up `pip-compile-multi` for local developm
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
+5. When you're done making changes, run lint, strict type checking, and the tests
+   with tox::
 
-    $ flake8 pip-compile-multi.py test_pip-compile-multi.py
-    $ py.test
+    $ tox -e lint,typing
     $ tox
 
-   To get flake8 and tox, just pip install them into your virtualenv.
+   Install tox in your virtualenv; it installs the tools for each environment.
+   The lint environment runs Ruff, isort (with the Black profile), Black, and
+   pylint. To apply safe lint fixes, sort imports, and format locally::
+
+    $ python -m ruff check --fix .
+    $ python -m isort .
+    $ python -m black --config black.toml .
+
+   The typing environment checks the package with strict mypy, strict Pyright,
+   and Astral's ty, targeting Python 3.10. Configuration lives in ``setup.cfg``,
+   ``pyrightconfig.json``, ``ruff.toml``, ``black.toml``, and ``ty.toml``.
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -99,9 +121,8 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, and 3.4, and for PyPy. Check
-   https://travis-ci.org/peterdemin/pip-compile-multi/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+3. The pull request should work for Python 3.10 and newer, including compatible
+   PyPy versions. Check GitHub Actions and make sure the tests and type checks pass.
 
 Tips
 ----

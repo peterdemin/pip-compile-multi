@@ -42,12 +42,12 @@ from .forward import ForwardOption
 class EmitFindLinks(ForwardOption):
     """Optionally add the find-links entries to the generated files."""
 
-    OPTION_NAME = 'emit_find_links'
+    OPTION_NAME = "emit_find_links"
     CLICK_OPTION = ClickOption(
-        long_option='--emit-find-links/--no-emit-find-links',
+        long_option="--emit-find-links/--no-emit-find-links",
         is_flag=True,
         default=True,
         help_text="Add find-links entries to generated files (default true)",
     )
-    enabled_pin_options = ['--emit-find-links']
-    disabled_pin_options = ['--no-emit-find-links']
+    enabled_pin_options = ["--emit-find-links"]
+    disabled_pin_options = ["--no-emit-find-links"]

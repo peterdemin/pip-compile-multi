@@ -64,35 +64,34 @@ from .discover import discover
 from .environment import Environment
 from .features import FEATURES
 
-
 logger = logging.getLogger("pip-compile-multi")
 
 
-def verify_environments():
+def verify_environments() -> bool:
     """
     For each environment verify hash comments and report failures.
     If any failure occured, exit with code 1.
     """
-    env_confs = discover(FEATURES.compose_input_file_path('*'))
+    env_confs = discover(FEATURES.compose_input_file_path("*"))
     success = True
     for conf in env_confs:
-        env = Environment(in_path=conf['in_path'])
+        env = Environment(in_path=conf["in_path"])
         current_comment = generate_hash_comment(env.infile)
         robust_comment = generate_robust_hash_comment(env.infile)
         existing_comment = parse_hash_comment(env.outfile)
         if existing_comment in (robust_comment, current_comment):
-            logger.info("OK - %s was generated from %s.",
-                        env.outfile, env.infile)
+            logger.info("OK - %s was generated from %s.", env.outfile, env.infile)
         else:
-            logger.error("ERROR! %s was not regenerated after changes in %s.",
-                         env.outfile, env.infile)
+            logger.error(
+                "ERROR! %s was not regenerated after changes in %s.", env.outfile, env.infile
+            )
             logger.error("Expecting: %s", robust_comment.strip())
             logger.error("Found:     %s", existing_comment.strip())
             success = False
     return success
 
 
-def generate_hash_comment(file_path):
+def generate_hash_comment(file_path: str) -> str:
     """
     Read file with given file_path and return string of format
 
@@ -100,12 +99,12 @@ def generate_hash_comment(file_path):
 
     which is hex representation of SHA1 file content hash
     """
-    with open(file_path, 'rb') as fp:
+    with open(file_path, "rb") as fp:
         hexdigest = hashlib.sha1(fp.read().strip()).hexdigest()
     return f"# SHA1:{hexdigest}\n"
 
 
-def generate_robust_hash_comment(file_path):
+def generate_robust_hash_comment(file_path: str) -> str:
     """
     Read file with given file_path and return string of format
 
@@ -114,16 +113,13 @@ def generate_robust_hash_comment(file_path):
     which is hex representation of SHA1 file content hash.
     File content is pre-processed by stripping comments, whitespace and newlines.
     """
-    with open(file_path, 'rt', encoding="utf-8") as fp:
-        essense = ''.join(sorted(
-            line.split('#')[0].strip()
-            for line in fp
-        ))
+    with open(file_path, encoding="utf-8") as fp:
+        essense = "".join(sorted(line.split("#")[0].strip() for line in fp))
     hexdigest = hashlib.sha1(essense.encode("utf-8")).hexdigest()
     return f"# SHA1:{hexdigest}\n"
 
 
-def parse_hash_comment(file_path):
+def parse_hash_comment(file_path: str) -> str:
     """
     Read file with given file_path line by line,
     return the first line that starts with "# SHA1:", like this:
@@ -134,4 +130,4 @@ def parse_hash_comment(file_path):
         for line in fp:
             if line.startswith("# SHA1:"):
                 return line
-    return ''
+    return ""

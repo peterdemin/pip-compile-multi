@@ -1,0 +1,5 @@
+{
+  "include": ["pipcompilemulti"],
+  "pythonVersion": "3.10",
+  "typeCheckingMode": "strict"
+}

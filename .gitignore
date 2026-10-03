@@ -28,6 +28,8 @@ pip-log.txt
 .tox
 nosetests.xml
 /.pytest_cache/
+/.mypy_cache/
+/.ruff_cache/
 
 # Conflict tests side-effects
 /conflicting-in-*/*.txt

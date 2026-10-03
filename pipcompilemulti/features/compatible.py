@@ -28,24 +28,24 @@ from fnmatch import fnmatch
 from .base import BaseFeature, ClickOption
 
 
-class Compatible(BaseFeature):
+class Compatible(BaseFeature[list[str] | tuple[str, ...] | None]):
     """Use ~= for selected packages."""
 
-    OPTION_NAME = 'compatible_patterns'
+    OPTION_NAME = "compatible_patterns"
     CLICK_OPTION = ClickOption(
-        long_option='--compatible',
-        short_option='-c',
+        long_option="--compatible",
+        short_option="-c",
         multiple=True,
-        help_text='Glob expression for packages with compatible (~=) '
-                  'version constraint. Can be supplied multiple times.'
+        help_text="Glob expression for packages with compatible (~=) "
+        "version constraint. Can be supplied multiple times.",
     )
 
     @property
-    def patterns(self):
+    def patterns(self) -> list[str] | tuple[str, ...]:
         """Use empty list as the default."""
         return self.value or []
 
-    def constraint(self, package_name):
+    def constraint(self, package_name: str) -> str:
         """Return ``~=`` if package_name matches patterns, ``==`` otherwise.
 
         >>> from pipcompilemulti.options import OPTIONS
@@ -56,9 +56,9 @@ class Compatible(BaseFeature):
         >>> feature.constraint('xxx')
         '~='
         """
-        return '~=' if self.is_matched(package_name) else '=='
+        return "~=" if self.is_matched(package_name) else "=="
 
-    def is_matched(self, package_name):
+    def is_matched(self, package_name: str) -> bool:
         """Whether package name matches one of configured glob patterns."""
         package = package_name.lower()
         for pattern in self.patterns:

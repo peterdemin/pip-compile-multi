@@ -21,20 +21,20 @@ import os
 from .base import BaseFeature, ClickOption
 
 
-class BaseDir(BaseFeature):
+class BaseDir(BaseFeature[str]):
     """Override input file extension."""
 
-    OPTION_NAME = 'directory'
+    OPTION_NAME = "directory"
     CLICK_OPTION = ClickOption(
-        long_option='--directory',
-        short_option='-d',
+        long_option="--directory",
+        short_option="-d",
         default="requirements",
         is_flag=False,
-        help_text='Directory path with requirements files.',
+        help_text="Directory path with requirements files.",
     )
 
     @property
-    def path(self):
+    def path(self) -> str:
         """Get the base directory path.
 
         >>> BaseDir().path == 'requirements'
@@ -42,7 +42,7 @@ class BaseDir(BaseFeature):
         """
         return self.value
 
-    def file_path(self, file_name):
+    def file_path(self, file_name: str) -> str:
         """Compose file path for a given file name.
 
         >>> import os.path

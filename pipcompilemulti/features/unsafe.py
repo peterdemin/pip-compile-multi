@@ -31,14 +31,14 @@ from .forward import ForwardOption
 class AllowUnsafe(ForwardOption):
     """Use pip-tools cache, or rebuild from scratch."""
 
-    OPTION_NAME = 'allow_unsafe'
+    OPTION_NAME = "allow_unsafe"
     CLICK_OPTION = ClickOption(
-        long_option='--allow-unsafe',
-        short_option='-s',
+        long_option="--allow-unsafe",
+        short_option="-s",
         is_flag=True,
         default=False,
         help_text="Whether or not to include 'unsafe' packages "
-                  'in generated requirements files. '
-                  'Consult pip-compile --help for more information'
+        "in generated requirements files. "
+        "Consult pip-compile --help for more information",
     )
-    enabled_pin_options = ['--allow-unsafe']
+    enabled_pin_options = ["--allow-unsafe"]

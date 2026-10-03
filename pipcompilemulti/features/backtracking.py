@@ -30,13 +30,13 @@ from .forward import ForwardOption
 class Backtracking(ForwardOption):
     """Enable backtracking resolver."""
 
-    OPTION_NAME = 'backtracking'
+    OPTION_NAME = "backtracking"
     CLICK_OPTION = ClickOption(
-        long_option='--backtracking/--no-backtracking',
+        long_option="--backtracking/--no-backtracking",
         is_flag=True,
         default=False,
-        help_text='Enable backtracking resolver. Translates to '
-                  'pip-compile --resolver=backtracking option.'
+        help_text="Enable backtracking resolver. Translates to "
+        "pip-compile --resolver=backtracking option.",
     )
-    enabled_pin_options = ['--resolver=backtracking']
-    disabled_pin_options = ['--resolver=legacy']
+    enabled_pin_options = ["--resolver=backtracking"]
+    disabled_pin_options = ["--resolver=legacy"]

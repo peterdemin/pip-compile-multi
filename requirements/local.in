@@ -1,19 +1,22 @@
 -r test.in
 
+black
+build
+bump2version
+isort
+mypy
+pipdeptree
+pkginfo<1.11
+pre-commit
+pre-commit-hooks
+pygments
+pylint
+pyright
+ruff
+sphinx
 tox
 twine
-wheel
-bump2version
-flake8
-collective.checkdocs
-pygments
-pre-commit
-pipdeptree
-pylint
-pep8-naming
-pycodestyle
-pydocstyle
-pylint
-sphinx
+ty
+types-toposort
 virtualenv
-pkginfo<1.11
+wheel

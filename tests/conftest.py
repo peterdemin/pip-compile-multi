@@ -1,15 +1,15 @@
 """Pytest configuration."""
 
-import shutil
-import pathlib
-import os.path
-import tempfile
 import contextlib
+import os.path
+import pathlib
+import shutil
+import tempfile
 
 import pytest
 from click.testing import CliRunner
-from pipcompilemulti.options import OPTIONS
 
+from pipcompilemulti.options import OPTIONS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

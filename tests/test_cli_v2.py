@@ -1,10 +1,10 @@
 """End to end tests for CLI v2"""
 
+import pytest
 from click.testing import CliRunner
 
-import pytest
-
 from pipcompilemulti.cli_v2 import cli
+
 from .utils import temp_dir
 
 
@@ -15,7 +15,7 @@ def requirements_dir():
         yield
 
 
-@pytest.mark.parametrize('command', ['lock', 'upgrade', 'verify'])
+@pytest.mark.parametrize("command", ["lock", "upgrade", "verify"])
 def test_command_exits_with_zero(command):
     """Run requirements command on self"""
     runner = CliRunner()

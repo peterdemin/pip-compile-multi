@@ -34,38 +34,32 @@ import re
 from .base import BaseFeature, ClickOption
 
 
-class SkipConstraintComments(BaseFeature):
+class SkipConstraintComments(BaseFeature[bool]):
     """Remove lines like ``-c file.txt`` from comments in output files."""
 
-    OPTION_NAME = 'skip_constraints'
+    OPTION_NAME = "skip_constraints"
     CLICK_OPTION = ClickOption(
-        long_option='--skip-constraints/--no-skip-constraints',
+        long_option="--skip-constraints/--no-skip-constraints",
         is_flag=True,
         default=True,
         help_text='Remove constraints from "via" comments.',
     )
-    _RE_VIA_COMMENT = re.compile(
-        r'^\s*# via$'
-    )
-    _RE_CONSTRAINT_COMMENT = re.compile(
-        r'^\s*#\s+-c \S+$'
-    )
-    _RE_PACKAGE_COMMENT = re.compile(
-        r'^\s*#\s+((?:-r )?\S+)$'
-    )
+    _RE_VIA_COMMENT = re.compile(r"^\s*# via$")
+    _RE_CONSTRAINT_COMMENT = re.compile(r"^\s*#\s+-c \S+$")
+    _RE_PACKAGE_COMMENT = re.compile(r"^\s*#\s+((?:-r )?\S+)$")
 
     @property
-    def enabled(self):
+    def enabled(self) -> bool:
         """Whether feature was explicitly enabled or not."""
         return self.value
 
-    def process_dependency_comments(self, comment):
+    def process_dependency_comments(self, comment: str) -> str:
         """Remove constraint comments if feature is enabled."""
         if self.enabled:
             return self._drop_sink_comment(comment)
         return comment
 
-    def _drop_sink_comment(self, comment):
+    def _drop_sink_comment(self, comment: str) -> str:
         r"""Erase sink constraint from comments.
 
         >>> feature = SkipConstraintComments()
@@ -84,7 +78,7 @@ class SkipConstraintComments(BaseFeature):
             return "\n".join(self._collapse_single_via(result))
         return comment
 
-    def _collapse_single_via(self, lines):
+    def _collapse_single_via(self, lines: list[str]) -> list[str]:
         r"""Combine via into a single line when it has only two lines.
 
         >>> feature = SkipConstraintComments()
@@ -99,5 +93,5 @@ class SkipConstraintComments(BaseFeature):
             matchobj = self._RE_PACKAGE_COMMENT.match(lines[2])
             if matchobj:
                 package = matchobj.group(1)
-                return [lines[0], lines[1] + ' ' + package]
+                return [lines[0], lines[1] + " " + package]
         return lines

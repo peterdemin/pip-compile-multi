@@ -15,27 +15,29 @@ In configuration file, use ``live`` option::
     [requirements]
     live = True
 """
+
 import subprocess
 
+from ..types import PipeArguments
 from .base import BaseFeature, ClickOption
 
 
-class LiveOutput(BaseFeature):
+class LiveOutput(BaseFeature[bool]):
     """Controls whether stdout and stderr should be printed live or at error."""
 
-    OPTION_NAME = 'live'
+    OPTION_NAME = "live"
     CLICK_OPTION = ClickOption(
-        long_option='--live/--no-live',
+        long_option="--live/--no-live",
         default=False,
         is_flag=True,
-        help_text='Print debug output from pip-compile live.',
+        help_text="Print debug output from pip-compile live.",
     )
 
-    def pipe_arguments(self):
+    def pipe_arguments(self) -> PipeArguments:
         """Values for stdout and stderr arguments to subprocess.Popen."""
         if self.value:
             return {}
         return {
-            'stdout': subprocess.PIPE,
-            'stderr': subprocess.PIPE,
+            "stdout": subprocess.PIPE,
+            "stderr": subprocess.PIPE,
         }

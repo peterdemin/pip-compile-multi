@@ -31,11 +31,11 @@ from .forward import ForwardOption
 class UseCache(ForwardOption):
     """Use pip-tools cache, or rebuild from scratch."""
 
-    OPTION_NAME = 'use_cache'
+    OPTION_NAME = "use_cache"
     CLICK_OPTION = ClickOption(
-        long_option='--use-cache/--no-use-cache',
+        long_option="--use-cache/--no-use-cache",
         is_flag=True,
         default=True,
-        help_text='Use pip-tools cache to speed up compilation (default true)',
+        help_text="Use pip-tools cache to speed up compilation (default true)",
     )
-    disabled_pin_options = ['--rebuild']
+    disabled_pin_options = ["--rebuild"]

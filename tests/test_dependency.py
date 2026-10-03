@@ -26,21 +26,14 @@ def test_parse_package_name():
 
 def test_parse_url_without_postfix():
     """Package URL with package and constraint references."""
-    dependency = Dependency(
-        "https://site.com/path#egg=dep\n  # via\n  # -c constraint\n  # -r pkg"
-    )
+    dependency = Dependency("https://site.com/path#egg=dep\n  # via\n  # -c constraint\n  # -r pkg")
     assert vars(dependency) == {
         "is_at": False,
         "is_vcs": True,
         "comment": "\n  # via\n  # -c constraint\n  # -r pkg",
         "comment_span": (29, 66),
         "hashes": "",
-        "line": (
-            "https://site.com/path#egg=dep\n"
-            "  # via\n"
-            "  # -c constraint\n"
-            "  # -r pkg"
-        ),
+        "line": ("https://site.com/path#egg=dep\n  # via\n  # -c constraint\n  # -r pkg"),
         "package": "dep",
         "valid": True,
         "markers": "",
@@ -51,8 +44,7 @@ def test_parse_url_without_postfix():
 def test_parse_url_with_postfix():
     """VCS URL with package and constraint references."""
     dependency = Dependency(
-        "git+https://site@0.4.1#egg=dep==1.2.3_git&sub=dir"
-        "\n  # via\n  # -c constraint\n  # -r pkg"
+        "git+https://site@0.4.1#egg=dep==1.2.3_git&sub=dir\n  # via\n  # -c constraint\n  # -r pkg"
     )
     assert vars(dependency) == {
         "is_at": False,
@@ -73,34 +65,27 @@ def test_parse_url_with_postfix():
     }
     OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
     assert dependency.serialize() == (
-        "git+https://site@0.4.1#egg=dep==1.2.3_git&sub=dir\n" "  # via -r pkg"
+        "git+https://site@0.4.1#egg=dep==1.2.3_git&sub=dir\n  # via -r pkg"
     )
 
 
 def test_parse_at_url_notation():
     """Package URL with package and constraint references."""
-    dependency = Dependency(
-        "dep @ https://site.com/path\n  # via\n  # -c constraint\n  # -r pkg"
-    )
+    dependency = Dependency("dep @ https://site.com/path\n  # via\n  # -c constraint\n  # -r pkg")
     assert vars(dependency) == {
         "is_at": True,
         "is_vcs": False,
         "comment": "\n  # via\n  # -c constraint\n  # -r pkg",
         "comment_span": (27, 64),
         "hashes": "",
-        "line": (
-            "dep @ https://site.com/path\n"
-            "  # via\n"
-            "  # -c constraint\n"
-            "  # -r pkg"
-        ),
+        "line": ("dep @ https://site.com/path\n  # via\n  # -c constraint\n  # -r pkg"),
         "package": "dep",
         "valid": True,
         "version": "",
         "markers": "",
     }
     OPTIONS[FEATURES.skip_constraint_comments.OPTION_NAME] = True
-    assert dependency.serialize() == ("dep @ https://site.com/path\n" "  # via -r pkg")
+    assert dependency.serialize() == ("dep @ https://site.com/path\n  # via -r pkg")
 
 
 def test_sanitize_package_version():

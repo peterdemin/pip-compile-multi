@@ -13,7 +13,7 @@ install: requirements/local.hash virtual_env_set
 .PHONY: sync
 sync: requirements/local.hash virtual_env_set
 	pip-sync requirements/local.hash
-	pip install -e . --no-deps
+	pip install -e . --no-deps --no-build-isolation
 
 .venv3:
 	python3.10 -m venv .venv3
@@ -30,6 +30,10 @@ upgrade: virtual_env_set
 .PHONY: test
 test:
 	tox
+
+.PHONY: lint
+lint:
+	tox -e lint,typing,checkdocs,verify
 
 .PHONY: clean
 clean:

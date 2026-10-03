@@ -1,24 +1,22 @@
 """Tests for Skip constraints in comments of output files feature."""
+
 from textwrap import dedent
+
 from pipcompilemulti.features.skip_constraint_comments import SkipConstraintComments
 
-
-_SOURCE = dedent(
-    """
+_SOURCE = dedent("""
         # via
         #   -c path/to/sink.txt
         #   -r path/to/requirements.in
-    """
-).rstrip()
-_EXPECTED = dedent(
-    """
+    """).rstrip()
+_EXPECTED = dedent("""
         # via -r path/to/requirements.in
-    """
-).rstrip()
+    """).rstrip()
 
 
 class SkipConstraintCommentsAlwayOn(SkipConstraintComments):
     """Force-enabled feature."""
+
     enabled = True
 
 

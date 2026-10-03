@@ -40,39 +40,48 @@ Example output:
 ``pip-compile-multi`` will recursively propagate this option to all
 environments that are referencing or referenced by selected environments.
 """  # noqa: E501
+
+from __future__ import annotations
+
 import os
+from collections.abc import Collection
+from typing import TYPE_CHECKING
 
 from pipcompilemulti.utils import reference_cluster
+
+from ..types import EnvironmentSpec
 from .base import BaseFeature, ClickOption
 
+if TYPE_CHECKING:
+    from .controller import FeaturesController
 
-class AddHashes(BaseFeature):
+
+class AddHashes(BaseFeature[list[str] | tuple[str, ...] | None]):
     """Write hashes for pinned packages."""
 
-    OPTION_NAME = 'generate_hashes'
+    OPTION_NAME = "generate_hashes"
     CLICK_OPTION = ClickOption(
-        long_option='--generate-hashes',
-        short_option='-g',
+        long_option="--generate-hashes",
+        short_option="-g",
         multiple=True,
-        help_text='Input file name (base.in, requirements/test.in, etc) '
-                  'that needs packages hashes. '
-                  'Can be supplied multiple times.',
-
+        help_text="Input file name (base.in, requirements/test.in, etc) "
+        "that needs packages hashes. "
+        "Can be supplied multiple times.",
     )
 
-    def __init__(self, controller):
+    def __init__(self, controller: FeaturesController) -> None:
         self._controller = controller
-        self._hashed_by_reference = None
+        self._hashed_by_reference: set[str] | None = None
 
     @property
-    def enabled_in_paths(self):
+    def enabled_in_paths(self) -> set[str]:
         """Convert list of .in paths to a set.
 
         For backwards compatibility, check if passed value is env name
         and convert it to in_path.
         """
         names_or_paths = self.value or []
-        in_paths = set()
+        in_paths: set[str] = set()
         for name_or_path in names_or_paths:
             in_path = self._controller.compose_input_file_path(name_or_path)
             if os.path.exists(in_path):
@@ -81,20 +90,18 @@ class AddHashes(BaseFeature):
                 in_paths.add(name_or_path)
         return in_paths
 
-    def on_discover(self, env_confs):
+    def on_discover(self, env_confs: Collection[EnvironmentSpec]) -> None:
         """Save environment names that need hashing."""
         self._hashed_by_reference = set()
         for in_path in self.enabled_in_paths:
-            self._hashed_by_reference.update(
-                reference_cluster(env_confs, in_path)
-            )
+            self._hashed_by_reference.update(reference_cluster(env_confs, in_path))
 
-    def _needs_hashes(self, in_path):
+    def _needs_hashes(self, in_path: str) -> bool:
         assert self._hashed_by_reference is not None
         return in_path in self._hashed_by_reference
 
-    def pin_options(self, in_path):
+    def pin_options(self, in_path: str) -> list[str]:
         """Return --generate-hashes if env requires it."""
         if self._needs_hashes(in_path):
-            return ['--generate-hashes']
+            return ["--generate-hashes"]
         return []

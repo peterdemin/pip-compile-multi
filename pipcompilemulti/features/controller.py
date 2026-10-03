@@ -2,12 +2,16 @@
 
 import os
 import sys
+from collections.abc import Callable, Collection
 from functools import wraps
+from typing import Any, TypeVar, cast
 
+from ..types import EnvironmentSpec, OptionValue, PipeArguments
 from .add_hashes import AddHashes
 from .annotate_index import AnnotateIndex
 from .autoresolve import Autoresolve
 from .backtracking import Backtracking
+from .base import BaseFeature
 from .base_dir import BaseDir
 from .build_isolation import BuildIsolation
 from .compatible import Compatible
@@ -27,12 +31,15 @@ from .upgrade import UpgradeAll, UpgradeSelected
 from .use_cache import UseCache
 from .use_uv import UseUV
 
+Command = TypeVar("Command", bound=Callable[..., Any])
+
 
 class FeaturesController:
     """Gateway to a list of features."""
+
     # pylint: disable=too-many-instance-attributes
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.add_hashes = AddHashes(self)
         self.allow_unsafe = AllowUnsafe()
         self.annotate_index = AnnotateIndex()
@@ -58,7 +65,7 @@ class FeaturesController:
         self.upgrade_selected = UpgradeSelected(self)
         self.use_cache = UseCache()
         self.use_uv = UseUV()
-        self._features = [
+        self._features: list[BaseFeature[Any]] = [
             self.add_hashes,
             self.allow_unsafe,
             self.annotate_index,
@@ -86,10 +93,11 @@ class FeaturesController:
             self.use_uv,
         ]
 
-    def bind(self, command):
+    def bind(self, command: Command) -> Command:
         """Bind all features to click command."""
+
         @wraps(command)
-        def save_command_options(*args, **kwargs):
+        def save_command_options(*args: Any, **kwargs: OptionValue) -> Any:
             """Save option values and call original command without it."""
             for feature in self._features:
                 feature.extract_option(kwargs)
@@ -97,35 +105,34 @@ class FeaturesController:
 
         for feature in self._features:
             save_command_options = feature.bind(save_command_options)
-        return save_command_options
+        return cast(Command, save_command_options)
 
-    def pin_command(self):
+    def pin_command(self) -> list[str]:
         """Return list of pin command parameters."""
         if self.use_uv.value:
             executable = self.use_uv.executable()
             if not executable:
                 raise RuntimeError(
-                    "uv is not installed. "
-                    "Install it with: pip install uv, or brew install uv"
+                    "uv is not installed. Install it with: pip install uv, or brew install uv"
                 )
             return executable + [
-                'pip',
-                'compile',
-                '--no-header',
+                "pip",
+                "compile",
+                "--no-header",
             ]
         # Use the same interpreter binary
         return [
-            sys.executable or 'python',
-            '-m',
-            'piptools',
-            'compile',
-            '--no-header',
-            '--verbose',
+            sys.executable or "python",
+            "-m",
+            "piptools",
+            "compile",
+            "--no-header",
+            "--verbose",
         ]
 
-    def pin_options(self, in_path):
+    def pin_options(self, in_path: str) -> list[str]:
         """Return list of options to pin command."""
-        options = []
+        options: list[str] = []
         options.extend(self.add_hashes.pin_options(in_path))
         options.extend(self.annotate_index.pin_options())
         options.extend(self.build_isolation.pin_options())
@@ -143,17 +150,15 @@ class FeaturesController:
         options.extend(self.strip_extras.pin_options())
         return options
 
-    def compose_input_file_path(self, basename):
+    def compose_input_file_path(self, basename: str) -> str:
         """Return input file path by environment name."""
-        return self.base_dir.file_path(
-            self.input_extension.compose_input_file_name(basename)
-        )
+        return self.base_dir.file_path(self.input_extension.compose_input_file_name(basename))
 
-    def compose_output_file_path(self, in_path):
+    def compose_output_file_path(self, in_path: str) -> str:
         """Return output file path by environment name."""
         return self.output_extension.compose_output_file_path(in_path)
 
-    def drop_post(self, in_path, package_name, version):
+    def drop_post(self, in_path: str, package_name: str, version: str) -> str:
         """Whether post versions are forbidden for passed environment name."""
         if self.forbid_post.post_forbidden(in_path):
             return self.forbid_post.drop_post(version)
@@ -161,23 +166,23 @@ class FeaturesController:
             return self.forbid_post.drop_post(version)
         return version
 
-    def constraint(self, package_name):
+    def constraint(self, package_name: str) -> str:
         """Return ``~=`` if package_name matches patterns, ``==`` otherwise."""
         return self.compatible.constraint(package_name)
 
-    def on_discover(self, env_confs):
+    def on_discover(self, env_confs: Collection[EnvironmentSpec]) -> list[EnvironmentSpec]:
         """Configure features with a list of discovered environments.
 
         Returns a new possibly shorter env list.
         """
         self.upgrade_selected.reset()
         self.limit_in_paths.on_discover(env_confs)
-        limited_env_confs = [env for env in env_confs if self.included(env['in_path'])]
+        limited_env_confs = [env for env in env_confs if self.included(env["in_path"])]
         self.add_hashes.on_discover(limited_env_confs)
         self.autoresolve.on_discover(limited_env_confs)
         return limited_env_confs
 
-    def affected(self, in_path):
+    def affected(self, in_path: str) -> bool:
         """Whether environment is affected by upgrade command."""
         if self.upgrade_all.enabled:
             return True
@@ -185,19 +190,19 @@ class FeaturesController:
             return True
         return in_path == self.autoresolve.sink_path()
 
-    def included(self, in_path):
+    def included(self, in_path: str) -> bool:
         """Whether in_path is included directly or by reference."""
         return self.limit_in_paths.included(in_path)
 
-    def get_header_text(self):
+    def get_header_text(self) -> str:
         """Text to put in the beginning of each generated file."""
         return self.header.text
 
-    def sink_in_path(self):
+    def sink_in_path(self) -> str | None:
         """Return input sink path if it's enabled. Otherwise None"""
         return self.autoresolve.sink_path()
 
-    def sink_out_path(self):
+    def sink_out_path(self) -> str | None:
         """Return sink output path if it's enabled and exists. Otherwise None"""
         infile = self.autoresolve.sink_path()
         if not infile:
@@ -207,10 +212,10 @@ class FeaturesController:
             return None
         return outfile
 
-    def process_dependency_comments(self, comment):
+    def process_dependency_comments(self, comment: str) -> str:
         """Process comments of locked dependency (e.g. # via xxx)."""
         return self.skip_constraint_comments.process_dependency_comments(comment)
 
-    def pipe_arguments(self):
+    def pipe_arguments(self) -> PipeArguments:
         """Values for stdout and stderr arguments to subprocess.Popen."""
         return self.live_output.pipe_arguments()

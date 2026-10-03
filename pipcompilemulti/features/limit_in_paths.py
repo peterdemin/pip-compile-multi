@@ -30,11 +30,15 @@ For example::
     include_in_paths = requirements/deps36.in
 """
 
+from collections.abc import Collection
+
 from pipcompilemulti.utils import recursive_refs
+
+from ..types import EnvironmentSpec
 from .base import BaseFeature, ClickOption
 
 
-class LimitInPaths(BaseFeature):
+class LimitInPaths(BaseFeature[list[str] | tuple[str, ...] | None]):
     """Limit discovered input files to specified subset.
 
     >>> from pipcompilemulti.options import OPTIONS
@@ -53,36 +57,35 @@ class LimitInPaths(BaseFeature):
     False
     """
 
-    OPTION_NAME = 'include_in_paths'
+    OPTION_NAME = "include_in_paths"
     CLICK_OPTION = ClickOption(
-        long_option='--only-path',
-        short_option='-t',
+        long_option="--only-path",
+        short_option="-t",
         multiple=True,
-        help_text='Compile only for passed input paths and their '
-                  'references. Can be supplied multiple times.',
+        help_text="Compile only for passed input paths and their "
+        "references. Can be supplied multiple times.",
     )
 
-    def __init__(self):
-        self._all_envs = None
+    def __init__(self) -> None:
+        self._all_envs: Collection[str] | None = None
 
     @property
-    def direct_envs(self):
+    def direct_envs(self) -> set[str]:
         """Set of environments included by command line options."""
         return set(self.value or [])
 
-    def on_discover(self, env_confs):
+    def on_discover(self, env_confs: Collection[EnvironmentSpec]) -> None:
         """Save set of all (recursive) included environments."""
         if not self.direct_envs:
             # No limit means all envs included:
-            self._all_envs = [env['in_path'] for env in env_confs]
+            self._all_envs = [env["in_path"] for env in env_confs]
             return
         transitive_refs = {
-            ref
-            for in_path in self.direct_envs
-            for ref in recursive_refs(env_confs, in_path)
+            ref for in_path in self.direct_envs for ref in recursive_refs(env_confs, in_path)
         }
         self._all_envs = self.direct_envs | transitive_refs
 
-    def included(self, in_path):
+    def included(self, in_path: str) -> bool:
         """Whether environment is included directly or by reference."""
+        assert self._all_envs is not None
         return in_path in self._all_envs

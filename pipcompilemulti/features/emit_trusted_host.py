@@ -39,12 +39,12 @@ from .forward import ForwardOption
 class EmitTrustedHost(ForwardOption):
     """Optionally add the trusted host to the generated files."""
 
-    OPTION_NAME = 'emit_trusted_host'
+    OPTION_NAME = "emit_trusted_host"
     CLICK_OPTION = ClickOption(
-        long_option='--emit-trusted-host/--no-emit-trusted-host',
+        long_option="--emit-trusted-host/--no-emit-trusted-host",
         is_flag=True,
         default=True,
-        help_text="Add trusted host option to generated file"
+        help_text="Add trusted host option to generated file",
     )
-    enabled_pin_options = ['--emit-trusted-host']
-    disabled_pin_options = ['--no-emit-trusted-host']
+    enabled_pin_options = ["--emit-trusted-host"]
+    disabled_pin_options = ["--no-emit-trusted-host"]

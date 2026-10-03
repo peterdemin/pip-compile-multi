@@ -28,7 +28,7 @@ History
 
 * Fix ``TypeError`` is not triggered when sections is None.
   (Issue `#516`_, PR `#517`_, thanks to `Nikola Trandafilovic`_.)
-    
+
 .. _#516: https://github.com/peterdemin/pip-compile-multi/issues/516
 .. _#517: https://github.com/peterdemin/pip-compile-multi/pull/517
 .. _Nikola Trandafilovic: https://github.com/elrik

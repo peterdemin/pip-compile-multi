@@ -44,24 +44,24 @@ In configuration file, use ``extra_index_url`` option with comma-separated list 
 from .base import BaseFeature, ClickOption
 
 
-class ExtraIndexUrl(BaseFeature):
+class ExtraIndexUrl(BaseFeature[list[str] | tuple[str, ...] | None]):
     """Forward extra index URLs to to pip-compile."""
 
-    _OPTION = '--extra-index-url'
-    OPTION_NAME = 'extra_index_url'
+    _OPTION = "--extra-index-url"
+    OPTION_NAME = "extra_index_url"
     CLICK_OPTION = ClickOption(
         long_option=_OPTION,
         multiple=True,
         help_text=(
-            'Add additional package index URL to search for package versions. '
-            'Can be supplied multiple times.'
-        )
+            "Add additional package index URL to search for package versions. "
+            "Can be supplied multiple times."
+        ),
     )
 
-    def pin_options(self):
+    def pin_options(self) -> list[str]:
         """Pin command options."""
         if self.value:
-            parts = []
+            parts: list[str] = []
             for url in self.value:
                 parts.extend([self._OPTION, url])
             return parts

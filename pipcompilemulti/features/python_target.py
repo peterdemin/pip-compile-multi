@@ -33,12 +33,12 @@ In configuration file, use ``python_platform`` and ``python_version`` options::
 from .base import BaseFeature, ClickOption
 
 
-class UvTarget(BaseFeature):
+class UvTarget(BaseFeature[str | None]):
     """Forward a resolution target option to uv."""
 
-    _OPTION = ''
+    _OPTION = ""
 
-    def pin_options(self, use_uv):
+    def pin_options(self, use_uv: bool) -> list[str]:
         """Pin command options."""
         if not self.value:
             return []
@@ -50,13 +50,12 @@ class UvTarget(BaseFeature):
 class PythonPlatform(UvTarget):
     """Resolve dependencies for another platform."""
 
-    _OPTION = '--python-platform'
-    OPTION_NAME = 'python_platform'
+    _OPTION = "--python-platform"
+    OPTION_NAME = "python_platform"
     CLICK_OPTION = ClickOption(
         long_option=_OPTION,
         help_text=(
-            'Platform to resolve dependencies for, '
-            'e.g. x86_64-manylinux_2_28. Requires --uv.'
+            "Platform to resolve dependencies for, e.g. x86_64-manylinux_2_28. Requires --uv."
         ),
     )
 
@@ -64,9 +63,9 @@ class PythonPlatform(UvTarget):
 class PythonVersion(UvTarget):
     """Resolve dependencies for another Python version."""
 
-    _OPTION = '--python-version'
-    OPTION_NAME = 'python_version'
+    _OPTION = "--python-version"
+    OPTION_NAME = "python_version"
     CLICK_OPTION = ClickOption(
         long_option=_OPTION,
-        help_text='Python version to resolve dependencies for, e.g. 3.12. Requires --uv.',
+        help_text="Python version to resolve dependencies for, e.g. 3.12. Requires --uv.",
     )

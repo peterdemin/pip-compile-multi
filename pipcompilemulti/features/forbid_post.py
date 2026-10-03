@@ -25,26 +25,26 @@ In configuration file, use ``forbid_post`` option with comma-separated list of p
 from .base import BaseFeature, ClickOption
 
 
-class ForbidPost(BaseFeature):
+class ForbidPost(BaseFeature[list[str] | tuple[str, ...] | None]):
     """Truncate postXXX from versions for selected packages."""
 
-    OPTION_NAME = 'forbid_post'
+    OPTION_NAME = "forbid_post"
     CLICK_OPTION = ClickOption(
-        long_option='--forbid-post',
-        short_option='-p',
+        long_option="--forbid-post",
+        short_option="-p",
         multiple=True,
         help_text="Environment name (base, test, etc) that cannot have "
-                  'packages with post-release versions (1.2.3.post777). '
-                  'Can be supplied multiple times.'
+        "packages with post-release versions (1.2.3.post777). "
+        "Can be supplied multiple times.",
     )
 
     @property
-    def enabled_envs(self):
+    def enabled_envs(self) -> set[str]:
         """Convert to set."""
         return set(self.value or [])
 
     @staticmethod
-    def drop_post(version):
+    def drop_post(version: str) -> str:
         """Remove .postXXXX postfix from version.
 
         >>> ForbidPost.drop_post('1.2.3.post123')
@@ -52,11 +52,11 @@ class ForbidPost(BaseFeature):
         >>> ForbidPost.drop_post('1.2.3')
         '1.2.3'
         """
-        post_index = version.find('.post')
+        post_index = version.find(".post")
         if post_index >= 0:
             return version[:post_index]
         return version
 
-    def post_forbidden(self, env_name):
+    def post_forbidden(self, env_name: str) -> bool:
         """Whether post versions are forbidden for passed environment name."""
         return env_name in self.enabled_envs

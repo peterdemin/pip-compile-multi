@@ -29,6 +29,7 @@ To use UV:
 - Pass ``--uv`` flag to ``pip-compile-multi``
   or add ``uv = True`` when using ``requirements`` command.
 """
+
 import importlib.util
 import shutil
 import sys
@@ -36,7 +37,7 @@ import sys
 from .base import BaseFeature, ClickOption
 
 
-class UseUV(BaseFeature):
+class UseUV(BaseFeature[bool]):
     """Use uv for dependency resolution.
 
     This feature enables using uv's fast Rust-based dependency resolver
@@ -44,18 +45,18 @@ class UseUV(BaseFeature):
     or as an executable on PATH, before using this feature.
     """
 
-    OPTION_NAME = 'uv'
+    OPTION_NAME = "uv"
     CLICK_OPTION = ClickOption(
-        long_option='--uv/--no-uv',
+        long_option="--uv/--no-uv",
         default=False,
         is_flag=True,
-        help_text='Use uv for dependency resolution.',
+        help_text="Use uv for dependency resolution.",
     )
 
     @staticmethod
-    def executable():
+    def executable() -> list[str] | None:
         """Command that runs uv, or None when it is not installed."""
-        if importlib.util.find_spec('uv'):
-            return [sys.executable or 'python', '-m', 'uv']
-        path = shutil.which('uv')
+        if importlib.util.find_spec("uv"):
+            return [sys.executable or "python", "-m", "uv"]
+        path = shutil.which("uv")
         return [path] if path else None

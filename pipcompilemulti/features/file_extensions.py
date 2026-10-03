@@ -18,46 +18,47 @@ In configuration file, use ``in_ext`` and ``out_ext`` options. For example::
 """
 
 import os
+
 from .base import BaseFeature, ClickOption
 
 
-class InputExtension(BaseFeature):
+class InputExtension(BaseFeature[str]):
     """Override input file extension."""
 
-    OPTION_NAME = 'in_ext'
+    OPTION_NAME = "in_ext"
     CLICK_OPTION = ClickOption(
-        long_option='--in-ext',
-        short_option='-i',
+        long_option="--in-ext",
+        short_option="-i",
         default="in",
         is_flag=False,
-        help_text='File extension of input files.',
+        help_text="File extension of input files.",
     )
 
-    def compose_input_file_name(self, base_name):
+    def compose_input_file_name(self, base_name: str) -> str:
         """Compose file name given environment name.
 
         >>> InputExtension().compose_input_file_name('base')
         'base.in'
         """
-        return f'{base_name}.{self.value}'
+        return f"{base_name}.{self.value}"
 
 
-class OutputExtension(BaseFeature):
+class OutputExtension(BaseFeature[str]):
     """Override output file extension."""
 
-    OPTION_NAME = 'out_ext'
+    OPTION_NAME = "out_ext"
     CLICK_OPTION = ClickOption(
-        long_option='--out-ext',
-        short_option='-o',
+        long_option="--out-ext",
+        short_option="-o",
         default="txt",
         is_flag=False,
-        help_text='File extension of output files.',
+        help_text="File extension of output files.",
     )
 
-    def compose_output_file_path(self, in_path):
+    def compose_output_file_path(self, in_path: str) -> str:
         """Compose file name given environment name.
 
         >>> OutputExtension().compose_output_file_path('sub/base.in')
         'sub/base.txt'
         """
-        return f'{os.path.splitext(in_path)[0]}.{self.value}'
+        return f"{os.path.splitext(in_path)[0]}.{self.value}"

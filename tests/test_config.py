@@ -1,4 +1,5 @@
 """Tests for config loading for CLI v2"""
+
 import os
 import pathlib
 import shutil
@@ -9,16 +10,16 @@ import pytest
 
 from pipcompilemulti.config import read_config
 
-TESTDATA = pathlib.Path(__file__).parent / 'configs'
+TESTDATA = pathlib.Path(__file__).parent / "configs"
 ASSETS = {
-    path.name: path.read_text(encoding='utf-8')
-    for path in TESTDATA.glob('*.*')
-    if not path.name.startswith('.')
+    path.name: path.read_text(encoding="utf-8")
+    for path in TESTDATA.glob("*.*")
+    if not path.name.startswith(".")
 }
 
 
 def _write_asset(name: str) -> None:
-    pathlib.Path(name).write_text(ASSETS[name], encoding='utf-8')
+    pathlib.Path(name).write_text(ASSETS[name], encoding="utf-8")
 
 
 @pytest.fixture(autouse=True)
@@ -41,19 +42,28 @@ def test_load_no_configs() -> None:
 
 
 @pytest.mark.parametrize(
-    'asset_name,expected',
+    "asset_name,expected",
     [
-        ('setup.cfg', [
-            ('requirements:Python 3', {'autoresolve': True}),
-        ]),
-        ('requirements.ini', [
-            ('requirements', {'allow_unsafe': True, 'use_cache': True, 'uv': True}),
-        ]),
-        ('pyproject.toml', [
-            ('one', {'uv': True}),
-            ('two', {'generate_hashes': ['file.txt']}),
-        ]),
-    ]
+        (
+            "setup.cfg",
+            [
+                ("requirements:Python 3", {"autoresolve": True}),
+            ],
+        ),
+        (
+            "requirements.ini",
+            [
+                ("requirements", {"allow_unsafe": True, "use_cache": True, "uv": True}),
+            ],
+        ),
+        (
+            "pyproject.toml",
+            [
+                ("one", {"uv": True}),
+                ("two", {"generate_hashes": ["file.txt"]}),
+            ],
+        ),
+    ],
 )
 def test_load_single_config(asset_name: str, expected: list) -> None:
     """Load sample config file"""
@@ -64,29 +74,29 @@ def test_load_single_config(asset_name: str, expected: list) -> None:
 
 def test_load_two_configs() -> None:
     """Combine setup.cfg and pyproject.toml"""
-    _write_asset('setup.cfg')
-    _write_asset('pyproject.toml')
+    _write_asset("setup.cfg")
+    _write_asset("pyproject.toml")
     got = read_config()
     assert got == [
-        ('one', {'uv': True}),
-        ('two', {'generate_hashes': ['file.txt']}),
-        ('requirements:Python 3', {'autoresolve': True})
+        ("one", {"uv": True}),
+        ("two", {"generate_hashes": ["file.txt"]}),
+        ("requirements:Python 3", {"autoresolve": True}),
     ]
 
 
 def test_load_ini_with_empty_pyproject() -> None:
     """Regression test - pyproject without requirements section"""
-    _write_asset('setup.cfg')
-    pathlib.Path('pyproject.toml').touch()
+    _write_asset("setup.cfg")
+    pathlib.Path("pyproject.toml").touch()
     got = read_config()
-    assert got == [('requirements:Python 3', {'autoresolve': True})]
+    assert got == [("requirements:Python 3", {"autoresolve": True})]
 
 
 def test_pyproject_without_section_name() -> None:
     """Regression test - pyproject without requirements section"""
-    pathlib.Path('pyproject.toml').write_text(
+    pathlib.Path("pyproject.toml").write_text(
         "[tool.requirements]\nuv=true\n",
         encoding="utf-8",
     )
     got = read_config()
-    assert got == [('config', {'uv': True})]
+    assert got == [("config", {"uv": True})]
