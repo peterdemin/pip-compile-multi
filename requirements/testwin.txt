@@ -5,7 +5,7 @@
 #
 #    requirements upgrade
 #
-atomicwrites==1.4.0
+atomicwrites==1.4.1
     # via -r requirements/testwin.in
-colorama==0.4.4
+colorama==0.4.6
     # via -r requirements/testwin.in
