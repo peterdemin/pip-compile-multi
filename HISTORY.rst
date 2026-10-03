@@ -1,6 +1,11 @@
 History
 =======
 
+3.3.2 (2026-10-02)
+------------------
+
+* Add support for `--python-platform` and `--python-version` when `uv` is used.
+
 3.3.1 (2025-04-19)
 ------------------
 
