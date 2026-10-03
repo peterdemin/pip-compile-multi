@@ -2,8 +2,7 @@
 import sys
 import os
 import configparser
-from typing import Dict, List, Union
-from functools import lru_cache
+from functools import cache
 
 from .features.base import BaseFeature, ClickOption
 
@@ -101,8 +100,8 @@ def _make_toml_scalar(v: object) -> str:
     return ",".join(v) if isinstance(v, list) else str(v)
 
 
-@lru_cache(maxsize=None)
-def _collect_feature_options() -> Dict[str, ClickOption]:
+@cache
+def _collect_feature_options() -> dict[str, ClickOption]:
     subclasses = BaseFeature.__subclasses__()
     for feature_class in BaseFeature.__subclasses__():
         subclasses.extend(feature_class.__subclasses__())
@@ -113,7 +112,7 @@ def _collect_feature_options() -> Dict[str, ClickOption]:
     }
 
 
-def parse_value(key: str, value: str) -> Union[str, List[str], bool]:
+def parse_value(key: str, value: str) -> str | list[str] | bool:
     """Parse value according to the option definition (bool or list)"""
     options = _collect_feature_options()
     click_option = options.get(key)

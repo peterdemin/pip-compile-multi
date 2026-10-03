@@ -39,14 +39,14 @@ def recursive_refs(envs, in_path):
     }
     refs = refs_by_in_path[os.path.normpath(in_path)]
     if refs:
-        indirect_refs = set(
+        indirect_refs = {
             subref
             for ref in refs
             for subref in recursive_refs(envs, ref)
-        )
+        }
     else:
         indirect_refs = set()
-    return set.union(refs, indirect_refs)
+    return refs | indirect_refs
 
 
 def merged_packages(env_packages, names):
@@ -101,14 +101,14 @@ def reference_cluster(envs, in_path):
     True
     """
     edges = [
-        set([env['in_path'], fix_reference_path(env['in_path'], ref)])
+        {env['in_path'], fix_reference_path(env['in_path'], ref)}
         for env in envs
         for ref in env['refs']
     ]
-    prev, cluster = set(), set([in_path])
+    prev, cluster = set(), {in_path}
     while prev != cluster:
         # While cluster grows
-        prev = set(cluster)
+        prev = cluster.copy()
         to_visit = []
         for edge in edges:
             if cluster & edge:

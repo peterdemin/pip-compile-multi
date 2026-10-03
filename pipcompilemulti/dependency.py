@@ -5,7 +5,7 @@ import re
 from .features import FEATURES
 
 
-class Dependency(object):  # pylint: disable=too-many-instance-attributes
+class Dependency:  # pylint: disable=too-many-instance-attributes
     r"""Single dependency.
 
     Comment may span multiple lines.
@@ -127,18 +127,14 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
             == otherwise
         """
         if self.is_vcs or self.is_at:
-            return "{}{}".format(
-                self.without_editable(self.line[:self.comment_span[0]]).strip(),
-                FEATURES.process_dependency_comments(self.comment),
+            return (
+                self.without_editable(self.line[:self.comment_span[0]]).strip()
+                + FEATURES.process_dependency_comments(self.comment)
             )
         equal = FEATURES.constraint(self.package)
-        package_version = '{package}{equal}{version}  '.format(
-            package=self.without_editable(self.package),
-            version=self.version,
-            equal=equal,
-        )
+        package_version = f'{self.without_editable(self.package)}{equal}{self.version}  '
         if self.markers:
-            package_version = '{}{}  '.format(package_version.strip(), self.markers)
+            package_version = f'{package_version.strip()}{self.markers}  '
         if self.hashes:
             hashes = self.hashes.split()
             lines = [package_version.strip()]
@@ -152,9 +148,8 @@ class Dependency(object):  # pylint: disable=too-many-instance-attributes
                     package_version.rstrip() +
                     FEATURES.process_dependency_comments(self.comment).rstrip()
                 )
-            return '{0}{1}'.format(
-                package_version.ljust(self.COMMENT_JUSTIFICATION),
-                self.comment.lstrip(),
+            return (
+                package_version.ljust(self.COMMENT_JUSTIFICATION) + self.comment.lstrip()
             ).rstrip()  # rstrip for empty comment
 
     @classmethod

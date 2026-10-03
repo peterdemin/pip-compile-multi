@@ -14,7 +14,7 @@ from .utils import extract_env_name
 logger = logging.getLogger("pip-compile-multi")
 
 
-class Environment(object):
+class Environment:
     """requirements file"""
 
     RE_REF = re.compile(r'^(?:-r|--requirement)\s*(?P<path>\S+).*$')
@@ -76,7 +76,7 @@ class Environment(object):
                 logger.critical(stdout.decode('utf-8'))
             if stderr:
                 logger.critical(stderr.decode('utf-8'))
-            raise RuntimeError("Failed to pip-compile {0}".format(self.infile))
+            raise RuntimeError(f"Failed to pip-compile {self.infile}")
 
     @classmethod
     def parse_references(cls, filename):
@@ -155,7 +155,7 @@ class Environment(object):
             else:
                 line_parts.append(line)
                 yield ' '.join(line_parts)
-                line_parts[:] = []
+                line_parts.clear()
         if line_parts:
             # Impossible:
             raise RuntimeError("Compiled file ends with backslash \\")
@@ -221,9 +221,7 @@ class Environment(object):
         with open(self.outfile, 'wt', encoding="utf-8") as fp:
             fp.writelines(header)
             fp.writelines(
-                '-r {0}\n'.format(
-                    FEATURES.compose_output_file_path(other_in_path)
-                )
+                f'-r {FEATURES.compose_output_file_path(other_in_path)}\n'
                 for other_in_path in sorted(other_in_paths)
             )
             fp.writelines(body)
@@ -267,4 +265,4 @@ class Environment(object):
             os.path.dirname(self.infile),
         ))
         with open(self.infile, "at", encoding="utf-8") as fp:
-            return fp.write("\n\n-c {}\n".format(rel_sink_out_path))
+            return fp.write(f"\n\n-c {rel_sink_out_path}\n")

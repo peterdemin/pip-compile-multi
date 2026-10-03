@@ -51,14 +51,12 @@ confidence=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 disable=bad-inline-option,
-        consider-using-f-string,
         deprecated-pragma,
         file-ignored,
         locally-disabled,
         no-else-return,
         raw-checker-failed,
         suppressed-message,
-        useless-object-inheritance,
         useless-suppression
 
 # Enable the message, report, category or checker with the given id(s). You can

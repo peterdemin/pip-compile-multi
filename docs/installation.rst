@@ -5,7 +5,7 @@ Python Version
 ==============
 
 We recommend using the latest version of Python 3.
-Pip-compile-multi supports Python 3.5 and newer, Python 2.7, and PyPy.
+Pip-compile-multi supports Python 3.10 and newer, including compatible PyPy versions.
 
 Dependencies
 ============
@@ -37,11 +37,7 @@ Virtual environments are independent groups of Python libraries, one for each
 project. Packages installed for one project will not affect other projects or
 the operating system's packages.
 
-Python 3 comes bundled with the :mod:`venv` module to create virtual
-environments. If you're using a modern version of Python, you can continue on
-to the next section.
-
-If you're using Python 2, see :ref:`install-install-virtualenv` first.
+Python comes bundled with the :mod:`venv` module to create virtual environments.
 
 .. _install-create-env:
 
@@ -61,19 +57,6 @@ On Windows:
 .. code-block:: bat
 
     $ py -3 -m venv venv
-
-If you needed to install virtualenv because you are using Python 2, use
-the following command instead:
-
-.. code-block:: sh
-
-    $ python2 -m virtualenv venv
-
-On Windows:
-
-.. code-block:: bat
-
-    > \Python27\Scripts\virtualenv.exe venv
 
 .. _install-activate-env:
 
@@ -105,43 +88,3 @@ Within the activated environment, use the following command to install pip-compi
 
 pip-compile-multi is now installed. Check out the :doc:`/features` or go to the
 :doc:`Documentation Overview </index>`.
-
-.. _install-install-virtualenv:
-
-Install virtualenv
-==================
-
-If you are using Python 2, the venv module is not available. Instead,
-install `virtualenv`_.
-
-On Linux, virtualenv is provided by your package manager:
-
-.. code-block:: sh
-
-    # Debian, Ubuntu
-    $ sudo apt-get install python-virtualenv
-
-    # CentOS, Fedora
-    $ sudo yum install python-virtualenv
-
-    # Arch
-    $ sudo pacman -S python-virtualenv
-
-If you are on Mac OS X or Windows, download `get-pip.py`_, then:
-
-.. code-block:: sh
-
-    $ sudo python2 Downloads/get-pip.py
-    $ sudo python2 -m pip install virtualenv
-
-On Windows, as an administrator:
-
-.. code-block:: bat
-
-    > \Python27\python.exe Downloads\get-pip.py
-    > \Python27\python.exe -m pip install virtualenv
-
-Now you can return above and :ref:`install-create-env`.
-
-.. _virtualenv: https://virtualenv.pypa.io/
-.. _get-pip.py: https://bootstrap.pypa.io/get-pip.py

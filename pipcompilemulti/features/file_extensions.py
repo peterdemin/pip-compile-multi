@@ -39,7 +39,7 @@ class InputExtension(BaseFeature):
         >>> InputExtension().compose_input_file_name('base')
         'base.in'
         """
-        return '{0}.{1}'.format(base_name, self.value)
+        return f'{base_name}.{self.value}'
 
 
 class OutputExtension(BaseFeature):
@@ -60,4 +60,4 @@ class OutputExtension(BaseFeature):
         >>> OutputExtension().compose_output_file_path('sub/base.in')
         'sub/base.txt'
         """
-        return '{0}.{1}'.format(os.path.splitext(in_path)[0], self.value)
+        return f'{os.path.splitext(in_path)[0]}.{self.value}'

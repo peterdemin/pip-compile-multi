@@ -15,25 +15,16 @@ sync: requirements/local.hash virtual_env_set
 	pip-sync requirements/local.hash
 	pip install -e . --no-deps
 
-.PHONY: %-docker
-%-docker:  ## Could be lock-docker or upgrade-docker
-	docker run --rm -it -v $(PWD):/pcm $$(docker build -q .) /usr/bin/make $*-ubuntu
-
-.PHONY: %-ubuntu
-%-ubuntu: .venv3
-	.venv3/bin/python3 -m pip install tox
-	.venv3/bin/python3 -m tox -e $*
-
 .venv3:
 	python3.10 -m venv .venv3
 
 .PHONY: lock
 lock: virtual_env_set
-	tox -e lock
+	requirements lock
 
 .PHONY: upgrade
 upgrade: virtual_env_set
-	tox -e upgrade
+	requirements upgrade
 
 ### CI ###
 .PHONY: test

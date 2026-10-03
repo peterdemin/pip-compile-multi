@@ -136,12 +136,12 @@ class UpgradeSelected(BaseFeature):
     def _read_packages(outfile):
         try:
             with open(outfile, encoding="utf-8") as fp:
-                return set(
+                return {
                     line.split('==', 1)[0].lower()
                     for line in fp
                     if '==' in line
-                )
-        except IOError:
+                }
+        except OSError:
             # Act as if file is empty
             return set()
 

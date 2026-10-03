@@ -2,6 +2,5 @@
 
 pytest
 pytest-cov
-mock
 more-itertools
 uv>=0.1.0  # Astral's faster dependency resolver

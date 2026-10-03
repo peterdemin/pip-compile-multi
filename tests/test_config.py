@@ -3,7 +3,7 @@ import os
 import pathlib
 import shutil
 import tempfile
-from typing import Iterator, List
+from collections.abc import Iterator
 
 import pytest
 
@@ -55,7 +55,7 @@ def test_load_no_configs() -> None:
         ]),
     ]
 )
-def test_load_single_config(asset_name: str, expected: List) -> None:
+def test_load_single_config(asset_name: str, expected: list) -> None:
     """Load sample config file"""
     _write_asset(asset_name)
     got = read_config()

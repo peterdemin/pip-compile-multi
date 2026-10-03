@@ -25,11 +25,11 @@ def discover(glob_pattern):
     >>> envs == [
     ...  {'in_path': os.path.join('requirements', 'base.in'), 'name': 'base',
     ...   'refs': set()},
+    ...  {'in_path': os.path.join('requirements', 'testwin.in'), 'name': 'testwin',
+    ...   'refs': set()},
     ...  {'in_path': os.path.join('requirements', 'test.in'), 'name': 'test',
     ...   'refs': {'base.in'}},
     ...  {'in_path': os.path.join('requirements', 'local.in'), 'name': 'local',
-    ...   'refs': {'test.in'}},
-    ...  {'in_path': os.path.join('requirements', 'testwin.in'), 'name': 'testwin',
     ...   'refs': {'test.in'}}
     ... ]
     True
@@ -61,8 +61,10 @@ def order_by_refs(envs):
     I.e. all referenced environments are placed before their references.
     """
     topology = {
-        env['in_path']: set(fix_reference_path(env['in_path'], ref)
-                            for ref in env['refs'])
+        env['in_path']: {
+            fix_reference_path(env['in_path'], ref)
+            for ref in env['refs']
+        }
         for env in envs
     }
     by_in_path = {

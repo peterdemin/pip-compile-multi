@@ -1,10 +1,7 @@
 """Tests for pip-compile-multi"""
 
 import os
-try:
-    from unittest import mock
-except ImportError:
-    import mock
+from unittest import mock
 
 import pytest
 
@@ -141,7 +138,7 @@ def test_reference_cluster():
             {'in_path': 'doc', 'refs': ['base']},
             {'in_path': 'side', 'refs': []},
         ], entry)
-        assert cluster == set(['base', 'doc', 'local', 'test'])
+        assert cluster == {'base', 'doc', 'local', 'test'}
 
 
 def test_parse_vcs_dependencies():
