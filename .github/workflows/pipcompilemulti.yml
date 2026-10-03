@@ -15,11 +15,12 @@ jobs:
           python-version: '3.10'
       - name: Install tox
         run: |
-          python -m pip install --upgrade pip
-          pip install tox
+          python -m pip install --upgrade pip uv
+          uv pip install -r requirements/base.hash
+          uv pip install -e . --no-deps
       - name: Update dependencies
         run: |
-          tox -e upgrade
+          requirements upgrade
       - name: Create commits
         run: |
           git config user.name 'pip-compile-multi'
