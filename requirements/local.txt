@@ -10,17 +10,17 @@ alabaster==1.0.0
     # via sphinx
 ast-serialize==0.12.1
     # via mypy
-astroid==4.3.3
+astroid==4.3.4
     # via pylint
 babel==2.18.0
     # via sphinx
 backports-tarfile==1.2.0
     # via jaraco-context
-black==26.5.1
+black==26.10.0
     # via -r requirements/local.in
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==7.2.0
+cachetools==7.2.1
     # via tox
 certifi==2026.7.22
     # via requests
@@ -42,7 +42,7 @@ docutils==0.21.2
     # via
     #   readme-renderer
     #   sphinx
-filelock==4.0.9
+filelock==4.0.12
     # via
     #   python-discovery
     #   tox
@@ -134,7 +134,7 @@ pipdeptree==4.2.5
     # via -r requirements/local.in
 pkginfo==1.10.0
     # via -r requirements/local.in
-platformdirs==4.12.2
+platformdirs==4.12.4
     # via
     #   black
     #   pylint
@@ -144,11 +144,11 @@ pre-commit==4.6.2
     # via -r requirements/local.in
 pre-commit-hooks==6.0.0
     # via -r requirements/local.in
-pycparser==3.0
+pycparser==3.1
     # via cffi
 pylint==4.1.2
     # via -r requirements/local.in
-pyproject-api==1.11.2
+pyproject-api==1.11.4
     # via tox
 pyright==1.1.414
     # via -r requirements/local.in
@@ -201,13 +201,13 @@ tomli-w==1.2.0
     #   tox
 tomlkit==0.15.1
     # via pylint
-tox==4.64.7
+tox==4.64.10
     # via -r requirements/local.in
 truststore==0.10.4
     # via nab-index
 twine==7.0.0
     # via -r requirements/local.in
-ty==0.0.84
+ty==0.0.85
     # via -r requirements/local.in
 types-toposort==1.10.0.20260408
     # via -r requirements/local.in
@@ -217,10 +217,10 @@ urllib3==2.8.0
     #   nab-index
     #   requests
     #   twine
-virtualenv==21.14.5
+virtualenv==21.14.6
     # via
     #   -r requirements/local.in
     #   pre-commit
     #   tox
-zipp==4.1.0
+zipp==4.1.1
     # via importlib-metadata

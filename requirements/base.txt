@@ -17,7 +17,7 @@ packaging==26.3
     #   wheel
 pip==26.2.1
     # via pip-tools
-pip-tools==7.6.1
+pip-tools==7.6.2
     # via -r requirements/base.in
 pyproject-hooks==1.3.3
     # via
@@ -25,7 +25,7 @@ pyproject-hooks==1.3.3
     #   pip-tools
 setuptools==84.0.0
     # via pip-tools
-tomli==2.4.1
+tomli==2.5.0
     # via
     #   build
     #   pip-tools
