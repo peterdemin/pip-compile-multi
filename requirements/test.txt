@@ -26,5 +26,5 @@ pytest==9.1.1
     #   pytest-cov
 pytest-cov==7.1.0
     # via -r requirements/test.in
-uv==0.12.24
+uv==0.13.1
     # via -r requirements/test.in
