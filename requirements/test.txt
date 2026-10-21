@@ -14,7 +14,7 @@ iniconfig==2.3.1
     # via pytest
 more-itertools==11.1.0
     # via -r requirements/test.in
-pluggy==1.6.0
+pluggy==1.7.0
     # via
     #   pytest
     #   pytest-cov
@@ -26,5 +26,5 @@ pytest==9.1.1
     #   pytest-cov
 pytest-cov==7.1.0
     # via -r requirements/test.in
-uv==0.12.24
+uv==0.13.4
     # via -r requirements/test.in
