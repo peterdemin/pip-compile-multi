@@ -8,7 +8,7 @@
 -r test.txt
 alabaster==1.0.0
     # via sphinx
-ast-serialize==0.12.1
+ast-serialize==0.13.1
     # via mypy
 astroid==4.3.4
     # via pylint
@@ -16,13 +16,13 @@ babel==2.18.0
     # via sphinx
 backports-tarfile==1.2.0
     # via jaraco-context
-black==26.10.0
+black==26.10.1
     # via -r requirements/local.in
 bump2version==1.0.1
     # via -r requirements/local.in
-cachetools==7.2.1
+cachetools==7.2.6
     # via tox
-certifi==2026.7.22
+certifi==2026.10.23
     # via requests
 cffi==2.1.1
     # via cryptography
@@ -36,13 +36,13 @@ cryptography==50.0.2
     # via secretstorage
 dill==0.4.1
     # via pylint
-distlib==0.4.3
+distlib==0.4.4
     # via virtualenv
 docutils==0.21.2
     # via
     #   readme-renderer
     #   sphinx
-filelock==4.0.12
+filelock==4.1.0
     # via
     #   python-discovery
     #   tox
@@ -57,7 +57,7 @@ imagesize==2.0.1
     # via sphinx
 importlib-metadata==9.0.1
     # via keyring
-installer==1.0.1
+installer==1.1.0
     # via nab-project
 isort==9.0.2
     # via
@@ -87,37 +87,39 @@ mccabe==0.7.0
     # via pylint
 mdurl==0.1.2
     # via markdown-it-py
-mypy==2.4.0
+mypy==2.4.1
     # via -r requirements/local.in
 mypy-extensions==1.1.0
     # via
     #   black
     #   isort
     #   mypy
-nab==0.0.18
+nab==0.0.23
     # via pipdeptree
-nab-index==0.0.18
+nab-index==0.0.23
     # via
     #   nab
     #   nab-project
     #   pipdeptree
-nab-markersets==0.0.18
+nab-markersets==0.0.23
     # via
     #   nab
     #   nab-project
     #   nab-provider
-nab-project==0.0.18
+nab-project==0.0.23
     # via
     #   nab
     #   pipdeptree
-nab-provider==0.0.18
+nab-provider==0.0.23
     # via
     #   nab
     #   nab-index
     #   nab-project
-nab-resolver==0.0.18
+nab-resolver==0.0.23
     # via
     #   nab
+    #   nab-index
+    #   nab-markersets
     #   nab-project
     #   nab-provider
 nh3==0.3.7
@@ -144,15 +146,15 @@ pre-commit==4.6.2
     # via -r requirements/local.in
 pre-commit-hooks==6.0.0
     # via -r requirements/local.in
-pycparser==3.1
+pycparser==3.11
     # via cffi
-pylint==4.1.2
+pylint==4.1.3
     # via -r requirements/local.in
 pyproject-api==1.11.4
     # via tox
 pyright==1.1.414
     # via -r requirements/local.in
-python-discovery==1.6.1
+python-discovery==1.6.7
     # via
     #   tox
     #   virtualenv
@@ -175,7 +177,7 @@ rich==15.0.0
     # via twine
 ruamel-yaml==0.19.1
     # via pre-commit-hooks
-ruff==0.16.10
+ruff==0.17.3
     # via -r requirements/local.in
 secretstorage==3.5.0
     # via keyring
@@ -189,7 +191,7 @@ sphinxcontrib-devhelp==2.0.0
     # via sphinx
 sphinxcontrib-htmlhelp==2.1.0
     # via sphinx
-sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-jsmath==2.0.0
     # via sphinx
 sphinxcontrib-qthelp==2.0.0
     # via sphinx
@@ -199,15 +201,15 @@ tomli-w==1.2.0
     # via
     #   nab-project
     #   tox
-tomlkit==0.15.1
+tomlkit==0.15.2
     # via pylint
-tox==4.64.10
+tox==4.65.0
     # via -r requirements/local.in
-truststore==0.10.4
+truststore==0.10.5
     # via nab-index
 twine==7.0.0
     # via -r requirements/local.in
-ty==0.0.85
+ty==0.0.94
     # via -r requirements/local.in
 types-toposort==1.10.0.20260408
     # via -r requirements/local.in
@@ -217,10 +219,10 @@ urllib3==2.8.0
     #   nab-index
     #   requests
     #   twine
-virtualenv==21.14.6
+virtualenv==21.15.1
     # via
     #   -r requirements/local.in
     #   pre-commit
     #   tox
-zipp==4.1.1
+zipp==4.1.2
     # via importlib-metadata
